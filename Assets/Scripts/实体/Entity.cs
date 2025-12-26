@@ -27,6 +27,7 @@ public class Entity : MonoBehaviour
     public bool 检测到墙壁 { get; private set; }
 
     private Coroutine 击退协程;
+    private Coroutine slowDownCo;
     private bool 被击退;
 
     protected virtual void Awake()
@@ -51,7 +52,16 @@ public class Entity : MonoBehaviour
     {
 
     }
-
+    public virtual void SlowDownEntity(float duration, float slowMultiplier)
+    {
+        if(slowDownCo != null)
+            StopCoroutine(slowDownCo);
+        slowDownCo = StartCoroutine(SlowDownEntityCo(duration,slowMultiplier));
+    }
+    protected virtual IEnumerator SlowDownEntityCo(float duration, float slowMultiplier)//协程，允许暂停并在将来执行函数
+    {
+        yield return null;
+    }
     public void 受击击退(Vector2 击退,float 持续时间)
     {
         if (击退协程 != null)

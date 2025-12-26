@@ -1646,7 +1646,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   defaultDuration: 3
-  chillSlowMultiplier: 0.2
+  chillSlowMultiplier: 0.4
 --- !u!114 &907479397
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2121,16 +2121,16 @@ MonoBehaviour:
   "\u5730\u9762\u68C0\u6D4B\u8D77\u70B9": {fileID: 1049994935}
   "\u9996\u8981\u7684\u5899\u58C1\u68C0\u6D4B": {fileID: 34542389}
   "\u6B21\u8981\u7684\u5899\u58C1\u68C0\u6D4B": {fileID: 2037437824}
-  "\u653B\u51FB\u65F6\u901F\u5EA6":
+  attackVelocity:
   - {x: 3, y: 1.5}
   - {x: 1, y: 2.5}
   - {x: 2.75, y: 1.75}
-  "\u8DF3\u8DC3\u65A9\u51FB\u65F6\u901F\u5EA6": {x: 5, y: -6}
+  jumpAttackVelocity: {x: 0, y: 0}
   "\u653B\u51FB\u65F6\u901F\u5EA6\u6301\u7EED\u65F6\u95F4": 0.1
   "\u8FDE\u62DB\u91CD\u7F6E\u65F6\u95F4": 1
   moveSpeed: 8
   jumpForce: 12
-  "\u5899\u58C1\u8DF3\u8DC3": {x: 6, y: 12}
+  wallJumpForce: {x: 0, y: 0}
   "\u7A7A\u4E2D\u79FB\u52A8\u500D\u7387": 0.7
   "\u6ED1\u5899\u4E0B\u964D\u500D\u7387": 0.4
   dashDuration: 0.25
@@ -2274,7 +2274,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   defaultDuration: 3
-  chillSlowMultiplier: 0.2
+  chillSlowMultiplier: 0.4
   "\u5F39\u53CD\u52A8\u4F5C\u50F5\u76F4\u65F6\u95F4": 0.25
 --- !u!114 &1049994942
 MonoBehaviour:

@@ -10,8 +10,8 @@ public class 玩家普通攻击状态 : PlayerState
     private bool 连招衔接;
     public 玩家普通攻击状态(Player player, StateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
-        if(连招总数 != player.攻击时速度.Length)
-            连招总数 = player.攻击时速度.Length;
+        if(连招总数 != player.attackVelocity.Length)
+            连招总数 = player.attackVelocity.Length;
         //限制/确定数组和连招总数是否一致，没啥用哈哈
     }
     public override void Enter()
@@ -64,7 +64,7 @@ public class 玩家普通攻击状态 : PlayerState
     }
     private void 产生攻击时速度()
     {
-        Vector2 攻击时速度 = player.攻击时速度[连招索引 - 1];
+        Vector2 攻击时速度 = player.attackVelocity[连招索引 - 1];
         攻击时速度计时器 = player.攻击时速度持续时间;
         player.SetVelocity(攻击时速度.x * 攻击方向, 攻击时速度.y);
         //这里的攻击方向改变速度方向，使得进入攻击状态时获得一个翻转的机会（player.翻转处理）

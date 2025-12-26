@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class Enemy : Entity
@@ -33,6 +34,25 @@ public class Enemy : Entity
     [SerializeField] private float 玩家检测距离;
 
     public Transform player { get; private set; }
+    protected override IEnumerator SlowDownEntityCo(float duration, float slowMultiplier)//冰冻减速异常效果实现
+    {
+        //存储原始值
+        float originalMoveSpeed = moveSpeed;
+        float originalBattleSpeed = battleMoveSpeed;
+        float originalanimSpeed = anim.speed;//动画速度
+
+        float speedMultiplier = 1 - slowMultiplier;
+
+        moveSpeed = moveSpeed * speedMultiplier;
+        battleMoveSpeed = battleMoveSpeed * speedMultiplier;
+        anim.speed = anim.speed * speedMultiplier;
+        
+        yield return new WaitForSeconds(duration);
+        //回归原始值
+        moveSpeed = originalMoveSpeed;
+        battleMoveSpeed = originalBattleSpeed;
+        anim.speed = originalanimSpeed;
+    }
     public void EnableCounterWindow(bool enable)
     {
         canBeStunned = enable;

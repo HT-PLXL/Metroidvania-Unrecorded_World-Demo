@@ -13,7 +13,7 @@ public class 实体战斗及目标检测 : MonoBehaviour
 
     [Header("异常状态效果处理")]
     [SerializeField] private float defaultDuration = 3;
-    [SerializeField] private float chillSlowMultiplier = .2f;
+    [SerializeField] private float chillSlowMultiplier = .4f;
 
     private void Awake()
     {
@@ -23,7 +23,7 @@ public class 实体战斗及目标检测 : MonoBehaviour
     }
     public void 执行攻击()
     {
-        foreach(var target in 获得检测的碰撞体())
+        foreach(var target in 获得检测的碰撞体())//对攻击目标执行
         {
             //实体血量 targetHp = target.GetComponent<实体血量>();
             //targetHp ? .造成伤害(damage,transform);//传入伤害以及受伤对象的组件

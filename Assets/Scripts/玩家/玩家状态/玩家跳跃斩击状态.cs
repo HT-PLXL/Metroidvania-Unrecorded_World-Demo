@@ -10,7 +10,7 @@ public class 玩家跳跃斩击状态 : PlayerState
     {
         base.Enter();
         是否接触过地面 = false;
-        player.SetVelocity(player.跳跃斩击时速度.x * player.面对方向, player.跳跃斩击时速度.y);
+        player.SetVelocity(player.jumpAttackVelocity.x * player.面对方向, player.jumpAttackVelocity.y);
     }
     public override void Update()
     {

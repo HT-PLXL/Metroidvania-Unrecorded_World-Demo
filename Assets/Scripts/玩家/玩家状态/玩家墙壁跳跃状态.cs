@@ -9,7 +9,7 @@ public class 玩家墙壁跳跃状态 : PlayerState
     public override void Enter()
     {
         base.Enter();
-        player.SetVelocity(player.墙壁跳跃.x * -player.面对方向, player.墙壁跳跃.y);
+        player.SetVelocity(player.wallJumpForce.x * -player.面对方向, player.wallJumpForce.y);
     }
 
     public override void Update()

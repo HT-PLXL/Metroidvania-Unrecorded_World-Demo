@@ -29,8 +29,8 @@ public class Player : Entity
 
 
     [Header("攻击细节")]
-    public Vector2[] 攻击时速度;
-    public Vector2 跳跃斩击时速度;
+    public Vector2[] attackVelocity;
+    public Vector2 jumpAttackVelocity;
     public float 攻击时速度持续时间 = 0.1f;
     public float 连招重置时间 = 1;
     private Coroutine 攻击排队;
@@ -38,7 +38,7 @@ public class Player : Entity
     [Header("移动详情")]
     public float moveSpeed;
     public float jumpForce;
-    public Vector2 墙壁跳跃;
+    public Vector2 wallJumpForce;
     [Range(0, 1)]//滑动条
     public float 空中移动倍率 = 0.7f;
     [Range(0, 1)]
@@ -76,6 +76,46 @@ public class Player : Entity
     {
         base.Start();
         stateMachine.Initalize(idleState);
+    }
+    protected override IEnumerator SlowDownEntityCo(float duration, float slowMultiplier)
+    {
+        //存储原始值开始
+        float originalMoveSpeed = moveSpeed;
+        float originalJumpSpeed = jumpForce;
+        float originalanimSpeed = anim.speed;//动画速度
+        Vector2 originalWallJump = wallJumpForce;
+        Vector2 originalJumpAttackVelocity = jumpAttackVelocity;
+        Vector2[] originalAttackVelocity = new Vector2[attackVelocity.Length];//攻击速度是3段普攻的不同数据，存储在数组（引用类型，变量实际只是个指针）不能简单的赋值保存，所以用for循环拷贝原数组
+        for(int i = 0; i < attackVelocity.Length; i++)
+        {
+            originalAttackVelocity[i] = attackVelocity[i];
+        }
+        //存储原始值结束
+        float speedMultiplier = 1 - slowMultiplier;
+
+        moveSpeed = moveSpeed * speedMultiplier;
+        jumpForce = jumpForce * speedMultiplier;
+        anim.speed = anim.speed * speedMultiplier;
+        wallJumpForce = wallJumpForce * speedMultiplier;
+        jumpAttackVelocity = jumpAttackVelocity * speedMultiplier;
+
+        for(int i = 0; i < attackVelocity.Length; i++)
+        {
+            attackVelocity[i] = attackVelocity[i] * speedMultiplier;
+        }
+
+        yield return new WaitForSeconds(duration);
+        //回归原始值
+        moveSpeed = originalMoveSpeed;
+        jumpForce = originalJumpSpeed;
+        anim.speed = originalanimSpeed;
+        wallJumpForce = originalWallJump;
+        jumpAttackVelocity = originalJumpAttackVelocity;
+
+        for (int i = 0; i < attackVelocity.Length; i++)
+        {
+            attackVelocity[i] = originalAttackVelocity[i];
+        }
     }
     public override void 实体死亡()
     {

@@ -29,6 +29,32 @@ public class 实体视觉效果 : MonoBehaviour
         原材质 = sr.material;
         originalHitVfxColor = hitVfxColor;
     }
+    public void PlayOnStatusVfx(float duration, ElementType element)//用于被调用启动异常状态视觉效果协程
+    {
+        if (element == ElementType.Ice)
+            StartCoroutine(PlayStatusVfxCo(duration, chillVfx));
+    }
+    private IEnumerator PlayStatusVfxCo(float duration, Color effectColor)
+    {
+        float tickInterval = 0.25f;//短暂时间间隔
+        float timeHasPassed = 0f;
+
+        Color lightColor = effectColor * 1.2f;
+        Color darkColor = effectColor * 0.95f;
+
+        bool toggle = false;
+
+        while(timeHasPassed < duration)//条件满足时重复且延迟切换颜色深浅，实现闪烁
+        {
+            sr.color = toggle ? lightColor : darkColor;
+            toggle  = !toggle;
+
+            yield return new WaitForSeconds(tickInterval);
+            timeHasPassed = timeHasPassed + tickInterval;//会有一定的时间误差，持续时间最好设置为间隔时间的倍数
+        }
+
+        sr.color = Color.white;//循环结束后设置为默认颜色
+    }
     public void 启用攻击特效(Transform target, bool isCrit)//transform包含了位置，旋转，缩放
     {
         GameObject hitPrefab = isCrit ? critHitVfx : hitVfx;//选择攻击特效预制体
@@ -40,7 +66,6 @@ public class 实体视觉效果 : MonoBehaviour
         if (entity.面对方向 == -1 && isCrit)//通过GetComponent获取并赋给entity的组件是同一个GameObject（玩家）上的，自然只与玩家的方向有关而与敌人的方向无关
             vfx.transform.Rotate(0, 180, 0);
     }
-
 
     public void UpdataOnHitColor(ElementType element)
     {
