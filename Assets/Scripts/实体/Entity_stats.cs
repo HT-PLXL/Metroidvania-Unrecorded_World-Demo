@@ -6,7 +6,7 @@ public class Entity_stats : MonoBehaviour
     public Stat_MajorGroup major;
     public Stat_AttackGroup attack;
     public Stat_DefenseGroup defense;
-    public float GetElementalDamage(out ElementType element)
+    public float GetElementalDamage(out ElementType element,float scareFactor = 1)//scareFactor比例因子，用于实现不同倍率的伤害
     {
         float fireDamage = attack.fireDamage.GetValue();
         float iceDamage = attack.iceDamage.GetValue();
@@ -38,7 +38,7 @@ public class Entity_stats : MonoBehaviour
 
         float weakerElementsDamage = bonusFire + bonusIce + bonusLightning;
         float finalDamage = hightstDamage + weakerElementsDamage + bonusElementalDamage;
-        return finalDamage;
+        return finalDamage * scareFactor;
     }
     public float GetElementalResistance(ElementType element)
     {
@@ -91,7 +91,7 @@ public class Entity_stats : MonoBehaviour
         float finalReduction = attack.armorReduction.GetValue() / 100;
         return finalReduction;
     }
-    public float GetPhyiscalDamage(out bool isCrit)//out关键字用于额外返回多个值供调用，此处的isCrit在形参中声明在方法体中确定值
+    public float GetPhyiscalDamage(out bool isCrit, float scareFactor = 1)//out关键字用于额外返回多个值供调用，此处的isCrit在形参中声明在方法体中确定值
     {
         float baseDamage = attack.damage.GetValue();
         float bonusDamage = major.strength.GetValue();
@@ -108,7 +108,7 @@ public class Entity_stats : MonoBehaviour
         isCrit = Random.Range(0, 100) < finalCritChance;//注意形参列表中已经声明isCrit为bool值
         float finalDamage = isCrit ? totalBaseDamage * finalCritPower : totalBaseDamage;
 
-        return finalDamage;
+        return finalDamage * scareFactor;
     }
     public float GetEvasion()
     {

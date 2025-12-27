@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class 实体血量 : MonoBehaviour, IDamageable
+public class EntityHp : MonoBehaviour, IDamageable
 {
     private Slider 血条;
     private 实体视觉效果 实体视觉效果;
@@ -9,7 +9,7 @@ public class 实体血量 : MonoBehaviour, IDamageable
     private Entity_stats stats;
 
     [SerializeField] protected float currentHp;
-    [SerializeField] protected bool isDead;
+    [SerializeField] public bool isDead;
     [Header("受击击退")]
     [SerializeField] private float 击退硬直时间 = .2f;
     [SerializeField] private Vector2 击退力度 = new Vector2(1.5f, 2f);
@@ -49,7 +49,7 @@ public class 实体血量 : MonoBehaviour, IDamageable
 
         施加击退(伤害来源, finalDamage);
 
-        减少血量(finalDamage);
+        ReduceHp(finalDamage);
 
         return true;
     }
@@ -65,7 +65,7 @@ public class 实体血量 : MonoBehaviour, IDamageable
         entity?.受击击退(击退, 持续时间);
     }
 
-    protected void 减少血量(float damage)
+    public void ReduceHp(float damage)
     {
         实体视觉效果 ?. 播放受伤视觉效果();//此处是变白效果，打击效果在实体战斗中
         currentHp -= damage;
@@ -77,6 +77,7 @@ public class 实体血量 : MonoBehaviour, IDamageable
     {
         isDead = true;
         entity.实体死亡();
+        实体视觉效果.StopAllVfx();
     }
     private void 血条更新()
     {

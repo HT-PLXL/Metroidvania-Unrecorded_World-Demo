@@ -1,4 +1,6 @@
 using System.Collections;
+using System.ComponentModel;
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 
 public class 实体视觉效果 : MonoBehaviour
@@ -10,8 +12,10 @@ public class 实体视觉效果 : MonoBehaviour
     [SerializeField] private Material 受伤材质;
     [SerializeField] private float 受伤视觉效果持续时间 = 0.2f;
 
-    private Material 原材质;
+    private Material originalMaterial;
     private Coroutine 受伤视觉协程;
+    private Coroutine statsCo;
+
 
     [Header("攻击特效")]
     [SerializeField] private GameObject hitVfx;
@@ -20,19 +24,32 @@ public class 实体视觉效果 : MonoBehaviour
 
     [Header("元素颜色")]
     [SerializeField] private Color chillVfx = Color.cyan;
+    [SerializeField] private Color burnVfx = Color.red;
+    [SerializeField] private Color electrifyVfx = Color.yellow;
     private Color originalHitVfxColor;
 
     private void Awake()
     {
         entity = GetComponent<Entity>();
         sr = GetComponentInChildren<SpriteRenderer>();
-        原材质 = sr.material;
+        originalMaterial = sr.material;
         originalHitVfxColor = hitVfxColor;
     }
     public void PlayOnStatusVfx(float duration, ElementType element)//用于被调用启动异常状态视觉效果协程
     {
         if (element == ElementType.Ice)
-            StartCoroutine(PlayStatusVfxCo(duration, chillVfx));
+            statsCo = StartCoroutine(PlayStatusVfxCo(duration, chillVfx));
+        if (element == ElementType.Fire)
+            statsCo = StartCoroutine(PlayStatusVfxCo(duration, burnVfx));
+        if (element == ElementType.Lightning)
+            statsCo = StartCoroutine(PlayStatusVfxCo(duration, electrifyVfx));
+    }
+    public void StopAllVfx()
+    {
+        sr.color = Color.white;
+        sr.material = originalMaterial;
+        if (statsCo != null)
+            StopCoroutine(statsCo);
     }
     private IEnumerator PlayStatusVfxCo(float duration, Color effectColor)
     {
@@ -47,12 +64,11 @@ public class 实体视觉效果 : MonoBehaviour
         while(timeHasPassed < duration)//条件满足时重复且延迟切换颜色深浅，实现闪烁
         {
             sr.color = toggle ? lightColor : darkColor;
-            toggle  = !toggle;
-
+            toggle = !toggle;
             yield return new WaitForSeconds(tickInterval);
             timeHasPassed = timeHasPassed + tickInterval;//会有一定的时间误差，持续时间最好设置为间隔时间的倍数
         }
-
+        //statsCo = null;
         sr.color = Color.white;//循环结束后设置为默认颜色
     }
     public void 启用攻击特效(Transform target, bool isCrit)//transform包含了位置，旋转，缩放
@@ -79,7 +95,7 @@ public class 实体视觉效果 : MonoBehaviour
     {
         sr.material = 受伤材质;
         yield return new WaitForSeconds(受伤视觉效果持续时间);
-        sr.material = 原材质;
+        sr.material = originalMaterial;
     }
     public void 播放受伤视觉效果()
     {
