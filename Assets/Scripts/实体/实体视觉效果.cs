@@ -3,7 +3,7 @@ using System.ComponentModel;
 using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 
-public class 实体视觉效果 : MonoBehaviour
+public class Entity_VFX : MonoBehaviour
 {
     private SpriteRenderer sr;//渲染器
     private Entity entity;

@@ -7,6 +7,7 @@ public abstract class EntityState
     protected string animBoolName;
     protected Animator anim;//声明anim配合下面构造函数中anim进行缩写
     protected Rigidbody2D rb;//用于缩写
+    protected Entity_stats entity_stats;
     protected float stateTimer;//状态计时器
     protected bool 触发结束;
 
@@ -41,5 +42,10 @@ public abstract class EntityState
     public virtual void 更新动画师界面参数()//virtual属性的方法被调用会执行其重写方法
     {
 
+    }
+    public void SetAttackSpeed()
+    {
+        float attackSpeed = entity_stats.attack.attackSpeed.GetValue();
+        anim.SetFloat("攻击速度乘数",attackSpeed);
     }
 }

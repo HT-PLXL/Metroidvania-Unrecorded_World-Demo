@@ -9,6 +9,7 @@ public class EnemyState : EntityState
 
         rb = enemy.rb;
         anim = enemy.anim;
+        entity_stats = enemy.entityStats;
     }
 
     public override void 更新动画师界面参数()

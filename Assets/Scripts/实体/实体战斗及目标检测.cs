@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class 实体战斗及目标检测 : MonoBehaviour
 {
-    private 实体视觉效果 vfx;
+    private Entity_VFX vfx;
     private Entity_stats stats;
 
     [Header("目标检测")]
@@ -22,7 +22,7 @@ public class 实体战斗及目标检测 : MonoBehaviour
 
     private void Awake()
     {
-        vfx = GetComponent<实体视觉效果>();
+        vfx = GetComponent<Entity_VFX>();
         stats = GetComponent<Entity_stats>();
 
     }

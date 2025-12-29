@@ -14,6 +14,7 @@ public abstract class PlayerState : EntityState
         anim = player.anim;//给父类和上面声明的空实例赋值
         rb = player.rb;
         input = player.input;
+        entity_stats = player.entityStats;
     }
     public override void Update()
     {

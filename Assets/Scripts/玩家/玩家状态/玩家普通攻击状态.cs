@@ -19,6 +19,7 @@ public class 玩家普通攻击状态 : PlayerState
         base.Enter();
         连招衔接 = false;
         重置连招索引();
+        SetAttackSpeed();
 
         攻击方向 = player.moveInput.x != 0 ? (((int)player.moveInput.x)): player.面对方向;
 

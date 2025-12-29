@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class 敌人视觉效果 : 实体视觉效果
+public class 敌人视觉效果 : Entity_VFX
 {
     [Header("反击窗口")]
     [SerializeField] private GameObject 攻击警告;

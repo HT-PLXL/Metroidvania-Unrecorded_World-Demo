@@ -4,7 +4,7 @@ using UnityEngine;
 public class Entity_StatusHandler : MonoBehaviour
 {
     private Entity entity;
-    private 实体视觉效果 entityVfx;
+    private Entity_VFX entityVfx;
     private Entity_stats EntityStats;
     private EntityHp entityHp; 
     private ElementType currentEffect = ElementType.None;
@@ -18,7 +18,7 @@ public class Entity_StatusHandler : MonoBehaviour
     {
         EntityStats = GetComponent<Entity_stats>();
         entity = GetComponent<Entity>();
-        entityVfx = GetComponent<实体视觉效果>();
+        entityVfx = GetComponent<Entity_VFX>();
         entityHp = GetComponent<EntityHp>();
     }
 

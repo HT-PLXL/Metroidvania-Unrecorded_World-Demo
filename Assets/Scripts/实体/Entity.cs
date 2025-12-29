@@ -8,6 +8,7 @@ public class Entity : MonoBehaviour
     public event Action 翻转中;//声明一个封装了委托的事件，委托可以理解为任务列表
     public Animator anim { get; private set; }
     public Rigidbody2D rb { get; private set; }
+    public Entity_stats entityStats { get; private set; }
     protected StateMachine stateMachine;//声明状态机容器（即变量stateMachine）
 
 
@@ -34,6 +35,7 @@ public class Entity : MonoBehaviour
     {
         anim = GetComponentInChildren<Animator>();
         rb = GetComponent<Rigidbody2D>();
+        entityStats = GetComponent<Entity_stats>();
 
         stateMachine = new StateMachine();//为stateMachine创建实例，确保被使用时传出的参数不为null
 
