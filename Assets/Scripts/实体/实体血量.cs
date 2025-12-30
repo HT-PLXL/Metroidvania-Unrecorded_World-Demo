@@ -6,7 +6,7 @@ public class EntityHp : MonoBehaviour, IDamageable
     private Slider HpBar;
     private Entity_VFX entityVfx;
     private Entity entity;
-    private Entity_stats entityStats;
+    private Entity_Stats entityStats;
 
     [SerializeField] protected float currentHp;
     [SerializeField] public bool isDead;
@@ -25,7 +25,7 @@ public class EntityHp : MonoBehaviour, IDamageable
         entity = GetComponent<Entity>();
         entityVfx = GetComponent<Entity_VFX>();
         HpBar = GetComponentInChildren<Slider>();
-        entityStats = GetComponent<Entity_stats>();
+        entityStats = GetComponent<Entity_Stats>();
 
         currentHp = entityStats.GetMaxHp();
         HpBarUpdate();
@@ -43,7 +43,7 @@ public class EntityHp : MonoBehaviour, IDamageable
             return false;
         }
 
-        Entity_stats attackerStats = 伤害来源.GetComponent<Entity_stats>();
+        Entity_Stats attackerStats = 伤害来源.GetComponent<Entity_Stats>();
         float armorReduction = attackerStats != null ? attackerStats.GetArmorReduction() : 0;
 
         float mitigation = entityStats.GetArmorMitigation(armorReduction);//护甲在实体自身上，可以直接使用，削减在攻击者身上，需要获取并提供给方法以计算最终减免比例

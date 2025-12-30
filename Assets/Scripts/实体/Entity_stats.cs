@@ -1,12 +1,12 @@
 using UnityEngine;
 
-public class Entity_stats : MonoBehaviour
+public class Entity_Stats : MonoBehaviour
 {
-    public Stat_ResourceGroup resources;
+    public Stat_ResourceGroup resources;//资源
     public Stat_MajorGroup major;
     public Stat_AttackGroup attack;
     public Stat_DefenseGroup defense;
-    public float GetElementalDamage(out ElementType element,float scareFactor = 1)//scareFactor比例因子，用于实现不同倍率的伤害
+    public float GetElementalDamage(out ElementType element, float scareFactor = 1)//scareFactor比例因子，用于实现不同倍率的伤害
     {
         float fireDamage = attack.fireDamage.GetValue();
         float iceDamage = attack.iceDamage.GetValue();
@@ -121,5 +121,37 @@ public class Entity_stats : MonoBehaviour
         float finalEvasion = Mathf.Clamp(totalEvasion, 0, evasionCap);//数学-钳制（插值）函数，限制第一个值在第二第三值之间，超出范围的会被自动约束
 
         return finalEvasion;
+    }
+    public Stat GetStatByType(StatType type)
+    {
+        switch (type)
+        {
+            case StatType.MaxHP: return resources.maxHp;
+            case StatType.HpRegen: return resources.HpRegen;
+
+            case StatType.Strength: return major.strength;
+            case StatType.Agility: return major.agility;
+            case StatType.Intelligence: return major.intelligence;
+            case StatType.Vitality: return major.vitality;
+
+            case StatType.AttackSpeed: return attack.attackSpeed;
+            case StatType.Damage: return attack.damage;
+            case StatType.CritChance: return attack.critChance;
+            case StatType.CritPower: return attack.critPower;
+            case StatType.ArmorReduction: return attack.armorReduction;
+            case StatType.FireDamage: return attack.fireDamage;
+            case StatType.IceDamage: return attack.iceDamage;
+            case StatType.LightningDamage: return attack.lightningDamage;
+
+            case StatType.Armor: return defense.armor;
+            case StatType.Evasion: return defense.evasion;
+            case StatType.IceResistance: return defense.iceResistance;
+            case StatType.FireResistance: return defense.fireResistance;
+            case StatType.LightningResistance: return defense.lightningResistance;
+
+            default:
+                Debug.LogWarning($"数据种类{type}尚未实现");
+                return null;
+        }
     }
 }

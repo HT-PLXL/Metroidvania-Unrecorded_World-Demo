@@ -5,7 +5,7 @@ public class Entity_StatusHandler : MonoBehaviour
 {
     private Entity entity;
     private Entity_VFX entityVfx;
-    private Entity_stats EntityStats;
+    private Entity_Stats EntityStats;
     private EntityHp entityHp; 
     private ElementType currentEffect = ElementType.None;
 
@@ -16,7 +16,7 @@ public class Entity_StatusHandler : MonoBehaviour
     private Coroutine electrifyCo;
     private void Awake()
     {
-        EntityStats = GetComponent<Entity_stats>();
+        EntityStats = GetComponent<Entity_Stats>();
         entity = GetComponent<Entity>();
         entityVfx = GetComponent<Entity_VFX>();
         entityHp = GetComponent<EntityHp>();

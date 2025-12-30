@@ -4,7 +4,7 @@ using UnityEngine;
 public class 实体战斗及目标检测 : MonoBehaviour
 {
     private Entity_VFX vfx;
-    private Entity_stats stats;
+    private Entity_Stats stats;
 
     [Header("目标检测")]
     [SerializeField] private Transform targetCheck;
@@ -23,23 +23,23 @@ public class 实体战斗及目标检测 : MonoBehaviour
     private void Awake()
     {
         vfx = GetComponent<Entity_VFX>();
-        stats = GetComponent<Entity_stats>();
+        stats = GetComponent<Entity_Stats>();
 
     }
     public void 执行攻击()
     {
-        foreach(var target in 获得检测的碰撞体())//对攻击目标执行
+        foreach (var target in 获得检测的碰撞体())//对攻击目标执行
         {
             //实体血量 targetHp = target.GetComponent<实体血量>();
             //targetHp ? .造成伤害(damage,transform);//传入伤害以及受伤对象的组件
 
             IDamageable damageable = target.GetComponent<IDamageable>();
-            
+
             if (damageable == null)
                 continue;
             float elementalDamage = stats.GetElementalDamage(out ElementType element);
             float damage = stats.GetPhyiscalDamage(out bool isCrit);//这里的isCrit可以是任何名字，只是原函数中out传过来的数值的容器
-            bool targetGotHit = damageable.造成伤害(damage, elementalDamage,element,transform);
+            bool targetGotHit = damageable.造成伤害(damage, elementalDamage, element, transform);
 
             if (element != ElementType.None)
                 ApplyStatusEffect(target.transform, element);
