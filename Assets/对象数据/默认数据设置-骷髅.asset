@@ -27,3 +27,7 @@ MonoBehaviour:
   fireResistance: 0
   iceResistance: 0
   LightningResistance: 0
+  strength: 0
+  agility: 0
+  intelligence: 0
+  vitality: 0
