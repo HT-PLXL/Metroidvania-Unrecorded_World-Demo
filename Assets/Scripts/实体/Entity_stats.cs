@@ -2,10 +2,12 @@ using UnityEngine;
 
 public class Entity_Stats : MonoBehaviour
 {
+    public Stat_SetupSO defaultStatSetup;
+
     public Stat_ResourceGroup resources;//资源
-    public Stat_MajorGroup major;
     public Stat_AttackGroup attack;
     public Stat_DefenseGroup defense;
+    public Stat_MajorGroup major;
     public float GetElementalDamage(out ElementType element, float scareFactor = 1)//scareFactor比例因子，用于实现不同倍率的伤害
     {
         float fireDamage = attack.fireDamage.GetValue();
@@ -153,5 +155,38 @@ public class Entity_Stats : MonoBehaviour
                 Debug.LogWarning($"数据种类{type}尚未实现");
                 return null;
         }
+    }
+    [ContextMenu("更新默认数据")]
+    public void ApplyDefaultStatSetup()
+    {
+        if(defaultStatSetup == null)
+        {
+            Debug.Log("没有默认状态已分配");
+            return;
+        }
+        resources.maxHp.SetBaseValue(defaultStatSetup.maxHp);
+        resources.HpRegen.SetBaseValue(defaultStatSetup.HpRegen);
+
+        major.strength.SetBaseValue(defaultStatSetup.strength);
+        major.agility.SetBaseValue(defaultStatSetup.agility);
+        major.intelligence.SetBaseValue(defaultStatSetup.intelligence);
+        major.vitality.SetBaseValue(defaultStatSetup.vitality);
+
+        attack.attackSpeed.SetBaseValue(defaultStatSetup.attackSpeed);
+        attack.damage.SetBaseValue(defaultStatSetup.damage);
+        attack.critChance.SetBaseValue(defaultStatSetup.critChange);
+        attack.critPower.SetBaseValue(defaultStatSetup.critPower);
+        attack.armorReduction.SetBaseValue(defaultStatSetup.armorReduction);
+
+        attack.iceDamage.SetBaseValue(defaultStatSetup.iceDamage);
+        attack.fireDamage.SetBaseValue(defaultStatSetup.fireDamage);
+        attack.lightningDamage.SetBaseValue(defaultStatSetup.lightningDamage);
+
+        defense.armor.SetBaseValue(defaultStatSetup.armor);
+        defense.evasion.SetBaseValue(defaultStatSetup.evasion);
+
+        defense.iceResistance.SetBaseValue(defaultStatSetup.iceResistance);
+        defense.fireResistance.SetBaseValue(defaultStatSetup.fireResistance);
+        defense.lightningResistance.SetBaseValue(defaultStatSetup.LightningResistance);
     }
 }

@@ -39,7 +39,7 @@ public class Stat//这个类用于在unity面板设置基础值，其他脚本使用值时使用的是在En
         }
         return finalValue;
     }
-
+    public void SetBaseValue(float value) => baseValue = value;
 }
 
 [Serializable]
