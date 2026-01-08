@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ec8ecb608c3d77448b7cb7bd6a2648f, type: 3}
+  m_Name: "\u6280\u80FD\u6570\u636E-\u6CBB\u6108\u4E4B\u9B42"
+  m_EditorClassIdentifier: 
+  cost: 2
+  skillName: "\u6CBB\u6108\u4E4B\u9B42"
+  description: "\u514B\u9686\u4F53\u7834\u788E\u540E\u5316\u8EAB\u6CBB\u6108\u4E4B\u9B42\u56DE\u5F52"
+  icon: {fileID: 995613103, guid: d8922fa682394c34387c8e6ae7c48e68, type: 3}
