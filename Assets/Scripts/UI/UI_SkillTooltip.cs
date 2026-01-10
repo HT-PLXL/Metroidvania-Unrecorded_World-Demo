@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class UI_SkillTooltip : UI_Tooltip
 {
+    private UI ui;
     private UI_SkillTree skillTree;
     [SerializeField] private TextMeshProUGUI skillName;
     [SerializeField] private TextMeshProUGUI skillDescription;
@@ -20,7 +21,8 @@ public class UI_SkillTooltip : UI_Tooltip
     protected override void Awake()
     {
         base.Awake();
-        skillTree = GetComponentInParent<UI_SkillTree>();
+        ui = GetComponentInParent<UI>();
+        skillTree = ui.GetComponentInChildren<UI_SkillTree>();
     }
     public override void showTooltip(bool show, RectTransform targetRect)
     {

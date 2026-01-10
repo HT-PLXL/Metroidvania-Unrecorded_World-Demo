@@ -7,6 +7,7 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     private UI ui;
     private RectTransform rect;
     private UI_SkillTree skillTree;
+    private UI_TreeConnectHandle connectHandle;
 
     [Header("解锁功能详情")]
     public UI_TreeNode[] needNodes;//需要的前置节点
@@ -27,6 +28,8 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         ui = GetComponentInParent<UI>();
         rect = GetComponent<RectTransform>();
         skillTree = GetComponentInParent<UI_SkillTree>();
+        connectHandle = GetComponent<UI_TreeConnectHandle>();
+
         UpdateIconColor(GetColor(lockedColor));//设置初始颜色为暗色调
     }
     private void OnValidate()//用于编辑器模式下的数据验证和初始化的特殊生命周期方法
@@ -44,12 +47,13 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         UpdateIconColor(Color.white);//恢复原色
         skillTree.RemoveSkillPoint(skillData.cost);
         LockConflictNodes();
+        connectHandle.UnlockConnectionLineImage(true);//改变连接线颜色
     }
     private bool CanBeUnlocked()//判断节点能否被解锁
     {
         if (islocked || isUnlocked)
             return false;
-        if(skillTree.haveEnoughSkillPoint(skillData.cost)==false)
+        if (skillTree.haveEnoughSkillPoint(skillData.cost) == false)
             return false;
         foreach (var node in needNodes)
         {
@@ -89,14 +93,18 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     {
         ui.skillTooltip.showTooltip(true, rect, this);
 
-        if (isUnlocked == false)
-            UpdateIconColor(Color.white * .9f);
+        if (isUnlocked == false && islocked == false)
+        {
+            Color color = Color.white * 0.9f;
+            color.a = 1;//颜色rgba的a：透明度
+            UpdateIconColor(color);
+        }
     }
     public void OnPointerExit(PointerEventData eventData)
     {
         ui.skillTooltip.showTooltip(false, rect);
 
-        if (isUnlocked == false)
+        if (isUnlocked == false && islocked == false)
             UpdateIconColor(lastColor);
     }
     private Color GetColor(string hexNumber)

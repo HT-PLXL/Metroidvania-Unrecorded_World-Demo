@@ -1,21 +1,23 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 //该类旨在给出树节点的连接方法，用于被调用
 public class UI_TreeConnection : MonoBehaviour
 {
-    [SerializeField] private RectTransform connectPoint;
-    [SerializeField] private RectTransform connectionLength;
-    [SerializeField] private RectTransform childConnectPoint;
+    [SerializeField] private RectTransform connectPoint;//对应对象“连接”
+    [SerializeField] private RectTransform connectionLine;//对应对象“连接线”
+    [SerializeField] private RectTransform childConnectPoint;//对应对象“子节点”
 
-    public void DirectConnection(NodeDirectionType direction,float length)//调节连接方向和长度
+    public void DirectConnection(NodeDirectionType direction,float length,float offset)//调节连接方向和长度
     {
         bool active = direction != NodeDirectionType.None;
         float finalLength = active ? length : 0;
         float angle = GetDirectionAngle(direction);
 
-        connectPoint.localRotation = Quaternion.Euler(0,0,angle);
-        connectionLength.sizeDelta = new Vector2(finalLength,connectionLength.sizeDelta.y);
+        connectPoint.localRotation = Quaternion.Euler(0,0,angle+offset);
+        connectionLine.sizeDelta = new Vector2(finalLength,connectionLine.sizeDelta.y);
     }
+    public Image GetConnectionLineImage()=>connectionLine.GetComponent<Image>();
     public Vector2 GetConnectionPoint(RectTransform rect)
     {
         RectTransformUtility.ScreenPointToLocalPointInRectangle(rect.parent as RectTransform, childConnectPoint.position, null, out var localPosition);
