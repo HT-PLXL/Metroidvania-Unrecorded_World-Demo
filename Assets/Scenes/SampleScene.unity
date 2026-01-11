@@ -448,7 +448,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.6901961, g: 0.6901961, b: 0.6901961, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1245,7 +1245,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &399946405
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2088,6 +2088,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skillTooltip: {fileID: 0}
+  skillTree: {fileID: 0}
 --- !u!1 &591658361
 GameObject:
   m_ObjectHideFlags: 0
@@ -2548,7 +2549,8 @@ MonoBehaviour:
   meetConditionHex: '#03FF00'
   NotMeetConditionHex: '#00FFF5'
   importantInfoHex: '#FFF000'
-  color: {r: 0, g: 1, b: 0.9603982, a: 1}
+  WarningHex: '#B50000'
+  testColor: {r: 1, g: 0, b: 0, a: 1}
   lockedSkillText: "\u795E\u7075\u964D\u4E0B\u67B7\u9501\\n\\n\u8BE5\u6280\u80FD\u5DF2\u9501\u5B9A"
 --- !u!1 &732367464
 GameObject:

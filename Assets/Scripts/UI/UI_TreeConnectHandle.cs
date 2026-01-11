@@ -22,10 +22,8 @@ public class UI_TreeConnectHandle : MonoBehaviour
     private Color OriginalColor;//原始颜色
     private void Awake()
     {
-        if (connections == null)
-        {
+        if (connectionLineImage != null)
             OriginalColor = connectionLineImage.color;
-        }
     }
 
     private void OnValidate()//编辑器专属方法，此处用于修改参数时自动执行移动节点相关功能
@@ -47,14 +45,14 @@ public class UI_TreeConnectHandle : MonoBehaviour
             var connection = connections[i];
 
             Vector2 targetPosition = connection.GetConnectionPoint(rect);
-            Image connectionLineImage = connection.GetConnectionLineImage();
+            Image connectionLine = connection.GetConnectionLineImage();
 
             connection.DirectConnection(detail.direction, detail.length, detail.rotation);
 
             if (detail.childNode == null)//此处用于避免控制台报错，使childNode可以为空
                 continue;
             detail.childNode.SetPosition(targetPosition);
-            detail.childNode.SetConnectionLineImage(connectionLineImage);
+            detail.childNode.SetConnectionLineImage(connectionLine);
             detail.childNode.transform.SetAsLastSibling();//将子节点设为最后一个对象，配合遍历可修复层级错误
         }
     }

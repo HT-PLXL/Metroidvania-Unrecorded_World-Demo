@@ -41,6 +41,22 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         skillCost = skillData.cost;
         gameObject.name = "UI树节点 - " + skillName;
     }
+    private void OnEnable()
+    {
+        //用于修复开启技能树后出现的异常问题
+        if (isUnlocked)
+            UpdateIconColor(Color.white);
+        else
+            UpdateIconColor(GetColor(lockedColor));
+    }
+    public void RefundSkillPoint()
+    {
+        isUnlocked = false;
+        islocked = false;
+        UpdateIconColor(GetColor(lockedColor));//恢复图标颜色
+        skillTree.AddSkillPoint(skillData.cost);
+        connectHandle.UnlockConnectionLineImage(false);//恢复连接线颜色
+    }
     private void Unlock()
     {
         isUnlocked = true;
@@ -53,7 +69,7 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     {
         if (islocked || isUnlocked)
             return false;
-        if (skillTree.haveEnoughSkillPoint(skillData.cost) == false)
+        if (skillTree.HaveEnoughSkillPoint(skillData.cost) == false)
             return false;
         foreach (var node in needNodes)
         {
@@ -86,8 +102,8 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
             Unlock();
             Debug.Log("解锁技能");
         }
-        else
-            Debug.Log("无法解锁技能");
+        else if (islocked)
+            ui.skillTooltip.lockedSkillEffect();
     }
     public void OnPointerEnter(PointerEventData eventData)
     {
@@ -106,6 +122,9 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
         if (isUnlocked == false && islocked == false)
             UpdateIconColor(lastColor);
+
+        ui.skillTooltip.StopCo(ui.skillTooltip.textEffectCo);//停止锁定提示的变色协程
+            
     }
     private Color GetColor(string hexNumber)
     {

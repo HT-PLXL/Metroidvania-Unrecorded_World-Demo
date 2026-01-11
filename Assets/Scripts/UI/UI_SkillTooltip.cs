@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Text;
 using TMPro;
 using UnityEngine;
@@ -13,16 +14,18 @@ public class UI_SkillTooltip : UI_Tooltip
     [SerializeField] private string meetConditionHex;//满足条件时十六进制数
     [SerializeField] private string NotMeetConditionHex;
     [SerializeField] private string importantInfoHex;
+    [SerializeField] private string WarningHex;
 
-    [SerializeField] private Color color;
+
+    [SerializeField] private Color testColor;
     [SerializeField]
     private string lockedSkillText = "神灵降下枷锁\n\n该技能已锁定";
-
+    public Coroutine textEffectCo;
     protected override void Awake()
     {
         base.Awake();
         ui = GetComponentInParent<UI>();
-        skillTree = ui.GetComponentInChildren<UI_SkillTree>();
+        skillTree = ui.GetComponentInChildren<UI_SkillTree>(true);
     }
     public override void showTooltip(bool show, RectTransform targetRect)
     {
@@ -45,7 +48,7 @@ public class UI_SkillTooltip : UI_Tooltip
         StringBuilder sb = new StringBuilder();//字符串处理类
         sb.AppendLine("——需 求——");
 
-        string costColor = skillTree.haveEnoughSkillPoint(cost) ? meetConditionHex : NotMeetConditionHex;
+        string costColor = skillTree.HaveEnoughSkillPoint(cost) ? meetConditionHex : NotMeetConditionHex;
         sb.AppendLine($"<color={costColor}>{cost} 技能点</color>");
 
         foreach (var node in needNodes)
@@ -62,5 +65,30 @@ public class UI_SkillTooltip : UI_Tooltip
             sb.AppendLine($"<color={importantInfoHex}>{node.skillData.skillName}</color>");
         }
         return sb.ToString();
+    }
+
+    public void lockedSkillEffect()
+    {
+        if (textEffectCo != null)
+            StopCo(textEffectCo);
+        textEffectCo = StartCoroutine(TextBlibkEffectCO(skillRequirements, 0.15f, 3));
+    }
+    public void StopCo(Coroutine coroutine)
+    {
+        if (coroutine != null)
+        {
+            StopCoroutine(coroutine);
+            coroutine = null;
+        }
+    }
+    private IEnumerator TextBlibkEffectCO(TextMeshProUGUI text, float Interval,int Count)//使锁定文本闪烁
+    {
+        for(int i = 0; i< Count; i++)
+        {
+            text.text = GetColorText(WarningHex, lockedSkillText);
+            yield return new WaitForSeconds(Interval);
+            text.text = GetColorText(importantInfoHex, lockedSkillText);
+            yield return new WaitForSeconds(Interval);
+        }
     }
 }
