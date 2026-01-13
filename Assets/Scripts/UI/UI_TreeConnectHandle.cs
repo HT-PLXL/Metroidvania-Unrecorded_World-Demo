@@ -14,12 +14,13 @@ public class UI_TreeConnectDetails
 public class UI_TreeConnectHandle : MonoBehaviour
 {
     private RectTransform rect => GetComponent<RectTransform>();
-    [SerializeField] private UI_TreeConnectDetails[] connectDetails;
+    public UI_TreeConnectDetails[] connectDetails;
 
     [SerializeField] private UI_TreeConnection[] connections;
 
     private Image connectionLineImage;
     private Color OriginalColor;//原始颜色
+    private static bool allowSetAsLastSibling = false;//设置为static静态，使所有实例共享一个bool值
     private void Awake()
     {
         if (connectionLineImage != null)
@@ -47,24 +48,27 @@ public class UI_TreeConnectHandle : MonoBehaviour
             Vector2 targetPosition = connection.GetConnectionPoint(rect);
             Image connectionLine = connection.GetConnectionLineImage();
 
-            connection.DirectConnection(detail.direction, detail.length, detail.rotation);
+            connection.DirectConnection(detail.direction, detail.length, detail.rotation);//控制对象“连接”的方向长度旋转
 
             if (detail.childNode == null)//此处用于避免控制台报错，使childNode可以为空
                 continue;
             detail.childNode.SetPosition(targetPosition);
             detail.childNode.SetConnectionLineImage(connectionLine);
-            detail.childNode.transform.SetAsLastSibling();//将子节点设为最后一个对象，配合遍历可修复层级错误
+            if (allowSetAsLastSibling)
+                detail.childNode.transform.SetAsLastSibling();//将子节点设为最后一个对象，配合遍历可修复层级错误
         }
     }
     public void UpdateAllNode()
     {
-        UpdateConnection();//更新主节点
+        allowSetAsLastSibling = true;
+        UpdateConnection();//更新主节点连接线相关及子节点位置
         foreach (var node in connectDetails)//每个技能都是主节点，但也可以被其他节点认为是“子节点”
         {
             if (node.childNode == null)//防报错
                 continue;
-            node.childNode?.UpdateConnection();//更新子节点
+            node.childNode?.UpdateConnection();//更新子节点及
         }
+        allowSetAsLastSibling = false;
     }
     public void UnlockConnectionLineImage(bool unlock)
     {

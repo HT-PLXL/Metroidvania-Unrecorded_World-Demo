@@ -144,6 +144,15 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""施法"",
+                    ""type"": ""Button"",
+                    ""id"": ""23a9a1ee-4765-4630-9540-f5bdbda53086"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -256,6 +265,17 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
                     ""action"": ""开关技能树"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b7349bff-18b1-4605-afa5-094b76fc0509"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard & Mouse"",
+                    ""action"": ""施法"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -287,6 +307,7 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
         m_Player_普通攻击 = m_Player.FindAction("普通攻击", throwIfNotFound: true);
         m_Player_弹反 = m_Player.FindAction("弹反", throwIfNotFound: true);
         m_Player_开关技能树 = m_Player.FindAction("开关技能树", throwIfNotFound: true);
+        m_Player_施法 = m_Player.FindAction("施法", throwIfNotFound: true);
     }
 
     ~@PlayerInputSet()
@@ -373,6 +394,7 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_普通攻击;
     private readonly InputAction m_Player_弹反;
     private readonly InputAction m_Player_开关技能树;
+    private readonly InputAction m_Player_施法;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -408,6 +430,10 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Player/开关技能树".
         /// </summary>
         public InputAction @开关技能树 => m_Wrapper.m_Player_开关技能树;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/施法".
+        /// </summary>
+        public InputAction @施法 => m_Wrapper.m_Player_施法;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -452,6 +478,9 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
             @开关技能树.started += instance.On开关技能树;
             @开关技能树.performed += instance.On开关技能树;
             @开关技能树.canceled += instance.On开关技能树;
+            @施法.started += instance.On施法;
+            @施法.performed += instance.On施法;
+            @施法.canceled += instance.On施法;
         }
 
         /// <summary>
@@ -481,6 +510,9 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
             @开关技能树.started -= instance.On开关技能树;
             @开关技能树.performed -= instance.On开关技能树;
             @开关技能树.canceled -= instance.On开关技能树;
+            @施法.started -= instance.On施法;
+            @施法.performed -= instance.On施法;
+            @施法.canceled -= instance.On施法;
         }
 
         /// <summary>
@@ -576,5 +608,12 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void On开关技能树(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "施法" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void On施法(InputAction.CallbackContext context);
     }
 }

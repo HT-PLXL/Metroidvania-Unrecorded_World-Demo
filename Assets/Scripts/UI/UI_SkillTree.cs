@@ -1,23 +1,28 @@
-using System.Security.Cryptography;
 using UnityEngine;
 
 public class UI_SkillTree : MonoBehaviour
 {
     [SerializeField] private int skillPoint;
     [SerializeField] private UI_TreeConnectHandle[] parentNodes;
+
+    public Player_SkillManager skillManager { get; private set; }
+    private void Awake()
+    {
+        skillManager = FindAnyObjectByType<Player_SkillManager>();
+    }
     private void Start()
     {
         UpdateAllNodes();
     }
-    public bool HaveEnoughSkillPoint(int cost)=>skillPoint >= cost;
-    public void RemoveSkillPoint(int cost)=>skillPoint -= cost;
+    public bool HaveEnoughSkillPoint(int cost) => skillPoint >= cost;
+    public void RemoveSkillPoint(int cost) => skillPoint -= cost;
     public void AddSkillPoint(int cost) => skillPoint += cost;
 
     [ContextMenu("÷ÿ÷√ººƒ‹")]
     public void RefundAllSkillPoint()
     {
         UI_TreeNode[] skillNodes = GetComponentsInChildren<UI_TreeNode>();
-        foreach(var node in skillNodes)
+        foreach (var node in skillNodes)
             node.RefundSkillPoint();
     }
 

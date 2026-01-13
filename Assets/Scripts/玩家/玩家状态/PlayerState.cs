@@ -5,6 +5,7 @@ public abstract class PlayerState : EntityState
 {
     protected Player player;
     protected PlayerInputSet input;
+    protected Player_SkillManager skillManager;
 
     public PlayerState(Player player, StateMachine stateMachine, string animBoolName):base(stateMachine,animBoolName)
         //构造函数，完成对象初始化
@@ -15,6 +16,7 @@ public abstract class PlayerState : EntityState
         rb = player.rb;
         input = player.input;
         entity_stats = player.entityStats;
+        skillManager = player.skillManager;
     }
     public override void Update()
     {
@@ -22,7 +24,10 @@ public abstract class PlayerState : EntityState
 
 
         if (input.Player.冲刺.WasPressedThisFrame() && 允许冲刺())
+        {
+            skillManager.dash.setSkillOnCooldown();//进入冷却
             stateMachine.ChangeState(player.冲刺状态);
+        }
     }
     public override void 更新动画师界面参数()
     {
@@ -32,6 +37,8 @@ public abstract class PlayerState : EntityState
     }
     private bool 允许冲刺()
     {
+        if(skillManager.dash.CanUseSkill() == false)
+            return false;
         if (player.检测到墙壁)
             return false;
         if(stateMachine.currentState == player.冲刺状态)

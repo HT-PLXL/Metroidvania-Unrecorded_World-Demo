@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Entity_VFX : MonoBehaviour
 {
-    private SpriteRenderer sr;//渲染器
+    protected SpriteRenderer sr;//渲染器
     private Entity entity;
 
     [Header("受伤视觉效果")]

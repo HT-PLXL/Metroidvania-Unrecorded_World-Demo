@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Xml;
 using UnityEngine;
 
 public class Player : Entity
@@ -16,6 +15,9 @@ public class Player : Entity
     //创建状态脚本，在此声明公开的脚本类型+变量
     //最后在Awake（）中new参数后创建新的状态脚本写继承，触发、结束和状态转换
     private UI ui;
+    public Player_SkillManager skillManager {  get; private set; }
+    public Player_VFX vfx { get; private set;}
+
     public Player_IdleState idleState { get; private set; }
     public Player_MoveState moveState { get; private set; }
     public Player_JumpState jumpState { get; private set; }
@@ -56,6 +58,8 @@ public class Player : Entity
 
         ui = FindAnyObjectByType<UI>();//全局范围查找第一个类型为UI的对象
         input = new PlayerInputSet();
+        skillManager = GetComponent<Player_SkillManager>();
+        vfx = GetComponent<Player_VFX>();
 
         idleState = new Player_IdleState(this, stateMachine, "idle");//橙色内容是动画师界面的参数，必须一致
         moveState = new Player_MoveState(this, stateMachine, "move");
@@ -149,6 +153,7 @@ public class Player : Entity
         //ctx为context，前后需保持一致
 
         input.Player.开关技能树.performed += ctx => ui.ToggleSkillTreeUI();
+        input.Player.施法.performed += ctx => skillManager.crystal.CreateCrystal();
     }
     private void OnDisable()
     {
