@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Text;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class UI_SkillTooltip : UI_Tooltip
@@ -16,10 +17,8 @@ public class UI_SkillTooltip : UI_Tooltip
     [SerializeField] private string importantInfoHex;
     [SerializeField] private string WarningHex;
 
-
     [SerializeField] private Color testColor;
-    [SerializeField]
-    private string lockedSkillText = "神灵降下枷锁\n\n该技能已锁定";
+    [SerializeField] private string lockedSkillText = "？？降下枷锁\n\n该技能已锁定";
     public Coroutine textEffectCo;
     protected override void Awake()
     {
@@ -37,9 +36,9 @@ public class UI_SkillTooltip : UI_Tooltip
         if (show == false)
             return;
 
-        skillName.text = node.skillData.skillName;
-        skillDescription.text = node.skillData.description;
-        string skillLockedText = $"<color={importantInfoHex}>{lockedSkillText}</color>";
+        skillName.text = node.skillData.skillName;//技能名字文本
+        skillDescription.text = $"{node.skillData.description}\n冷却时间：{node.skillData.upgradeData.cooldown}s";//描述文本
+        string skillLockedText = $"<color={importantInfoHex}>{lockedSkillText}</color>";//锁定文本
         string requirement = node.islocked ? skillLockedText : GetRequirements(node.skillData.cost, node.needNodes, node.conflictNodes);
         skillRequirements.text = requirement;
     }
@@ -53,6 +52,7 @@ public class UI_SkillTooltip : UI_Tooltip
 
         foreach (var node in needNodes)
         {
+            if (node == null) continue;
             string nodeColor = node.isUnlocked ? meetConditionHex : NotMeetConditionHex;
             sb.AppendLine($"<color={nodeColor}>{node.skillData.skillName}</color>");
         }
@@ -62,11 +62,11 @@ public class UI_SkillTooltip : UI_Tooltip
         sb.AppendLine($"<color={importantInfoHex}>-冲突技能-</color>");
         foreach (var node in conflictNodes)
         {
+            if (node == null) continue;
             sb.AppendLine($"<color={importantInfoHex}>{node.skillData.skillName}</color>");
         }
         return sb.ToString();
     }
-
     public void lockedSkillEffect()
     {
         if (textEffectCo != null)
@@ -81,9 +81,9 @@ public class UI_SkillTooltip : UI_Tooltip
             coroutine = null;
         }
     }
-    private IEnumerator TextBlibkEffectCO(TextMeshProUGUI text, float Interval,int Count)//使锁定文本闪烁
+    private IEnumerator TextBlibkEffectCO(TextMeshProUGUI text, float Interval, int Count)//使锁定文本闪烁
     {
-        for(int i = 0; i< Count; i++)
+        for (int i = 0; i < Count; i++)
         {
             text.text = GetColorText(WarningHex, lockedSkillText);
             yield return new WaitForSeconds(Interval);

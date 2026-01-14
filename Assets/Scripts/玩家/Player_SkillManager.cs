@@ -4,17 +4,19 @@ using UnityEngine;
 public class Player_SkillManager : MonoBehaviour
 {
     public Skill_Dash dash { get; private set; }
-    public Skill_Crystal crystal { get; private set; }
+    public Skill_Shard shard { get; private set; }
     private void Awake()
     {
         dash = GetComponentInChildren<Skill_Dash>();
-        crystal = GetComponentInChildren<Skill_Crystal>();
+        shard = GetComponentInChildren<Skill_Shard>();
     }
     public Skill_Base GetSkillByType(SkillType type)
     {
         switch (type)
         {
-            case SkillType.Dash:return dash;
+            case SkillType.Dash:return dash;//返回实例（技能）
+            case SkillType.TimeShard: return shard;
+
             default:
                 Debug.Log($"尚未实现的技能{type}");
                 return null;

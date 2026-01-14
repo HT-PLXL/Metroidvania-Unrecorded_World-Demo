@@ -153,7 +153,8 @@ public class Player : Entity
         //ctx为context，前后需保持一致
 
         input.Player.开关技能树.performed += ctx => ui.ToggleSkillTreeUI();
-        input.Player.施法.performed += ctx => skillManager.crystal.CreateCrystal();
+        input.Player.关闭技能树.performed += ctx => ui.CloseSkillTreeUI();
+        input.Player.施法.performed += ctx => skillManager.shard.TryUseSkill();
     }
     private void OnDisable()
     {

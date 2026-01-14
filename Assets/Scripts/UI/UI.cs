@@ -16,4 +16,9 @@ public class UI : MonoBehaviour
         skillTree.gameObject.SetActive(skillTreeEnable);
         skillTooltip.showTooltip(false, null);
     }
+    public void CloseSkillTreeUI()
+    {
+        skillTree.gameObject.SetActive(false);
+        skillTooltip.showTooltip(false, null);
+    }
 }

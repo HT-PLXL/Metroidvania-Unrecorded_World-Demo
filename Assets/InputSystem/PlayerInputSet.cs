@@ -146,6 +146,15 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""关闭技能树"",
+                    ""type"": ""Button"",
+                    ""id"": ""92d46a3e-1ae1-42ac-b73e-e1bec8d7e6c4"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""施法"",
                     ""type"": ""Button"",
                     ""id"": ""23a9a1ee-4765-4630-9540-f5bdbda53086"",
@@ -276,6 +285,17 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
                     ""action"": ""施法"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""802d6426-f585-48b9-bc1b-97c30271e39a"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard & Mouse"",
+                    ""action"": ""关闭技能树"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -307,6 +327,7 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
         m_Player_普通攻击 = m_Player.FindAction("普通攻击", throwIfNotFound: true);
         m_Player_弹反 = m_Player.FindAction("弹反", throwIfNotFound: true);
         m_Player_开关技能树 = m_Player.FindAction("开关技能树", throwIfNotFound: true);
+        m_Player_关闭技能树 = m_Player.FindAction("关闭技能树", throwIfNotFound: true);
         m_Player_施法 = m_Player.FindAction("施法", throwIfNotFound: true);
     }
 
@@ -394,6 +415,7 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_普通攻击;
     private readonly InputAction m_Player_弹反;
     private readonly InputAction m_Player_开关技能树;
+    private readonly InputAction m_Player_关闭技能树;
     private readonly InputAction m_Player_施法;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
@@ -430,6 +452,10 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Player/开关技能树".
         /// </summary>
         public InputAction @开关技能树 => m_Wrapper.m_Player_开关技能树;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/关闭技能树".
+        /// </summary>
+        public InputAction @关闭技能树 => m_Wrapper.m_Player_关闭技能树;
         /// <summary>
         /// Provides access to the underlying input action "Player/施法".
         /// </summary>
@@ -478,6 +504,9 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
             @开关技能树.started += instance.On开关技能树;
             @开关技能树.performed += instance.On开关技能树;
             @开关技能树.canceled += instance.On开关技能树;
+            @关闭技能树.started += instance.On关闭技能树;
+            @关闭技能树.performed += instance.On关闭技能树;
+            @关闭技能树.canceled += instance.On关闭技能树;
             @施法.started += instance.On施法;
             @施法.performed += instance.On施法;
             @施法.canceled += instance.On施法;
@@ -510,6 +539,9 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
             @开关技能树.started -= instance.On开关技能树;
             @开关技能树.performed -= instance.On开关技能树;
             @开关技能树.canceled -= instance.On开关技能树;
+            @关闭技能树.started -= instance.On关闭技能树;
+            @关闭技能树.performed -= instance.On关闭技能树;
+            @关闭技能树.canceled -= instance.On关闭技能树;
             @施法.started -= instance.On施法;
             @施法.performed -= instance.On施法;
             @施法.canceled -= instance.On施法;
@@ -608,6 +640,13 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void On开关技能树(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "关闭技能树" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void On关闭技能树(InputAction.CallbackContext context);
         /// <summary>
         /// Method invoked when associated input action "施法" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>

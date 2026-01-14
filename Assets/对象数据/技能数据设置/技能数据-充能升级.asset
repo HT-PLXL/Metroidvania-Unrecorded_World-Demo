@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ec8ecb608c3d77448b7cb7bd6a2648f, type: 3}
+  m_Name: "\u6280\u80FD\u6570\u636E-\u5145\u80FD\u5347\u7EA7"
+  m_EditorClassIdentifier: 
+  skillType: 2
+  upgradeData:
+    upgradeType: 8
+    cooldown: 1
+  unlockedByDefault: 0
+  skillName: "\u5145\u80FD\u5347\u7EA7"
+  cost: 3
+  description: "\u6700\u591A\u53EF\u5B58\u50A83\u4E2A\u9B54\u80FD\u6676\u4F53\uFF0C\u6570\u91CF\u968F\u65F6\u95F4\u6062\u590D"
+  icon: {fileID: -572916157, guid: d8922fa682394c34387c8e6ae7c48e68, type: 3}

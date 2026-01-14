@@ -60,6 +60,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "关闭技能树",
+                    "type": "Button",
+                    "id": "92d46a3e-1ae1-42ac-b73e-e1bec8d7e6c4",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "施法",
                     "type": "Button",
                     "id": "23a9a1ee-4765-4630-9540-f5bdbda53086",
@@ -188,6 +197,17 @@
                     "processors": "",
                     "groups": ";Keyboard & Mouse",
                     "action": "施法",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "802d6426-f585-48b9-bc1b-97c30271e39a",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard & Mouse",
+                    "action": "关闭技能树",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -14,8 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillType: 0
   upgradeData:
-    upgradeType: 1
+    upgradeType: 5
     cooldown: 3
+  unlockedByDefault: 0
   skillName: "\u9B54\u5F71\u805A\u96C6"
   cost: 2
   description: 

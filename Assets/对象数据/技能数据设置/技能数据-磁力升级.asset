@@ -10,13 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5ec8ecb608c3d77448b7cb7bd6a2648f, type: 3}
-  m_Name: "\u6280\u80FD\u6570\u636E-\u719F\u80FD\u751F\u5DE7"
+  m_Name: "\u6280\u80FD\u6570\u636E-\u78C1\u529B\u5347\u7EA7"
   m_EditorClassIdentifier: 
-  skillType: 0
+  skillType: 2
   upgradeData:
-    upgradeType: 0
-    cooldown: 0
-  skillName: "\u719F\u80FD\u751F\u5DE7"
-  cost: 1
-  description: "\u51B2\u523A\u65F6\u77ED\u6682\u65E0\u654C"
-  icon: {fileID: -1500834908, guid: d8922fa682394c34387c8e6ae7c48e68, type: 3}
+    upgradeType: 7
+    cooldown: 3
+  unlockedByDefault: 0
+  skillName: "\u78C1\u529B\u5347\u7EA7"
+  cost: 2
+  description: "\u52A0\u88C5\u4E86\u7D22\u654C\u88C5\u7F6E\u7684\u6539\u826F\u7248\u9B54\u80FD\u6676\u4F53"
+  icon: {fileID: 2140423333, guid: d8922fa682394c34387c8e6ae7c48e68, type: 3}

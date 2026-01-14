@@ -7,6 +7,7 @@ public class Skill_DataSO : ScriptableObject
 {
     public SkillType skillType;
     public UpgradeData upgradeData;
+    public bool unlockedByDefault;
 
     [Header("¼¼ÄÜÃèÊö")]
     public string skillName;

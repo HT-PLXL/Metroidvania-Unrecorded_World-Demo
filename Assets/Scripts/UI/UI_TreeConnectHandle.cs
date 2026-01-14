@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -37,6 +39,16 @@ public class UI_TreeConnectHandle : MonoBehaviour
             return;
         }
         UpdateConnection();
+    }
+    public UI_TreeNode[] GetChildNodes()//获取子节点
+    {
+        List<UI_TreeNode> returnChildNode = new List<UI_TreeNode>();
+        foreach(var node in connectDetails)
+        {
+            if(node.childNode != null)
+                returnChildNode.Add(node.childNode.GetComponent<UI_TreeNode>());
+        }
+        return returnChildNode.ToArray();
     }
     public void UpdateConnection()
     {

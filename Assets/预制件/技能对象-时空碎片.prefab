@@ -76,7 +76,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1533244041
   m_SortingLayer: -1
-  m_SortingOrder: -1
+  m_SortingOrder: 1
   m_Sprite: {fileID: 5293031974318352618, guid: 109c2148395d1ec469a00966f9a1bb4d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -119,10 +119,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3027926042458545058}
-  - component: {fileID: 5228231131812725582}
   - component: {fileID: 4123894585322402811}
+  - component: {fileID: 9140635783780776311}
   m_Layer: 0
-  m_Name: "\u6280\u80FD\u5BF9\u8C61-\u6C34\u6676"
+  m_Name: "\u6280\u80FD\u5BF9\u8C61-\u65F6\u7A7A\u788E\u7247"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -144,24 +144,6 @@ Transform:
   - {fileID: 6954634604232368254}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5228231131812725582
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2616946008389234105}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f8415d9d2507ca9488986fbbf82ea268, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  whoIsEneny:
-    serializedVersion: 2
-    m_Bits: 256
-  targetCheck: {fileID: 3027926042458545058}
-  checkRadius: 1.14
-  vfxPrefab: {fileID: 1643398503482952915, guid: 398846d2d54c46e4d8e2427f1a1ff732, type: 3}
 --- !u!58 &4123894585322402811
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -198,3 +180,21 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 1
+--- !u!114 &9140635783780776311
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2616946008389234105}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ddd7d46eda25a304e84c4851c43b8b1b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  whoIsEneny:
+    serializedVersion: 2
+    m_Bits: 256
+  targetCheck: {fileID: 3027926042458545058}
+  checkRadius: 1
+  vfxPrefab: {fileID: 1643398503482952915, guid: 398846d2d54c46e4d8e2427f1a1ff732, type: 3}

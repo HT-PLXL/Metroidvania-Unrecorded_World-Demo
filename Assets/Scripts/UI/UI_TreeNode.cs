@@ -32,6 +32,11 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
         UpdateIconColor(GetColor(lockedColor));//设置初始颜色为暗色调
     }
+    private void Start()
+    {
+        if (skillData.unlockedByDefault)
+            Unlock();
+    }
     private void OnValidate()//用于编辑器模式下的数据验证和初始化的特殊生命周期方法
     {
         if (skillData == null)
@@ -83,6 +88,7 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         }
         foreach (var node in conflictNodes)
         {
+            if (node == null) continue;
             if (node.isUnlocked)//判断节点是否有冲突
                 return false;
         }
@@ -91,7 +97,13 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     private void LockConflictNodes()//锁定冲突节点
     {
         foreach (var node in conflictNodes)
-            node.islocked = true;
+            node.LockChildNodes();
+    }
+    public void LockChildNodes()
+    {
+        islocked = true;
+        foreach(var node in connectHandle.GetChildNodes())
+            node.LockChildNodes();
     }
     private void UpdateIconColor(Color color)
     {
@@ -129,7 +141,7 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
             UpdateIconColor(lastColor);
 
         ui.skillTooltip.StopCo(ui.skillTooltip.textEffectCo);//停止锁定提示的变色协程
-            
+
     }
     private Color GetColor(string hexNumber)
     {
