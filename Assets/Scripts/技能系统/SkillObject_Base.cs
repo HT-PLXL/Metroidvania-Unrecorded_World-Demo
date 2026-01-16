@@ -5,20 +5,29 @@ public class SkillObject_Base : MonoBehaviour
     [SerializeField][cn("敌人")] protected LayerMask whoIsEneny;
     [SerializeField][cn("检测圆心")] protected Transform targetCheck;
     [SerializeField][cn("检测范围")] protected float checkRadius = 1;
-    protected void DamageEnemyInRadius(Transform transform, float radius)
+    protected Entity_Stats playerStats;
+    protected DamageScaleFactor damageScale;
+    protected ElementType elementType;
+    protected void DamageEnemyInRadius(Transform transform, float radius)//伤害范围内所有敌人
     {
         foreach (var target in EnemyAround(transform, radius))
         {
-            IDamageable damageable = target.GetComponent<IDamageable>();
-            if (damageable == null)
+            IDamageable damageTarget = target.GetComponent<IDamageable>();
+            if (damageTarget == null)
                 continue;
-            damageable.造成伤害(1, 1, ElementType.None, transform);
+            AttackData attackData = playerStats.GetAttackData(damageScale);
+            float physicalDamage = attackData.physicalDamage;
+            float elementalDamage = attackData.elementalDamage;
+            damageTarget.TakeDamage(physicalDamage, elementalDamage, attackData.element, transform);//造成伤害，基于使用者的元素伤害
+            if (attackData.element != ElementType.None)
+                target.GetComponent<Entity_StatusHandler>().ApplyStatusEffect(attackData.element, attackData.effectData); //effectData包含技能伤害和时间等数据
+            elementType = attackData.element;//存储一份元素种类给子类用
         }
     }
     protected Transform SearchTarget()//寻找范围内最近目标
     {
         Transform target = null;
-        float closestDistance =Mathf.Infinity;//设定最近距离
+        float closestDistance = Mathf.Infinity;//设定最近距离
         foreach (var enemy in EnemyAround(transform, 10))
         {
             float distance = Vector2.Distance(transform.position, enemy.transform.position);

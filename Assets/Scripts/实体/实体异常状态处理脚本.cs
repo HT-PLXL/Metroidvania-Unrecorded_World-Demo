@@ -10,10 +10,10 @@ public class Entity_StatusHandler : MonoBehaviour
     private ElementType currentEffect = ElementType.None;
 
     [Header("闪电效果细节")]
-    [SerializeField] private GameObject lightningVfx;//unity面板设定一个预制体
+    [SerializeField] private GameObject lightningVfx;
     [SerializeField] private float currentCharge;
     [SerializeField] private float maxCharge = 1;
-    private Coroutine electrifyCo;
+    private Coroutine lightningCo;
     private void Awake()
     {
         EntityStats = GetComponent<Entity_Stats>();
@@ -21,23 +21,32 @@ public class Entity_StatusHandler : MonoBehaviour
         entityVfx = GetComponent<Entity_VFX>();
         entityHp = GetComponent<EntityHp>();
     }
+    public void ApplyStatusEffect(ElementType element,ElementEffectData effectData)//用于应用元素伤害与效果
+    {
+        if (element == ElementType.Ice && CanApply(ElementType.Ice))
+            ApplyChillEffect(effectData.chillDuration, effectData.chillSlowMulitiplier);
+        if (element == ElementType.Fire && CanApply(ElementType.Fire))
+            ApplyBurnEffect(effectData.burnDuration, effectData.totalBurnDamage);
+        if (element == ElementType.Lightning && CanApply(ElementType.Lightning))
+            ApplyLightningEffect(effectData.lightningDuration, effectData.lightningDamage, effectData.lightningCharge);
+    }
 
-    public void ApplyElectrifyEffect(float duration,float damage,float charge)
+    public void ApplyLightningEffect(float duration,float damage,float charge)
     {
         float lightningResistance = EntityStats.GetElementalResistance(ElementType.Lightning);
         float finalCharge = charge * (1 - lightningResistance);
-        currentCharge = currentCharge + finalCharge;
-        if(currentCharge >= maxCharge)
+        currentCharge = currentCharge + finalCharge;//通过传入的charge更新当前charge层数
+        if (currentCharge >= maxCharge)
         {
             DoLightningStrike(damage);
-            StopElectrifyEffect();
+            StopLightningEffect();
             return;
         }
-        if (electrifyCo != null)
-            StopCoroutine(electrifyCo);
-        electrifyCo = StartCoroutine(ElectrifyEffectCo(duration));//启动雷电闪烁协程
+        if (lightningCo != null)
+            StopCoroutine(lightningCo);
+        lightningCo = StartCoroutine(LightningEffectCo(duration));//启动雷电闪烁协程
     }
-    private void StopElectrifyEffect()//停止闪烁特效
+    private void StopLightningEffect()//停止闪烁特效
     {
         currentEffect = ElementType.None;
         currentCharge = 0;
@@ -46,15 +55,15 @@ public class Entity_StatusHandler : MonoBehaviour
     private void DoLightningStrike(float damage)//创建雷暴特效与伤害
     {
         Instantiate(lightningVfx, transform.position, Quaternion.identity);//实例化（闪电预制体，位置，旋转）
-        entityHp.ReduceHp(damage);
+        entityHp.ReduceHp(damage,ElementType.Lightning);
     }
-    private IEnumerator ElectrifyEffectCo(float duration)//雷电闪烁效果协程
+    private IEnumerator LightningEffectCo(float duration)//雷电闪烁效果协程
     {
         currentEffect = ElementType.Lightning;
         entityVfx.PlayOnStatusVfx(duration, ElementType.Lightning);
         //启动雷电效果的闪烁，延迟几秒后结束雷电效果，在这期间会充能，达到界限会触发雷暴特效
         yield return new WaitForSeconds(duration);
-        StopElectrifyEffect();
+        StopLightningEffect();
     }
     public void ApplyBurnEffect(float duration, float fireDamage)
     {
@@ -76,7 +85,7 @@ public class Entity_StatusHandler : MonoBehaviour
 
         for (int i = 0; i < tickCount; i++)
         {
-            entityHp.ReduceHp(damagePerTick);
+            entityHp.ReduceHp(damagePerTick, ElementType.Fire);
             yield return new WaitForSeconds(tickInterval);
         }
         currentEffect = ElementType.None;//解除属性状态

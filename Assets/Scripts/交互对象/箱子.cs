@@ -14,9 +14,9 @@ public class 箱子 : MonoBehaviour, IDamageable
         rb = GetComponentInChildren<Rigidbody2D>();
         vfx = GetComponent<Entity_VFX>();
     }
-    public bool 造成伤害(float damage,float elementalDamage,ElementType element, Transform damageDealer)
+    public bool TakeDamage(float damage,float elementalDamage,ElementType element, Transform damageDealer)
     {
-        vfx.播放受伤视觉效果();
+        vfx.播放受伤视觉效果(ElementType.None);
         anim.SetBool("打开宝箱", true);
         rb.linearVelocity = 被击退;
         rb.angularVelocity = Random.Range(-200f, 200f);

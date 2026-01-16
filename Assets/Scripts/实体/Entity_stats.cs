@@ -1,5 +1,5 @@
 using UnityEngine;
-
+//此类集中玩家的属性值，并提供了属性的计算方法
 public class Entity_Stats : MonoBehaviour
 {
     public Stat_SetupSO defaultStatSetup;
@@ -8,6 +8,11 @@ public class Entity_Stats : MonoBehaviour
     public Stat_AttackGroup attack;
     public Stat_DefenseGroup defense;
     public Stat_MajorGroup major;
+
+    public AttackData GetAttackData(DamageScaleFactor damageScale)
+    {
+        return new AttackData(this, damageScale);
+    }
     public float GetElementalDamage(out ElementType element, float scareFactor = 1)//scareFactor比例因子，用于实现不同倍率的伤害
     {
         float fireDamage = attack.fireDamage.GetValue();
@@ -59,7 +64,6 @@ public class Entity_Stats : MonoBehaviour
                 baseResistance = defense.lightningResistance.GetValue();
                 break;
         }
-
         float resistance = baseResistance + bonusResistance;
         float resistanceCap = 99f;//元素抗性最大值
         float finalResistance = Mathf.Clamp(resistance, 0, resistanceCap) / 100;//转化为百分比
@@ -93,7 +97,7 @@ public class Entity_Stats : MonoBehaviour
         float finalReduction = attack.armorReduction.GetValue() / 100;
         return finalReduction;
     }
-    public float GetPhyiscalDamage(out bool isCrit, float scareFactor = 1)//out关键字用于额外返回多个值供调用，此处的isCrit在形参中声明在方法体中确定值
+    public float GetPhysicalDamage(out bool isCrit, float scareFactor = 1)//out关键字用于额外返回多个值供调用，此处的isCrit在形参中声明在方法体中确定值
     {
         float baseDamage = attack.damage.GetValue();
         float bonusDamage = major.strength.GetValue();
@@ -159,9 +163,9 @@ public class Entity_Stats : MonoBehaviour
     [ContextMenu("更新默认数据")]
     public void ApplyDefaultStatSetup()
     {
-        if(defaultStatSetup == null)
+        if (defaultStatSetup == null)
         {
-            Debug.Log("没有默认状态已分配");
+            Debug.Log("没有默认数据已分配");
             return;
         }
         resources.maxHp.SetBaseValue(defaultStatSetup.maxHp);

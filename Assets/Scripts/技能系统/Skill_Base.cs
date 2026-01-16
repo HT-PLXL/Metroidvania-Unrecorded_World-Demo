@@ -1,8 +1,11 @@
 using UnityEngine;
-
+//子类挂载在技能容器上
 public class Skill_Base : MonoBehaviour
 {
-    [Header("普通细节")]
+    public Player player {  get; private set; }
+    public Player_SkillManager SkillManager { get; private set; }
+    public DamageScaleFactor damageScale {  get; private set; }
+    [Header("当前技能详情")]
     [SerializeField][cn("冷却时间")] protected float cooldown;
     [SerializeField][cn("技能种类")] protected SkillType skillType;
     [SerializeField][cn("技能升级种类")] protected SkillUpgradeType upgradeType;
@@ -10,13 +13,15 @@ public class Skill_Base : MonoBehaviour
 
     protected virtual void Awake()
     {
+        player = GetComponentInParent<Player>();
+        SkillManager = GetComponentInParent<Player_SkillManager>();
         lastTimeUsed = lastTimeUsed - cooldown;//初始/重生时重置冷却
     }
     public virtual void TryUseSkill()
     {
 
     }
-    private bool OnCooldown() => Time.time < lastTimeUsed + cooldown;
+    protected bool OnCooldown() => Time.time < lastTimeUsed + cooldown;
     public void setSkillOnCooldown() => lastTimeUsed = Time.time;//使其进入冷却
     private void ResetCooldownBy(float cooldownReduction) => lastTimeUsed = lastTimeUsed + cooldownReduction;//修改冷却时间
     public void ResetCooldown() => lastTimeUsed = Time.time;//重置冷却时间
@@ -32,10 +37,11 @@ public class Skill_Base : MonoBehaviour
         }
         return true;
     }
-    public void SetSkillUpgrade(UpgradeData Type)
+    public void SetSkillUpgrade(UpgradeData Type)//更新升级后数据
     {
         upgradeType = Type.upgradeType;
         cooldown = Type.cooldown;
+        damageScale = Type.damageScale;
     }
     protected bool Unlocked(SkillUpgradeType upgradeCheck)=> upgradeType == upgradeCheck;
 }

@@ -12,11 +12,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ec8ecb608c3d77448b7cb7bd6a2648f, type: 3}
   m_Name: "\u6280\u80FD\u6570\u636E-\u9B54\u5F71\u5206\u8EAB"
   m_EditorClassIdentifier: 
-  skillType: 0
-  upgradeData:
-    upgradeType: 3
-    cooldown: 3
   skillName: "\u9B54\u5F71\u5206\u8EAB"
   cost: 2
   description: "\u51B2\u523A\u65F6\u4EA7\u751F\u590D\u5236\u4F53"
-  icon: {fileID: 1612011895, guid: d8922fa682394c34387c8e6ae7c48e68, type: 3}
+  icon: {fileID: -1967946306, guid: d8922fa682394c34387c8e6ae7c48e68, type: 3}
+  unlockedByDefault: 0
+  skillType: 0
+  upgradeData:
+    upgradeType: 2
+    cooldown: 3
+    damageScale:
+      phyiscal: 1
+      elemental: 1
+      chillDuration: 3
+      chillSlowMulitiplier: 0.2
+      burnDuration: 3
+      burnDamageScale: 3
+      lightningDuration: 3
+      lightningDamageScale: 1
+      lightningCharge: 0.4

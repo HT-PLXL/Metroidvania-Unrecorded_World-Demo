@@ -25,7 +25,7 @@ public class 实体动画触发器 : MonoBehaviour
 
     private void 攻击触发()
     {
-        entity_Combat.执行攻击();
+        entity_Combat.PerformAttack();
     }
 
 

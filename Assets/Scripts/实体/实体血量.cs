@@ -8,7 +8,7 @@ public class EntityHp : MonoBehaviour, IDamageable
     private Entity entity;
     private Entity_Stats entityStats;
 
-    [SerializeField] protected float currentHp;
+    [SerializeField] public float currentHp;
     [SerializeField] public bool isDead;
     [Header("血量回复")]
     [SerializeField] private float regenInterval = 1;
@@ -32,49 +32,52 @@ public class EntityHp : MonoBehaviour, IDamageable
 
         InvokeRepeating(nameof(RegenHp), 0, regenInterval);//自带的重复调用函数(方法名，延迟，间隔)，方法名可以使用‘ “方法名” ’，但使用nameof转为字符串利于修改，比如ctrl+R+R的名称修改
     }
-    public virtual bool 造成伤害(float damage,float elementalDamage, ElementType element, Transform 伤害来源)
+    public virtual bool TakeDamage(float damage, float elementalDamage, ElementType element, Transform damageSource)
     {
         if (isDead)
             return false;
 
-        if (attackEvaded())
+        if (attackEvaded())//闪避
         {
             Debug.Log($"{gameObject.name} evaded the attack!");
             return false;
         }
 
-        Entity_Stats attackerStats = 伤害来源.GetComponent<Entity_Stats>();
+        Entity_Stats attackerStats = damageSource.GetComponent<Entity_Stats>();
         float armorReduction = attackerStats != null ? attackerStats.GetArmorReduction() : 0;
 
         float mitigation = entityStats.GetArmorMitigation(armorReduction);//护甲在实体自身上，可以直接使用，削减在攻击者身上，需要获取并提供给方法以计算最终减免比例
-        float finalDamage = damage * (1 - mitigation);
+        float finalPhysicalDamage = damage * (1 - mitigation);
 
         float resistance = entityStats.GetElementalResistance(element);
         float finalElementalDamage = elementalDamage * (1 - resistance);
 
-        施加击退(伤害来源, finalDamage);
+        施加击退(damageSource, element != ElementType.None ? finalElementalDamage : finalPhysicalDamage);
 
-        ReduceHp(finalDamage);
+        if (element == ElementType.None)
+            ReduceHp(finalPhysicalDamage);
+        else
+            ReduceHp(finalElementalDamage, element);
 
         return true;
     }
 
     private bool attackEvaded()
     {
-        return Random.Range(0,100) < entityStats.GetEvasion();
+        return Random.Range(0, 100) < entityStats.GetEvasion();
     }
     public void RegenHp()//自动回复生命值
     {
-        if(canRegenHp == false)
+        if (canRegenHp == false)
             return;
         float regenAmount = entityStats.resources.HpRegen.GetValue();
         IncreaseHp(regenAmount);
     }
     public void IncreaseHp(float healAmount)//用于增加当前生命值的基础方法
     {
-        if(isDead)
+        if (isDead)
             return;
-        
+
         float newHp = currentHp + healAmount;
         float maxHp = entityStats.GetMaxHp();
         currentHp = Mathf.Min(newHp, maxHp);//限制增加后的血量不高于最大血量
@@ -82,7 +85,15 @@ public class EntityHp : MonoBehaviour, IDamageable
     }
     public void ReduceHp(float damage)
     {
-        entityVfx ?. 播放受伤视觉效果();//此处是变白效果，打击效果在实体战斗中
+        entityVfx?.播放受伤视觉效果(ElementType.None);//此处是变白效果，打击效果在实体战斗中
+        currentHp -= damage;
+        HpBarUpdate();
+        if (currentHp <= 0)
+            Die();
+    }
+    public void ReduceHp(float damage, ElementType element)//元素伤害专用，不播放变白效果
+    {
+        entityVfx?.播放受伤视觉效果(element);//此处是变白效果，打击效果在实体战斗中
         currentHp -= damage;
         HpBarUpdate();
         if (currentHp <= 0)
@@ -96,7 +107,7 @@ public class EntityHp : MonoBehaviour, IDamageable
     }
     private void HpBarUpdate()
     {
-        if(HpBar == null)
+        if (HpBar == null)
             return;
 
         HpBar.value = currentHp / entityStats.GetMaxHp();
@@ -119,4 +130,5 @@ public class EntityHp : MonoBehaviour, IDamageable
         return 是否是强力攻击(damage) ? 强力击退硬直时间 : 击退硬直时间;
     }
     private bool 是否是强力攻击(float damage) => damage / entityStats.GetMaxHp() > 强力击退伤害阈值;
+
 }

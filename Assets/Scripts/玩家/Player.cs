@@ -83,6 +83,7 @@ public class Player : Entity
         base.Start();
         stateMachine.Initalize(idleState);
     }
+    public void TeleportPlayer(Vector3 position)=> transform.position = position;//传送玩家
     protected override IEnumerator SlowDownEntityCo(float duration, float slowMultiplier)
     {
         //存储原始值开始

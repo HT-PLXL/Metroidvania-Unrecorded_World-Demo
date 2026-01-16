@@ -1,76 +1,36 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class 实体战斗及目标检测 : MonoBehaviour
 {
     private Entity_VFX vfx;
-    private Entity_Stats stats;
-
+    private Entity_Stats stats;//声明stats即可使用Entity_Stats中GetAttackData()
+    [HideInInspector] public DamageScaleFactor damageScale;
     [Header("目标检测")]
     [SerializeField] private Transform targetCheck;
     [SerializeField] private float targetCheckRadius = 1;
     [SerializeField] private LayerMask whatIsTarget;
-
-    [Header("异常状态效果处理")]
-    [SerializeField] private float defaultDuration = 3;
-    [SerializeField] private float chillSlowMultiplier = .4f;
-    [SerializeField] private float electrifyChargeBuildUp = .4f;
-    [Space]
-    [SerializeField] private float fireScare = 0.8f;
-    [SerializeField] private float lightningScare = 2.5f;//伤害倍率
-
-
     private void Awake()
     {
         vfx = GetComponent<Entity_VFX>();
         stats = GetComponent<Entity_Stats>();
 
     }
-    public void 执行攻击()
+    public void PerformAttack()//执行攻击
     {
-        foreach (var target in 获得检测的碰撞体())//对攻击目标执行
+        foreach (var target in 获得检测的碰撞体())//对受击目标执行
         {
-            //实体血量 targetHp = target.GetComponent<实体血量>();
-            //targetHp ? .造成伤害(damage,transform);//传入伤害以及受伤对象的组件
-
-            IDamageable damageable = target.GetComponent<IDamageable>();
-
-            if (damageable == null)
+            IDamageable damageTarget = target.GetComponent<IDamageable>();
+            if (damageTarget == null)
                 continue;
-            float elementalDamage = stats.GetElementalDamage(out ElementType element);
-            float damage = stats.GetPhyiscalDamage(out bool isCrit);//这里的isCrit可以是任何名字，只是原函数中out传过来的数值的容器
-            bool targetGotHit = damageable.造成伤害(damage, elementalDamage, element, transform);
-
-            if (element != ElementType.None)
-                ApplyStatusEffect(target.transform, element);
-
+            AttackData attackData = stats.GetAttackData(damageScale);
+            float elementalDamage = attackData.physicalDamage;
+            float physicalDamage = attackData.elementalDamage;
+            //if (element != ElementType.None)
+            //    target.GetComponent<Entity_StatusHandler>().ApplyStatusEffect(attackData.element, attackData.effectData);//使用攻击方的数据在受击方应用伤害与效果
+            //暂时不让普攻使用元素伤害以及元素附着特效
+            bool targetGotHit = damageTarget.TakeDamage(physicalDamage, elementalDamage, ElementType.None, transform);//暂时不让普攻使用元素伤害，此处传入ElementType.None
             if (targetGotHit)
-            {
-                vfx.UpdataOnHitColor(element);
-                vfx.启用攻击特效(target.transform, isCrit);
-            }
-        }
-    }
-    public void ApplyStatusEffect(Transform target, ElementType element,float scareFactor = 1)
-    {
-        Entity_StatusHandler statusHandler = target.GetComponent<Entity_StatusHandler>();
-        if (statusHandler == null)
-            return;
-
-        if (element == ElementType.Ice && statusHandler.CanApply(ElementType.Ice))
-            statusHandler.ApplyChillEffect(defaultDuration, chillSlowMultiplier * scareFactor);
-
-        if (element == ElementType.Fire && statusHandler.CanApply(ElementType.Fire))
-        {
-            scareFactor = fireScare;
-            float fireDamage = stats.attack.fireDamage.GetValue() * scareFactor;
-            statusHandler.ApplyBurnEffect(defaultDuration, fireDamage);
-        }
-        if (element == ElementType.Lightning && statusHandler.CanApply(ElementType.Lightning))
-        {
-            scareFactor = lightningScare;
-            float lightningDamage = stats.attack.lightningDamage.GetValue() * scareFactor;
-            statusHandler.ApplyElectrifyEffect(defaultDuration, lightningDamage, electrifyChargeBuildUp);
+                vfx.CreateHitVfx(target.transform, attackData.isCrit, attackData.element);//创建打击特效粒子
         }
     }
     protected Collider2D[] 获得检测的碰撞体()
