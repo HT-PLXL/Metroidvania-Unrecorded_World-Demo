@@ -1,29 +1,29 @@
 using System.Collections;
 using UnityEngine;
-//挂载在技能容器上
+//挂载在技能容器上，下方声明的参数用来在技能容器修改对应技能实体脚本声明的参数的值
 public class Skill_Shard : Skill_Base
 {
     private SkillObject_Shard currentShard;
-    [SerializeField] private EntityHp playerHp;
-    [SerializeField][cn("碎片预制体")] private GameObject shardPerfab;
+    private EntityHp playerHp;
+    [SerializeField][cn("水晶预制体")] private GameObject shardPerfab;
     [SerializeField][cn("引爆时间")] private float detonateTime = 2;
-    [Header("磁力碎片升级")]
-    [SerializeField] private float shardSpeed = 7;
+    [Header("磁力升级")]
+    [SerializeField] [cn("飞行速度")]private float shardSpeed = 7;
 
-    [Header("连锁碎片升级")]
-    [SerializeField] private int maxCount = 3;
-    [SerializeField] private int currentCount;
-    [SerializeField] private bool isCharging;//正在充能
+    [Header("充能升级")]
+    [SerializeField] [cn("最大数量")]private int maxNumber = 3;
+    [SerializeField] [cn("当前可用数量")]private int currentNumber;
+    [SerializeField] [cn("正在充能？")]private bool isCharging;//正在充能
 
     [Header("超时空升级")]
-    [SerializeField] private float shardDuration = 10;
+    [SerializeField] [cn("持续时间")]private float shardDuration = 10;
 
     [Header("时空回溯升级")]
-    [SerializeField] private float originalHp;
+    [SerializeField][cn("使用前血量")] private float originalHp;
     protected override void Awake()
     {
         base.Awake();
-        currentCount = maxCount;
+        currentNumber = maxNumber;
         playerHp = GetComponentInParent<EntityHp>();
     }
     public override void TryUseSkill()
@@ -77,21 +77,21 @@ public class Skill_Shard : Skill_Base
     }
     private void HandleShardSplit()//split分裂
     {
-        if (currentCount <= 0)
+        if (currentNumber <= 0)
             return;
         CreateShard();
         currentShard.MoveToClosestTarget(shardSpeed);
-        currentCount--;
+        currentNumber--;
         if (isCharging == false)
             StartCoroutine(ShardChargeCo());
     }
     private IEnumerator ShardChargeCo()
     {
         isCharging = true;
-        while (currentCount < maxCount)
+        while (currentNumber < maxNumber)
         {
             yield return new WaitForSeconds(cooldown);
-            currentCount++;
+            currentNumber++;
         }
         isCharging = false;
 

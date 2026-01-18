@@ -2,5 +2,5 @@ using UnityEngine;
 
 public enum SkillType
 {
-    Dash,TimeEcho,TimeShard
+    Dash,TimeEcho,Ä§ÄÜ¾§Ìå,ÖÀ½£
 }

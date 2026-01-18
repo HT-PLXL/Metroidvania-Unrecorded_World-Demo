@@ -9,7 +9,7 @@ public abstract class EntityState
     protected Rigidbody2D rb;//用于缩写
     protected Entity_Stats entity_stats;
     protected float stateTimer;//状态计时器
-    protected bool 触发结束;
+    protected bool triggerOver;
 
     public EntityState(StateMachine stateMachine, string animBoolName)
     {
@@ -21,13 +21,13 @@ public abstract class EntityState
         //——————————注意子类没有enter会自动执行父类的enter——————————
 
         anim.SetBool(animBoolName, true);
-        触发结束 = false;
+        triggerOver = false;
     }
     //在进入该状态时执行特定操作，对应下面Exit离开状态时执行操作
     public virtual void Update()
     {
         stateTimer -= Time.deltaTime;//右式是增量时间，结合相关代码就是从某个时间开始加减，可以为负
-        更新动画师界面参数();//virtual属性的方法被调用会执行其重写方法
+        UpdateAnimator();//virtual属性的方法被调用会执行其重写方法
     }
     public virtual void Exit()
     {
@@ -35,11 +35,11 @@ public abstract class EntityState
                                           //此处执行anim.SetBool，字符串类型的参数集合“animBoolName”全部修改为false，因为只传了1个第3参，此时内部只有参数idle，修改为false
                                           //注意上面声明的this.animBoolName = animBoolName;因此也可以理解括号中为（animBoolName = 实例参数animBoolName（即为idle），false）
     }
-    public void 动画事件触发()
+    public void AnimTrigger()
     {
-        触发结束 = true;
+        triggerOver = true;
     }
-    public virtual void 更新动画师界面参数()//virtual属性的方法被调用会执行其重写方法
+    public virtual void UpdateAnimator()//virtual属性的方法被调用会执行其重写方法
     {
 
     }

@@ -13,7 +13,7 @@ public class Player_AiredState : PlayerState
             player.SetVelocity(player.moveInput.x * (player.moveSpeed * player.¿ÕÖĞÒÆ¶¯±¶ÂÊ), rb.linearVelocity.y);
 
         if (input.Player.ÆÕÍ¨¹¥»÷.WasPressedThisFrame())
-            stateMachine.ChangeState(player.ÌøÔ¾Õ¶»÷×´Ì¬);
+            stateMachine.ChangeState(player.jumpAttackState);
     }
 
 

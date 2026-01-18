@@ -13,7 +13,7 @@ public class Enemy_AttackState : EnemyState
     public override void Update()
     {
         base.Update();
-        if (´¥·¢½áÊø)
+        if (triggerOver)
             stateMachine.ChangeState(enemy.battleState);
     }
 }

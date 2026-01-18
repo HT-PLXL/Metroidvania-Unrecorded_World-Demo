@@ -50,7 +50,7 @@ public class Entity : MonoBehaviour
         stateMachine.UpdataActiveState();
         碰撞检测();
     }
-    public virtual void 实体死亡()
+    public virtual void EntityDead()//实体死亡
     {
 
     }
@@ -78,22 +78,22 @@ public class Entity : MonoBehaviour
         rb.linearVelocity = Vector2.zero;
         被击退 = false;
     }
-    public void 当前状态动画事件触发器()
+    public void CurrentStateAnimTrigger()
     {
-        stateMachine.currentState.动画事件触发();
+        stateMachine.currentState.AnimTrigger();
         //注意currentState是在stateMachine中定义的EntityState类型变量
         //实例.属性.对属性所属类型执行方法（）
-        //所以调用的EntityState中的动画事件触发()
+        //所以调用的EntityState中的AnimTrigger()
     }
     public void SetVelocity(float xVelocity, float yVelocity)
     {
         if (被击退)
             return;//受击ban移动
         rb.linearVelocity = new Vector2(xVelocity, yVelocity);
-        翻转处理(xVelocity);
+        HandleFlip(xVelocity);
     }
 
-    public void 翻转()
+    public void Flip()//翻转
     {
         transform.Rotate(0, 180, 0);
         面向右方 = !面向右方;
@@ -102,15 +102,15 @@ public class Entity : MonoBehaviour
         翻转中?.Invoke();//实体翻转的时候调用事件保持血条不翻转
     }
 
-    public void 翻转处理(float xVelocity)
+    public void HandleFlip(float xVelocity)//处理翻转
     {
         if (xVelocity > 0 && 面向右方 == false)
         {
-            翻转();
+            Flip();
         }
         else if (xVelocity < 0 && 面向右方 == true)
         {
-            翻转();
+            Flip();
         }
     }
 

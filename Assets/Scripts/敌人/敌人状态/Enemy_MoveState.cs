@@ -9,7 +9,7 @@ public class Enemy_MoveState : Enemy_GroundState
     {
         base.Enter();
         if (enemy.检测到地面 == false || enemy.检测到墙壁)
-            enemy.翻转();
+            enemy.Flip();
     }
     public override void Update()
     {

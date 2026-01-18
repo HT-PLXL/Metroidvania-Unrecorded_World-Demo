@@ -18,9 +18,11 @@ public class Player_GroundState : PlayerState
         if (input.Player.Jump.WasPressedThisFrame())//WasPressedThisFrame是新输入系统PlayerInputSet脚本定义的
             stateMachine.ChangeState(player.jumpState);
         if (input.Player.普通攻击.WasPressedThisFrame())
-            stateMachine.ChangeState(player.普通攻击状态);
+            stateMachine.ChangeState(player.attackState);
         if (input.Player.弹反.WasPressedThisFrame())
             stateMachine.ChangeState(player.counterAttactState);
+        if (input.Player.掷剑.WasPressedThisFrame()&& skillManager.throwSword.CanUseSkill())
+            stateMachine.ChangeState(player.throwSwordState);
     }
 
 

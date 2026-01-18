@@ -30,7 +30,7 @@ public class Enemy_BattleState : EnemyState
         if (应该后撤())
         {
             rb.linearVelocity = new Vector2(enemy.后撤速度.x * -朝向玩家的方向(), enemy.后撤速度.y);
-            enemy.翻转处理(朝向玩家的方向());
+            enemy.HandleFlip(朝向玩家的方向());
         }
     }
 

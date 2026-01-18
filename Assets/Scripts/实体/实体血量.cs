@@ -102,7 +102,7 @@ public class EntityHp : MonoBehaviour, IDamageable
     private void Die()
     {
         isDead = true;
-        entity.实体死亡();
+        entity.EntityDead();
         entityVfx.StopAllVfx();
     }
     private void HpBarUpdate()

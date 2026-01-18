@@ -1,5 +1,5 @@
 using UnityEngine;
-//子类挂载在技能容器上
+//子类挂载在技能容器上，下方声明的参数用来在技能容器修改对应技能实体脚本声明的参数的值
 public class Skill_Base : MonoBehaviour
 {
     public Player player {  get; private set; }
@@ -16,6 +16,7 @@ public class Skill_Base : MonoBehaviour
         player = GetComponentInParent<Player>();
         SkillManager = GetComponentInParent<Player_SkillManager>();
         lastTimeUsed = lastTimeUsed - cooldown;//初始/重生时重置冷却
+        damageScale = new DamageScaleFactor();//暂时没做技能数据，所以需要初始化一下
     }
     public virtual void TryUseSkill()
     {
@@ -26,7 +27,7 @@ public class Skill_Base : MonoBehaviour
     private void ResetCooldownBy(float cooldownReduction) => lastTimeUsed = lastTimeUsed + cooldownReduction;//修改冷却时间
     public void ResetCooldown() => lastTimeUsed = Time.time;//重置冷却时间
 
-    public bool CanUseSkill()
+    public virtual bool CanUseSkill()
     {
         if(upgradeType == SkillUpgradeType.None)
             return false;

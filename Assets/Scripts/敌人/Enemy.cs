@@ -57,9 +57,9 @@ public class Enemy : Entity
     {
         canBeStunned = enable;
     }
-    public override void 实体死亡()
+    public override void EntityDead()
     {
-        base.实体死亡();
+        base.EntityDead();
 
         stateMachine.ChangeState(deadState);
     }

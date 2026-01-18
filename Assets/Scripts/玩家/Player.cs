@@ -17,19 +17,22 @@ public class Player : Entity
     private UI ui;
     public Player_SkillManager skillManager {  get; private set; }
     public Player_VFX vfx { get; private set;}
+    public EntityHp Hp { get; private set;}
+    public Entity_StatusHandler statusHandler { get; private set; }
+
 
     public Player_IdleState idleState { get; private set; }
     public Player_MoveState moveState { get; private set; }
     public Player_JumpState jumpState { get; private set; }
     public Player_FallState fallState { get; private set; }
     public Player_DeadState deadState { get; private set; }
-    public 玩家墙壁滑动状态 墙壁滑动状态 { get; private set; }
-    public 玩家墙壁跳跃状态 墙壁跳跃状态 { get; private set; }
-    public 玩家冲刺状态 冲刺状态 { get; private set; }
-    public 玩家普通攻击状态 普通攻击状态 { get; private set; }
-    public 玩家跳跃斩击状态 跳跃斩击状态 { get; private set; }
+    public Player_WallSlideState wallSlideState { get; private set; }
+    public Player_WallJumpState wallJumpState { get; private set; }
+    public Player_DashState dashState { get; private set; }
+    public Player_AttackState attackState { get; private set; }
+    public Player_JumpAttackState jumpAttackState { get; private set; }
     public Player_CounterAttactState counterAttactState { get; private set; }
-
+    public Player_ThrowSwordState throwSwordState { get; private set; }
 
     [Header("攻击细节")]
     public Vector2[] attackVelocity;
@@ -51,6 +54,7 @@ public class Player : Entity
     public float dashSpeed = 20f;
     public Vector2 moveInput { get; private set; }
     //moveinput在unity PlayerInputSet界面被映射为整数值
+    public Vector2 mousePosition { get; private set; }
 
     protected override void Awake()
     {
@@ -60,6 +64,8 @@ public class Player : Entity
         input = new PlayerInputSet();
         skillManager = GetComponent<Player_SkillManager>();
         vfx = GetComponent<Player_VFX>();
+        Hp =GetComponent<EntityHp>();
+        statusHandler = GetComponent<Entity_StatusHandler>();
 
         idleState = new Player_IdleState(this, stateMachine, "idle");//橙色内容是动画师界面的参数，必须一致
         moveState = new Player_MoveState(this, stateMachine, "move");
@@ -67,11 +73,12 @@ public class Player : Entity
         fallState = new Player_FallState(this, stateMachine, "jumpFall");
         deadState = new Player_DeadState(this, stateMachine, "dead");
         counterAttactState = new Player_CounterAttactState(this, stateMachine, "弹反");
-        墙壁滑动状态 = new 玩家墙壁滑动状态(this, stateMachine, "墙壁滑动");
-        墙壁跳跃状态 = new 玩家墙壁跳跃状态(this, stateMachine, "jumpFall");
-        冲刺状态 = new 玩家冲刺状态(this, stateMachine, "冲刺");
-        普通攻击状态 = new 玩家普通攻击状态(this, stateMachine, "普通攻击");
-        跳跃斩击状态 = new 玩家跳跃斩击状态(this, stateMachine, "跳跃斩击");
+        wallSlideState = new Player_WallSlideState(this, stateMachine, "墙壁滑动");
+        wallJumpState = new Player_WallJumpState(this, stateMachine, "jumpFall");
+        dashState = new Player_DashState(this, stateMachine, "冲刺");
+        attackState = new Player_AttackState(this, stateMachine, "普通攻击");
+        jumpAttackState = new Player_JumpAttackState(this, stateMachine, "跳跃斩击");
+        throwSwordState = new Player_ThrowSwordState(this, stateMachine, "throwSword");
         //重中之重，此处通过new将参数传递给各状态脚本并执行其构造函数
         //再通过他们的构造函数中的“：base”传递参数给他们的父类PlayerState
         //于是各子类状态脚本便可以通过父类中声明的stateMachine执行操作,如调用状态机中的公开方法
@@ -124,9 +131,9 @@ public class Player : Entity
             attackVelocity[i] = originalAttackVelocity[i];
         }
     }
-    public override void 实体死亡()
+    public override void EntityDead()
     {
-        base.实体死亡();
+        base.EntityDead();
         在玩家死亡之时?.Invoke ();//用Invoke执行委托，
         stateMachine.ChangeState(deadState);
     }
@@ -140,11 +147,12 @@ public class Player : Entity
     private IEnumerator 延迟进入攻击状态协同程序()//IE在unity中被当做执行流程控制器
     {
         yield return new WaitForEndOfFrame();//生成延迟并返回——帧结束处理（一帧的最后一件事）
-        stateMachine.ChangeState(普通攻击状态);//PlayerState中Enter会刷新bool值为真
+        stateMachine.ChangeState(attackState);//PlayerState中Enter会刷新bool值为真
     }
     private void OnEnable()//Onable在Awake后执行，用于启动输入系统
     {
         input.Enable();
+        input.Player.鼠标.performed += ctx => mousePosition = ctx.ReadValue<Vector2>();
         input.Player.Movement.performed += ctx => moveInput = ctx.ReadValue<Vector2>();
         input.Player.Movement.canceled += ctx => moveInput = Vector2.zero;
         //实例.访问Player的Movement模块

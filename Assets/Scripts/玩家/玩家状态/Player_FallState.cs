@@ -13,7 +13,7 @@ public class Player_FallState : Player_AiredState
         if (player.¼ì²âµ½µØÃæ)
             stateMachine.ChangeState(player.idleState);
         if (player.¼ì²âµ½Ç½±Ú)
-            stateMachine.ChangeState(player.Ç½±Ú»¬¶¯×´Ì¬);
+            stateMachine.ChangeState(player.wallSlideState);
 
     }
 }

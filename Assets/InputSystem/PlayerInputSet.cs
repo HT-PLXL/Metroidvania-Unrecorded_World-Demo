@@ -162,6 +162,24 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""掷剑"",
+                    ""type"": ""Button"",
+                    ""id"": ""bf2d3eee-8be1-4eb8-a894-183fde37f25b"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""鼠标"",
+                    ""type"": ""Value"",
+                    ""id"": ""ca30a24a-d43a-4dc1-a72e-36ea4d49a608"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -296,6 +314,28 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
                     ""action"": ""关闭技能树"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7c03f665-fa90-42c2-b035-5c0047043120"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard & Mouse"",
+                    ""action"": ""掷剑"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cc5d0437-e84d-4b80-8c01-da0336923e41"",
+                    ""path"": ""<Mouse>/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard & Mouse"",
+                    ""action"": ""鼠标"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -329,6 +369,8 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
         m_Player_开关技能树 = m_Player.FindAction("开关技能树", throwIfNotFound: true);
         m_Player_关闭技能树 = m_Player.FindAction("关闭技能树", throwIfNotFound: true);
         m_Player_施法 = m_Player.FindAction("施法", throwIfNotFound: true);
+        m_Player_掷剑 = m_Player.FindAction("掷剑", throwIfNotFound: true);
+        m_Player_鼠标 = m_Player.FindAction("鼠标", throwIfNotFound: true);
     }
 
     ~@PlayerInputSet()
@@ -417,6 +459,8 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_开关技能树;
     private readonly InputAction m_Player_关闭技能树;
     private readonly InputAction m_Player_施法;
+    private readonly InputAction m_Player_掷剑;
+    private readonly InputAction m_Player_鼠标;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -460,6 +504,14 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Player/施法".
         /// </summary>
         public InputAction @施法 => m_Wrapper.m_Player_施法;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/掷剑".
+        /// </summary>
+        public InputAction @掷剑 => m_Wrapper.m_Player_掷剑;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/鼠标".
+        /// </summary>
+        public InputAction @鼠标 => m_Wrapper.m_Player_鼠标;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -510,6 +562,12 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
             @施法.started += instance.On施法;
             @施法.performed += instance.On施法;
             @施法.canceled += instance.On施法;
+            @掷剑.started += instance.On掷剑;
+            @掷剑.performed += instance.On掷剑;
+            @掷剑.canceled += instance.On掷剑;
+            @鼠标.started += instance.On鼠标;
+            @鼠标.performed += instance.On鼠标;
+            @鼠标.canceled += instance.On鼠标;
         }
 
         /// <summary>
@@ -545,6 +603,12 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
             @施法.started -= instance.On施法;
             @施法.performed -= instance.On施法;
             @施法.canceled -= instance.On施法;
+            @掷剑.started -= instance.On掷剑;
+            @掷剑.performed -= instance.On掷剑;
+            @掷剑.canceled -= instance.On掷剑;
+            @鼠标.started -= instance.On鼠标;
+            @鼠标.performed -= instance.On鼠标;
+            @鼠标.canceled -= instance.On鼠标;
         }
 
         /// <summary>
@@ -654,5 +718,19 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void On施法(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "掷剑" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void On掷剑(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "鼠标" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void On鼠标(InputAction.CallbackContext context);
     }
 }

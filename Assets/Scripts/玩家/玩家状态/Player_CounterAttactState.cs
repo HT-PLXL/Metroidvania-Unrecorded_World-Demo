@@ -24,7 +24,7 @@ public class Player_CounterAttactState : PlayerState
 
         player.SetVelocity(0, rb.linearVelocity.y);
 
-        if (触发结束)
+        if (triggerOver)
             stateMachine.ChangeState(player.idleState);
         if (stateTimer < 0 && 是否已弹反 == false)
             stateMachine.ChangeState(player.idleState);

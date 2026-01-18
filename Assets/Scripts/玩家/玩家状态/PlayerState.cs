@@ -23,25 +23,25 @@ public abstract class PlayerState : EntityState
         base.Update();
 
 
-        if (input.Player.冲刺.WasPressedThisFrame() && 允许冲刺())
+        if (input.Player.冲刺.WasPressedThisFrame() && CanDash())
         {
             skillManager.dash.setSkillOnCooldown();//进入冷却
-            stateMachine.ChangeState(player.冲刺状态);
+            stateMachine.ChangeState(player.dashState);
         }
     }
-    public override void 更新动画师界面参数()
+    public override void UpdateAnimator()
     {
-        base.更新动画师界面参数();
+        base.UpdateAnimator();
         
         anim.SetFloat("yVelocity", rb.linearVelocity.y);//将y轴速度赋值给动画师界面的参数yVelocity，实现jump/fall动画切换
     }
-    private bool 允许冲刺()
+    private bool CanDash()
     {
         if(skillManager.dash.CanUseSkill() == false)
             return false;
         if (player.检测到墙壁)
             return false;
-        if(stateMachine.currentState == player.冲刺状态)
+        if(stateMachine.currentState == player.dashState)
             return false;
         return true;
     }
