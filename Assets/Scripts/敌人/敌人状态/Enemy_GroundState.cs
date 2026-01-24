@@ -10,9 +10,9 @@ public class Enemy_GroundState : EnemyState
     {
         base.Update();
 
-        if (enemy.玩家检测() == true)
+        if (enemy.detectPlayer() == true)
             stateMachine.ChangeState(enemy.battleState);
-        //玩家检测()返回的是RaycastHit2D 类型的变量hit
+        //detectPlayer()返回的是RaycastHit2D 类型的变量hit
         //它是 Unity 为 2D 物理系统提供的结构体，用于存储射线检测的命中信息，包含碰撞体（collider）、碰撞点（point）、碰撞距离（distance）等关键数据
         //在 C# 中，RaycastHit2D结构体存在隐式布尔转换：
         //当 RaycastHit2D 的 collider 属性不为null时，会被视为true

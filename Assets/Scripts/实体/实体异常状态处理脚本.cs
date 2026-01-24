@@ -21,6 +21,12 @@ public class Entity_StatusHandler : MonoBehaviour
         entityVfx = GetComponent<Entity_VFX>();
         entityHp = GetComponent<EntityHp>();
     }
+    public void RemoveAllDebuff()
+    {
+        StopAllCoroutines();//关闭当前脚本所挂载的对象上由该脚本实例启动的所有协程
+        currentEffect = ElementType.None;
+        entityVfx.StopAllVfx();
+    }
     public void ApplyStatusEffect(ElementType element,ElementEffectData effectData)//用于应用元素伤害与效果
     {
         if (element == ElementType.Ice && CanApply(ElementType.Ice))

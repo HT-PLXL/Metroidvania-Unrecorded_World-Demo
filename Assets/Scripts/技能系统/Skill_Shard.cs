@@ -8,15 +8,15 @@ public class Skill_Shard : Skill_Base
     [SerializeField][cn("水晶预制体")] private GameObject shardPerfab;
     [SerializeField][cn("引爆时间")] private float detonateTime = 2;
     [Header("磁力升级")]
-    [SerializeField] [cn("飞行速度")]private float shardSpeed = 7;
+    [SerializeField][cn("飞行速度")] private float shardSpeed = 7;
 
     [Header("充能升级")]
-    [SerializeField] [cn("最大数量")]private int maxNumber = 3;
-    [SerializeField] [cn("当前可用数量")]private int currentNumber;
-    [SerializeField] [cn("正在充能？")]private bool isCharging;//正在充能
+    [SerializeField][cn("最大数量")] private int maxNumber = 3;
+    [SerializeField][cn("当前可用数量")] private int currentNumber;
+    [SerializeField][cn("正在充能？")] private bool isCharging;//正在充能
 
     [Header("超时空升级")]
-    [SerializeField] [cn("持续时间")]private float shardDuration = 10;
+    [SerializeField][cn("持续时间")] private float shardDuration = 10;
 
     [Header("时空回溯升级")]
     [SerializeField][cn("使用前血量")] private float originalHp;
@@ -117,11 +117,15 @@ public class Skill_Shard : Skill_Base
         if (Unlocked(SkillUpgradeType.超时空升级) || Unlocked(SkillUpgradeType.时空回溯升级))
             currentShard.OnExplode += Cooldown;//订阅Cooldown()
     }
-    public void CreateOriginalShard()
+    public void CreateOriginalShard(Transform target = null, bool shardCanMove = false)//不传入shardCanMove说明是磁力/充能升级需要生成水晶，传入shardCanMove=true则是技能魔能轰炸需要生成水晶
     {
-        bool canMove = Unlocked(SkillUpgradeType.磁力升级 )|| Unlocked(SkillUpgradeType.充能升级);
+        bool canMove = shardCanMove != false ? shardCanMove : Unlocked(SkillUpgradeType.磁力升级) || Unlocked(SkillUpgradeType.充能升级);
         GameObject shard = Instantiate(shardPerfab, transform.position, Quaternion.identity);
-        shard.GetComponent<SkillObject_Shard>().SetUpShard(this,detonateTime,canMove,shardSpeed);//调用重载的方法
+        shard.GetComponent<SkillObject_Shard>().SetUpShard(this, detonateTime, canMove, shardSpeed,target);//调用重载的方法
+    }
+    public void CreateDomainShard(Transform Target)
+    {
+
     }
 
     public float GetDetonateTime()//选择存在时间

@@ -7,13 +7,16 @@ public class SkillObject_Base : MonoBehaviour
     [SerializeField][cn("检测圆心")] protected Transform targetCheck;
     [SerializeField][cn("检测范围")] protected float checkRadius = 1;
     protected Animator anim;
+    protected Rigidbody2D rb;
     protected Entity_Stats playerStats;
     protected DamageScaleFactor damageScale;
     protected ElementType elementType;
     protected bool targetGotHit;
+    protected Transform lastTarget;
     protected virtual void Awake()
     {
         anim = GetComponentInChildren<Animator>();
+        rb = GetComponent<Rigidbody2D>();
     }
     protected void DamageEnemyInRadius(Transform transform, float radius)//伤害范围内所有敌人
     {
@@ -29,11 +32,14 @@ public class SkillObject_Base : MonoBehaviour
             if (attackData.element != ElementType.None)
                 target.GetComponent<Entity_StatusHandler>().ApplyStatusEffect(attackData.element, attackData.effectData); //effectData包含技能伤害和时间等数据
             if (targetGotHit)
+            {
+                lastTarget= target.transform;
                 Instantiate(onHitVfxBySkill, target.transform.position, Quaternion.identity);
+            }
             elementType = attackData.element;//存储一份元素种类给子类用
         }
     }
-    protected Transform SearchTarget()//寻找范围内最近目标
+    protected Transform SearchClosestTarget()//寻找范围内最近目标
     {
         Transform target = null;
         float closestDistance = Mathf.Infinity;//设定最近距离

@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Entity : MonoBehaviour
@@ -16,7 +15,7 @@ public class Entity : MonoBehaviour
     public int 面对方向 { get; private set; } = 1;//区分正负，可当被乘数用于确定方向
 
     [Header("碰撞检测")]
-    [SerializeField] protected LayerMask 什么是地面或墙壁;
+    public LayerMask whatIsGround;
     [SerializeField] private float 地面检测距离;
     [SerializeField] private float 墙壁检测距离;
     [SerializeField] private Transform 地面检测起点;
@@ -54,17 +53,27 @@ public class Entity : MonoBehaviour
     {
 
     }
-    public virtual void SlowDownEntity(float duration, float slowMultiplier)
+    public virtual void SlowDownEntity(float duration, float slowMultiplier, bool canOverrideSlowDown = false)
     {
-        if(slowDownCo != null)
-            StopCoroutine(slowDownCo);
-        slowDownCo = StartCoroutine(SlowDownEntityCo(duration,slowMultiplier));
+        if (slowDownCo != null)
+        {
+            if (canOverrideSlowDown)
+                StopCoroutine(slowDownCo);
+            else
+                return;
+        }
+        slowDownCo = StartCoroutine(SlowDownEntityCo(duration, slowMultiplier));
     }
     protected virtual IEnumerator SlowDownEntityCo(float duration, float slowMultiplier)//协程，允许暂停并在将来执行函数
     {
         yield return null;
     }
-    public void 受击击退(Vector2 击退,float 持续时间)
+    public virtual void StopSlowDown()
+    {
+        StopCoroutine(slowDownCo);
+        //slowDownCo = null;
+    }
+    public void 受击击退(Vector2 击退, float 持续时间)
     {
         if (击退协程 != null)
             StopCoroutine(击退协程);
@@ -116,15 +125,15 @@ public class Entity : MonoBehaviour
 
     private void 碰撞检测()
     {
-        检测到地面 = Physics2D.Raycast(地面检测起点.position, Vector2.down, 地面检测距离, 什么是地面或墙壁);
+        检测到地面 = Physics2D.Raycast(地面检测起点.position, Vector2.down, 地面检测距离, whatIsGround);
         //2d.光线投射（起始点，方向，距离，所需检测图层）
         if (次要的墙壁检测 != null)
         {
-            检测到墙壁 = Physics2D.Raycast(首要的墙壁检测.position, Vector2.right * 面对方向, 墙壁检测距离, 什么是地面或墙壁)
-                      && Physics2D.Raycast(次要的墙壁检测.position, Vector2.right * 面对方向, 墙壁检测距离, 什么是地面或墙壁);
+            检测到墙壁 = Physics2D.Raycast(首要的墙壁检测.position, Vector2.right * 面对方向, 墙壁检测距离, whatIsGround)
+                      && Physics2D.Raycast(次要的墙壁检测.position, Vector2.right * 面对方向, 墙壁检测距离, whatIsGround);
         }
         else
-            检测到墙壁 = Physics2D.Raycast(首要的墙壁检测.position, Vector2.right * 面对方向, 墙壁检测距离, 什么是地面或墙壁);
+            检测到墙壁 = Physics2D.Raycast(首要的墙壁检测.position, Vector2.right * 面对方向, 墙壁检测距离, whatIsGround);
     }
     protected virtual void OnDrawGizmos()//辅助线
     {

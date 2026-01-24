@@ -33,6 +33,7 @@ public class Player : Entity
     public Player_JumpAttackState jumpAttackState { get; private set; }
     public Player_CounterAttactState counterAttactState { get; private set; }
     public Player_ThrowSwordState throwSwordState { get; private set; }
+    public Player_DomainState domainState { get; private set; }
 
     [Header("攻击细节")]
     public Vector2[] attackVelocity;
@@ -52,6 +53,10 @@ public class Player : Entity
     [Space]
     public float dashDuration = .25f;
     public float dashSpeed = 20f;
+    [Header("终极技能详情")]
+    public float riseSpeed = 25;
+    public float riseMaxDistance = 3;
+
     public Vector2 moveInput { get; private set; }
     //moveinput在unity PlayerInputSet界面被映射为整数值
     public Vector2 mousePosition { get; private set; }
@@ -79,6 +84,7 @@ public class Player : Entity
         attackState = new Player_AttackState(this, stateMachine, "普通攻击");
         jumpAttackState = new Player_JumpAttackState(this, stateMachine, "跳跃斩击");
         throwSwordState = new Player_ThrowSwordState(this, stateMachine, "throwSword");
+        domainState = new Player_DomainState(this, stateMachine, "jumpFall");
         //重中之重，此处通过new将参数传递给各状态脚本并执行其构造函数
         //再通过他们的构造函数中的“：base”传递参数给他们的父类PlayerState
         //于是各子类状态脚本便可以通过父类中声明的stateMachine执行操作,如调用状态机中的公开方法
@@ -164,6 +170,7 @@ public class Player : Entity
         input.Player.开关技能树.performed += ctx => ui.ToggleSkillTreeUI();
         input.Player.关闭技能树.performed += ctx => ui.CloseSkillTreeUI();
         input.Player.施法.performed += ctx => skillManager.shard.TryUseSkill();
+        input.Player.施法.performed += ctx => skillManager.clone.TryUseSkill();//记得调整
     }
     private void OnDisable()
     {

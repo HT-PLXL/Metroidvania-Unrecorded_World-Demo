@@ -3,7 +3,6 @@ using UnityEngine;
 public class SkillObject_Sword : SkillObject_Base
 {
     protected Skill_ThrowSword throwSword;
-    protected Rigidbody2D rb;
     protected float comeBackSpeed = 50;
     protected Transform playerTransform;
     protected float maxDistance = 25;
@@ -18,7 +17,6 @@ public class SkillObject_Sword : SkillObject_Base
     }
     public virtual void SetUpSword(Skill_ThrowSword throwSword, Vector2 direction)//抛出剑的方法，同时接收Skill_ThrowSword的掷剑升级信息(可于技能容器修改)，并传递给技能实体脚本替换默认值
     {
-        rb = GetComponent<Rigidbody2D>();
         rb.linearVelocity = direction;//给一个初速度，就自动做斜抛运动了
         //用技能容器值替换默认值
         this.throwSword = throwSword;

@@ -1,15 +1,30 @@
 using System;
-using Unity.Mathematics;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.XR;
 
 public class Enemy_BattleState : EnemyState
 {
     private Transform player;
+    private Transform lastTarget;
     private float lastTimeWasInBattle;
     public Enemy_BattleState(Enemy enemy, StateMachine stateMachine, string animBoolName) : base(enemy, stateMachine, animBoolName)
     {
+    }
+    public override void Update()
+    {
+        base.Update();
+
+        if (enemy.detectPlayer() == true)
+        {
+            UpdateTarget();
+            lastTimeWasInBattle = Time.time;
+        }
+        if (战斗时间结束())
+            stateMachine.ChangeState(enemy.idleState);
+
+        if (在攻击距离内() && enemy.detectPlayer())
+            stateMachine.ChangeState(enemy.attackState);
+        else
+            enemy.SetVelocity(enemy.GetBattleMoveSpeed() * 朝向玩家的方向(), rb.linearVelocity.y);
     }
     public override void Enter()
     {
@@ -29,7 +44,7 @@ public class Enemy_BattleState : EnemyState
 
         if (应该后撤())
         {
-            rb.linearVelocity = new Vector2(enemy.后撤速度.x * -朝向玩家的方向(), enemy.后撤速度.y);
+            rb.linearVelocity = new Vector2(enemy.后撤速度.x * enemy.activeSlowDownmultiplier * -朝向玩家的方向(), enemy.后撤速度.y);
             enemy.HandleFlip(朝向玩家的方向());
         }
     }
@@ -44,7 +59,7 @@ public class Enemy_BattleState : EnemyState
         //Abs：absolute，这里是绝对值运算
     }
     private bool 战斗时间结束() => Time.time > lastTimeWasInBattle + enemy.battleTimeDuration;
-                             // =>会根据 判断成立与否 返回值
+    // =>会根据 判断成立与否 返回值
     private bool 在攻击距离内()
     {
         return 与玩家的距离() < enemy.attackDistance;
@@ -54,23 +69,20 @@ public class Enemy_BattleState : EnemyState
     private bool 应该后撤() => 与玩家的距离() < enemy.最小后撤距离;
     private int 朝向玩家的方向()
     {
-        if(player == null)
+        if (player == null)
             return 0;
         return player.position.x > enemy.transform.position.x ? 1 : -1;
         //Animator界面中参数xVelocity需要临界值0，1与-1
     }
-    public override void Update()
+    private void UpdateTarget()
     {
-        base.Update();
-
-        if (enemy.玩家检测() == true)
-            lastTimeWasInBattle = Time.time;
-        if (战斗时间结束())
-            stateMachine.ChangeState(enemy.idleState);
-
-        if (在攻击距离内() && enemy.玩家检测())
-            stateMachine.ChangeState(enemy.attackState);
-        else
-            enemy.SetVelocity(enemy.battleMoveSpeed * 朝向玩家的方向(), rb.linearVelocity.y);
+        if (enemy.detectPlayer() == false)
+            return;
+        Transform newTarget = enemy.detectPlayer().transform;
+        if (newTarget != lastTarget)
+        {
+            lastTarget = newTarget;
+            player = newTarget;
+        }
     }
 }

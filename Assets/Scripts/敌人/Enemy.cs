@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class Enemy : Entity
 {
+    public EnemyHp enemyHp {  get; private set; }
+
     public Enemy_IdleState idleState;
     public Enemy_MoveState moveState;
     public Enemy_AttackState attackState;
@@ -28,30 +30,46 @@ public class Enemy : Entity
     public Vector2 stunnedVelocity = new Vector2(7,7);
     [SerializeField] protected bool canBeStunned;
 
-    [Header("玩家检测")]
+    [Header("detectPlayer")]
     [SerializeField] private LayerMask 什么是玩家;
     [SerializeField] private Transform 玩家检测起点;
     [SerializeField] private float 玩家检测距离;
 
     public Transform player { get; private set; }
+    public float activeSlowDownmultiplier { get; private set; } = 1;
+    protected override void Awake()
+    {
+        base.Awake();
+        enemyHp = GetComponent<EnemyHp>();
+    }
+    public float GetMoveSpeed() => moveSpeed * activeSlowDownmultiplier;
+    public float GetBattleMoveSpeed() => battleMoveSpeed * activeSlowDownmultiplier;
+
     protected override IEnumerator SlowDownEntityCo(float duration, float slowMultiplier)//冰冻减速异常效果实现
     {
-        //存储原始值
-        float originalMoveSpeed = moveSpeed;
-        float originalBattleSpeed = battleMoveSpeed;
-        float originalanimSpeed = anim.speed;//动画速度
+        ////存储原始值
+        //float originalMoveSpeed = moveSpeed;
+        //float originalBattleSpeed = battleMoveSpeed;
+        //float originalAnimSpeed = anim.speed;//动画速度
 
-        float speedMultiplier = 1 - slowMultiplier;
+        activeSlowDownmultiplier = 1 - slowMultiplier;
 
-        moveSpeed = moveSpeed * speedMultiplier;
-        battleMoveSpeed = battleMoveSpeed * speedMultiplier;
-        anim.speed = anim.speed * speedMultiplier;
+        //moveSpeed = moveSpeed * speedMultiplier;
+        //battleMoveSpeed = battleMoveSpeed * speedMultiplier;
+        anim.speed = anim.speed * activeSlowDownmultiplier;
         
         yield return new WaitForSeconds(duration);
-        //回归原始值
-        moveSpeed = originalMoveSpeed;
-        battleMoveSpeed = originalBattleSpeed;
-        anim.speed = originalanimSpeed;
+        StopSlowDown();
+        ////回归原始值
+        //moveSpeed = originalMoveSpeed;
+        //battleMoveSpeed = originalBattleSpeed;
+        //anim.speed = originalAnimSpeed;
+    }
+    public override void StopSlowDown()
+    {
+        activeSlowDownmultiplier = 1;
+        anim.speed = 1;
+        base.StopSlowDown();
     }
     public void EnableCounterWindow(bool enable)
     {
@@ -77,17 +95,17 @@ public class Enemy : Entity
     public Transform 获取玩家组件()
     {
         if (player == null)
-            player = 玩家检测().transform;//在小怪正常检测到玩家时被调用执行，此时为空，获取玩家组件
+            player = detectPlayer().transform;//在小怪正常检测到玩家时被调用执行，此时为空，获取玩家组件
         return player;//小怪受击进入战斗状态后被调用，然后返回“实体攻击目标检测”中获取并传入这里的this.player的player
     }
 
-    public RaycastHit2D 玩家检测()
+    public RaycastHit2D detectPlayer()
     {
-        RaycastHit2D hit = Physics2D.Raycast(玩家检测起点.position, Vector2.right * 面对方向, 玩家检测距离, 什么是玩家 | 什么是地面或墙壁);
+        RaycastHit2D hit = Physics2D.Raycast(玩家检测起点.position, Vector2.right * 面对方向, 玩家检测距离, 什么是玩家 | whatIsGround);
         if (hit.collider == null || hit.collider.gameObject.layer != LayerMask.NameToLayer("玩家"))
             return default;
         return hit;
-        // "|"表示或，检测到其中一个条件就执行下一句
+        // "|"表示按位或，检测到其中一个条件就执行下一句
         //ray是射线，检测的是最先，最近碰到的碰撞体，如果检测到地面层类别的墙壁，就只会返回地面层类别墙壁的碰撞体
         //RaycastHit2D类型返回值包含隐式布尔转换，检测到碰撞体为true，反之false，详见Enemy_GroundState中注释
     }

@@ -14,9 +14,9 @@ public class SkillObject_Shard : SkillObject_Base
             return;
         transform.position = Vector3.MoveTowards(transform.position, target.position, speed * Time.deltaTime);//实现晶体平滑移动
     }
-    public void MoveToClosestTarget(float speed)//被调用才会启动搜索目标，才会执行update内容
+    public void MoveToClosestTarget(float speed, Transform newtarget = null)//被调用才会启动搜索目标，才会执行update内容
     {
-        target = SearchTarget();
+        target = newtarget == null ? SearchClosestTarget() : newtarget;
         this.speed = speed;
     }
     public void SetUpShard(Skill_Shard shard)
@@ -27,14 +27,14 @@ public class SkillObject_Shard : SkillObject_Base
         float time = shard.GetDetonateTime();
         Invoke(nameof(Explode), time);//延迟time后执行，这是继承了MonoBehaviour的内置方法
     }
-    public void SetUpShard(Skill_Shard shard,float detonationTime,bool canMove,float shardSpeed)//重载
+    public void SetUpShard(Skill_Shard shard, float detonationTime, bool canMove, float shardSpeed, Transform target = null)//重载
     {
         this.skillShard = shard;
         playerStats = shard.player.entityStats;
         damageScale = shard.damageScale;
         Invoke(nameof(Explode), detonationTime);//延迟detonationTime后执行，这是继承了MonoBehaviour的内置方法
         if (canMove)
-            MoveToClosestTarget(shardSpeed);
+            MoveToClosestTarget(shardSpeed,target);
     }
     public void Explode()//爆炸方法
     {

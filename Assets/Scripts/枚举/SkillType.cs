@@ -2,5 +2,5 @@ using UnityEngine;
 
 public enum SkillType
 {
-    Dash,TimeEcho,魔能晶体,掷剑
+    冲刺,克隆,魔能晶体,掷剑,领域,
 }

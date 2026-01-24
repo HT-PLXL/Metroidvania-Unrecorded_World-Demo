@@ -21,6 +21,7 @@ public class Player_DashState : PlayerState
         原始重力 = rb.gravityScale;//把刚体重力原本的值赋给“原始重力”容器
         rb.gravityScale = 0;
         //重力设置为0，水平冲刺无下落
+        player.Hp.CanTakeDamage(false);//使冲刺时无敌
     }
     public override void Update()
     {
@@ -41,6 +42,7 @@ public class Player_DashState : PlayerState
 
         skillManager.dash.OnEndEffect();
 
+        player.Hp.CanTakeDamage(true);
         player.SetVelocity(0, 0);
         rb.gravityScale = 原始重力;
     }

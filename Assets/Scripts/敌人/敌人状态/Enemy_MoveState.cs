@@ -14,7 +14,7 @@ public class Enemy_MoveState : Enemy_GroundState
     public override void Update()
     {
         base.Update();
-        enemy.SetVelocity(enemy.moveSpeed * enemy.面对方向, rb.linearVelocity.y);
+        enemy.SetVelocity(enemy.GetMoveSpeed() * enemy.面对方向, rb.linearVelocity.y);
         if(enemy.检测到地面 == false || enemy.检测到墙壁)
             stateMachine.ChangeState(enemy.idleState);
     }

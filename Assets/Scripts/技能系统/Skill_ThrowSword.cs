@@ -47,6 +47,7 @@ public class Skill_ThrowSword : Skill_Base
         GameObject newSword = Instantiate(UsedSwordPrefab, allDots[1].position, Quaternion.identity);//生成技能升级对应实体
         currentSword = newSword.GetComponent<SkillObject_Sword>();
         currentSword.SetUpSword(this, mouseDirection * throwPower);//传入各种掷剑升级的信息用于技能实体脚本引用覆盖默认值，以及传入初速度用于掷剑
+        setSkillOnCooldown();
     }
     private GameObject GetSwordPrefab()//选择技能升级种类，拓展升级需要来更新
     {

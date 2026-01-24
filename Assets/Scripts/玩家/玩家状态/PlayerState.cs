@@ -28,6 +28,14 @@ public abstract class PlayerState : EntityState
             skillManager.dash.setSkillOnCooldown();//进入冷却
             stateMachine.ChangeState(player.dashState);
         }
+        if(input.Player.终极技能.WasPressedThisFrame() && skillManager.domain.CanUseSkill())//终极技能--领域
+        {
+            if (skillManager.domain.IsInstantDomain())
+                skillManager.domain.CreateDomain();
+            else
+                stateMachine.ChangeState(player.domainState);
+            skillManager.domain.setSkillOnCooldown();
+        }
     }
     public override void UpdateAnimator()
     {
@@ -41,7 +49,7 @@ public abstract class PlayerState : EntityState
             return false;
         if (player.检测到墙壁)
             return false;
-        if(stateMachine.currentState == player.dashState)
+        if(stateMachine.currentState == player.dashState || stateMachine.currentState == player.domainState)
             return false;
         return true;
     }

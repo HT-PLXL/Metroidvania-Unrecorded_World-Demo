@@ -180,6 +180,15 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""终极技能"",
+                    ""type"": ""Button"",
+                    ""id"": ""1f085372-4071-4dad-9c62-3cf735edf011"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -336,6 +345,17 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
                     ""action"": ""鼠标"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e512ab7c-81e6-4483-ac67-42e9e5063162"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard & Mouse"",
+                    ""action"": ""终极技能"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -371,6 +391,7 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
         m_Player_施法 = m_Player.FindAction("施法", throwIfNotFound: true);
         m_Player_掷剑 = m_Player.FindAction("掷剑", throwIfNotFound: true);
         m_Player_鼠标 = m_Player.FindAction("鼠标", throwIfNotFound: true);
+        m_Player_终极技能 = m_Player.FindAction("终极技能", throwIfNotFound: true);
     }
 
     ~@PlayerInputSet()
@@ -461,6 +482,7 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_施法;
     private readonly InputAction m_Player_掷剑;
     private readonly InputAction m_Player_鼠标;
+    private readonly InputAction m_Player_终极技能;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -512,6 +534,10 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Player/鼠标".
         /// </summary>
         public InputAction @鼠标 => m_Wrapper.m_Player_鼠标;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/终极技能".
+        /// </summary>
+        public InputAction @终极技能 => m_Wrapper.m_Player_终极技能;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -568,6 +594,9 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
             @鼠标.started += instance.On鼠标;
             @鼠标.performed += instance.On鼠标;
             @鼠标.canceled += instance.On鼠标;
+            @终极技能.started += instance.On终极技能;
+            @终极技能.performed += instance.On终极技能;
+            @终极技能.canceled += instance.On终极技能;
         }
 
         /// <summary>
@@ -609,6 +638,9 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
             @鼠标.started -= instance.On鼠标;
             @鼠标.performed -= instance.On鼠标;
             @鼠标.canceled -= instance.On鼠标;
+            @终极技能.started -= instance.On终极技能;
+            @终极技能.performed -= instance.On终极技能;
+            @终极技能.canceled -= instance.On终极技能;
         }
 
         /// <summary>
@@ -732,5 +764,12 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void On鼠标(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "终极技能" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void On终极技能(InputAction.CallbackContext context);
     }
 }

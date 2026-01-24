@@ -8,8 +8,10 @@ public class EntityHp : MonoBehaviour, IDamageable
     private Entity entity;
     private Entity_Stats entityStats;
 
+    public float lastDamage { get; private set; }//用于灵魂粒子
+    public bool isDead {  get; private set; }
+    protected bool canTakeDamage = true;
     [SerializeField] public float currentHp;
-    [SerializeField] public bool isDead;
     [Header("血量回复")]
     [SerializeField] private float regenInterval = 1;
     [SerializeField] private bool canRegenHp = true;
@@ -26,16 +28,17 @@ public class EntityHp : MonoBehaviour, IDamageable
         entityVfx = GetComponent<Entity_VFX>();
         HpBar = GetComponentInChildren<Slider>();
         entityStats = GetComponent<Entity_Stats>();
-
-        currentHp = entityStats.GetMaxHp();
-        HpBarUpdate();
-
-        InvokeRepeating(nameof(RegenHp), 0, regenInterval);//自带的重复调用函数(方法名，延迟，间隔)，方法名可以使用‘ “方法名” ’，但使用nameof转为字符串利于修改，比如ctrl+R+R的名称修改
+        if (entityStats != null)
+        {
+            currentHp = entityStats.GetMaxHp();
+            HpBarUpdate();
+            InvokeRepeating(nameof(RegenHp), 0, regenInterval);//自带的重复调用函数(方法名，延迟，间隔)，方法名可以使用‘ “方法名” ’，但使用nameof转为字符串利于修改，比如ctrl+R+R的名称修改
+        }
     }
-    public virtual bool TakeDamage(float damage, float elementalDamage, ElementType element, Transform damageSource)
+    public virtual bool TakeDamage(float damage, float elementalDamage, ElementType element, Transform damageSource)//对受击目标执行
     {
-        if (isDead)
-            return false;
+        //if (isDead || canTakeDamage == false)
+        //    return false;
 
         if (attackEvaded())//闪避
         {
@@ -46,10 +49,10 @@ public class EntityHp : MonoBehaviour, IDamageable
         Entity_Stats attackerStats = damageSource.GetComponent<Entity_Stats>();
         float armorReduction = attackerStats != null ? attackerStats.GetArmorReduction() : 0;
 
-        float mitigation = entityStats.GetArmorMitigation(armorReduction);//护甲在实体自身上，可以直接使用，削减在攻击者身上，需要获取并提供给方法以计算最终减免比例
+        float mitigation = entityStats != null ? entityStats.GetArmorMitigation(armorReduction) : 0;//护甲在实体自身上，可以直接使用，削减在攻击者身上，需要获取并提供给方法以计算最终减免比例
         float finalPhysicalDamage = damage * (1 - mitigation);
 
-        float resistance = entityStats.GetElementalResistance(element);
+        float resistance = entityStats != null ? entityStats.GetElementalResistance(element) : 0;
         float finalElementalDamage = elementalDamage * (1 - resistance);
 
         施加击退(damageSource, element != ElementType.None ? finalElementalDamage : finalPhysicalDamage);
@@ -58,13 +61,17 @@ public class EntityHp : MonoBehaviour, IDamageable
             ReduceHp(finalPhysicalDamage);
         else
             ReduceHp(finalElementalDamage, element);
-
+        lastDamage = finalPhysicalDamage + finalElementalDamage;
+        Debug.Log($"{finalPhysicalDamage}|{finalPhysicalDamage}");
         return true;
     }
-
+    public void CanTakeDamage(bool canTakeDamage) => this.canTakeDamage = canTakeDamage;
     private bool attackEvaded()
     {
-        return Random.Range(0, 100) < entityStats.GetEvasion();
+        if (entityStats == null)
+            return false;
+        else
+            return Random.Range(0, 100) < entityStats.GetEvasion();
     }
     public void RegenHp()//自动回复生命值
     {
@@ -99,7 +106,7 @@ public class EntityHp : MonoBehaviour, IDamageable
         if (currentHp <= 0)
             Die();
     }
-    private void Die()
+    protected virtual void Die()
     {
         isDead = true;
         entity.EntityDead();
@@ -121,14 +128,19 @@ public class EntityHp : MonoBehaviour, IDamageable
     private Vector2 计算受击方向与力度(float damage, Transform 伤害来源)
     {
         int direction = transform.position.x > 伤害来源.position.x ? 1 : -1;
-        Vector2 击退 = 是否是强力攻击(damage) ? 强力击退力度 : 击退力度;
+        Vector2 击退 = IsHeavyDamage(damage) ? 强力击退力度 : 击退力度;
         击退.x = 击退.x * direction;
         return 击退;
     }
     private float 计算持续时间(float damage)
     {
-        return 是否是强力攻击(damage) ? 强力击退硬直时间 : 击退硬直时间;
+        return IsHeavyDamage(damage) ? 强力击退硬直时间 : 击退硬直时间;
     }
-    private bool 是否是强力攻击(float damage) => damage / entityStats.GetMaxHp() > 强力击退伤害阈值;
-
+    private bool IsHeavyDamage(float damage)
+    {
+        if (entityStats == null)
+            return false;
+        else
+            return damage / entityStats.GetMaxHp() > 强力击退伤害阈值;
+    }
 }
