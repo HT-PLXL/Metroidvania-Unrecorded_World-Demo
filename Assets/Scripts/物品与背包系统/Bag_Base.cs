@@ -5,14 +5,24 @@ using UnityEngine;
 public class Bag_Base : MonoBehaviour
 {
     public event Action OnBagChange;
-    public int maxBagSize = 16;
+    public int maxBagSize = 15;
     public List<Bag_Item> itemList = new List<Bag_Item>();
     protected virtual void Awake()
     {
 
     }
     public bool CanAddItem() => itemList.Count < maxBagSize;//已有物品格数小于最大格子数
-    public void AttItem(Bag_Item itemNeedAdd)
+    public bool CanAddStack(Bag_Item itemTryToAddStack)
+    {
+        List<Bag_Item> stackableItemInBag = itemList.FindAll(item => item.itemData == itemTryToAddStack.itemData);
+        foreach(var anyStack in stackableItemInBag)//每个同类可堆叠物品都判断一次是否可继续堆叠
+        {
+            if(anyStack.CanAddStackCount())
+                return true;
+        }
+        return false;
+    }
+    public void AddItem(Bag_Item itemNeedAdd)
     {
         Bag_Item item = SearchItem(itemNeedAdd.itemData);//检查背包中是否已有相同物品
         if (item != null && item.CanAddStackCount())//若背包内对应物品不为空且可堆叠

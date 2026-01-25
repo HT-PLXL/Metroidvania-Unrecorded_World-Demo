@@ -26,11 +26,11 @@
 //}
 
 
-// 无需额外逻辑，仅存储中文名称
+
 using System;
 using UnityEngine;
 
-[AttributeUsage(AttributeTargets.Field, Inherited = true)]
+[AttributeUsage(AttributeTargets.Field | AttributeTargets.Enum, Inherited = true)]
 public class cnAttribute : PropertyAttribute
 {
     public readonly string ChineseName;

@@ -4,6 +4,6 @@ using UnityEngine;
 [Serializable]
 public class Stat_ResourceGroup
 {
-    public Stat maxHp;
-    public Stat HpRegen;
+    [cn("最大血量")] public Stat maxHp;
+    [cn("生命回复")] public Stat HpRegen;
 }

@@ -135,7 +135,7 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     }
     public void OnPointerExit(PointerEventData eventData)
     {
-        ui.skillTooltip.showTooltip(false, rect);
+        ui.skillTooltip.ShowTooltip(false, rect);
 
         if (isUnlocked == false && islocked == false)
             UpdateIconColor(lastColor);

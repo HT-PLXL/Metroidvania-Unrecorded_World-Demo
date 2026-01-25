@@ -4,10 +4,10 @@ public class Entity_Stats : MonoBehaviour
 {
     public Stat_SetupSO defaultStatSetup;
 
-    public Stat_ResourceGroup resources;//资源
-    public Stat_AttackGroup attack;
-    public Stat_DefenseGroup defense;
-    public Stat_MajorGroup major;
+    [cn("最大生命值与回复")] public Stat_ResourceGroup resources;//资源
+    [cn("攻击")] public Stat_AttackGroup attack;
+    [cn("防御")] public Stat_DefenseGroup defense;
+    [cn("基础附加属性")] public Stat_MajorGroup major;
 
     public AttackData GetAttackData(DamageScaleFactor damageScale)
     {
@@ -77,14 +77,12 @@ public class Entity_Stats : MonoBehaviour
         float finalMaxHp = baseMaxHp + bounsMaxHp;
         return finalMaxHp;
     }
-    public float GetArmorMitigation(float armorReduction)//护甲减免
+    public float GetArmorMitigation(float armorReduction)//护甲值伤害减免
     {
-        float baseArmor = defense.armor.GetValue();
-        float bonusArmor = major.vitality.GetValue();//每点活力值+1护甲
-        float totalArmor = baseArmor + bonusArmor;
+        float baseArmor = GetBaseArmor();
 
         float reductionMultiplier = Mathf.Clamp(1 - armorReduction, 0, 1);
-        float effectiveArmor = totalArmor * reductionMultiplier;
+        float effectiveArmor = baseArmor * reductionMultiplier;
 
         float mitigation = effectiveArmor / (effectiveArmor + 100);//调整常数即可改变每点护甲收益
         float mitigationCap = 0.99f;//最大护甲值伤害减免
@@ -92,6 +90,7 @@ public class Entity_Stats : MonoBehaviour
 
         return finalmitigation;
     }
+    public float GetBaseArmor() => defense.armor.GetValue() + (major.vitality.GetValue() * 2);//每点活力值+2护甲
     public float GetArmorReduction()//护甲削减
     {
         float finalReduction = attack.armorReduction.GetValue() / 100;
@@ -99,23 +98,17 @@ public class Entity_Stats : MonoBehaviour
     }
     public float GetPhysicalDamage(out bool isCrit, float scareFactor = 1)//out关键字用于额外返回多个值供调用，此处的isCrit在形参中声明在方法体中确定值
     {
-        float baseDamage = attack.damage.GetValue();
-        float bonusDamage = major.strength.GetValue();
-        float totalBaseDamage = baseDamage + bonusDamage;
+        float baseDamage = GetBaseDamage();
+        float critChance = GetCritChance();
+        float critPower = GetCritPower() / 100;
 
-        float baseCritChance = attack.critChance.GetValue();
-        float bonusCritChance = major.agility.GetValue() * 0.3f;//每点敏捷+0.3%暴击率
-        float finalCritChance = baseCritChance + bonusCritChance;
-
-        float baseCritPower = attack.critPower.GetValue();
-        float bonusCritPower = major.strength.GetValue() * 0.5f;//每点力量+0.5%的暴击伤害
-        float finalCritPower = (baseCritPower + bonusCritPower) / 100;//最终暴击伤害（倍率）
-
-        isCrit = Random.Range(0, 100) < finalCritChance;//注意形参列表中已经声明isCrit为bool值
-        float finalDamage = isCrit ? totalBaseDamage * finalCritPower : totalBaseDamage;
-
+        isCrit = Random.Range(0, 100) < critChance;//注意形参列表中已经声明isCrit为bool值
+        float finalDamage = isCrit ? baseDamage * critPower : baseDamage;
         return finalDamage * scareFactor;
     }
+    public float GetBaseDamage() => attack.damage.GetValue() + (major.strength.GetValue() * 2f);
+    public float GetCritChance() => attack.critChance.GetValue() + (major.agility.GetValue() * 0.5f);//每点敏捷+0.5%暴击率
+    public float GetCritPower() => attack.critPower.GetValue() + (major.strength.GetValue() * 0.5f);//每点力量+0.5%的暴击伤害
     public float GetEvasion()
     {
         float baseEvasion = defense.evasion.GetValue();
@@ -156,7 +149,6 @@ public class Entity_Stats : MonoBehaviour
             case StatType.LightningResistance: return defense.lightningResistance;
 
             default:
-                Debug.LogWarning($"数据种类{type}尚未实现");
                 return null;
         }
     }

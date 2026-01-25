@@ -26,13 +26,13 @@ public class UI_SkillTooltip : UI_Tooltip
         ui = GetComponentInParent<UI>();
         skillTree = ui.GetComponentInChildren<UI_SkillTree>(true);
     }
-    public override void showTooltip(bool show, RectTransform targetRect)
+    public override void ShowTooltip(bool show, RectTransform targetRect)
     {
-        base.showTooltip(show, targetRect);
+        base.ShowTooltip(show, targetRect);
     }
     public void showTooltip(bool show, RectTransform targetRect, UI_TreeNode node)//同名函数重载，允许不同参数执行不同内容
     {
-        base.showTooltip(show, targetRect);
+        base.ShowTooltip(show, targetRect);
         if (show == false)
             return;
 

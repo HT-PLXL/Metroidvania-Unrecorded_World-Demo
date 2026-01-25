@@ -3,14 +3,14 @@ using UnityEngine;
 [Serializable]
 public class Stat_AttackGroup
 {
-    public Stat attackSpeed;
+    [cn("¹¥»÷ËÙ¶È")] public Stat attackSpeed;
 
-    public Stat damage;
-    public Stat critChance;
-    public Stat critPower;
-    public Stat armorReduction;//»¤¼×Ï÷¼õ
+    [cn("ÎïÀíÉËº¦")] public Stat damage;
+    [cn("±©»÷ÂÊ")] public Stat critChance;
+    [cn("±©»÷ÉËº¦")] public Stat critPower;
+    [cn("»¤¼×Ï÷¼õ")] public Stat armorReduction;//»¤¼×Ï÷¼õ
     //ÔªËØÉËº¦
-    public Stat fireDamage;
-    public Stat iceDamage;
-    public Stat lightningDamage;//ÉÁµçÉËº¦
+    [cn("»ğÑæÉËº¦")] public Stat fireDamage;
+    [cn("±ùËªÉËº¦")] public Stat iceDamage;
+    [cn("À×µçÉËº¦")] public Stat lightningDamage;//ÉÁµçÉËº¦
 }

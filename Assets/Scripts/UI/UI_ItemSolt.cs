@@ -3,15 +3,19 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 //物品槽脚本，置于物品槽对象上
-public class UI_ItemSolt : MonoBehaviour,IPointerDownHandler
+public class UI_ItemSolt : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler
 {
     public Bag_Item itemInSlot { get; private set; }
-    private Bag_Player bag;
+    protected Bag_Player bag;
+    protected UI ui;
+    protected RectTransform rect;
     [Header("物品槽设置")]
     [SerializeField] private Image itemIcon;//unity面板选择
     [SerializeField] private TextMeshProUGUI itemStackCount;
-    private void Awake()
+    protected void Awake()
     {
+        ui = GetComponentInParent<UI>();
+        rect = GetComponent<RectTransform>();
         bag = FindAnyObjectByType<Bag_Player>();
     }
     public void UpdateSlot(Bag_Item item)//更新具体槽位信息
@@ -30,10 +34,24 @@ public class UI_ItemSolt : MonoBehaviour,IPointerDownHandler
         itemStackCount.text = item.StackCount > 1 ? item.StackCount.ToString() : "";
     }
 
-    public void OnPointerDown(PointerEventData eventData)//玩家点击背包的物品
+    public virtual void OnPointerDown(PointerEventData eventData)//玩家点击背包的物品
     {
-        if(itemInSlot == null)
+        if (itemInSlot == null)
             return;
         bag.TryEquipItem(itemInSlot);//尝试装备点击的物品
+        if (itemInSlot == null)//最后一个有装备的格子在装备后会为空，需要再次判断
+            ui.itemToolTip.ShowTooltip(false, null);
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if (itemInSlot == null)
+            return;
+        ui.itemToolTip.ShowTooltip(true, rect, itemInSlot);
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        ui.itemToolTip.ShowTooltip(false, null);
     }
 }
