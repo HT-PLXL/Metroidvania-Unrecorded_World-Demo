@@ -2,13 +2,17 @@ using UnityEngine;
 //此类集中玩家的属性值，并提供了属性的计算方法
 public class Entity_Stats : MonoBehaviour
 {
-    public Stat_SetupSO defaultStatSetup;
+    [cn("默认数据-右键菜单更新")] public Stat_SetupSO defaultStatSetup;
 
     [cn("最大生命值与回复")] public Stat_ResourceGroup resources;//资源
     [cn("攻击")] public Stat_AttackGroup attack;
     [cn("防御")] public Stat_DefenseGroup defense;
     [cn("基础附加属性")] public Stat_MajorGroup major;
 
+    protected virtual void Awake()
+    {
+        
+    }
     public AttackData GetAttackData(DamageScaleFactor damageScale)
     {
         return new AttackData(this, damageScale);
@@ -19,7 +23,7 @@ public class Entity_Stats : MonoBehaviour
         float iceDamage = attack.iceDamage.GetValue();
         float lightningDamage = attack.lightningDamage.GetValue();
 
-        float bonusElementalDamage = major.intelligence.GetValue();//每点智力+1元素伤害
+        float bonusElementalDamage = (major.intelligence.GetValue() * 2);//每点智力+2元素伤害
 
         float hightstDamage = fireDamage;
         element = ElementType.Fire;
@@ -50,7 +54,7 @@ public class Entity_Stats : MonoBehaviour
     public float GetElementalResistance(ElementType element)
     {
         float baseResistance = 0;
-        float bonusResistance = major.intelligence.GetValue() * .5f;//每点智力+0.5抗性
+        float bonusResistance = major.intelligence.GetValue() * .5f;//每点智力+0.5各属性抗性
 
         switch (element)
         {
@@ -73,7 +77,7 @@ public class Entity_Stats : MonoBehaviour
     public float GetMaxHp()
     {
         float baseMaxHp = resources.maxHp.GetValue();
-        float bounsMaxHp = major.vitality.GetValue() * 5;
+        float bounsMaxHp = major.vitality.GetValue() * 5;//每点活力+5最大生命
         float finalMaxHp = baseMaxHp + bounsMaxHp;
         return finalMaxHp;
     }

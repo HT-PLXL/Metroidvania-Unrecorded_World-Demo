@@ -36,9 +36,16 @@ public class UI_ItemSolt : MonoBehaviour, IPointerDownHandler, IPointerEnterHand
 
     public virtual void OnPointerDown(PointerEventData eventData)//玩家点击背包的物品
     {
-        if (itemInSlot == null)
+        if (itemInSlot == null ||itemInSlot.itemData.itemType == ItemType.材料)
             return;
-        bag.TryEquipItem(itemInSlot);//尝试装备点击的物品
+        if (itemInSlot.itemData.itemType == ItemType.消耗品)
+        {
+            if (itemInSlot.itemEffect.CanBeUsed() == false)//针对buff消耗品
+                return;
+            bag.TryUseItem(itemInSlot);
+        }
+        else
+            bag.TryEquipItem(itemInSlot);//尝试装备点击的物品
         if (itemInSlot == null)//最后一个有装备的格子在装备后会为空，需要再次判断
             ui.itemToolTip.ShowTooltip(false, null);
     }

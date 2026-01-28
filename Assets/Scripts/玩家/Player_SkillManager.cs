@@ -9,7 +9,7 @@ public class Player_SkillManager : MonoBehaviour
     public Skill_ThrowSword throwSword { get; private set; }
     public Skill_Clone clone { get; private set; }
     public Skill_Domain domain {  get; private set; }
-    private Skill_Base[] allSkills;
+    public Skill_Base[] allSkills {  get; private set; }
 
     private void Awake()
     {

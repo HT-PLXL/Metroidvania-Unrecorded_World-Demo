@@ -9,6 +9,10 @@ public class Player_VFX : Entity_VFX
     [SerializeField][cn("残影预制体")] private GameObject echoPrehab;
     private Coroutine echoCo;
 
+    public void CreateEffectForTarget(GameObject effectPrefab ,Transform target)//为敌人应用特效
+    {
+        Instantiate(effectPrefab, target.position ,Quaternion.identity);
+    }
     public void DoEchoEffect(float duration)
     {
         if (echoCo != null)

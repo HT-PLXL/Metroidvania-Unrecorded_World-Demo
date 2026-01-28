@@ -1,9 +1,9 @@
 using UnityEngine;
 
-public class 玩家战斗及目标检测 : Entity_Combat
+public class Player_Combat : Entity_Combat
 {
     [Header("弹反细节")]
-    [SerializeField] private float 弹反动作僵直时间;
+    [SerializeField] private float 尝试弹反后摇僵直时间 = 0.25f;
     public bool 尝试弹反()//bool类型方法必须要有返回值，不然会标红
     {
         bool 已弹反 = false;
@@ -22,6 +22,6 @@ public class 玩家战斗及目标检测 : Entity_Combat
     }
     public float 获得弹反动作僵直时间()
     {
-        return 弹反动作僵直时间;
+        return 尝试弹反后摇僵直时间;
     }
 }

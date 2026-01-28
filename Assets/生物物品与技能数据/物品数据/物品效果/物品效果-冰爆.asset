@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fda39292b8c39ca42a3c1f497e30bc9a, type: 3}
+  m_Name: "\u7269\u54C1\u6548\u679C-\u51B0\u7206"
+  m_EditorClassIdentifier: 
+  effectDescription: "\u5F53\u4F60\u53D7\u5230\u4F24\u5BB3\u4E14\u751F\u547D\u503C\u964D\u81F325%\u4EE5\u4E0B\u65F6\uFF0C\u91CA\u653E\u4E00\u6B21\u51B0\u7206\u3002\n\u5BF9\u9644\u8FD1\u654C\u4EBA\u9020\u6210150\u51B0\u5143\u7D20\u4F24\u5BB3\uFF0C\u51B7\u5374\u65F6\u95F440s"
+  effectData:
+    chillDuration: 3
+    chillSlowMulitiplier: 0.7
+    burnDuration: 0
+    totalBurnDamage: 0
+    lightningDuration: 0
+    lightningDamage: 0
+    lightningCharge: 0
+  IceDamage: 150
+  WhoIsEnemy:
+    serializedVersion: 2
+    m_Bits: 256
+  HpPercentTrigger: 0.25
+  cooldown: 40
+  iceBlastPrefab: {fileID: 5467607073689512320, guid: 3bc5aa017f56b5b4da9e69b031bdd8e2, type: 3}
+  onHitPrefab: {fileID: 2480556560465659715, guid: f1bfa83ea562e8448a91bbbf756e9b57, type: 3}

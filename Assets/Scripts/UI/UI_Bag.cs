@@ -18,6 +18,12 @@ public class UI_Bag : MonoBehaviour
         bag.OnBagChange += UpdateUI;//订阅方法
         UpdateUI();//使初始图标透明，默认状态下背包槽和图标都使用槽位背景图，如果无物品，则对应图标透明
     }
+    private void OnEnable()
+    {
+        if(bag == null)
+            return;
+        UpdateUI();
+    }
     private void UpdateUI()
     {
         UpdateBagSolts();
@@ -40,7 +46,7 @@ public class UI_Bag : MonoBehaviour
     }
     private void UpdateEquipmentSlots()//更新装备栏
     {
-        List<Bag_EquipmentSlot> PlayerEquipList = bag.equipmentList;
+        List<Bag_EquipmentSlot> PlayerEquipList = bag.equipmentSlotList;
         for(int i = 0; i< ui_EquipSlots.Length; i++)
         {
             var PlayerEquipSlot = PlayerEquipList[i];

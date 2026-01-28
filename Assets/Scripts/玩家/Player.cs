@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Player : Entity
 {
+    public static Player Instance;//在整个游戏流程中，类只需要一个实例时才适合设为静态实例
     public static event Action 在玩家死亡之时;
     //static静态，后接方法，直接使用类名+方法（）调用，但只能访问静态的方法和属性，不能访问实例成员
     //static event：静态事件不需要创建类的对象就可以订阅（subscribe）或触发（invoke）
@@ -15,10 +16,11 @@ public class Player : Entity
     //创建状态脚本，在此声明公开的脚本类型+变量
     //最后在Awake（）中new参数后创建新的状态脚本写继承，触发、结束和状态转换
     private UI ui;
-    public Player_SkillManager skillManager {  get; private set; }
-    public Player_VFX vfx { get; private set;}
-    public EntityHp Hp { get; private set;}
+    public Player_SkillManager skillManager { get; private set; }
+    public Player_VFX vfx { get; private set; }
+    public EntityHp Hp { get; private set; }
     public Entity_StatusHandler statusHandler { get; private set; }
+    public Player_Combat playerCombat { get; private set; }
 
 
     public Player_IdleState idleState { get; private set; }
@@ -65,12 +67,14 @@ public class Player : Entity
     {
         base.Awake();
 
+        Instance = this;
         ui = FindAnyObjectByType<UI>();//全局范围查找第一个类型为UI的对象
         input = new PlayerInputSet();
         skillManager = GetComponent<Player_SkillManager>();
         vfx = GetComponent<Player_VFX>();
-        Hp =GetComponent<EntityHp>();
+        Hp = GetComponent<EntityHp>();
         statusHandler = GetComponent<Entity_StatusHandler>();
+        playerCombat = GetComponent<Player_Combat>();
 
         idleState = new Player_IdleState(this, stateMachine, "idle");//橙色内容是动画师界面的参数，必须一致
         moveState = new Player_MoveState(this, stateMachine, "move");
@@ -96,7 +100,7 @@ public class Player : Entity
         base.Start();
         stateMachine.Initalize(idleState);
     }
-    public void TeleportPlayer(Vector3 position)=> transform.position = position;//传送玩家
+    public void TeleportPlayer(Vector3 position) => transform.position = position;//传送玩家
     protected override IEnumerator SlowDownEntityCo(float duration, float slowMultiplier)
     {
         //存储原始值开始
@@ -106,7 +110,7 @@ public class Player : Entity
         Vector2 originalWallJump = wallJumpForce;
         Vector2 originalJumpAttackVelocity = jumpAttackVelocity;
         Vector2[] originalAttackVelocity = new Vector2[attackVelocity.Length];//攻击速度是3段普攻的不同数据，存储在数组（引用类型，变量实际只是个指针）不能简单的赋值保存，所以用for循环拷贝原数组
-        for(int i = 0; i < attackVelocity.Length; i++)
+        for (int i = 0; i < attackVelocity.Length; i++)
         {
             originalAttackVelocity[i] = attackVelocity[i];
         }
@@ -119,7 +123,7 @@ public class Player : Entity
         wallJumpForce = wallJumpForce * speedMultiplier;
         jumpAttackVelocity = jumpAttackVelocity * speedMultiplier;
 
-        for(int i = 0; i < attackVelocity.Length; i++)
+        for (int i = 0; i < attackVelocity.Length; i++)
         {
             attackVelocity[i] = attackVelocity[i] * speedMultiplier;
         }
@@ -140,7 +144,7 @@ public class Player : Entity
     public override void EntityDead()
     {
         base.EntityDead();
-        在玩家死亡之时?.Invoke ();//用Invoke执行委托，
+        在玩家死亡之时?.Invoke();//用Invoke执行委托，
         stateMachine.ChangeState(deadState);
     }
     public void 延迟进入攻击状态()
@@ -168,7 +172,8 @@ public class Player : Entity
         //ctx为context，前后需保持一致
 
         input.Player.开关技能树.performed += ctx => ui.ToggleSkillTreeUI();
-        input.Player.关闭技能树.performed += ctx => ui.CloseSkillTreeUI();
+        input.Player.开关角色UI.performed += ctx => ui.ToggleBagUI();
+        input.Player.关闭所有UI.performed += ctx => ui.CloseUI();
         input.Player.施法.performed += ctx => skillManager.shard.TryUseSkill();
         input.Player.施法.performed += ctx => skillManager.clone.TryUseSkill();//记得调整
     }

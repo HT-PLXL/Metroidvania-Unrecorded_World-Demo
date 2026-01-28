@@ -2,9 +2,9 @@ using UnityEngine;
 //子类挂载在技能容器上，下方声明的参数用来在技能容器修改对应技能实体脚本声明的参数的值
 public class Skill_Base : MonoBehaviour
 {
-    public Player player {  get; private set; }
+    public Player player { get; private set; }
     public Player_SkillManager skillManager { get; private set; }
-    public DamageScaleFactor damageScale {  get; private set; }
+    public DamageScaleFactor damageScale { get; private set; }
     [Header("当前技能详情")]
     [SerializeField][cn("冷却时间")] protected float cooldown;
     [SerializeField][cn("技能种类")] protected SkillType skillType;
@@ -29,7 +29,7 @@ public class Skill_Base : MonoBehaviour
 
     public virtual bool CanUseSkill()
     {
-        if(upgradeType == SkillUpgradeType.None)
+        if (upgradeType == SkillUpgradeType.None)
             return false;
         if (OnCooldown())
         {
@@ -45,5 +45,7 @@ public class Skill_Base : MonoBehaviour
         damageScale = Type.damageScale;
         ResetCooldown();
     }
-    protected bool Unlocked(SkillUpgradeType upgradeCheck)=> upgradeType == upgradeCheck;
+    protected bool Unlocked(SkillUpgradeType upgradeCheck) => upgradeType == upgradeCheck;
+    public SkillUpgradeType GetUpgradeType() => upgradeType;
+    public SkillType GetSkillType() => skillType;
 }

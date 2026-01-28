@@ -1,9 +1,10 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class UI_StatSlot : MonoBehaviour
+public class UI_StatSlot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler
 {
-    private Entity_Stats playerStats;
+    private Player_Stats playerStats;
     private RectTransform rect;
     private UI ui;
     [SerializeField] private StatType statType;
@@ -17,9 +18,17 @@ public class UI_StatSlot : MonoBehaviour
     }
     private void Awake()
     {
-        ui = GetComponentInChildren<UI>();
+        ui = GetComponentInParent<UI>();
         rect = GetComponent<RectTransform>();
-        playerStats = FindFirstObjectByType<Entity_Stats>();
+        playerStats = FindFirstObjectByType<Player_Stats>();
+    }
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        ui.statsTooltip.ShowTooltip(true, rect, statType);
+    }
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        ui.statsTooltip.ShowTooltip(false,null);
     }
     public void UpdateStatValue()
     {

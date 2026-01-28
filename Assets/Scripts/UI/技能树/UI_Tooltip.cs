@@ -61,9 +61,8 @@ public class UI_Tooltip : MonoBehaviour
         }
         // 垂直方向：保持与目标对齐，边界检查
         float halfHeight = tooltipSize.y / 2f;
-        newPos.y = Mathf.Clamp(targetPos.y,
-            halfHeight + offset.y,
-            Screen.height - halfHeight - offset.y);
+        newPos.y = targetPos.y + offset.y;
+        newPos.y = Mathf.Clamp(newPos.y, halfHeight + offset.y,Screen.height - halfHeight - offset.y);
         // 应用位置
         rect.position = newPos;
     }

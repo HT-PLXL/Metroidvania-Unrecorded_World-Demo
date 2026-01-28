@@ -21,7 +21,7 @@ public class PickableItem : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         bag = collision.GetComponent<Bag_Base>();
-        bool canAddItem = bag.CanAddItem() || bag.CanAddStack(itemNeedAdd);
+        bool canAddItem = bag.CanAddItem() || bag.SearchStackableItem(itemNeedAdd) != null ;
         if (bag != null && canAddItem)
         {
             bag.AddItem(itemNeedAdd);

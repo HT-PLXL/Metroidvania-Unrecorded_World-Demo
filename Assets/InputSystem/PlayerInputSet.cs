@@ -146,7 +146,7 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""关闭技能树"",
+                    ""name"": ""关闭所有UI"",
                     ""type"": ""Button"",
                     ""id"": ""92d46a3e-1ae1-42ac-b73e-e1bec8d7e6c4"",
                     ""expectedControlType"": """",
@@ -185,6 +185,15 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
                     ""name"": ""终极技能"",
                     ""type"": ""Button"",
                     ""id"": ""1f085372-4071-4dad-9c62-3cf735edf011"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""开关角色UI"",
+                    ""type"": ""Button"",
+                    ""id"": ""e5bae10c-6dfc-4511-bef6-d4d7ab6b42c0"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
@@ -320,7 +329,7 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Keyboard & Mouse"",
-                    ""action"": ""关闭技能树"",
+                    ""action"": ""关闭所有UI"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -356,6 +365,17 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
                     ""action"": ""终极技能"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""633a0c6b-f018-4a74-b854-08a70b85a285"",
+                    ""path"": ""<Keyboard>/c"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard & Mouse"",
+                    ""action"": ""开关角色UI"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -387,11 +407,12 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
         m_Player_普通攻击 = m_Player.FindAction("普通攻击", throwIfNotFound: true);
         m_Player_弹反 = m_Player.FindAction("弹反", throwIfNotFound: true);
         m_Player_开关技能树 = m_Player.FindAction("开关技能树", throwIfNotFound: true);
-        m_Player_关闭技能树 = m_Player.FindAction("关闭技能树", throwIfNotFound: true);
+        m_Player_关闭所有UI = m_Player.FindAction("关闭所有UI", throwIfNotFound: true);
         m_Player_施法 = m_Player.FindAction("施法", throwIfNotFound: true);
         m_Player_掷剑 = m_Player.FindAction("掷剑", throwIfNotFound: true);
         m_Player_鼠标 = m_Player.FindAction("鼠标", throwIfNotFound: true);
         m_Player_终极技能 = m_Player.FindAction("终极技能", throwIfNotFound: true);
+        m_Player_开关角色UI = m_Player.FindAction("开关角色UI", throwIfNotFound: true);
     }
 
     ~@PlayerInputSet()
@@ -478,11 +499,12 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_普通攻击;
     private readonly InputAction m_Player_弹反;
     private readonly InputAction m_Player_开关技能树;
-    private readonly InputAction m_Player_关闭技能树;
+    private readonly InputAction m_Player_关闭所有UI;
     private readonly InputAction m_Player_施法;
     private readonly InputAction m_Player_掷剑;
     private readonly InputAction m_Player_鼠标;
     private readonly InputAction m_Player_终极技能;
+    private readonly InputAction m_Player_开关角色UI;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -519,9 +541,9 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
         /// </summary>
         public InputAction @开关技能树 => m_Wrapper.m_Player_开关技能树;
         /// <summary>
-        /// Provides access to the underlying input action "Player/关闭技能树".
+        /// Provides access to the underlying input action "Player/关闭所有UI".
         /// </summary>
-        public InputAction @关闭技能树 => m_Wrapper.m_Player_关闭技能树;
+        public InputAction @关闭所有UI => m_Wrapper.m_Player_关闭所有UI;
         /// <summary>
         /// Provides access to the underlying input action "Player/施法".
         /// </summary>
@@ -538,6 +560,10 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Player/终极技能".
         /// </summary>
         public InputAction @终极技能 => m_Wrapper.m_Player_终极技能;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/开关角色UI".
+        /// </summary>
+        public InputAction @开关角色UI => m_Wrapper.m_Player_开关角色UI;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -582,9 +608,9 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
             @开关技能树.started += instance.On开关技能树;
             @开关技能树.performed += instance.On开关技能树;
             @开关技能树.canceled += instance.On开关技能树;
-            @关闭技能树.started += instance.On关闭技能树;
-            @关闭技能树.performed += instance.On关闭技能树;
-            @关闭技能树.canceled += instance.On关闭技能树;
+            @关闭所有UI.started += instance.On关闭所有UI;
+            @关闭所有UI.performed += instance.On关闭所有UI;
+            @关闭所有UI.canceled += instance.On关闭所有UI;
             @施法.started += instance.On施法;
             @施法.performed += instance.On施法;
             @施法.canceled += instance.On施法;
@@ -597,6 +623,9 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
             @终极技能.started += instance.On终极技能;
             @终极技能.performed += instance.On终极技能;
             @终极技能.canceled += instance.On终极技能;
+            @开关角色UI.started += instance.On开关角色UI;
+            @开关角色UI.performed += instance.On开关角色UI;
+            @开关角色UI.canceled += instance.On开关角色UI;
         }
 
         /// <summary>
@@ -626,9 +655,9 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
             @开关技能树.started -= instance.On开关技能树;
             @开关技能树.performed -= instance.On开关技能树;
             @开关技能树.canceled -= instance.On开关技能树;
-            @关闭技能树.started -= instance.On关闭技能树;
-            @关闭技能树.performed -= instance.On关闭技能树;
-            @关闭技能树.canceled -= instance.On关闭技能树;
+            @关闭所有UI.started -= instance.On关闭所有UI;
+            @关闭所有UI.performed -= instance.On关闭所有UI;
+            @关闭所有UI.canceled -= instance.On关闭所有UI;
             @施法.started -= instance.On施法;
             @施法.performed -= instance.On施法;
             @施法.canceled -= instance.On施法;
@@ -641,6 +670,9 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
             @终极技能.started -= instance.On终极技能;
             @终极技能.performed -= instance.On终极技能;
             @终极技能.canceled -= instance.On终极技能;
+            @开关角色UI.started -= instance.On开关角色UI;
+            @开关角色UI.performed -= instance.On开关角色UI;
+            @开关角色UI.canceled -= instance.On开关角色UI;
         }
 
         /// <summary>
@@ -737,12 +769,12 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void On开关技能树(InputAction.CallbackContext context);
         /// <summary>
-        /// Method invoked when associated input action "关闭技能树" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "关闭所有UI" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void On关闭技能树(InputAction.CallbackContext context);
+        void On关闭所有UI(InputAction.CallbackContext context);
         /// <summary>
         /// Method invoked when associated input action "施法" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
@@ -771,5 +803,12 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void On终极技能(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "开关角色UI" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void On开关角色UI(InputAction.CallbackContext context);
     }
 }

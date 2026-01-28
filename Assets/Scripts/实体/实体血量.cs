@@ -1,15 +1,17 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class EntityHp : MonoBehaviour, IDamageable
 {
+    public event Action OnUnderAttack;
     private Slider HpBar;
     private Entity_VFX entityVfx;
     private Entity entity;
     private Entity_Stats entityStats;
 
     public float lastDamage { get; private set; }//用于灵魂粒子
-    public bool isDead {  get; private set; }
+    public bool isDead { get; private set; }
     protected bool canTakeDamage = true;
     [SerializeField] public float currentHp;
     [Header("血量回复")]
@@ -62,8 +64,14 @@ public class EntityHp : MonoBehaviour, IDamageable
         else
             ReduceHp(finalElementalDamage, element);
         lastDamage = finalPhysicalDamage + finalElementalDamage;
-        Debug.Log($"{finalPhysicalDamage}|{finalPhysicalDamage}");
+
+        OnUnderAttack?.Invoke();//每次受到攻击执行
         return true;
+    }
+    public float GetHpPercent()
+    {
+        float hpPercent = currentHp / entityStats.GetMaxHp();
+        return hpPercent;
     }
     public void CanTakeDamage(bool canTakeDamage) => this.canTakeDamage = canTakeDamage;
     private bool attackEvaded()
@@ -71,7 +79,7 @@ public class EntityHp : MonoBehaviour, IDamageable
         if (entityStats == null)
             return false;
         else
-            return Random.Range(0, 100) < entityStats.GetEvasion();
+            return UnityEngine.Random.Range(0, 100) < entityStats.GetEvasion();
     }
     public void RegenHp()//自动回复生命值
     {

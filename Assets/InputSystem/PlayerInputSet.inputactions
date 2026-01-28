@@ -60,7 +60,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "关闭技能树",
+                    "name": "关闭所有UI",
                     "type": "Button",
                     "id": "92d46a3e-1ae1-42ac-b73e-e1bec8d7e6c4",
                     "expectedControlType": "",
@@ -99,6 +99,15 @@
                     "name": "终极技能",
                     "type": "Button",
                     "id": "1f085372-4071-4dad-9c62-3cf735edf011",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "开关角色UI",
+                    "type": "Button",
+                    "id": "e5bae10c-6dfc-4511-bef6-d4d7ab6b42c0",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -234,7 +243,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard & Mouse",
-                    "action": "关闭技能树",
+                    "action": "关闭所有UI",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -268,6 +277,17 @@
                     "processors": "",
                     "groups": ";Keyboard & Mouse",
                     "action": "终极技能",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "633a0c6b-f018-4a74-b854-08a70b85a285",
+                    "path": "<Keyboard>/c",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard & Mouse",
+                    "action": "开关角色UI",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

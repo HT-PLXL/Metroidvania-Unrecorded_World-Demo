@@ -1,7 +1,9 @@
+using System;
 using UnityEngine;
 
 public class Entity_Combat : MonoBehaviour
 {
+    public event Action<float> OnTakingPhysicalDamage;//触发事件时顺带传入一个值
     private Entity_VFX vfx;
     private Entity_Stats stats;//声明stats即可使用Entity_Stats中GetAttackData()
     [HideInInspector] public DamageScaleFactor damageScale;
@@ -31,7 +33,10 @@ public class Entity_Combat : MonoBehaviour
             //暂时不让普攻使用元素伤害以及元素附着特效
             bool targetGotHit = damageTarget.TakeDamage(physicalDamage, elementalDamage, ElementType.None, transform);//暂时不让普攻使用元素伤害，此处传入ElementType.None
             if (targetGotHit)
+            {
+                OnTakingPhysicalDamage?.Invoke(physicalDamage);//触发事件时顺带传入物理伤害
                 vfx.CreateHitVfx(target.transform, attackData.isCrit, attackData.element);//创建打击特效粒子
+            }
         }
     }
     protected Collider2D[] GetDetectColliders()//获得检测到的碰撞体

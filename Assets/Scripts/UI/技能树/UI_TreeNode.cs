@@ -56,6 +56,8 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     }
     public void RefundSkillPoint()
     {
+        if (skillData.unlockedByDefault)
+            return;
         islocked = false;
         if (isUnlocked)
         {
@@ -63,7 +65,7 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
             skillTree.AddSkillPoint(skillData.cost);
         }
         UpdateIconColor(GetColor(lockedColor));//恢复图标颜色
-        connectHandle.UnlockConnectionLineImage(false);//恢复连接线颜色
+        connectHandle?.UnlockConnectionLineImage(false);//恢复连接线颜色
     }
     private void Unlock()
     {
@@ -74,6 +76,15 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         connectHandle.UnlockConnectionLineImage(true);//改变连接线颜色
 
         skillTree.skillManager.GetSkillByType(skillData.skillType).SetSkillUpgrade(skillData.upgradeData);
+    }
+    public void UnlockByUsingSaveData()//用于读档
+    {
+        isUnlocked = true;
+        UpdateIconColor(Color.white);//恢复原色
+        LockConflictNodes();
+
+        connectHandle.UnlockConnectionLineImage(true);//改变连接线颜色
+
     }
     private bool CanBeUnlocked()//判断节点能否被解锁
     {
@@ -102,7 +113,7 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     public void LockChildNodes()
     {
         islocked = true;
-        foreach(var node in connectHandle.GetChildNodes())
+        foreach (var node in connectHandle.GetChildNodes())
             node.LockChildNodes();
     }
     private void UpdateIconColor(Color color)

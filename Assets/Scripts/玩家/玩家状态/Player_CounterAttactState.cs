@@ -2,11 +2,11 @@ using UnityEngine;
 
 public class Player_CounterAttactState : PlayerState
 {
-    private 玩家战斗及目标检测 combat;
+    private Player_Combat combat;
     private bool 是否已弹反;
     public Player_CounterAttactState(Player player, StateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
-        combat = player.GetComponent<玩家战斗及目标检测>();
+        combat = player.GetComponent<Player_Combat>();
     }
     public override void Enter()
     {

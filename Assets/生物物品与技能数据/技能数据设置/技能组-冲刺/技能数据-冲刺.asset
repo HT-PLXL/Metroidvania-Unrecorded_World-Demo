@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: "\u6280\u80FD\u6570\u636E-\u51B2\u523A"
   m_EditorClassIdentifier: 
   skillName: "\u51B2\u523A"
-  cost: 1
+  cost: 0
   description: "\u523A\u5BA2\u7684\u57FA\u672C\u7D20\u517B\uFF0C\u51B2\u523A\u65F6\u514D\u75AB\u4F24\u5BB3"
   icon: {fileID: -1500834908, guid: d8922fa682394c34387c8e6ae7c48e68, type: 3}
-  unlockedByDefault: 0
+  unlockedByDefault: 1
   skillType: 0
   upgradeData:
     upgradeType: 1

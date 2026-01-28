@@ -1,18 +1,23 @@
+using System.Linq;
 using UnityEngine;
 
-public class UI_SkillTree : MonoBehaviour
+public class UI_SkillTree : MonoBehaviour, ISaveable
 {
     [SerializeField] private int skillPoint;
     [SerializeField] private UI_TreeConnectHandle[] parentNodes;
+    private UI_TreeNode[] allTreeNodes;
 
     public Player_SkillManager skillManager { get; private set; }
     private void Awake()
     {
         skillManager = FindAnyObjectByType<Player_SkillManager>();
+
+
     }
     private void Start()
     {
         UpdateAllNodes();
+
     }
     public bool HaveEnoughSkillPoint(int cost) => skillPoint >= cost;
     public void RemoveSkillPoint(int cost) => skillPoint -= cost;
@@ -38,5 +43,48 @@ public class UI_SkillTree : MonoBehaviour
             node.UpdateAllNode();
         }
     }
+
+    public void SavaData(ref GameData data)
+    {
+        //data.skillPoints = skillPoint;
+        //data.skillTreeUI.Clear();
+        //data.skillUpgrades.Clear();
+
+        //allTreeNodes = GetComponentsInChildren<UI_TreeNode>(true);
+        //Debug.Log($"{allTreeNodes.Length}");
+
+        //foreach (var node in allTreeNodes)
+        //{
+        //    string skillName = node.skillData.skillName;
+        //    data.skillTreeUI[skillName] = node.isUnlocked;
+        //}
+        //foreach (var skill in skillManager.allSkills)
+        //{
+        //    data.skillUpgrades[skill.GetSkillType()] = skill.GetUpgradeType();
+        //}
+    }
+    public void loadData(GameData data)
+    {
+        //skillPoint = data.skillPoints;
+
+        //foreach (var node in allTreeNodes)
+        //{
+        //    string skillName = node.skillData.skillName;
+
+        //    if (data.skillTreeUI.TryGetValue(skillName, out bool unlocked) && unlocked)
+        //        node.UnlockByUsingSaveData();
+        //}
+        //foreach (var skill in skillManager.allSkills)
+        //{
+        //    if (data.skillUpgrades.TryGetValue(skill.GetSkillType(), out SkillUpgradeType upgradeType))
+        //    {
+        //        var upgradeNode = allTreeNodes.FirstOrDefault(node => node.skillData.upgradeData.upgradeType == upgradeType);
+        //        if (upgradeNode != null)
+        //            skill.SetSkillUpgrade(upgradeNode.skillData.upgradeData);
+        //        //skill.SetSkillUpgrade(upgradeNode.skillData);¼ÇµÃ¸Ä
+        //    }
+        //}
+    }
+
 }
 

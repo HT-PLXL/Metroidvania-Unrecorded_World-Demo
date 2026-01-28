@@ -4,4 +4,5 @@ public enum ItemType
     武器,
     护甲,
     饰品,
+    消耗品,
 }

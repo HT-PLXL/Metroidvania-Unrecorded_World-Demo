@@ -1,5 +1,7 @@
+using System;
 using UnityEngine;
 
+[Serializable]//设为可序列化才能在其他脚本用序列化展示在unity面板上
 public class ElementEffectData
 {
     public float chillDuration;
