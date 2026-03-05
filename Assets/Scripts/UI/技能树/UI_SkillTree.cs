@@ -23,7 +23,7 @@ public class UI_SkillTree : MonoBehaviour, ISaveable
     public void RemoveSkillPoint(int cost) => skillPoint -= cost;
     public void AddSkillPoint(int cost) => skillPoint += cost;
 
-    [ContextMenu("ÖØÖÃ¼¼ÄÜ")]
+    [ContextMenu("é‡ç½®æŠ€èƒ½")]
     public void RefundAllSkillPoint()
     {
         UI_TreeNode[] skillNodes = GetComponentsInChildren<UI_TreeNode>();
@@ -32,10 +32,10 @@ public class UI_SkillTree : MonoBehaviour, ISaveable
     }
 
 
-    //----------ÓÃÓÚ¸üĞÂ½ÚµãËùÓĞÎ»ÖÃ£¬Ê¹ÓÃ²Ëµ¥¸üĞÂ¶ø²»ÊÇOnValidate×Ô¶¯¸üĞÂ----------
-    //·ÀÖ¹½Úµã·ÅÖÃÊ§Îó£¬×Ó½Úµã·Å¸¸½ÚµãÌ×ÍŞ±ÀÀ£
+    //----------ç”¨äºæ›´æ–°èŠ‚ç‚¹æ‰€æœ‰ä½ç½®ï¼Œä½¿ç”¨èœå•æ›´æ–°è€Œä¸æ˜¯OnValidateè‡ªåŠ¨æ›´æ–°----------
+    //é˜²æ­¢èŠ‚ç‚¹æ”¾ç½®å¤±è¯¯ï¼Œå­èŠ‚ç‚¹æ”¾çˆ¶èŠ‚ç‚¹å¥—å¨ƒå´©æºƒ
 
-    [ContextMenu("¸üĞÂËùÓĞ½Úµã")]
+    [ContextMenu("æ›´æ–°æ‰€æœ‰èŠ‚ç‚¹")]
     public void UpdateAllNodes()
     {
         foreach (var node in parentNodes)
@@ -81,7 +81,7 @@ public class UI_SkillTree : MonoBehaviour, ISaveable
         //        var upgradeNode = allTreeNodes.FirstOrDefault(node => node.skillData.upgradeData.upgradeType == upgradeType);
         //        if (upgradeNode != null)
         //            skill.SetSkillUpgrade(upgradeNode.skillData.upgradeData);
-        //        //skill.SetSkillUpgrade(upgradeNode.skillData);¼ÇµÃ¸Ä
+        //        //skill.SetSkillUpgrade(upgradeNode.skillData);è®°å¾—æ”¹
         //    }
         //}
     }

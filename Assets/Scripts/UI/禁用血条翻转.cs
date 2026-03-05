@@ -9,11 +9,11 @@ public class 禁用血条翻转 : MonoBehaviour
     }
     private void OnEnable()
     {
-        entity.翻转中 += 处理翻转;//给事件订阅新委托
+        entity.OnFlip += 处理翻转;//给事件订阅新委托
     }
     private void OnDisable()
     {
-        entity.翻转中 -= 处理翻转;
+        entity.OnFlip -= 处理翻转;
     }
 private void 处理翻转()
     {

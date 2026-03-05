@@ -8,8 +8,8 @@ public class Player_MoveState : Player_GroundState
     public override void Update()
     {
         base.Update();
-        if (player.moveInput.x == 0 || player.¼ì²âµ½Ç½±Ú)
-            stateMachine.ChangeState(player.idleState);//xÖáËÙ¶ÈÎª0×ªÈë¿ÕÏĞ
-        player.SetVelocity(player.moveInput.x * player.moveSpeed, rb.linearVelocity.y);//ÊµÏÖÒÆ¶¯
+        if (player.moveInput.x == 0 || player.isDetectWall)
+            stateMachine.ChangeState(player.idleState);//xè½´é€Ÿåº¦ä¸º0è½¬å…¥ç©ºé—²
+        player.SetVelocity(player.moveInput.x * player.moveSpeed, rb.linearVelocity.y);//å®ç°ç§»åŠ¨
     }
 }

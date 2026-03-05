@@ -5,16 +5,16 @@ public class SkillObject_Shard : SkillObject_Base
 {
     public event Action OnExplode;
     private Skill_Shard skillShard;
-    [SerializeField][cn("Ê±¿ÕËéÆ¬±¬Õ¨Ô¤ÖÆÌå")] private GameObject vfxPrefab;
+    [SerializeField][cn("æ—¶ç©ºç¢ç‰‡çˆ†ç‚¸é¢„åˆ¶ä½“")] private GameObject vfxPrefab;
     private Transform target;
     private float speed;
     private void Update()
     {
         if (target == null)
             return;
-        transform.position = Vector3.MoveTowards(transform.position, target.position, speed * Time.deltaTime);//ÊµÏÖ¾§ÌåÆ½»¬ÒÆ¶¯
+        transform.position = Vector3.MoveTowards(transform.position, target.position, speed * Time.deltaTime);//å®ç°æ™¶ä½“å¹³æ»‘ç§»åŠ¨
     }
-    public void MoveToClosestTarget(float speed, Transform newtarget = null)//±»µ÷ÓÃ²Å»áÆô¶¯ËÑË÷Ä¿±ê£¬²Å»áÖ´ĞĞupdateÄÚÈİ
+    public void MoveToClosestTarget(float speed, Transform newtarget = null)//è¢«è°ƒç”¨æ‰ä¼šå¯åŠ¨æœç´¢ç›®æ ‡ï¼Œæ‰ä¼šæ‰§è¡Œupdateå†…å®¹
     {
         target = newtarget == null ? SearchClosestTarget() : newtarget;
         this.speed = speed;
@@ -25,24 +25,24 @@ public class SkillObject_Shard : SkillObject_Base
         playerStats = shard.player.entityStats;
         damageScale = shard.damageScale;
         float time = shard.GetDetonateTime();
-        Invoke(nameof(Explode), time);//ÑÓ³ÙtimeºóÖ´ĞĞ£¬ÕâÊÇ¼Ì³ĞÁËMonoBehaviourµÄÄÚÖÃ·½·¨
+        Invoke(nameof(Explode), time);//å»¶è¿Ÿtimeåæ‰§è¡Œï¼Œè¿™æ˜¯ç»§æ‰¿äº†MonoBehaviourçš„å†…ç½®æ–¹æ³•
     }
-    public void SetUpShard(Skill_Shard shard, float detonationTime, bool canMove, float shardSpeed, Transform target = null)//ÖØÔØ
+    public void SetUpShard(Skill_Shard shard, float detonationTime, bool canMove, float shardSpeed, Transform target = null)//é‡è½½
     {
         this.skillShard = shard;
         playerStats = shard.player.entityStats;
         damageScale = shard.damageScale;
-        Invoke(nameof(Explode), detonationTime);//ÑÓ³ÙdetonationTimeºóÖ´ĞĞ£¬ÕâÊÇ¼Ì³ĞÁËMonoBehaviourµÄÄÚÖÃ·½·¨
+        Invoke(nameof(Explode), detonationTime);//å»¶è¿ŸdetonationTimeåæ‰§è¡Œï¼Œè¿™æ˜¯ç»§æ‰¿äº†MonoBehaviourçš„å†…ç½®æ–¹æ³•
         if (canMove)
             MoveToClosestTarget(shardSpeed,target);
     }
-    public void Explode()//±¬Õ¨·½·¨
+    public void Explode()//çˆ†ç‚¸æ–¹æ³•
     {
         DamageEnemyInRadius(transform, checkRadius);
-        GameObject vfx = Instantiate(vfxPrefab, transform.position, Quaternion.identity);//ÌØĞ§ÓĞ×Ô¼ºµÄÏú»Ù»úÖÆ¼°Ê±¼ä
-        vfx.GetComponentInChildren<SpriteRenderer>().color = skillShard.player.vfx.GetHitVfxColor(elementType);//¸Ä±äË®¾§±¬Õ¨Á£×ÓÑÕÉ«
-        OnExplode?.Invoke();//±¬Õ¨Ê±¼ì²éÊÇ·ñÓĞ¶©ÔÄµÄ·½·¨£¿(¼´½øÈëÀäÈ´)£¬ÓĞÔò´¥·¢¸Ã·½·¨
-        Destroy(gameObject);//Ïú»ÙËéÆ¬±¾Éí
+        GameObject vfx = Instantiate(vfxPrefab, transform.position, Quaternion.identity);//ç‰¹æ•ˆæœ‰è‡ªå·±çš„é”€æ¯æœºåˆ¶åŠæ—¶é—´
+        vfx.GetComponentInChildren<SpriteRenderer>().color = skillShard.player.vfx.GetHitVfxColor(elementType);//æ”¹å˜æ°´æ™¶çˆ†ç‚¸ç²’å­é¢œè‰²
+        OnExplode?.Invoke();//çˆ†ç‚¸æ—¶æ£€æŸ¥æ˜¯å¦æœ‰è®¢é˜…çš„æ–¹æ³•ï¼Ÿ(å³è¿›å…¥å†·å´)ï¼Œæœ‰åˆ™è§¦å‘è¯¥æ–¹æ³•
+        Destroy(gameObject);//é”€æ¯ç¢ç‰‡æœ¬èº«
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {

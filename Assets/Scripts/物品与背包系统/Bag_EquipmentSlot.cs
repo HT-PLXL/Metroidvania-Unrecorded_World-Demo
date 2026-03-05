@@ -4,7 +4,7 @@ using UnityEngine;
 [Serializable]
 public class Bag_EquipmentSlot
 {
-    public ItemType slotType;//²ÛÎ»ÖÖÀà
-    public Bag_Item equipmentItem;//×°±¸µÄÎïÆ·
+    public ItemType slotType;//æ§½ä½ç§ç±»
+    public Bag_Item equipmentItem;//è£…å¤‡çš„ç‰©å“
     public bool HasItem() => equipmentItem != null && equipmentItem.itemData != null;
 }

@@ -1,14 +1,14 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-//¸ÃÀàÖ¼ÔÚ¸ø³öÊ÷½ÚµãµÄÁ¬½Ó·½·¨£¬ÓÃÓÚ±»µ÷ÓÃ
+//è¯¥ç±»æ—¨åœ¨ç»™å‡ºæ ‘èŠ‚ç‚¹çš„è¿æ¥æ–¹æ³•ï¼Œç”¨äºè¢«è°ƒç”¨
 public class UI_TreeConnection : MonoBehaviour
 {
-    [SerializeField] private RectTransform connectPoint;//¶ÔÓ¦¶ÔÏó¡°Á¬½Ó¡±
-    [SerializeField] private RectTransform connectionLine;//¶ÔÓ¦¶ÔÏó¡°Á¬½ÓÏß¡±
-    [SerializeField] private RectTransform childConnectPoint;//¶ÔÓ¦¶ÔÏó¡°×Ó½Úµã¡±
+    [SerializeField] private RectTransform connectPoint;//å¯¹åº”å¯¹è±¡â€œè¿æ¥â€
+    [SerializeField] private RectTransform connectionLine;//å¯¹åº”å¯¹è±¡â€œè¿æ¥çº¿â€
+    [SerializeField] private RectTransform childConnectPoint;//å¯¹åº”å¯¹è±¡â€œå­èŠ‚ç‚¹â€
 
-    public void DirectConnection(NodeDirectionType direction,float length,float offset)//µ÷½ÚÁ¬½Ó·½ÏòºÍ³¤¶È
+    public void DirectConnection(NodeDirectionType direction,float length,float offset)//è°ƒèŠ‚è¿æ¥æ–¹å‘å’Œé•¿åº¦
     {
         bool active = direction != NodeDirectionType.None;
         float finalLength = active ? length : 0;
@@ -21,9 +21,9 @@ public class UI_TreeConnection : MonoBehaviour
     public Vector2 GetConnectionPoint(RectTransform rect)
     {
         RectTransformUtility.ScreenPointToLocalPointInRectangle(rect.parent as RectTransform, childConnectPoint.position, null, out var localPosition);
-        //RectTransformUtilityÊÇ¾²Ì¬¹¤¾ßÀà£¬×¨ÃÅÓÃÓÚ´¦Àí RectTransform µÄ¸´ÔÓ¼ÆËãºÍ²Ù×÷£¬ÌØ±ğÊÇÔÚÆÁÄ»¿Õ¼ä¡¢ÊÀ½ç¿Õ¼äºÍ±¾µØ¿Õ¼äÖ®¼äµÄ×ª»»¡£
-        //ScreenPointToLocalPointInRectangle£¨Ä¿±ê¶ÔÏó£¬ÆÁÄ»¿Õ¼ä×ø±ê£¨ÊÀ½ç×ø±ê´ÕºÏÓÃ£©£¬Ïà»ú£¨UIÔªËØÊ¹ÓÃ¿Õ£©£¬Êä³ö±¾µØ×ø±ê£©
-        //rectTransformÊÇTransformµÄ×ÓÀà£¬rect.parent·µ»ØµÄÊÇTransform£¬Ê¹ÓÃas×ª»¯ÎªRectTransformÀàĞÍ
+        //RectTransformUtilityæ˜¯é™æ€å·¥å…·ç±»ï¼Œä¸“é—¨ç”¨äºå¤„ç† RectTransform çš„å¤æ‚è®¡ç®—å’Œæ“ä½œï¼Œç‰¹åˆ«æ˜¯åœ¨å±å¹•ç©ºé—´ã€ä¸–ç•Œç©ºé—´å’Œæœ¬åœ°ç©ºé—´ä¹‹é—´çš„è½¬æ¢ã€‚
+        //ScreenPointToLocalPointInRectangleï¼ˆç›®æ ‡å¯¹è±¡ï¼Œå±å¹•ç©ºé—´åæ ‡ï¼ˆä¸–ç•Œåæ ‡å‡‘åˆç”¨ï¼‰ï¼Œç›¸æœºï¼ˆUIå…ƒç´ ä½¿ç”¨ç©ºï¼‰ï¼Œè¾“å‡ºæœ¬åœ°åæ ‡ï¼‰
+        //rectTransformæ˜¯Transformçš„å­ç±»ï¼Œrect.parentè¿”å›çš„æ˜¯Transformï¼Œä½¿ç”¨asè½¬åŒ–ä¸ºRectTransformç±»å‹
         return localPosition;
     }
     private float GetDirectionAngle(NodeDirectionType type)

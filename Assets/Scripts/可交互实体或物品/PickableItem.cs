@@ -2,14 +2,8 @@ using UnityEngine;
 
 public class PickableItem : MonoBehaviour
 {
-    [SerializeField] private ItemDataSO itemData;//ĞèÒªunityÍÏÈëÊı¾İ
+    [SerializeField] private ItemDataSO itemData;//éœ€è¦unityæ‹–å…¥æ•°æ®
     private SpriteRenderer sr;
-    private Bag_Item itemNeedAdd;
-    private Bag_Base bag;
-    private void Awake()
-    {
-        itemNeedAdd = new Bag_Item(itemData);//½«Êı¾İ×ª»¯ÎªÎïÆ·ÊµÀı
-    }
     private void OnValidate()
     {
         if (itemData == null)
@@ -20,9 +14,18 @@ public class PickableItem : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        bag = collision.GetComponent<Bag_Base>();
-        bool canAddItem = bag.CanAddItem() || bag.SearchStackableItem(itemNeedAdd) != null ;
-        if (bag != null && canAddItem)
+        Bag_Item itemNeedAdd = new Bag_Item(itemData);
+        Bag_Player bag = collision.GetComponent<Bag_Player>();
+        Bag_Storage storage = bag.storage;
+
+        if (itemData.itemType == ItemType.ææ–™)//å¦‚æœæ˜¯ææ–™ç›´æ¥å­˜è¿›ææ–™ä»“åº“
+        {
+            storage.AddMaterialToStorage(itemNeedAdd);
+            Destroy(gameObject);
+            return;
+        }
+
+        if (bag.CanAddItem(itemNeedAdd))
         {
             bag.AddItem(itemNeedAdd);
             Destroy(gameObject);

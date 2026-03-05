@@ -1,31 +1,31 @@
 using UnityEngine;
-//×ÓÀà¹ÒÔØÔÚ¼¼ÄÜÈİÆ÷ÉÏ£¬ÏÂ·½ÉùÃ÷µÄ²ÎÊıÓÃÀ´ÔÚ¼¼ÄÜÈİÆ÷ĞŞ¸Ä¶ÔÓ¦¼¼ÄÜÊµÌå½Å±¾ÉùÃ÷µÄ²ÎÊıµÄÖµ
+//å­ç±»æŒ‚è½½åœ¨æŠ€èƒ½å®¹å™¨ä¸Šï¼Œä¸‹æ–¹å£°æ˜çš„å‚æ•°ç”¨æ¥åœ¨æŠ€èƒ½å®¹å™¨ä¿®æ”¹å¯¹åº”æŠ€èƒ½å®ä½“è„šæœ¬å£°æ˜çš„å‚æ•°çš„å€¼
 public class Skill_Base : MonoBehaviour
 {
     public Player player { get; private set; }
     public Player_SkillManager skillManager { get; private set; }
     public DamageScaleFactor damageScale { get; private set; }
-    [Header("µ±Ç°¼¼ÄÜÏêÇé")]
-    [SerializeField][cn("ÀäÈ´Ê±¼ä")] protected float cooldown;
-    [SerializeField][cn("¼¼ÄÜÖÖÀà")] protected SkillType skillType;
-    [SerializeField][cn("¼¼ÄÜÉı¼¶ÖÖÀà")] protected SkillUpgradeType upgradeType;
+    [Header("å½“å‰æŠ€èƒ½è¯¦æƒ…")]
+    [SerializeField][cn("å†·å´æ—¶é—´")] protected float cooldown;
+    [SerializeField][cn("æŠ€èƒ½ç§ç±»")] protected SkillType skillType;
+    [SerializeField][cn("æŠ€èƒ½å‡çº§ç§ç±»")] protected SkillUpgradeType upgradeType;
     private float lastTimeUsed;
 
     protected virtual void Awake()
     {
         player = GetComponentInParent<Player>();
         skillManager = GetComponentInParent<Player_SkillManager>();
-        lastTimeUsed = lastTimeUsed - cooldown;//³õÊ¼/ÖØÉúÊ±ÖØÖÃÀäÈ´
-        damageScale = new DamageScaleFactor();//ÔİÊ±Ã»×ö¼¼ÄÜÊı¾İ£¬ËùÒÔĞèÒª³õÊ¼»¯Ò»ÏÂ
+        lastTimeUsed = lastTimeUsed - cooldown;//åˆå§‹/é‡ç”Ÿæ—¶é‡ç½®å†·å´
+        damageScale = new DamageScaleFactor();//æš‚æ—¶æ²¡åšæŠ€èƒ½æ•°æ®ï¼Œæ‰€ä»¥éœ€è¦åˆå§‹åŒ–ä¸€ä¸‹
     }
     public virtual void TryUseSkill()
     {
 
     }
     protected bool OnCooldown() => Time.time < lastTimeUsed + cooldown;
-    public void setSkillOnCooldown() => lastTimeUsed = Time.time;//Ê¹Æä½øÈëÀäÈ´
-    public void ReduceCooldown(float cooldownReduction) => lastTimeUsed = lastTimeUsed - cooldownReduction;//¼õÉÙÀäÈ´Ê±¼ä
-    public void ResetCooldown() => lastTimeUsed = Time.time - cooldown;//ÖØÖÃÀäÈ´Ê±¼ä
+    public void setSkillOnCooldown() => lastTimeUsed = Time.time;//ä½¿å…¶è¿›å…¥å†·å´
+    public void ReduceCooldown(float cooldownReduction) => lastTimeUsed = lastTimeUsed - cooldownReduction;//å‡å°‘å†·å´æ—¶é—´
+    public void ResetCooldown() => lastTimeUsed = Time.time - cooldown;//é‡ç½®å†·å´æ—¶é—´
 
     public virtual bool CanUseSkill()
     {
@@ -33,12 +33,12 @@ public class Skill_Base : MonoBehaviour
             return false;
         if (OnCooldown())
         {
-            Debug.Log("¼¼ÄÜÀäÈ´ÖĞ");
+            Debug.Log("æŠ€èƒ½å†·å´ä¸­");
             return false;
         }
         return true;
     }
-    public void SetSkillUpgrade(UpgradeData Type)//¸üĞÂÉı¼¶ºóÊı¾İ
+    public void SetSkillUpgrade(UpgradeData Type)//æ›´æ–°å‡çº§åæ•°æ®
     {
         upgradeType = Type.upgradeType;
         cooldown = Type.cooldown;

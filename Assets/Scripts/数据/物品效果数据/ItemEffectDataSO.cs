@@ -1,6 +1,6 @@
 using UnityEngine;
 
-//Ìá¹©Ò»¸öÃèÊö²Û£¬ÒÔ¼°¹©×ÓÀà¼Ì³ĞµÄ·½·¨£¨Ö´ĞĞĞ§¹û£©
+//æä¾›ä¸€ä¸ªæè¿°æ§½ï¼Œä»¥åŠä¾›å­ç±»ç»§æ‰¿çš„æ–¹æ³•ï¼ˆæ‰§è¡Œæ•ˆæœï¼‰
 public class ItemEffectDataSO : ScriptableObject
 {
     [TextArea]
@@ -14,11 +14,11 @@ public class ItemEffectDataSO : ScriptableObject
     {
 
     }
-    public virtual void Subscribe(Player player)//¶©ÔÄ
+    public virtual void Subscribe(Player player)//è®¢é˜…
     {
         this.player = player;
     }
-    public virtual void Unsubscribe()//È¡Ïû¶©ÔÄ
+    public virtual void Unsubscribe()//å–æ¶ˆè®¢é˜…
     {
 
     }

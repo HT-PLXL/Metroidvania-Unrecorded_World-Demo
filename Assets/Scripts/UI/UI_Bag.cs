@@ -1,22 +1,20 @@
 using System.Collections.Generic;
 using UnityEngine;
-//½ÇÉ«UIµÄ×é¼ş£¬¹ÜÀí×ÓÀàÎïÆ·²Û
+//è§’è‰²UIçš„ç»„ä»¶ï¼Œç®¡ç†å­ç±»ç‰©å“æ§½
 public class UI_Bag : MonoBehaviour
 {
-    private UI_ItemSolt[] ui_ItemSlots;
     private UI_EquipSlot[] ui_EquipSlots;
     private Bag_Player bag;
-    [SerializeField] private Transform uiItemSlotParent;//UI_EquipSlot¼Ì³ĞUI_ItemSolt£¬AwakeÖ±½Ó»ñÈ¡×Ó×é¼ş»á»ñµÃ¸¸×Ó×é¼şµÄ»ìºÏÁĞ±í£¬Òò´ËĞòÁĞ»¯ºóÔÚunityÃæ°åÑ¡Ôñ²¢ÔÚ´Ë»ñÈ¡¾ßÌåÊµÀıµÄ×Ó×é¼ş
+    [SerializeField] private UI_ItemSlotParent bagSlotsParent;
     [SerializeField] private Transform uiEquipSlotParent;
 
 
     private void Awake()
     {
-        ui_ItemSlots = uiItemSlotParent.GetComponentsInChildren<UI_ItemSolt>();
         ui_EquipSlots = uiEquipSlotParent.GetComponentsInChildren<UI_EquipSlot>();
         bag = FindFirstObjectByType<Bag_Player>();
-        bag.OnBagChange += UpdateUI;//¶©ÔÄ·½·¨
-        UpdateUI();//Ê¹³õÊ¼Í¼±êÍ¸Ã÷£¬Ä¬ÈÏ×´Ì¬ÏÂ±³°ü²ÛºÍÍ¼±ê¶¼Ê¹ÓÃ²ÛÎ»±³¾°Í¼£¬Èç¹ûÎŞÎïÆ·£¬Ôò¶ÔÓ¦Í¼±êÍ¸Ã÷
+        bag.OnBagChange += UpdateUI;//è®¢é˜…æ–¹æ³•
+        UpdateUI();//ä½¿åˆå§‹å›¾æ ‡é€æ˜ï¼Œé»˜è®¤çŠ¶æ€ä¸‹èƒŒåŒ…æ§½å’Œå›¾æ ‡éƒ½ä½¿ç”¨æ§½ä½èƒŒæ™¯å›¾ï¼Œå¦‚æœæ— ç‰©å“ï¼Œåˆ™å¯¹åº”å›¾æ ‡é€æ˜
     }
     private void OnEnable()
     {
@@ -26,25 +24,11 @@ public class UI_Bag : MonoBehaviour
     }
     private void UpdateUI()
     {
-        UpdateBagSolts();
+        bagSlotsParent.UpdateSlots(bag.itemList);
         UpdateEquipmentSlots();
     }
-    private void UpdateBagSolts()//¸üĞÂ±³°ü¿â´æ
-    {
-        List<Bag_Item> itemList = bag.itemList;//ÓÒÎªÒÑÓÃ²ÛÎ»ÁĞ±í
-        for (int i = 0; i < ui_ItemSlots.Length; i++)
-        {
-            if (i < itemList.Count)//Ñ¡Ôñ²ÛÎ»×ÜÊıÁĞ±í<ÒÑÓÃÁĞ±í³¤¶ÈµÄ²¿·Ö£¬¸üĞÂÄÚÈİ
-            {
-                ui_ItemSlots[i].UpdateSlot(itemList[i]);
-            }
-            else//ÆäÓà²¿·ÖÉèÖÃÍ¸Ã÷
-            {
-                ui_ItemSlots[i].UpdateSlot(null);
-            }
-        }
-    }
-    private void UpdateEquipmentSlots()//¸üĞÂ×°±¸À¸
+
+    private void UpdateEquipmentSlots()//æ›´æ–°è£…å¤‡æ 
     {
         List<Bag_EquipmentSlot> PlayerEquipList = bag.equipmentSlotList;
         for(int i = 0; i< ui_EquipSlots.Length; i++)

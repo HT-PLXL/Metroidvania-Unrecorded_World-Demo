@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "游戏设置/物品数据/物品效果/技能点", fileName = "物品效果-技能点")]
+[CreateAssetMenu(menuName = "娓告垙璁剧疆/鐗╁搧鏁版嵁/鐗╁搧鏁堟灉/鎶�鑳界偣", fileName = "鐗╁搧鏁堟灉-鎶�鑳界偣")]
 
 public class ItemEffect_GiveSkillPoint : ItemEffectDataSO
 {

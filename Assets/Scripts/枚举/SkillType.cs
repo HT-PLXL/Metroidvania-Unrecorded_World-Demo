@@ -2,5 +2,5 @@ using UnityEngine;
 
 public enum SkillType
 {
-    冲刺,克隆,魔能晶体,掷剑,领域,
+    鍐插埡,鍏嬮殕,榄旇兘鏅朵綋,鎺峰墤,棰嗗煙,
 }

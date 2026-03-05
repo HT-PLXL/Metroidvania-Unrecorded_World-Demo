@@ -8,14 +8,14 @@ public class Enemy_MoveState : Enemy_GroundState
     public override void Enter()
     {
         base.Enter();
-        if (enemy.检测到地面 == false || enemy.检测到墙壁)
+        if (enemy.isDetectGround == false || enemy.isDetectWall)
             enemy.Flip();
     }
     public override void Update()
     {
         base.Update();
-        enemy.SetVelocity(enemy.GetMoveSpeed() * enemy.面对方向, rb.linearVelocity.y);
-        if(enemy.检测到地面 == false || enemy.检测到墙壁)
+        enemy.SetVelocity(enemy.GetMoveSpeed() * enemy.faceDirection, rb.linearVelocity.y);
+        if(enemy.isDetectGround == false || enemy.isDetectWall)
             stateMachine.ChangeState(enemy.idleState);
     }
 

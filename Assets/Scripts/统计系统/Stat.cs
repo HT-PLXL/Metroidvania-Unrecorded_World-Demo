@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
-public class Stat//Õâ¸öÀàÓÃÓÚÔÚunityÃæ°åÉèÖÃ»ù´¡Öµ£¬ÆäËû½Å±¾Ê¹ÓÃÖµÊ±Ê¹ÓÃµÄÊÇÔÚEntity_stats°ü×°Ò»²ã£¨ÊôĞÔµã¼Ó³É£©ºóµÄÖµ
+public class Stat//è¿™ä¸ªç±»ç”¨äºåœ¨unityé¢æ¿è®¾ç½®åŸºç¡€å€¼ï¼Œå…¶ä»–è„šæœ¬ä½¿ç”¨å€¼æ—¶ä½¿ç”¨çš„æ˜¯åœ¨Entity_statsåŒ…è£…ä¸€å±‚ï¼ˆå±æ€§ç‚¹åŠ æˆï¼‰åçš„å€¼
 {
-    [SerializeField][cn("»ù´¡Öµ")] private float baseValue;//ÈÃÃ¿¸öÍâ½çÉùÃ÷µÄStatÀàÊµÀı¶¼ÓµÓĞÔÚunityÖĞ¿ÉÊÓ¿É¸ÄµÄÖµ
+    [SerializeField][cn("åŸºç¡€å€¼")] private float baseValue;//è®©æ¯ä¸ªå¤–ç•Œå£°æ˜çš„Statç±»å®ä¾‹éƒ½æ‹¥æœ‰åœ¨unityä¸­å¯è§†å¯æ”¹çš„å€¼
     [SerializeField] private List<StatModifier> modifiers = new List<StatModifier>();
     private float finalvalue;
     private bool needCalculate = true;
     public float GetValue()
     {
-        //return GetfinalValue();ĞÔÄÜ²»ÓÑºÃ£¬ÓÅ»¯ÈçÏÂ
+        //return GetfinalValue();æ€§èƒ½ä¸å‹å¥½ï¼Œä¼˜åŒ–å¦‚ä¸‹
         if (needCalculate)
         {
             finalvalue = GetfinalValue();
@@ -27,7 +27,7 @@ public class Stat//Õâ¸öÀàÓÃÓÚÔÚunityÃæ°åÉèÖÃ»ù´¡Öµ£¬ÆäËû½Å±¾Ê¹ÓÃÖµÊ±Ê¹ÓÃµÄÊÇÔÚEn
     }
     public void RemoveModifier(string source)
     {
-        modifiers.RemoveAll(modifier => modifier.source == source);//Çå³ıËùÓĞ£¨ÈÎÒâÃû=>ÈÎÒâÃû.source == À¨ºÅ´«ÈëµÄsource£©£¬À¨ºÅÄÚÎªÕæÖ´ĞĞÇå³ı
+        modifiers.RemoveAll(modifier => modifier.source == source);//æ¸…é™¤æ‰€æœ‰ï¼ˆä»»æ„å=>ä»»æ„å.source == æ‹¬å·ä¼ å…¥çš„sourceï¼‰ï¼Œæ‹¬å·å†…ä¸ºçœŸæ‰§è¡Œæ¸…é™¤
         needCalculate = true;
     }
     public float GetfinalValue()
@@ -45,8 +45,8 @@ public class Stat//Õâ¸öÀàÓÃÓÚÔÚunityÃæ°åÉèÖÃ»ù´¡Öµ£¬ÆäËû½Å±¾Ê¹ÓÃÖµÊ±Ê¹ÓÃµÄÊÇÔÚEn
 [Serializable]
 public class StatModifier
 {
-    [cn("¸½¼ÓÖµ")] public float value;
-    [cn("À´Ô´")] public string source;//À´Ô´
+    [cn("é™„åŠ å€¼")] public float value;
+    [cn("æ¥æº")] public string source;//æ¥æº
 
     public StatModifier(float value, string source)
     {

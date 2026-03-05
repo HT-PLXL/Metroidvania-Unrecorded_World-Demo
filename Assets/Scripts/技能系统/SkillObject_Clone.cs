@@ -27,19 +27,19 @@ public class SkillObject_Clone : SkillObject_Base
         flipClone();
         anim.SetBool("canAttack", maxAttackCounts > 0);
         cloneHp = GetComponent<SkillObject_Hp>();
-        trail = GetComponentInChildren<TrailRenderer>();//»ñÈ¡¹ì¼£×é¼ş²¢¹Ø±Õ
+        trail = GetComponentInChildren<TrailRenderer>();//è·å–è½¨è¿¹ç»„ä»¶å¹¶å…³é—­
         trail.gameObject.SetActive(false);
         Invoke(nameof(HandleDeath), cloneManager.GetCloneDuration());
     }
     private void Update()
     {
-        bool shouldMoveTrail = trail.gameObject.activeSelf;//activeSelfÊÇ±íÊ¾×ÔÉíÊÇ·ñ¼¤»îµÄboolÖµ£¬²»ÊÜ¸¸¶ÔÏóÓ°Ïì
+        bool shouldMoveTrail = trail.gameObject.activeSelf;//activeSelfæ˜¯è¡¨ç¤ºè‡ªèº«æ˜¯å¦æ¿€æ´»çš„boolå€¼ï¼Œä¸å—çˆ¶å¯¹è±¡å½±å“
         if (shouldMoveTrail)
             HandleTrailMovement();
         else
         {
             anim.SetFloat("yVelocity", rb.linearVelocity.y);
-            StopMovement();//×èÖ¹¸´ÖÆÌå×ÔÉíºáÏòÒÆ¶¯
+            StopMovement();//é˜»æ­¢å¤åˆ¶ä½“è‡ªèº«æ¨ªå‘ç§»åŠ¨
         }
     }
     private void flipClone()
@@ -48,7 +48,7 @@ public class SkillObject_Clone : SkillObject_Base
         if (target != null && target.position.x < transform.position.x)
             transform.Rotate(0, 180, 0);
     }
-    //private void HandleTrailMovement()//´¦ÀíÁé»êÁ£×Ó¹ì¼£Î»ÖÃ£¬´ËÊ±¸´ÖÆÌå¶¯»­ÒÑ¹Ø±Õ
+    //private void HandleTrailMovement()//å¤„ç†çµé­‚ç²’å­è½¨è¿¹ä½ç½®ï¼Œæ­¤æ—¶å¤åˆ¶ä½“åŠ¨ç”»å·²å…³é—­
     //{
     //    transform.position = Vector2.MoveTowards(transform.position, playerTransform.position, trailMoveSpeed * Time.deltaTime);
     //    if (Vector2.Distance(transform.position, playerTransform.position) < 0.5f)
@@ -57,7 +57,7 @@ public class SkillObject_Clone : SkillObject_Base
     //        Destroy(gameObject);
     //    }
     //}
-    private void HandleTrailMovement()//´¦ÀíÁé»êÁ£×Ó¹ì¼£Î»ÖÃ£¬´ËÊ±¸´ÖÆÌå¶¯»­ÒÑ¹Ø±Õ
+    private void HandleTrailMovement()//å¤„ç†çµé­‚ç²’å­è½¨è¿¹ä½ç½®ï¼Œæ­¤æ—¶å¤åˆ¶ä½“åŠ¨ç”»å·²å…³é—­
     {
         transform.position = Vector2.MoveTowards(transform.position, playerTransform.position, trailMoveSpeed * Time.deltaTime);
         if (Vector2.Distance(transform.position, playerTransform.position) < 0.5f)
@@ -65,7 +65,7 @@ public class SkillObject_Clone : SkillObject_Base
     }
     private IEnumerator TouchPlayerCo()
     {
-        // Ìí¼ÓÎ¢Ğ¡Ëæ»úÑÓ³Ù£¨0-0.1Ãë£©£¬±ÜÃâ¶à¸öÁ£×ÓÍ¬Ê±´¥·¢
+        // æ·»åŠ å¾®å°éšæœºå»¶è¿Ÿï¼ˆ0-0.1ç§’ï¼‰ï¼Œé¿å…å¤šä¸ªç²’å­åŒæ—¶è§¦å‘
         yield return new WaitForSeconds(Random.Range(0f, 0.1f));
         HandleTouchPlayer();
         Destroy(gameObject);
@@ -73,9 +73,9 @@ public class SkillObject_Clone : SkillObject_Base
 
 
 
-    private void HandleTouchPlayer()//Áé»êÁ£×Ó½Ó´¥Íæ¼ÒºóÄÚÈİ£¨»ØÑª/¼õCD/Çå³ıdebuff£©
+    private void HandleTouchPlayer()//çµé­‚ç²’å­æ¥è§¦ç©å®¶åå†…å®¹ï¼ˆå›è¡€/å‡CD/æ¸…é™¤debuffï¼‰
     {
-        float healAmount = cloneHp.lastDamage * cloneManager.GetDamagePercentHeal();//¼ÆËãÉúÃü»Ø¸´Á¿
+        float healAmount = cloneHp.lastDamage * cloneManager.GetDamagePercentHeal();//è®¡ç®—ç”Ÿå‘½å›å¤é‡
         playerHp.IncreaseHp(healAmount);
 
         float cooldownReduction = cloneManager.GetcooldownReduceSeconds();
@@ -87,7 +87,7 @@ public class SkillObject_Clone : SkillObject_Base
     public void HandleDeath()
     {
         Instantiate(DeathVfx, transform.position, Quaternion.identity);
-        if (cloneManager.ShouldUseTrail())//ÅĞ¶ÏÊÇ·ñÓ¦¸ÃÆôÓÃÁé»êÁ£×Ó¹ì¼£
+        if (cloneManager.ShouldUseTrail())//åˆ¤æ–­æ˜¯å¦åº”è¯¥å¯ç”¨çµé­‚ç²’å­è½¨è¿¹
         {
             anim.gameObject.SetActive(false);
             trail.gameObject.SetActive(true);
@@ -96,17 +96,17 @@ public class SkillObject_Clone : SkillObject_Base
         else
             Destroy(gameObject);
     }
-    public void PerformAttack()//¶¯»­Ö´ĞĞ
+    public void PerformAttack()//åŠ¨ç”»æ‰§è¡Œ
     {
         DamageEnemyInRadius(targetCheck, 1);
         if (targetGotHit == false)
             return;
         bool canClone = Random.value < cloneManager.GetCloneChance();
-        float xOffset = transform.position.x < lastTarget.position.x ? 1 : -1;//ÉèÖÃÒ»µãÆ«ÒÆÁ¿
+        float xOffset = transform.position.x < lastTarget.position.x ? 1 : -1;//è®¾ç½®ä¸€ç‚¹åç§»é‡
         if (canClone)
             cloneManager.CreateClone(lastTarget.position + new Vector3(xOffset, 0));
     }
-    private void StopMovement()//×èÖ¹Ë®Æ½ÒÆ¶¯
+    private void StopMovement()//é˜»æ­¢æ°´å¹³ç§»åŠ¨
     {
         RaycastHit2D hit2D = Physics2D.Raycast(transform.position, Vector2.down, 1.5f, WhatIsGround);
         if (hit2D.collider != null)

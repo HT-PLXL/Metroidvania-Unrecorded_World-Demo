@@ -5,20 +5,20 @@ using UnityEngine;
 
 public class SaveManager : MonoBehaviour
 {
-    public static SaveManager instance;//¾²Ì¬ÊµÀı
+    public static SaveManager instance;//é™æ€å®ä¾‹
     private FileDataHandler dataHandler;
     private GameData gameData;
     private List<ISaveable> allSaveables;
-    [SerializeField] private string fileName = "ÀàÒøºÓ¶ñÄ§³ÇÓÎÏ·ÏîÄ¿";
+    [SerializeField] private string fileName = "ç±»é“¶æ²³æ¶é­”åŸæ¸¸æˆé¡¹ç›®";
     [SerializeField] private bool encryptData = true;
 
     private void Awake()
     {
         instance = this;
     }
-    private IEnumerator Start()//Ğ­³Ìstart£¬¸øÆäËûstartÒ»µãÆô¶¯Ê±¼ä
+    private IEnumerator Start()//åç¨‹startï¼Œç»™å…¶ä»–startä¸€ç‚¹å¯åŠ¨æ—¶é—´
     {
-        Debug.Log(Application.persistentDataPath);//ÏÔÊ¾Â·¾¶
+        Debug.Log(Application.persistentDataPath);//æ˜¾ç¤ºè·¯å¾„
         dataHandler = new FileDataHandler(Application.persistentDataPath, fileName,encryptData);
         allSaveables = FindISaveables();
         yield return new WaitForSeconds(0.01f);
@@ -29,7 +29,7 @@ public class SaveManager : MonoBehaviour
         gameData = dataHandler.LoadData();
         if (gameData == null)
         {
-            Debug.Log("Î´ÕÒµ½´æµµ£¬ÕıÔÚ´´½¨ĞÂ´æµµ");
+            Debug.Log("æœªæ‰¾åˆ°å­˜æ¡£ï¼Œæ­£åœ¨åˆ›å»ºæ–°å­˜æ¡£");
             gameData = new GameData();
             return;
         }
@@ -43,7 +43,7 @@ public class SaveManager : MonoBehaviour
         dataHandler.SaveData(gameData);
     }
     public GameData GetGameData() => gameData;
-    [ContextMenu("É¾³ı±£´æµÄ´æµµ")]
+    [ContextMenu("åˆ é™¤ä¿å­˜çš„å­˜æ¡£")]
     public void DeleteSaveData()
     {
         dataHandler = new FileDataHandler(Application.persistentDataPath, fileName, encryptData);

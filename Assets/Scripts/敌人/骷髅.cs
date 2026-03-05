@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class 骷髅 : Enemy , 弹反
+public class 骷髅 : Enemy , ICounter
 {
     public bool CanBeCountered { get => canBeStunned;}
     //读取CanBeCounter时，返回类中canBeStunned的值
@@ -19,7 +19,7 @@ public class 骷髅 : Enemy , 弹反
     {
         base.Start();
 
-        stateMachine.Initalize(idleState);
+        stateMachine.Initialize(idleState);
     }
     public void HandleCounter()//实现接口
     {

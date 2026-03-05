@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "ÓÎÏ·ÉèÖÃ/ÎïÆ·Êı¾İ/ÎïÆ·Ğ§¹û/¼¼ÄÜÊ÷ÖØÖÃ", fileName = "ÎïÆ·Ğ§¹û-¼¼ÄÜÊ÷ÖØÖÃ")]
+[CreateAssetMenu(menuName = "æ¸¸æˆè®¾ç½®/ç‰©å“æ•°æ®/ç‰©å“æ•ˆæœ/æŠ€èƒ½æ ‘é‡ç½®", fileName = "ç‰©å“æ•ˆæœ-æŠ€èƒ½æ ‘é‡ç½®")]
 
 public class ItemEffect_RefundAllSkills : ItemEffectDataSO
 {
@@ -9,7 +9,7 @@ public class ItemEffect_RefundAllSkills : ItemEffectDataSO
         UI ui = FindFirstObjectByType<UI>();
         ui.skillTreeUI.RefundAllSkillPoint();
 
-        //node.RefundSkillPoint()µÄconnectHandleºó¼ÓÁË?¿ÕÅĞ¶¨
-        //Ê¹ÆäÔÚ¸ÕÔËĞĞÎ´´ò¿ª¹ı¼¼ÄÜÊ÷µÄÇé¿öÏÂÒ²ÄÜÊ¹ÓÃÒÅÍüÖ®Êé£¬ËäÈ»ÓĞµã³éÏó£¬µ«ÖÁÉÙ²»±¨´íÁË£¬Âß¼­Ò²Ã»ÎÊÌâ£¬Ë­ËµÃ»½âËø¼¼ÄÜ¾Í²»ÄÜÒÅÍüµÄ(Îí)
+        //node.RefundSkillPoint()çš„connectHandleååŠ äº†?ç©ºåˆ¤å®š
+        //ä½¿å…¶åœ¨åˆšè¿è¡Œæœªæ‰“å¼€è¿‡æŠ€èƒ½æ ‘çš„æƒ…å†µä¸‹ä¹Ÿèƒ½ä½¿ç”¨é—å¿˜ä¹‹ä¹¦ï¼Œè™½ç„¶æœ‰ç‚¹æŠ½è±¡ï¼Œä½†è‡³å°‘ä¸æŠ¥é”™äº†ï¼Œé€»è¾‘ä¹Ÿæ²¡é—®é¢˜ï¼Œè°è¯´æ²¡è§£é”æŠ€èƒ½å°±ä¸èƒ½é—å¿˜çš„(é›¾)
     }
 }

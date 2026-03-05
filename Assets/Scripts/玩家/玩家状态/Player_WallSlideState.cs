@@ -10,27 +10,27 @@ public class Player_WallSlideState : PlayerState
     {
         base.Update();
 
-        滑墙处理();//涉及翻转，所以代码必须在切换墙壁跳跃状态之上
+        HandleFlip();//涉及翻转，所以代码必须在切换墙壁跳跃状态之上
 
         if (input.Player.Jump.WasPressedThisFrame())
             stateMachine.ChangeState(player.wallJumpState);
 
-        if (player.检测到墙壁 == false)
+        if (player.isDetectWall == false)
             stateMachine.ChangeState(player.fallState);
 
-        if (player.检测到地面)
+        if (player.isDetectGround)
             stateMachine.ChangeState(player.idleState);
 
 
 
     }
-    private void 滑墙处理()
+    private void HandleFlip()
     {
         if (player.moveInput.y < 0)
             player.SetVelocity(player.moveInput.x, rb.linearVelocity.y);
-            //player中有根据x轴及“面向右方”进行角色翻转的功能，因此这里无需担心
+            //player中有根据x轴及“isFacingRight”进行角色翻转的功能，因此这里无需担心
         else
-            player.SetVelocity(player.moveInput.x, rb.linearVelocity.y * player.滑墙下降倍率);
+            player.SetVelocity(player.moveInput.x, rb.linearVelocity.y * player.WallSlideMultiplier);
 
     }
 }

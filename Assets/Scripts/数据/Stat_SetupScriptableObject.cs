@@ -1,29 +1,29 @@
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "ÉúÎïÊı¾İÉèÖÃ/Ä¬ÈÏÉúÎïÊı¾İÉèÖÃ",fileName = "Êı¾İÉèÖÃ-")]
+[CreateAssetMenu(menuName = "ç”Ÿç‰©æ•°æ®è®¾ç½®/é»˜è®¤ç”Ÿç‰©æ•°æ®è®¾ç½®",fileName = "æ•°æ®è®¾ç½®-")]
 public class Stat_SetupSO : ScriptableObject
 {
-    [Header("ÑªÁ¿Ïà¹Ø")]
+    [Header("è¡€é‡ç›¸å…³")]
     public float maxHp = 100;
     public float HpRegen;
-    [Header("ÎïÀíÉËº¦")]
+    [Header("ç‰©ç†ä¼¤å®³")]
     public float attackSpeed = 1;
     public float damage = 10;
     public float critChange;
     public float critPower;
     public float armorReduction;
-    [Header("ÔªËØÉËº¦")]
+    [Header("å…ƒç´ ä¼¤å®³")]
     public float fireDamage;
     public float iceDamage;
     public float lightningDamage;
-    [Header("ÎïÀí·ÀÓù")]
+    [Header("ç‰©ç†é˜²å¾¡")]
     public float armor;
     public float evasion;
-    [Header("ÔªËØµÖ¿¹")]
+    [Header("å…ƒç´ æŠµæŠ—")]
     public float fireResistance;
     public float iceResistance;
     public float LightningResistance;
-    [Header("ºËĞÄ¼Ó³ÉÊı¾İ")]
+    [Header("æ ¸å¿ƒåŠ æˆæ•°æ®")]
     public float strength;
     public float agility;
     public float intelligence;

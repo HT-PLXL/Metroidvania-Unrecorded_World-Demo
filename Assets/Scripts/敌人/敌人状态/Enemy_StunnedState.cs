@@ -2,20 +2,20 @@ using UnityEngine;
 
 public class Enemy_StunnedState : EnemyState
 {
-    private µĞÈËÊÓ¾õĞ§¹û VFX;
+    private æ•Œäººè§†è§‰æ•ˆæœ VFX;
     public Enemy_StunnedState(Enemy enemy, StateMachine stateMachine, string animBoolName) : base(enemy, stateMachine, animBoolName)
     {
-        VFX = enemy.GetComponent<µĞÈËÊÓ¾õĞ§¹û>();
+        VFX = enemy.GetComponent<æ•Œäººè§†è§‰æ•ˆæœ>();
     }
     public override void Enter()
     {
         base.Enter();
 
-        VFX.¿Éµ¯³ö¹¥»÷¾¯¸æ(false);
+        VFX.å¯å¼¹å‡ºæ”»å‡»è­¦å‘Š(false);
         enemy.EnableCounterWindow(false);
-        //¹¥»÷¶¯»­ÔÚµ¯·´Ê±±»È¡ÏûÁË£¬µÚ¶ş¸öÈ¡Ïû·´»÷´°¿ÚµÄ½Úµã¾Í²»»á±»´¥·¢£¬Òò´ËĞèÒªÔÚÕâÀïÈ¡Ïû
+        //æ”»å‡»åŠ¨ç”»åœ¨å¼¹åæ—¶è¢«å–æ¶ˆäº†ï¼Œç¬¬äºŒä¸ªå–æ¶ˆåå‡»çª—å£çš„èŠ‚ç‚¹å°±ä¸ä¼šè¢«è§¦å‘ï¼Œå› æ­¤éœ€è¦åœ¨è¿™é‡Œå–æ¶ˆ
         stateTimer =enemy.stunnedDuration;
-        rb.linearVelocity = new Vector2(enemy.stunnedVelocity.x * -enemy.Ãæ¶Ô·½Ïò, enemy.stunnedVelocity.y);
+        rb.linearVelocity = new Vector2(enemy.stunnedVelocity.x * -enemy.faceDirection, enemy.stunnedVelocity.y);
     }
     public override void Update()
     {

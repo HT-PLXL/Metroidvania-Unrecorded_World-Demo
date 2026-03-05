@@ -9,8 +9,8 @@ public class UI_TreeConnectDetails
 {
     public UI_TreeConnectHandle childNode;
     public NodeDirectionType direction;
-    [Range(100f, 300f)] public float length;//Á¬½ÓÏß³¤¶È
-    [Range(-45f, 45f)] public float rotation;//Á¬½ÓÏß¶îÍâ×óÓÒÆ«ÒÆÁ¿
+    [Range(100f, 300f)] public float length;//è¿æ¥çº¿é•¿åº¦
+    [Range(-45f, 45f)] public float rotation;//è¿æ¥çº¿é¢å¤–å·¦å³åç§»é‡
 }
 
 public class UI_TreeConnectHandle : MonoBehaviour
@@ -21,26 +21,26 @@ public class UI_TreeConnectHandle : MonoBehaviour
     [SerializeField] private UI_TreeConnection[] connections;
 
     private Image connectionLineImage;
-    private Color OriginalColor;//Ô­Ê¼ÑÕÉ«
-    private static bool allowSetAsLastSibling = false;//ÉèÖÃÎªstatic¾²Ì¬£¬Ê¹ËùÓĞÊµÀı¹²ÏíÒ»¸öboolÖµ
+    private Color OriginalColor;//åŸå§‹é¢œè‰²
+    private static bool allowSetAsLastSibling = false;//è®¾ç½®ä¸ºstaticé™æ€ï¼Œä½¿æ‰€æœ‰å®ä¾‹å…±äº«ä¸€ä¸ªboolå€¼
     private void Awake()
     {
         if (connectionLineImage != null)
             OriginalColor = connectionLineImage.color;
     }
 
-    private void OnValidate()//±à¼­Æ÷×¨Êô·½·¨£¬´Ë´¦ÓÃÓÚĞŞ¸Ä²ÎÊıÊ±×Ô¶¯Ö´ĞĞÒÆ¶¯½ÚµãÏà¹Ø¹¦ÄÜ
+    private void OnValidate()//ç¼–è¾‘å™¨ä¸“å±æ–¹æ³•ï¼Œæ­¤å¤„ç”¨äºä¿®æ”¹å‚æ•°æ—¶è‡ªåŠ¨æ‰§è¡Œç§»åŠ¨èŠ‚ç‚¹ç›¸å…³åŠŸèƒ½
     {
         if (connectDetails.Length <= 0)
             return;
         if (connectDetails.Length != connections.Length)
         {
-            Debug.Log("Ï¸½ÚÊıÁ¿ºÍÁ¬½ÓÊıÁ¿Ó¦¸ÃÏàµÈ" + gameObject.name);
+            Debug.Log("ç»†èŠ‚æ•°é‡å’Œè¿æ¥æ•°é‡åº”è¯¥ç›¸ç­‰" + gameObject.name);
             return;
         }
         UpdateConnection();
     }
-    public UI_TreeNode[] GetChildNodes()//»ñÈ¡×Ó½Úµã
+    public UI_TreeNode[] GetChildNodes()//è·å–å­èŠ‚ç‚¹
     {
         List<UI_TreeNode> returnChildNode = new List<UI_TreeNode>();
         foreach(var node in connectDetails)
@@ -60,25 +60,25 @@ public class UI_TreeConnectHandle : MonoBehaviour
             Vector2 targetPosition = connection.GetConnectionPoint(rect);
             Image connectionLine = connection.GetConnectionLineImage();
 
-            connection.DirectConnection(detail.direction, detail.length, detail.rotation);//¿ØÖÆ¶ÔÏó¡°Á¬½Ó¡±µÄ·½Ïò³¤¶ÈĞı×ª
+            connection.DirectConnection(detail.direction, detail.length, detail.rotation);//æ§åˆ¶å¯¹è±¡â€œè¿æ¥â€çš„æ–¹å‘é•¿åº¦æ—‹è½¬
 
-            if (detail.childNode == null)//´Ë´¦ÓÃÓÚ±ÜÃâ¿ØÖÆÌ¨±¨´í£¬Ê¹childNode¿ÉÒÔÎª¿Õ
+            if (detail.childNode == null)//æ­¤å¤„ç”¨äºé¿å…æ§åˆ¶å°æŠ¥é”™ï¼Œä½¿childNodeå¯ä»¥ä¸ºç©º
                 continue;
             detail.childNode.SetPosition(targetPosition);
             detail.childNode.SetConnectionLineImage(connectionLine);
             if (allowSetAsLastSibling)
-                detail.childNode.transform.SetAsLastSibling();//½«×Ó½ÚµãÉèÎª×îºóÒ»¸ö¶ÔÏó£¬ÅäºÏ±éÀú¿ÉĞŞ¸´²ã¼¶´íÎó
+                detail.childNode.transform.SetAsLastSibling();//å°†å­èŠ‚ç‚¹è®¾ä¸ºæœ€åä¸€ä¸ªå¯¹è±¡ï¼Œé…åˆéå†å¯ä¿®å¤å±‚çº§é”™è¯¯
         }
     }
     public void UpdateAllNode()
     {
         allowSetAsLastSibling = true;
-        UpdateConnection();//¸üĞÂÖ÷½ÚµãÁ¬½ÓÏßÏà¹Ø¼°×Ó½ÚµãÎ»ÖÃ
-        foreach (var node in connectDetails)//Ã¿¸ö¼¼ÄÜ¶¼ÊÇÖ÷½Úµã£¬µ«Ò²¿ÉÒÔ±»ÆäËû½ÚµãÈÏÎªÊÇ¡°×Ó½Úµã¡±
+        UpdateConnection();//æ›´æ–°ä¸»èŠ‚ç‚¹è¿æ¥çº¿ç›¸å…³åŠå­èŠ‚ç‚¹ä½ç½®
+        foreach (var node in connectDetails)//æ¯ä¸ªæŠ€èƒ½éƒ½æ˜¯ä¸»èŠ‚ç‚¹ï¼Œä½†ä¹Ÿå¯ä»¥è¢«å…¶ä»–èŠ‚ç‚¹è®¤ä¸ºæ˜¯â€œå­èŠ‚ç‚¹â€
         {
-            if (node.childNode == null)//·À±¨´í
+            if (node.childNode == null)//é˜²æŠ¥é”™
                 continue;
-            node.childNode?.UpdateConnection();//¸üĞÂ×Ó½Úµã¼°
+            node.childNode?.UpdateConnection();//æ›´æ–°å­èŠ‚ç‚¹åŠ
         }
         allowSetAsLastSibling = false;
     }
@@ -89,5 +89,5 @@ public class UI_TreeConnectHandle : MonoBehaviour
         connectionLineImage.color = unlock ? Color.white : OriginalColor;
     }
     public void SetConnectionLineImage(Image image) => connectionLineImage = image;
-    public void SetPosition(Vector2 position) => rect.anchoredPosition = position;//¸Ä±äÃªµãÎ»ÖÃ
+    public void SetPosition(Vector2 position) => rect.anchoredPosition = position;//æ”¹å˜é”šç‚¹ä½ç½®
 }

@@ -22,48 +22,48 @@ public class UI_StatTooltip : UI_Tooltip
         switch (statType)
         {
             case StatType.Strength:
-                return "Ã¿µãÁ¦Á¿+0.5%µÄ±©»÷ÉËº¦";
+                return "æ¯ç‚¹åŠ›é‡+0.5%çš„æš´å‡»ä¼¤å®³";
             case StatType.Agility:
-                return "Ã¿µãÃô½İ+0.5%±©»÷ÂÊ" + "\nÃ¿µãÃô½İ+0.5%ÉÁ±ÜÂÊ";
+                return "æ¯ç‚¹æ•æ·+0.5%æš´å‡»ç‡" + "\næ¯ç‚¹æ•æ·+0.5%é—ªé¿ç‡";
             case StatType.Intelligence:
-                return "Ã¿µãÖÇÁ¦+2ÔªËØÉËº¦" + "\nÃ¿µãÖÇÁ¦+0.5%¸÷ÔªËØ¿¹ĞÔ";
+                return "æ¯ç‚¹æ™ºåŠ›+2å…ƒç´ ä¼¤å®³" + "\næ¯ç‚¹æ™ºåŠ›+0.5%å„å…ƒç´ æŠ—æ€§";
             case StatType.Vitality:
-                return "Ã¿µã»îÁ¦Öµ+2»¤¼×" + "\nÃ¿µã»îÁ¦+5×î´óÉúÃü";
+                return "æ¯ç‚¹æ´»åŠ›å€¼+2æŠ¤ç”²" + "\næ¯ç‚¹æ´»åŠ›+5æœ€å¤§ç”Ÿå‘½";
             case StatType.MaxHP:
-                return "¡°ÑªÁ¿ÔÚ±Ä¼«¡±" + "\nÊÜ»îÁ¦Ó°Ïì";
+                return "â€œè¡€é‡åœ¨è¹¦æâ€" + "\nå—æ´»åŠ›å½±å“";
             case StatType.HpRegen:
-                return "ÓÉ×°±¸/buffÌá¹©";
+                return "ç”±è£…å¤‡/buffæä¾›";
             case StatType.Evasion:
-                return "ÓĞ¸ÅÂÊÉÁ±ÜÉËº¦"+"\nÉÁ±ÜÂÊÉÏÏŞ85%";
+                return "æœ‰æ¦‚ç‡é—ªé¿ä¼¤å®³"+"\né—ªé¿ç‡ä¸Šé™85%";
             case StatType.Armor:
-                return "»¤¼×Öµ¿É¼õÃâÎïÀíÉËº¦£¬×î¸ß99%" + "µ±Ç°ÉËº¦¼õÃâÎª£º" + playerStsts.GetArmorMitigation(0) * 100 + "%";
-            //"\n×îÖÕÉËº¦¼õÃâ = »¤¼×*£¨1-»¤¼×Ï÷¼õ£©/£¨»¤¼×*£¨1-»¤¼×Ï÷¼õ£©+100£©";
+                return "æŠ¤ç”²å€¼å¯å‡å…ç‰©ç†ä¼¤å®³ï¼Œæœ€é«˜99%" + "å½“å‰ä¼¤å®³å‡å…ä¸ºï¼š" + playerStsts.GetArmorMitigation(0) * 100 + "%";
+            //"\næœ€ç»ˆä¼¤å®³å‡å… = æŠ¤ç”²*ï¼ˆ1-æŠ¤ç”²å‰Šå‡ï¼‰/ï¼ˆæŠ¤ç”²*ï¼ˆ1-æŠ¤ç”²å‰Šå‡ï¼‰+100ï¼‰";
             case StatType.Damage:
-                return "ÊÜÁ¦Á¿Ó°Ïì";
+                return "å—åŠ›é‡å½±å“";
             case StatType.CritChance:
-                return "ÊÜÃô½İÓ°Ïì";
+                return "å—æ•æ·å½±å“";
             case StatType.CritPower:
-                return "ÊÜÁ¦Á¿Ó°Ïì";
+                return "å—åŠ›é‡å½±å“";
             case StatType.ArmorReduction:
-                return "¹¥»÷Ï÷¼õ¶Ô·½ÎïÀí»¤¼×°Ù·Ö±È";
+                return "æ”»å‡»å‰Šå‡å¯¹æ–¹ç‰©ç†æŠ¤ç”²ç™¾åˆ†æ¯”";
             case StatType.AttackSpeed:
-                return "¾ö¶¨ÆÕÍ¨¹¥»÷ËÙ¶È";
+                return "å†³å®šæ™®é€šæ”»å‡»é€Ÿåº¦";
             case StatType.FireDamage:
-                return "»ğÔªËØ¸½×Å»á³ÖĞø×ÆÉÕ";
+                return "ç«å…ƒç´ é™„ç€ä¼šæŒç»­ç¼çƒ§";
             case StatType.IceDamage:
-                return "±ùÔªËØ¸½×Å»á³ÖĞø¼õËÙ";
+                return "å†°å…ƒç´ é™„ç€ä¼šæŒç»­å‡é€Ÿ";
             case StatType.LightningDamage:
-                return "À×ÔªËØ¸½×Å´ïµ½ÉÏÏŞ»áÒı·¢À×±©£¬Ôì³É´óÁ¿ÉËº¦";
+                return "é›·å…ƒç´ é™„ç€è¾¾åˆ°ä¸Šé™ä¼šå¼•å‘é›·æš´ï¼Œé€ æˆå¤§é‡ä¼¤å®³";
             case StatType.ElementDamage:
-                return "ÔªËØÉËº¦×ÜºÍ = Ö÷ÔªËØÉËº¦+50%¸±ÔªËØÉËº¦+ÖÇÁ¦¼Ó³É";
+                return "å…ƒç´ ä¼¤å®³æ€»å’Œ = ä¸»å…ƒç´ ä¼¤å®³+50%å‰¯å…ƒç´ ä¼¤å®³+æ™ºåŠ›åŠ æˆ";
             case StatType.FireResistance:
-                return "»ğÔªËØµÖ¿¹£¬ÊÜÖÇÁ¦Ó°Ïì£¬ÉÏÏŞ99%";
+                return "ç«å…ƒç´ æŠµæŠ—ï¼Œå—æ™ºåŠ›å½±å“ï¼Œä¸Šé™99%";
             case StatType.IceResistance:
-                return "±ùÔªËØµÖ¿¹£¬ÊÜÖÇÁ¦Ó°Ïì£¬ÉÏÏŞ99%";
+                return "å†°å…ƒç´ æŠµæŠ—ï¼Œå—æ™ºåŠ›å½±å“ï¼Œä¸Šé™99%";
             case StatType.LightningResistance:
-                return "À×ÔªËØµÖ¿¹£¬ÊÜÖÇÁ¦Ó°Ïì£¬ÉÏÏŞ99%";
+                return "é›·å…ƒç´ æŠµæŠ—ï¼Œå—æ™ºåŠ›å½±å“ï¼Œä¸Šé™99%";
             default:
-                return "Ã»ÓĞÊÊºÏµÄÊôĞÔÌáÊ¾";
+                return "æ²¡æœ‰é€‚åˆçš„å±æ€§æç¤º";
         }
     }
 }

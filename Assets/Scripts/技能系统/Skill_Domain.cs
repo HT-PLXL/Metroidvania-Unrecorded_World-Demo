@@ -3,19 +3,19 @@ using UnityEngine;
 
 public class Skill_Domain : Skill_Base
 {
-    [Header("ÁìÓòÏêÇé")]
+    [Header("é¢†åŸŸè¯¦æƒ…")]
     public float maxSize = 10;
     public float expandSpeed = 3;
     [SerializeField] private GameObject domainPrefab;
-    [Header("Ê±¿Õ³ÙÖÍÁìÓò")]
+    [Header("æ—¶ç©ºè¿Ÿæ»é¢†åŸŸ")]
     [SerializeField] private float slowDownPercent = 0.8f;
     [SerializeField] private float slowDownDuration = 5;
-    [Header("Ê±¿ÕÁìÓò_ĞéÍıÒâÖ¾")]
-    [SerializeField] private int cloneCount =10;//¿ËÂ¡ÌåÊıÁ¿
+    [Header("æ—¶ç©ºé¢†åŸŸ_è™šå¦„æ„å¿—")]
+    [SerializeField] private int cloneCount =10;//å…‹éš†ä½“æ•°é‡
     [SerializeField] private float cloneUpgradeSlowDownPercent = 1f;
     [SerializeField] private float cloneUpgradeDuration = 8;
-    [Header("Ê±¿ÕÁìÓò_Ä§ÄÜºäÕ¨")]
-    [SerializeField] private int shardCount = 20;//Ä§ÄÜ¾§ÌåÊıÁ¿
+    [Header("æ—¶ç©ºé¢†åŸŸ_é­”èƒ½è½°ç‚¸")]
+    [SerializeField] private int shardCount = 20;//é­”èƒ½æ™¶ä½“æ•°é‡
     [SerializeField] private float shardUpgradeSlowDownPercent = 1f;
     [SerializeField] private float shardUpgradeDuration = 6;
     //[SerializeField] private float damageHealPercent = 0.5f;
@@ -44,19 +44,19 @@ public class Skill_Domain : Skill_Base
     }
     private void SpellCast(Transform target)
     {
-        if(upgradeType == SkillUpgradeType.Ê±¿ÕÁìÓò_ĞéÍıÒâÖ¾)
+        if(upgradeType == SkillUpgradeType.æ—¶ç©ºé¢†åŸŸ_è™šå¦„æ„å¿—)
         {
             Vector3 offect = Random.value < 0.5f ? new Vector2(1, 0) : new Vector2(-1, 0);
             skillManager.clone.CreateClone(target.position + offect);
         }
-        if (upgradeType == SkillUpgradeType.Ê±¿ÕÁìÓò_Ä§ÄÜºäÕ¨)
+        if (upgradeType == SkillUpgradeType.æ—¶ç©ºé¢†åŸŸ_é­”èƒ½è½°ç‚¸)
         {
             skillManager.shard.CreateOriginalShard(target, true);
         }
     }
     private Transform GetTarget()
     {
-        Alltargets.RemoveAll(target => target == null || target.enemyHp.isDead);//ÒÆ³ıÆäÖĞÎª¿Õ»òÕßÒÑËÀÍöµÄ¶ÔÏó
+        Alltargets.RemoveAll(target => target == null || target.enemyHp.isDead);//ç§»é™¤å…¶ä¸­ä¸ºç©ºæˆ–è€…å·²æ­»äº¡çš„å¯¹è±¡
         if (Alltargets.Count == 0)
             return null;
         int index = Random.Range(0, Alltargets.Count);
@@ -65,35 +65,35 @@ public class Skill_Domain : Skill_Base
     }
     public float GetDomainDuration()
     {
-        if (upgradeType == SkillUpgradeType.Ê±¿ÕÁìÓò)
+        if (upgradeType == SkillUpgradeType.æ—¶ç©ºé¢†åŸŸ)
             return slowDownDuration;
-        else if(upgradeType == SkillUpgradeType.Ê±¿ÕÁìÓò_ĞéÍıÒâÖ¾)
+        else if(upgradeType == SkillUpgradeType.æ—¶ç©ºé¢†åŸŸ_è™šå¦„æ„å¿—)
             return cloneUpgradeDuration;
-        else if (upgradeType == SkillUpgradeType.Ê±¿ÕÁìÓò_Ä§ÄÜºäÕ¨)
+        else if (upgradeType == SkillUpgradeType.æ—¶ç©ºé¢†åŸŸ_é­”èƒ½è½°ç‚¸)
             return shardUpgradeDuration;
         return 0;
     }
     public float GetSlowDownPercent()
     {
-        if (upgradeType == SkillUpgradeType.Ê±¿ÕÁìÓò)
+        if (upgradeType == SkillUpgradeType.æ—¶ç©ºé¢†åŸŸ)
             return slowDownPercent;
-        else if (upgradeType == SkillUpgradeType.Ê±¿ÕÁìÓò_ĞéÍıÒâÖ¾)
+        else if (upgradeType == SkillUpgradeType.æ—¶ç©ºé¢†åŸŸ_è™šå¦„æ„å¿—)
             return cloneUpgradeSlowDownPercent;
-        else if (upgradeType == SkillUpgradeType.Ê±¿ÕÁìÓò_Ä§ÄÜºäÕ¨)
+        else if (upgradeType == SkillUpgradeType.æ—¶ç©ºé¢†åŸŸ_é­”èƒ½è½°ç‚¸)
             return shardUpgradeSlowDownPercent;
         return 0;
     }
     private int GetSpellCastCount()
     {
-        if (upgradeType == SkillUpgradeType.Ê±¿ÕÁìÓò_ĞéÍıÒâÖ¾)
+        if (upgradeType == SkillUpgradeType.æ—¶ç©ºé¢†åŸŸ_è™šå¦„æ„å¿—)
             return cloneCount;
-        else if (upgradeType == SkillUpgradeType.Ê±¿ÕÁìÓò_Ä§ÄÜºäÕ¨)
+        else if (upgradeType == SkillUpgradeType.æ—¶ç©ºé¢†åŸŸ_é­”èƒ½è½°ç‚¸)
             return shardCount;
         return 0;
     }
     public bool IsInstantDomain()
     {
-        return upgradeType != SkillUpgradeType.Ê±¿ÕÁìÓò_ĞéÍıÒâÖ¾ && upgradeType != SkillUpgradeType.Ê±¿ÕÁìÓò_Ä§ÄÜºäÕ¨;
+        return upgradeType != SkillUpgradeType.æ—¶ç©ºé¢†åŸŸ_è™šå¦„æ„å¿— && upgradeType != SkillUpgradeType.æ—¶ç©ºé¢†åŸŸ_é­”èƒ½è½°ç‚¸;
     }
     public void AddTarget(Enemy target)
     {

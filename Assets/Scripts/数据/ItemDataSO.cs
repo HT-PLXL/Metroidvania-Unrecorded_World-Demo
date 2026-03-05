@@ -1,17 +1,17 @@
 using UnityEditor;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "ÓÎÏ·ÉèÖÃ/ÎïÆ·Êı¾İ/²ÄÁÏ", fileName = "²ÄÁÏ-")]
+[CreateAssetMenu(menuName = "æ¸¸æˆè®¾ç½®/ç‰©å“æ•°æ®/ææ–™", fileName = "ææ–™-")]
 public class ItemDataSO : ScriptableObject
 {
     public string savaId {  get;private set; }
     //[cn("")]
-    [cn("ÎïÆ·Ãû")] public string itemName;
-    [cn("Í¼±ê")] public Sprite icon;
-    [cn("ÎïÆ·ÖÖÀà")] public ItemType itemType;
-    [cn("×î´ó¶ÑµşÊıÁ¿")] public int maxStackCount = 1;
+    [cn("ç‰©å“å")] public string itemName;
+    [cn("å›¾æ ‡")] public Sprite icon;
+    [cn("ç‰©å“ç§ç±»")] public ItemType itemType;
+    [cn("æœ€å¤§å †å æ•°é‡")] public int maxStackCount = 1;
 
-    [Header("ÎïÆ·Ğ§¹û")]
+    [Header("ç‰©å“æ•ˆæœ")]
     public ItemEffectDataSO itemEffect;
 
 

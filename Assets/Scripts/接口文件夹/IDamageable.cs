@@ -1,6 +1,6 @@
 using UnityEngine;
-//½Ó¿Ú¡°¿ÉÊÜÉË¡±,¹ÒÔØÔÚÊµÌåÑªÁ¿ÉÏ£¬»òÕßÏä×ÓÕâÀà¿É½»»¥ÊµÌåÉÏ£¬ËùÓĞ¹ÒÔØÁË´Ë½Ó¿ÚµÄ¶ÔÏó¶¼ÒªÍêÉÆ¶ÔÓ¦µÄTakeDamage£¬¿ÉÒÔÊÇÈÎºÎÏëÔÚÊÜÉËÊ±×öµÄÄÚÈİ£¬°üÀ¨¿ÛÑª¹¦ÄÜ
+//æ¥å£â€œå¯å—ä¼¤â€,æŒ‚è½½åœ¨å®ä½“è¡€é‡ä¸Šï¼Œæˆ–è€…ç®±å­è¿™ç±»å¯äº¤äº’å®ä½“ä¸Šï¼Œæ‰€æœ‰æŒ‚è½½äº†æ­¤æ¥å£çš„å¯¹è±¡éƒ½è¦å®Œå–„å¯¹åº”çš„TakeDamageï¼Œå¯ä»¥æ˜¯ä»»ä½•æƒ³åœ¨å—ä¼¤æ—¶åšçš„å†…å®¹ï¼ŒåŒ…æ‹¬æ‰£è¡€åŠŸèƒ½
 public interface IDamageable
 {
-    public bool TakeDamage(float damagef,float elementalDamage,ElementType element, Transform damageSource);//damageSourceÉËº¦À´Ô´
+    public bool TakeDamage(float damagef,float elementalDamage,ElementType element, Transform damageSource);//damageSourceä¼¤å®³æ¥æº
 }

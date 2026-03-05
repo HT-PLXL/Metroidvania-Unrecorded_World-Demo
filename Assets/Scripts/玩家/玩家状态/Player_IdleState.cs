@@ -7,21 +7,21 @@ public class Player_IdleState : Player_GroundState
     {
     }
 
-    //×ÓÀà Player_IdleState µÄ¹¹Ôìº¯Êı½ÓÊÕplayer, stateMachine, stateName Èı¸ö²ÎÊı£»
-    //Í¨¹ı : base(player£¬stateMachine, stateName)£¬½«ÕâÈı¸ö²ÎÊı´«µİ¸ø¸¸Àà EntityState µÄ¹¹Ôìº¯Êı
-    //È·±£¸¸ÀàÖĞplayerºÍ stateMachine ºÍ stateName ³ÉÔ±±äÁ¿±»ÕıÈ·³õÊ¼»¯¡£
+    //å­ç±» Player_IdleState çš„æ„é€ å‡½æ•°æ¥æ”¶player, stateMachine, stateName ä¸‰ä¸ªå‚æ•°ï¼›
+    //é€šè¿‡ : base(playerï¼ŒstateMachine, stateName)ï¼Œå°†è¿™ä¸‰ä¸ªå‚æ•°ä¼ é€’ç»™çˆ¶ç±» EntityState çš„æ„é€ å‡½æ•°
+    //ç¡®ä¿çˆ¶ç±»ä¸­playerå’Œ stateMachine å’Œ stateName æˆå‘˜å˜é‡è¢«æ­£ç¡®åˆå§‹åŒ–ã€‚
     public override void Enter()
     {
         base.Enter();
         player.SetVelocity(0, rb.linearVelocity.y);
     }
-    public override void Update()//ÓÉÓÚ³õÊ¼ÊÇidle×´Ì¬£¬ÇÒÊÇ±¾½Å±¾µÄPlayer_IdleStateÀà
-                                 //ËùÒÔPlayer.csÖ´ĞĞµÄUpdateÖĞstateMachine.UpdataActiveState£¨£©
-                                 //µ÷ÓÃ×´Ì¬»úcurrentState.Update()ÔÙµ÷ÓÃÕâÀïµÄUpdate
-    {                            //¶øÕâÀïµÄbase»áÔÙ´ÎÏò¸¸¼¶Player_GroundState´«µİ
+    public override void Update()//ç”±äºåˆå§‹æ˜¯idleçŠ¶æ€ï¼Œä¸”æ˜¯æœ¬è„šæœ¬çš„Player_IdleStateç±»
+                                 //æ‰€ä»¥Player.csæ‰§è¡Œçš„Updateä¸­stateMachine.UpdataActiveStateï¼ˆï¼‰
+                                 //è°ƒç”¨çŠ¶æ€æœºcurrentState.Update()å†è°ƒç”¨è¿™é‡Œçš„Update
+    {                            //è€Œè¿™é‡Œçš„baseä¼šå†æ¬¡å‘çˆ¶çº§Player_GroundStateä¼ é€’
         base.Update();
 
-        if (player.moveInput.x == player.Ãæ¶Ô·½Ïò && player.¼ì²âµ½Ç½±Ú)
+        if (player.moveInput.x == player.faceDirection && player.isDetectWall)
             return;
         if (player.moveInput.x !=0)
             stateMachine.ChangeState(player.moveState);

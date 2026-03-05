@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "游戏设置/物品数据/物品效果/低级治疗", fileName = "物品效果-低级治疗")]
+[CreateAssetMenu(menuName = "娓告垙璁剧疆/鐗╁搧鏁版嵁/鐗╁搧鏁堟灉/浣庣骇娌荤枟", fileName = "鐗╁搧鏁堟灉-浣庣骇娌荤枟")]
 
 public class ItemEffect_Heal :ItemEffectDataSO
 {

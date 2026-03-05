@@ -1,21 +1,21 @@
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "ÓÎÏ·ÉèÖÃ/ÎïÆ·Êı¾İ/ÎïÆ·Ğ§¹û/ÎüÑª", fileName = "ÎïÆ·Ğ§¹û-ÎüÑª")]
+[CreateAssetMenu(menuName = "æ¸¸æˆè®¾ç½®/ç‰©å“æ•°æ®/ç‰©å“æ•ˆæœ/å¸è¡€", fileName = "ç‰©å“æ•ˆæœ-å¸è¡€")]
 
 public class ItemEffectOnTakingDamage : ItemEffectDataSO
 {
-    [SerializeField][cn("ÎüÑª±ÈÀı")] private float healPercentOnAttack = 0.1f;
+    [SerializeField][cn("å¸è¡€æ¯”ä¾‹")] private float healPercentOnAttack = 0.1f;
 
     public override void Subscribe(Player player)
     {
         base.Subscribe(player);
-        player.playerCombat.OnTakingPhysicalDamage += HealOnTakingDamage;//ÉËº¦ÓÉÊÂ¼şË³´ø´«µİ
+        player.playerCombat.OnTakingPhysicalDamage += HealOnTakingDamage;//ä¼¤å®³ç”±äº‹ä»¶é¡ºå¸¦ä¼ é€’
     }
     public override void Unsubscribe()
     {
         base.Unsubscribe();
         player.playerCombat.OnTakingPhysicalDamage -= HealOnTakingDamage;
-        player = null;//Çå³ıÀà¶ÔÍæ¼ÒÊµÀıµÄÒıÓÃ£¬Ê¹µÃÊµÀı¿É±»»ØÊÕÊÍ·ÅÄÚ´æ
+        player = null;//æ¸…é™¤ç±»å¯¹ç©å®¶å®ä¾‹çš„å¼•ç”¨ï¼Œä½¿å¾—å®ä¾‹å¯è¢«å›æ”¶é‡Šæ”¾å†…å­˜
     }
     private void HealOnTakingDamage(float damage)
     {

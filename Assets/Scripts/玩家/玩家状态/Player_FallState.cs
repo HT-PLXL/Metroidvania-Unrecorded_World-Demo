@@ -10,9 +10,9 @@ public class Player_FallState : Player_AiredState
     {
         base.Update();
 
-        if (player.检测到地面)
+        if (player.isDetectGround)
             stateMachine.ChangeState(player.idleState);
-        if (player.检测到墙壁)
+        if (player.isDetectWall)
             stateMachine.ChangeState(player.wallSlideState);
 
     }

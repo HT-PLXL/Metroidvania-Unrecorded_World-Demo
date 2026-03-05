@@ -7,12 +7,12 @@ public class SerializableDictionary<TKey, TValue> : Dictionary<TKey, TValue>, IS
     [SerializeField]private List<TKey> keys = new List<TKey>();
     [SerializeField] private List<TValue> values = new List<TValue>();
 
-    public void OnAfterDeserialize()//ÔÚ¼ÓÔØÊı¾İºóÈ¡»ØÁ½¸öÁĞ±í²¢×ª»»»Ø×Öµä
+    public void OnAfterDeserialize()//åœ¨åŠ è½½æ•°æ®åå–å›ä¸¤ä¸ªåˆ—è¡¨å¹¶è½¬æ¢å›å­—å…¸
     {
         this.Clear();
 
         if (keys.Count != values.Count)
-            Debug.Log("¼üÓëÖµÊıÁ¿²»µÈ");
+            Debug.Log("é”®ä¸å€¼æ•°é‡ä¸ç­‰");
         for (int i = 0; i < keys.Count; i++)
         {
             this.Add(keys[i], values[i]);
@@ -20,11 +20,11 @@ public class SerializableDictionary<TKey, TValue> : Dictionary<TKey, TValue>, IS
         }
     }
 
-    public void OnBeforeSerialize()//ÔÚ±£´æÇ°½«×Öµä×ª»¯ÎªÁ½¸öÁĞ±í,·Ö±ğ±£´æ¼üÓëÖµ
+    public void OnBeforeSerialize()//åœ¨ä¿å­˜å‰å°†å­—å…¸è½¬åŒ–ä¸ºä¸¤ä¸ªåˆ—è¡¨,åˆ†åˆ«ä¿å­˜é”®ä¸å€¼
     {
         keys.Clear();
         values.Clear();
-        foreach(KeyValuePair<TKey, TValue>pair in this)//this¼Ì³Ğ×Ô×Öµä
+        foreach(KeyValuePair<TKey, TValue>pair in this)//thisç»§æ‰¿è‡ªå­—å…¸
         {
             keys.Add(pair.Key);
             values.Add(pair.Value);

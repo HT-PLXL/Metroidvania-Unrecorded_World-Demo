@@ -1,13 +1,13 @@
 using System;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "游戏设置/物品数据/物品效果/buff效果", fileName = "物品效果-buff")]
+[CreateAssetMenu(menuName = "娓告垙璁剧疆/鐗╁搧鏁版嵁/鐗╁搧鏁堟灉/buff鏁堟灉", fileName = "鐗╁搧鏁堟灉-buff")]
 
 public class ItemEffect_Buff : ItemEffectDataSO
 {
     [SerializeField] private BuffEffectData[] buffsNeedApply;
     [SerializeField] private float duration;
-    [SerializeField] private string source = Guid.NewGuid().ToString();//不重复的id
+    [SerializeField] private string source = Guid.NewGuid().ToString();//涓嶉噸澶嶇殑id
     private Player_Stats playerStats;
 
     public override bool CanBeUsed()
@@ -19,11 +19,11 @@ public class ItemEffect_Buff : ItemEffectDataSO
             return true;
         else
         {
-            Debug.Log("不能应用相同的buff");
+            Debug.Log("涓嶈兘搴旂敤鐩稿悓鐨刡uff");
             return false;
         }
     }
-    public override void ExecuteEffect()//执行效果
+    public override void ExecuteEffect()//鎵ц鏁堟灉
     {
         playerStats.ApplyBuff(buffsNeedApply, duration, source);
     }

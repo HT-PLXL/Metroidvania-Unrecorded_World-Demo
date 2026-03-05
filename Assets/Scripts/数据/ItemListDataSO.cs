@@ -2,7 +2,7 @@ using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "ÓÎÏ·ÉèÖÃ/ÎïÆ·Êı¾İ/ÎïÆ·ÁĞ±í", fileName = "ÁĞ±íÎïÆ·-")]
+[CreateAssetMenu(menuName = "æ¸¸æˆè®¾ç½®/ç‰©å“æ•°æ®/ç‰©å“åˆ—è¡¨", fileName = "åˆ—è¡¨ç‰©å“-")]
 
 public class ItemListDataSO : ScriptableObject
 {
@@ -13,7 +13,7 @@ public class ItemListDataSO : ScriptableObject
     }
 
 #if UNITY_EDITOR
-    [ContextMenu("×Ô¶¯Ìî³äËùÓĞÎïÆ·Êı¾İ")]
+    [ContextMenu("è‡ªåŠ¨å¡«å……æ‰€æœ‰ç‰©å“æ•°æ®")]
     public void CollectItemsData()
     {
         string[] guids = AssetDatabase.FindAssets("t:ItemDataSO");

@@ -9,13 +9,13 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     private UI_SkillTree skillTree;
     private UI_TreeConnectHandle connectHandle;
 
-    [Header("½âËø¹¦ÄÜÏêÇé")]
-    public UI_TreeNode[] needNodes;//ĞèÒªµÄÇ°ÖÃ½Úµã
-    public UI_TreeNode[] conflictNodes;//³åÍ»µÄ½Úµã
-    public bool isUnlocked;//ÒÑ±»½âËø
-    public bool islocked;//ÒÑ±»Ëø¶¨
+    [Header("è§£é”åŠŸèƒ½è¯¦æƒ…")]
+    public UI_TreeNode[] needNodes;//éœ€è¦çš„å‰ç½®èŠ‚ç‚¹
+    public UI_TreeNode[] conflictNodes;//å†²çªçš„èŠ‚ç‚¹
+    public bool isUnlocked;//å·²è¢«è§£é”
+    public bool islocked;//å·²è¢«é”å®š
 
-    [Header("¼¼ÄÜÏêÇé")]
+    [Header("æŠ€èƒ½è¯¦æƒ…")]
     public Skill_DataSO skillData;
     [SerializeField] private string skillName;
     [SerializeField] private Image skillIcon;
@@ -30,25 +30,25 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         skillTree = GetComponentInParent<UI_SkillTree>();
         connectHandle = GetComponent<UI_TreeConnectHandle>();
 
-        UpdateIconColor(GetColor(lockedColor));//ÉèÖÃ³õÊ¼ÑÕÉ«Îª°µÉ«µ÷
+        UpdateIconColor(GetColor(lockedColor));//è®¾ç½®åˆå§‹é¢œè‰²ä¸ºæš—è‰²è°ƒ
     }
     private void Start()
     {
         if (skillData.unlockedByDefault)
             Unlock();
     }
-    private void OnValidate()//ÓÃÓÚ±à¼­Æ÷Ä£Ê½ÏÂµÄÊı¾İÑéÖ¤ºÍ³õÊ¼»¯µÄÌØÊâÉúÃüÖÜÆÚ·½·¨
+    private void OnValidate()//ç”¨äºç¼–è¾‘å™¨æ¨¡å¼ä¸‹çš„æ•°æ®éªŒè¯å’Œåˆå§‹åŒ–çš„ç‰¹æ®Šç”Ÿå‘½å‘¨æœŸæ–¹æ³•
     {
         if (skillData == null)
             return;
         skillName = skillData.skillName;
         skillIcon.sprite = skillData.icon;
         skillCost = skillData.cost;
-        gameObject.name = "UIÊ÷½Úµã - " + skillName;
+        gameObject.name = "UIæ ‘èŠ‚ç‚¹ - " + skillName;
     }
     private void OnEnable()
     {
-        //ÓÃÓÚĞŞ¸´¿ªÆô¼¼ÄÜÊ÷ºó³öÏÖµÄÒì³£ÎÊÌâ
+        //ç”¨äºä¿®å¤å¼€å¯æŠ€èƒ½æ ‘åå‡ºç°çš„å¼‚å¸¸é—®é¢˜
         if (isUnlocked)
             UpdateIconColor(Color.white);
         else
@@ -64,29 +64,29 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
             isUnlocked = false;
             skillTree.AddSkillPoint(skillData.cost);
         }
-        UpdateIconColor(GetColor(lockedColor));//»Ö¸´Í¼±êÑÕÉ«
-        connectHandle?.UnlockConnectionLineImage(false);//»Ö¸´Á¬½ÓÏßÑÕÉ«
+        UpdateIconColor(GetColor(lockedColor));//æ¢å¤å›¾æ ‡é¢œè‰²
+        connectHandle?.UnlockConnectionLineImage(false);//æ¢å¤è¿æ¥çº¿é¢œè‰²
     }
     private void Unlock()
     {
         isUnlocked = true;
-        UpdateIconColor(Color.white);//»Ö¸´Ô­É«
+        UpdateIconColor(Color.white);//æ¢å¤åŸè‰²
         skillTree.RemoveSkillPoint(skillData.cost);
         LockConflictNodes();
-        connectHandle.UnlockConnectionLineImage(true);//¸Ä±äÁ¬½ÓÏßÑÕÉ«
+        connectHandle.UnlockConnectionLineImage(true);//æ”¹å˜è¿æ¥çº¿é¢œè‰²
 
         skillTree.skillManager.GetSkillByType(skillData.skillType).SetSkillUpgrade(skillData.upgradeData);
     }
-    public void UnlockByUsingSaveData()//ÓÃÓÚ¶Áµµ
+    public void UnlockByUsingSaveData()//ç”¨äºè¯»æ¡£
     {
         isUnlocked = true;
-        UpdateIconColor(Color.white);//»Ö¸´Ô­É«
+        UpdateIconColor(Color.white);//æ¢å¤åŸè‰²
         LockConflictNodes();
 
-        connectHandle.UnlockConnectionLineImage(true);//¸Ä±äÁ¬½ÓÏßÑÕÉ«
+        connectHandle.UnlockConnectionLineImage(true);//æ”¹å˜è¿æ¥çº¿é¢œè‰²
 
     }
-    private bool CanBeUnlocked()//ÅĞ¶Ï½ÚµãÄÜ·ñ±»½âËø
+    private bool CanBeUnlocked()//åˆ¤æ–­èŠ‚ç‚¹èƒ½å¦è¢«è§£é”
     {
         if (islocked || isUnlocked)
             return false;
@@ -94,18 +94,18 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
             return false;
         foreach (var node in needNodes)
         {
-            if (node.isUnlocked == false)//ÅĞ¶ÏÇ°ÖÃ½ÚµãÊÇ·ñ½âËø
+            if (node.isUnlocked == false)//åˆ¤æ–­å‰ç½®èŠ‚ç‚¹æ˜¯å¦è§£é”
                 return false;
         }
         foreach (var node in conflictNodes)
         {
             if (node == null) continue;
-            if (node.isUnlocked)//ÅĞ¶Ï½ÚµãÊÇ·ñÓĞ³åÍ»
+            if (node.isUnlocked)//åˆ¤æ–­èŠ‚ç‚¹æ˜¯å¦æœ‰å†²çª
                 return false;
         }
         return true;
     }
-    private void LockConflictNodes()//Ëø¶¨³åÍ»½Úµã
+    private void LockConflictNodes()//é”å®šå†²çªèŠ‚ç‚¹
     {
         foreach (var node in conflictNodes)
             node.LockChildNodes();
@@ -128,7 +128,7 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         if (CanBeUnlocked())
         {
             Unlock();
-            Debug.Log("½âËø¼¼ÄÜ");
+            Debug.Log("è§£é”æŠ€èƒ½");
         }
         else if (islocked)
             ui.skillTooltip.lockedSkillEffect();
@@ -140,7 +140,7 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         if (isUnlocked == false && islocked == false)
         {
             Color color = Color.white * 0.9f;
-            color.a = 1;//ÑÕÉ«rgbaµÄa£ºÍ¸Ã÷¶È
+            color.a = 1;//é¢œè‰²rgbaçš„aï¼šé€æ˜åº¦
             UpdateIconColor(color);
         }
     }
@@ -151,12 +151,12 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         if (isUnlocked == false && islocked == false)
             UpdateIconColor(lastColor);
 
-        ui.skillTooltip.StopCo(ui.skillTooltip.textEffectCo);//Í£Ö¹Ëø¶¨ÌáÊ¾µÄ±äÉ«Ğ­³Ì
+        ui.skillTooltip.StopCo(ui.skillTooltip.textEffectCo);//åœæ­¢é”å®šæç¤ºçš„å˜è‰²åç¨‹
 
     }
     private Color GetColor(string hexNumber)
     {
-        ColorUtility.TryParseHtmlString(hexNumber, out Color color);//½«16½øÖÆ×Ö·û´®×ª»¯ÎªÑÕÉ«
+        ColorUtility.TryParseHtmlString(hexNumber, out Color color);//å°†16è¿›åˆ¶å­—ç¬¦ä¸²è½¬åŒ–ä¸ºé¢œè‰²
         return color;
     }
 }

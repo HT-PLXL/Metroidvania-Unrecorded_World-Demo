@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: "\u88C5\u5907-\u6728\u5251"
   m_EditorClassIdentifier: 
   itemName: "\u6728\u5251"
-  icon: {fileID: 2024028200, guid: d8922fa682394c34387c8e6ae7c48e68, type: 3}
+  icon: {fileID: -5365385695610608141, guid: 6df671555535cce438f5502f352eba42, type: 3}
   itemType: 1
   maxStackCount: 1
+  itemEffect: {fileID: 0}
   modifier:
   - statType: 7
     value: 10

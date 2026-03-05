@@ -1,7 +1,7 @@
 using UnityEngine;
 
-//¿ÉÏûºÄµÀ¾ßÊı¾İ´´½¨
-[CreateAssetMenu(menuName = "ÓÎÏ·ÉèÖÃ/ÎïÆ·Êı¾İ/ÏûºÄÆ·", fileName = "ÏûºÄÆ·-")]
+//å¯æ¶ˆè€—é“å…·æ•°æ®åˆ›å»º
+[CreateAssetMenu(menuName = "æ¸¸æˆè®¾ç½®/ç‰©å“æ•°æ®/æ¶ˆè€—å“", fileName = "æ¶ˆè€—å“-")]
 
 public class ConsumableItemDataSO : ItemDataSO
 {

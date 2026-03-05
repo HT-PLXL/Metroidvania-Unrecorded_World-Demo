@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "ÓÎÏ·ÉèÖÃ/ÎïÆ·Êı¾İ/ÎïÆ·Ğ§¹û/±ù±¬", fileName = "ÎïÆ·Ğ§¹û-±ù±¬")]
+[CreateAssetMenu(menuName = "æ¸¸æˆè®¾ç½®/ç‰©å“æ•°æ®/ç‰©å“æ•ˆæœ/å†°çˆ†", fileName = "ç‰©å“æ•ˆæœ-å†°çˆ†")]
 
 public class ItemEffect_IceBlastUnderAttack : ItemEffectDataSO
 {
@@ -9,8 +9,8 @@ public class ItemEffect_IceBlastUnderAttack : ItemEffectDataSO
     [SerializeField] private LayerMask WhoIsEnemy;
     [SerializeField] private float HpPercentTrigger = 0.25f;
     [SerializeField] private float cooldown;
-    [System.NonSerialized] private float lastTimeBeUsed = -99f;//·ÀÖ¹Öµ±»±£´æµ½×°±¸ÉÏµ¼ÖÂÏÂ´ÎÔËĞĞÀäÈ´Òì³£
-    [Header("ÌØĞ§¶ÔÏó")]
+    [System.NonSerialized] private float lastTimeBeUsed = -99f;//é˜²æ­¢å€¼è¢«ä¿å­˜åˆ°è£…å¤‡ä¸Šå¯¼è‡´ä¸‹æ¬¡è¿è¡Œå†·å´å¼‚å¸¸
+    [Header("ç‰¹æ•ˆå¯¹è±¡")]
     [SerializeField] private GameObject iceBlastPrefab;
     [SerializeField] private GameObject onHitPrefab;
     public override void ExecuteEffect()
@@ -25,7 +25,7 @@ public class ItemEffect_IceBlastUnderAttack : ItemEffectDataSO
             DamageEnemybyIceBlast();
         }
     }
-    private void DamageEnemybyIceBlast()//±ù±¬µÄÉËº¦·½·¨
+    private void DamageEnemybyIceBlast()//å†°çˆ†çš„ä¼¤å®³æ–¹æ³•
     {
         Collider2D[] enemies = Physics2D.OverlapCircleAll(player.transform.position, 1.5f, WhoIsEnemy);
         foreach (var target in enemies)
@@ -40,7 +40,7 @@ public class ItemEffect_IceBlastUnderAttack : ItemEffectDataSO
                 player.vfx.CreateEffectForTarget(onHitPrefab, target.transform);
         }
     }
-    public override void Subscribe(Player player)//¶©ÔÄ
+    public override void Subscribe(Player player)//è®¢é˜…
     {
         base.Subscribe(player);
         player.Hp.OnUnderAttack += ExecuteEffect;

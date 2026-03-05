@@ -3,7 +3,7 @@ using UnityEngine;
 public class Player_CounterAttactState : PlayerState
 {
     private Player_Combat combat;
-    private bool ÊÇ·ñÒÑµ¯·´;
+    private bool æ˜¯å¦å·²å¼¹å;
     public Player_CounterAttactState(Player player, StateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
         combat = player.GetComponent<Player_Combat>();
@@ -12,11 +12,11 @@ public class Player_CounterAttactState : PlayerState
     {
         base.Enter();
 
-        stateTimer = combat.»ñµÃµ¯·´¶¯×÷½©Ö±Ê±¼ä();
-        ÊÇ·ñÒÑµ¯·´ = combat.³¢ÊÔµ¯·´();//¸øÆä¸³ÖµÎªboolÀàĞÍ·½·¨µÄ·µ»ØÖµtrue/false
-        //Ö»Ö´ĞĞÒ»´Î³¢ÊÔµ¯·´()£¬Ò²¾ÍÊÇÖ»¼ì²âÒ»´ÎÅö×²Ìå£¬Èç¹ûÃ»¼ì²âµ½Åö×²Ìå»òÅö×²ÌåÎŞµ¯·´½Ó¿Ú
-        //¾ÍÖ»»á·µ»ØÒÑµ¯·´£ºfalse²¢±»¸³¸øÊÇ·ñÒÑµ¯·´
-        anim.SetBool("µ¯·´³É¹¦", ÊÇ·ñÒÑµ¯·´);
+        stateTimer = combat.GetStunTimeAfterTryCounter();
+        æ˜¯å¦å·²å¼¹å = combat.tryCounter();//ç»™å…¶èµ‹å€¼ä¸ºboolç±»å‹æ–¹æ³•çš„è¿”å›å€¼true/false
+        //åªæ‰§è¡Œä¸€æ¬¡å°è¯•å¼¹å()ï¼Œä¹Ÿå°±æ˜¯åªæ£€æµ‹ä¸€æ¬¡ç¢°æ’ä½“ï¼Œå¦‚æœæ²¡æ£€æµ‹åˆ°ç¢°æ’ä½“æˆ–ç¢°æ’ä½“æ— å¼¹åæ¥å£
+        //å°±åªä¼šè¿”å›å·²å¼¹åï¼šfalseå¹¶è¢«èµ‹ç»™æ˜¯å¦å·²å¼¹å
+        anim.SetBool("å¼¹åæˆåŠŸ", æ˜¯å¦å·²å¼¹å);
     }
     public override void Update()
     {
@@ -26,8 +26,8 @@ public class Player_CounterAttactState : PlayerState
 
         if (triggerOver)
             stateMachine.ChangeState(player.idleState);
-        if (stateTimer < 0 && ÊÇ·ñÒÑµ¯·´ == false)
+        if (stateTimer < 0 && æ˜¯å¦å·²å¼¹å == false)
             stateMachine.ChangeState(player.idleState);
-        //µ±Ã»ÄÜµ¯·´³É¹¦Ê±£¬±ãÒªµÈ´ı½©Ö±Ê±¼ä×÷Îª³Í·££¬Ê±¼ä½áÊøÍË³öÖÁ¿ÕÏĞ×´Ì¬
+        //å½“æ²¡èƒ½å¼¹åæˆåŠŸæ—¶ï¼Œä¾¿è¦ç­‰å¾…åƒµç›´æ—¶é—´ä½œä¸ºæƒ©ç½šï¼Œæ—¶é—´ç»“æŸé€€å‡ºè‡³ç©ºé—²çŠ¶æ€
     }
 }

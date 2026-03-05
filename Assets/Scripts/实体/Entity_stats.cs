@@ -1,13 +1,13 @@
 using UnityEngine;
-//´ËÀà¼¯ÖĞÍæ¼ÒµÄÊôĞÔÖµ£¬²¢Ìá¹©ÁËÊôĞÔµÄ¼ÆËã·½·¨
+//æ­¤ç±»é›†ä¸­ç©å®¶çš„å±æ€§å€¼ï¼Œå¹¶æä¾›äº†å±æ€§çš„è®¡ç®—æ–¹æ³•
 public class Entity_Stats : MonoBehaviour
 {
-    [cn("Ä¬ÈÏÊı¾İ-ÓÒ¼ü²Ëµ¥¸üĞÂ")] public Stat_SetupSO defaultStatSetup;
+    [cn("é»˜è®¤æ•°æ®-å³é”®èœå•æ›´æ–°")] public Stat_SetupSO defaultStatSetup;
 
-    [cn("×î´óÉúÃüÖµÓë»Ø¸´")] public Stat_ResourceGroup resources;//×ÊÔ´
-    [cn("¹¥»÷")] public Stat_AttackGroup attack;
-    [cn("·ÀÓù")] public Stat_DefenseGroup defense;
-    [cn("»ù´¡¸½¼ÓÊôĞÔ")] public Stat_MajorGroup major;
+    [cn("æœ€å¤§ç”Ÿå‘½å€¼ä¸å›å¤")] public Stat_ResourceGroup resources;//èµ„æº
+    [cn("æ”»å‡»")] public Stat_AttackGroup attack;
+    [cn("é˜²å¾¡")] public Stat_DefenseGroup defense;
+    [cn("åŸºç¡€é™„åŠ å±æ€§")] public Stat_MajorGroup major;
 
     protected virtual void Awake()
     {
@@ -17,13 +17,13 @@ public class Entity_Stats : MonoBehaviour
     {
         return new AttackData(this, damageScale);
     }
-    public float GetElementalDamage(out ElementType element, float scareFactor = 1)//scareFactor±ÈÀıÒò×Ó£¬ÓÃÓÚÊµÏÖ²»Í¬±¶ÂÊµÄÉËº¦
+    public float GetElementalDamage(out ElementType element, float scareFactor = 1)//scareFactoræ¯”ä¾‹å› å­ï¼Œç”¨äºå®ç°ä¸åŒå€ç‡çš„ä¼¤å®³
     {
         float fireDamage = attack.fireDamage.GetValue();
         float iceDamage = attack.iceDamage.GetValue();
         float lightningDamage = attack.lightningDamage.GetValue();
 
-        float bonusElementalDamage = (major.intelligence.GetValue() * 2);//Ã¿µãÖÇÁ¦+2ÔªËØÉËº¦
+        float bonusElementalDamage = (major.intelligence.GetValue() * 2);//æ¯ç‚¹æ™ºåŠ›+2å…ƒç´ ä¼¤å®³
 
         float hightstDamage = fireDamage;
         element = ElementType.Fire;
@@ -54,7 +54,7 @@ public class Entity_Stats : MonoBehaviour
     public float GetElementalResistance(ElementType element)
     {
         float baseResistance = 0;
-        float bonusResistance = major.intelligence.GetValue() * .5f;//Ã¿µãÖÇÁ¦+0.5¸÷ÊôĞÔ¿¹ĞÔ
+        float bonusResistance = major.intelligence.GetValue() * .5f;//æ¯ç‚¹æ™ºåŠ›+0.5å„å±æ€§æŠ—æ€§
 
         switch (element)
         {
@@ -69,59 +69,59 @@ public class Entity_Stats : MonoBehaviour
                 break;
         }
         float resistance = baseResistance + bonusResistance;
-        float resistanceCap = 99f;//ÔªËØ¿¹ĞÔ×î´óÖµ
-        float finalResistance = Mathf.Clamp(resistance, 0, resistanceCap) / 100;//×ª»¯Îª°Ù·Ö±È
+        float resistanceCap = 99f;//å…ƒç´ æŠ—æ€§æœ€å¤§å€¼
+        float finalResistance = Mathf.Clamp(resistance, 0, resistanceCap) / 100;//è½¬åŒ–ä¸ºç™¾åˆ†æ¯”
 
         return finalResistance;
     }
     public float GetMaxHp()
     {
         float baseMaxHp = resources.maxHp.GetValue();
-        float bounsMaxHp = major.vitality.GetValue() * 5;//Ã¿µã»îÁ¦+5×î´óÉúÃü
+        float bounsMaxHp = major.vitality.GetValue() * 5;//æ¯ç‚¹æ´»åŠ›+5æœ€å¤§ç”Ÿå‘½
         float finalMaxHp = baseMaxHp + bounsMaxHp;
         return finalMaxHp;
     }
-    public float GetArmorMitigation(float armorReduction)//»¤¼×ÖµÉËº¦¼õÃâ
+    public float GetArmorMitigation(float armorReduction)//æŠ¤ç”²å€¼ä¼¤å®³å‡å…
     {
         float baseArmor = GetBaseArmor();
 
         float reductionMultiplier = Mathf.Clamp(1 - armorReduction, 0, 1);
         float effectiveArmor = baseArmor * reductionMultiplier;
 
-        float mitigation = effectiveArmor / (effectiveArmor + 100);//µ÷Õû³£Êı¼´¿É¸Ä±äÃ¿µã»¤¼×ÊÕÒæ
-        float mitigationCap = 0.99f;//×î´ó»¤¼×ÖµÉËº¦¼õÃâ
+        float mitigation = effectiveArmor / (effectiveArmor + 100);//è°ƒæ•´å¸¸æ•°å³å¯æ”¹å˜æ¯ç‚¹æŠ¤ç”²æ”¶ç›Š
+        float mitigationCap = 0.99f;//æœ€å¤§æŠ¤ç”²å€¼ä¼¤å®³å‡å…
         float finalmitigation = Mathf.Clamp(mitigation, 0, mitigationCap);
 
         return finalmitigation;
     }
-    public float GetBaseArmor() => defense.armor.GetValue() + (major.vitality.GetValue() * 2);//Ã¿µã»îÁ¦Öµ+2»¤¼×
-    public float GetArmorReduction()//»¤¼×Ï÷¼õ
+    public float GetBaseArmor() => defense.armor.GetValue() + (major.vitality.GetValue() * 2);//æ¯ç‚¹æ´»åŠ›å€¼+2æŠ¤ç”²
+    public float GetArmorReduction()//æŠ¤ç”²å‰Šå‡
     {
         float finalReduction = attack.armorReduction.GetValue() / 100;
         return finalReduction;
     }
-    public float GetPhysicalDamage(out bool isCrit, float scareFactor = 1)//out¹Ø¼ü×ÖÓÃÓÚ¶îÍâ·µ»Ø¶à¸öÖµ¹©µ÷ÓÃ£¬´Ë´¦µÄisCritÔÚĞÎ²ÎÖĞÉùÃ÷ÔÚ·½·¨ÌåÖĞÈ·¶¨Öµ
+    public float GetPhysicalDamage(out bool isCrit, float scareFactor = 1)//outå…³é”®å­—ç”¨äºé¢å¤–è¿”å›å¤šä¸ªå€¼ä¾›è°ƒç”¨ï¼Œæ­¤å¤„çš„isCritåœ¨å½¢å‚ä¸­å£°æ˜åœ¨æ–¹æ³•ä½“ä¸­ç¡®å®šå€¼
     {
         float baseDamage = GetBaseDamage();
         float critChance = GetCritChance();
         float critPower = GetCritPower() / 100;
 
-        isCrit = Random.Range(0, 100) < critChance;//×¢ÒâĞÎ²ÎÁĞ±íÖĞÒÑ¾­ÉùÃ÷isCritÎªboolÖµ
+        isCrit = Random.Range(0, 100) < critChance;//æ³¨æ„å½¢å‚åˆ—è¡¨ä¸­å·²ç»å£°æ˜isCritä¸ºboolå€¼
         float finalDamage = isCrit ? baseDamage * critPower : baseDamage;
         return finalDamage * scareFactor;
     }
     public float GetBaseDamage() => attack.damage.GetValue() + (major.strength.GetValue() * 2f);
-    public float GetCritChance() => attack.critChance.GetValue() + (major.agility.GetValue() * 0.5f);//Ã¿µãÃô½İ+0.5%±©»÷ÂÊ
-    public float GetCritPower() => attack.critPower.GetValue() + (major.strength.GetValue() * 0.5f);//Ã¿µãÁ¦Á¿+0.5%µÄ±©»÷ÉËº¦
+    public float GetCritChance() => attack.critChance.GetValue() + (major.agility.GetValue() * 0.5f);//æ¯ç‚¹æ•æ·+0.5%æš´å‡»ç‡
+    public float GetCritPower() => attack.critPower.GetValue() + (major.strength.GetValue() * 0.5f);//æ¯ç‚¹åŠ›é‡+0.5%çš„æš´å‡»ä¼¤å®³
     public float GetEvasion()
     {
         float baseEvasion = defense.evasion.GetValue();
-        float bonusEvasion = major.agility.GetValue() * .5f;//Ã¿µãÃô½İ+0.5%ÉÁ±ÜÂÊ
+        float bonusEvasion = major.agility.GetValue() * .5f;//æ¯ç‚¹æ•æ·+0.5%é—ªé¿ç‡
 
         float totalEvasion = baseEvasion + bonusEvasion;
-        float evasionCap = 85f;//ÉÏÏŞÖµ
+        float evasionCap = 85f;//ä¸Šé™å€¼
 
-        float finalEvasion = Mathf.Clamp(totalEvasion, 0, evasionCap);//ÊıÑ§-Ç¯ÖÆ£¨²åÖµ£©º¯Êı£¬ÏŞÖÆµÚÒ»¸öÖµÔÚµÚ¶şµÚÈıÖµÖ®¼ä£¬³¬³ö·¶Î§µÄ»á±»×Ô¶¯Ô¼Êø
+        float finalEvasion = Mathf.Clamp(totalEvasion, 0, evasionCap);//æ•°å­¦-é’³åˆ¶ï¼ˆæ’å€¼ï¼‰å‡½æ•°ï¼Œé™åˆ¶ç¬¬ä¸€ä¸ªå€¼åœ¨ç¬¬äºŒç¬¬ä¸‰å€¼ä¹‹é—´ï¼Œè¶…å‡ºèŒƒå›´çš„ä¼šè¢«è‡ªåŠ¨çº¦æŸ
 
         return finalEvasion;
     }
@@ -156,12 +156,12 @@ public class Entity_Stats : MonoBehaviour
                 return null;
         }
     }
-    [ContextMenu("¸üĞÂÄ¬ÈÏÊı¾İ")]
+    [ContextMenu("æ›´æ–°é»˜è®¤æ•°æ®")]
     public void ApplyDefaultStatSetup()
     {
         if (defaultStatSetup == null)
         {
-            Debug.Log("Ã»ÓĞÄ¬ÈÏÊı¾İÒÑ·ÖÅä");
+            Debug.Log("æ²¡æœ‰é»˜è®¤æ•°æ®å·²åˆ†é…");
             return;
         }
         resources.maxHp.SetBaseValue(defaultStatSetup.maxHp);

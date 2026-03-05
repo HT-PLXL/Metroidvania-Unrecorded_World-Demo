@@ -4,6 +4,6 @@ using UnityEngine;
 [Serializable]
 public class Stat_ResourceGroup
 {
-    [cn("×î´óÑªÁ¿")] public Stat maxHp;
-    [cn("ÉúÃü»Ø¸´")] public Stat HpRegen;
+    [cn("æœ€å¤§è¡€é‡")] public Stat maxHp;
+    [cn("ç”Ÿå‘½å›å¤")] public Stat HpRegen;
 }

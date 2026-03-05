@@ -15,7 +15,7 @@ MonoBehaviour:
   skillName: "\u9B54\u5F71\u5206\u8EAB"
   cost: 2
   description: "\u51B2\u523A\u65F6\u751F\u6210\u590D\u5236\u4F53\uFF0C\u5176\u6548\u679C\u4E0E\u514B\u9686\u7CFB\u6280\u80FD\u76F8\u5173\n\u2014\u2014\n\u55EF\uFF1F\u600E\u4E48\u591A\u4E86\u4E00\u4E2A\uFF0C\u5361Bug\u4E86\uFF1F"
-  icon: {fileID: -1967946306, guid: d8922fa682394c34387c8e6ae7c48e68, type: 3}
+  icon: {fileID: 651381140, guid: d8922fa682394c34387c8e6ae7c48e68, type: 3}
   unlockedByDefault: 0
   skillType: 0
   upgradeData:

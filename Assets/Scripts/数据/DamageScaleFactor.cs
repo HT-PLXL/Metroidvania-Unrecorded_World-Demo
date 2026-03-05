@@ -2,19 +2,19 @@ using System;
 using UnityEngine;
 
 [Serializable]
-public class DamageScaleFactor//Ëõ·ÅÒò×ÓÀà£¬ÓÃÓÚ¸ø¹¥»÷/¼¼ÄÜÉè¶¨ÉËº¦±¶ÂÊ
+public class DamageScaleFactor//ç¼©æ”¾å› å­ç±»ï¼Œç”¨äºç»™æ”»å‡»/æŠ€èƒ½è®¾å®šä¼¤å®³å€ç‡
 {
-    [Header("ÉËº¦±¶ÂÊ")]
-    [cn("ÎïÀíÉËº¦±¶ÂÊ")] public float phyiscal = 1;
-    [cn("ÔªËØÉËº¦±¶ÂÊ")] public float elemental = 1;
-    [Header("Ëª¶³")]
-    [cn("¼õËÙÊ±¼ä")] public float chillDuration = 3;
-    [cn("¼õËÙĞ§¹û±¶ÂÊ")] public float chillSlowMulitiplier = 0.2f;
-    [Header("×ÆÉÕ")]
-    [cn("×ÆÉÕÊ±¼ä")]public float burnDuration = 3;
-    [cn("×ÆÉÕÉËº¦±¶ÂÊ")]public float burnDamageScale = 3;
-    [Header("À×»÷")]
-    [cn("À×»÷´°¿ÚÊ±¼ä")]public float lightningDuration = 3;
-    [cn("À×»÷ÉËº¦±¶ÂÊ")]public float lightningDamageScale = 1;
-    [cn("À×»÷³äÄÜÖµ")]public float lightningCharge = 0.4f;
+    [Header("ä¼¤å®³å€ç‡")]
+    [cn("ç‰©ç†ä¼¤å®³å€ç‡")] public float phyiscal = 1;
+    [cn("å…ƒç´ ä¼¤å®³å€ç‡")] public float elemental = 1;
+    [Header("éœœå†»")]
+    [cn("å‡é€Ÿæ—¶é—´")] public float chillDuration = 3;
+    [cn("å‡é€Ÿæ•ˆæœå€ç‡")] public float chillSlowMulitiplier = 0.2f;
+    [Header("ç¼çƒ§")]
+    [cn("ç¼çƒ§æ—¶é—´")]public float burnDuration = 3;
+    [cn("ç¼çƒ§ä¼¤å®³å€ç‡")]public float burnDamageScale = 3;
+    [Header("é›·å‡»")]
+    [cn("é›·å‡»çª—å£æ—¶é—´")]public float lightningDuration = 3;
+    [cn("é›·å‡»ä¼¤å®³å€ç‡")]public float lightningDamageScale = 1;
+    [cn("é›·å‡»å……èƒ½å€¼")]public float lightningCharge = 0.4f;
 }

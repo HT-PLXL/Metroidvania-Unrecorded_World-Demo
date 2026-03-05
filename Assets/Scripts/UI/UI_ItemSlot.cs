@@ -2,15 +2,15 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-//ÎïÆ·²Û½Å±¾£¬ÖÃÓÚÎïÆ·²Û¶ÔÏóÉÏ
-public class UI_ItemSolt : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler
+//ç‰©å“æ§½è„šæœ¬ï¼Œç½®äºç‰©å“æ§½å¯¹è±¡ä¸Š
+public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler
 {
     public Bag_Item itemInSlot { get; private set; }
     protected Bag_Player bag;
     protected UI ui;
     protected RectTransform rect;
-    [Header("ÎïÆ·²ÛÉèÖÃ")]
-    [SerializeField] private Image itemIcon;//unityÃæ°åÑ¡Ôñ
+    [Header("ç‰©å“æ§½è®¾ç½®")]
+    [SerializeField] private Image itemIcon;//unityé¢æ¿é€‰æ‹©
     [SerializeField] private TextMeshProUGUI itemStackCount;
     protected void Awake()
     {
@@ -18,13 +18,13 @@ public class UI_ItemSolt : MonoBehaviour, IPointerDownHandler, IPointerEnterHand
         rect = GetComponent<RectTransform>();
         bag = FindAnyObjectByType<Bag_Player>();
     }
-    public void UpdateSlot(Bag_Item item)//¸üĞÂ¾ßÌå²ÛÎ»ĞÅÏ¢
+    public void UpdateSlot(Bag_Item item)//æ›´æ–°å…·ä½“æ§½ä½ä¿¡æ¯
     {
-        itemInSlot = item;//Áî¾ßÌå²ÛÎ»Îª´«ÈëµÄÄ³Îï
+        itemInSlot = item;//ä»¤å…·ä½“æ§½ä½ä¸ºä¼ å…¥çš„æŸç‰©
         if (itemInSlot == null)
         {
-            itemStackCount.text = "";//Òş²ØÊıÁ¿ÎÄ±¾
-            itemIcon.color = Color.clear;//Í¼±êÍ¸Ã÷
+            itemStackCount.text = "";//éšè—æ•°é‡æ–‡æœ¬
+            itemIcon.color = Color.clear;//å›¾æ ‡é€æ˜
             return;
         }
         Color color = Color.white;
@@ -34,19 +34,19 @@ public class UI_ItemSolt : MonoBehaviour, IPointerDownHandler, IPointerEnterHand
         itemStackCount.text = item.StackCount > 1 ? item.StackCount.ToString() : "";
     }
 
-    public virtual void OnPointerDown(PointerEventData eventData)//Íæ¼Òµã»÷±³°üµÄÎïÆ·
+    public virtual void OnPointerDown(PointerEventData eventData)//æ¥å£èµ‹äºˆçš„æ–¹æ³•ï¼Œç¡®å®šç©å®¶ç‚¹å‡»èƒŒåŒ…çš„ç‰©å“æ§½å®ä¾‹
     {
-        if (itemInSlot == null ||itemInSlot.itemData.itemType == ItemType.²ÄÁÏ)
+        if (itemInSlot == null ||itemInSlot.itemData.itemType == ItemType.ææ–™)
             return;
-        if (itemInSlot.itemData.itemType == ItemType.ÏûºÄÆ·)
+        if (itemInSlot.itemData.itemType == ItemType.æ¶ˆè€—å“)
         {
-            if (itemInSlot.itemEffect.CanBeUsed() == false)//Õë¶ÔbuffÏûºÄÆ·
+            if (itemInSlot.itemEffect.CanBeUsed() == false)//é’ˆå¯¹buffæ¶ˆè€—å“
                 return;
             bag.TryUseItem(itemInSlot);
         }
         else
-            bag.TryEquipItem(itemInSlot);//³¢ÊÔ×°±¸µã»÷µÄÎïÆ·
-        if (itemInSlot == null)//×îºóÒ»¸öÓĞ×°±¸µÄ¸ñ×ÓÔÚ×°±¸ºó»áÎª¿Õ£¬ĞèÒªÔÙ´ÎÅĞ¶Ï
+            bag.TryEquipItem(itemInSlot);//å°è¯•è£…å¤‡ç‚¹å‡»çš„ç‰©å“
+        if (itemInSlot == null)//æœ€åä¸€ä¸ªæœ‰è£…å¤‡çš„æ ¼å­åœ¨è£…å¤‡åä¼šä¸ºç©ºï¼Œéœ€è¦å†æ¬¡åˆ¤æ–­
             ui.itemToolTip.ShowTooltip(false, null);
     }
 

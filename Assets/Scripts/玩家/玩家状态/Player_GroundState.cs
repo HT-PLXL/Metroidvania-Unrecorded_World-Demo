@@ -10,18 +10,18 @@ public class Player_GroundState : PlayerState
     public override void Update()
     {
         base.Update();
-        if (rb.linearVelocity.y < 0 && player.¼ì²âµ½µØÃæ == false)
+        if (rb.linearVelocity.y < 0 && player.isDetectGround == false)
             stateMachine.ChangeState(player.fallState);
-        //2.5pºÍ2.6pÁ½´¦Ä©Î²ÐÞ¸´bugÊ¹ÓÃ£¬µ«´Ë´¦Î´³öÏÖbug£¬Ê¹ÓÃÉÏÊö´úÂëÏÔÈ»»áÓ°ÏìºóÐø¶þ¶ÎÌø¹¦ÄÜ
+        //2.5på’Œ2.6pä¸¤å¤„æœ«å°¾ä¿®å¤bugä½¿ç”¨ï¼Œä½†æ­¤å¤„æœªå‡ºçŽ°bugï¼Œä½¿ç”¨ä¸Šè¿°ä»£ç æ˜¾ç„¶ä¼šå½±å“åŽç»­äºŒæ®µè·³åŠŸèƒ½
 
-        //ÊäÈëPlayerInputSet½çÃæÌîÈëµÄÃû³Æ
-        if (input.Player.Jump.WasPressedThisFrame())//WasPressedThisFrameÊÇÐÂÊäÈëÏµÍ³PlayerInputSet½Å±¾¶¨ÒåµÄ
+        //è¾“å…¥PlayerInputSetç•Œé¢å¡«å…¥çš„åç§°
+        if (input.Player.Jump.WasPressedThisFrame())//WasPressedThisFrameæ˜¯æ–°è¾“å…¥ç³»ç»ŸPlayerInputSetè„šæœ¬å®šä¹‰çš„
             stateMachine.ChangeState(player.jumpState);
-        if (input.Player.ÆÕÍ¨¹¥»÷.WasPressedThisFrame())
+        if (input.Player.æ™®é€šæ”»å‡».WasPressedThisFrame())
             stateMachine.ChangeState(player.attackState);
-        if (input.Player.µ¯·´.WasPressedThisFrame())
+        if (input.Player.å¼¹å.WasPressedThisFrame())
             stateMachine.ChangeState(player.counterAttactState);
-        if (input.Player.ÖÀ½£.WasPressedThisFrame()&& skillManager.throwSword.CanUseSkill())
+        if (input.Player.æŽ·å‰‘.WasPressedThisFrame()&& skillManager.throwSword.CanUseSkill())
             stateMachine.ChangeState(player.throwSwordState);
     }
 

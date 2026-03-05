@@ -3,7 +3,7 @@ using UnityEngine;
 public class SkillObject_SpinSword : SkillObject_Sword
 {
     private float maxFlyDistance;
-    private float attackPerSecond;//Ã¿Ãë¹¥»÷´ÎÊı
+    private float attackPerSecond;//æ¯ç§’æ”»å‡»æ¬¡æ•°
     private float attackTimer;
     private bool stopAlready;
     protected override void Update()
@@ -18,7 +18,7 @@ public class SkillObject_SpinSword : SkillObject_Sword
     {
         base.SetUpSword(throwSword, direction);
 
-        anim?.SetTrigger("·É½£Ğı×ª");
+        anim?.SetTrigger("é£å‰‘æ—‹è½¬");
         maxFlyDistance = throwSword.maxFlyDistance;
         attackPerSecond = throwSword.attackPerSecond;
         Invoke(nameof(ShouldComeBack),throwSword.maxDuration);

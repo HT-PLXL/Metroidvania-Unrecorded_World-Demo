@@ -2,26 +2,26 @@ using UnityEngine;
 
 public class Player_Combat : Entity_Combat
 {
-    [Header("µ¯·´Ï¸½Ú")]
-    [SerializeField] private float ³¢ÊÔµ¯·´ºóÒ¡½©Ö±Ê±¼ä = 0.25f;
-    public bool ³¢ÊÔµ¯·´()//boolÀàĞÍ·½·¨±ØĞëÒªÓĞ·µ»ØÖµ£¬²»È»»á±êºì
+    [Header("å¼¹åç»†èŠ‚")]
+    [cn("å¼¹ååæ‘‡")][SerializeField] private float stunTimeAfterTryCounter = 0.25f;
+    public bool tryCounter()//boolç±»å‹æ–¹æ³•å¿…é¡»è¦æœ‰è¿”å›å€¼ï¼Œä¸ç„¶ä¼šæ ‡çº¢
     {
-        bool ÒÑµ¯·´ = false;
+        bool isCounter = false;
         foreach(var target in GetDetectColliders())
         {
-            µ¯·´ counterable = target.GetComponent<µ¯·´>();
-            //¶¨Òå½Ó¿ÚÊµÀı²¢¸³Óè´ÓÅö×²ÌåÖĞÉ¸Ñ¡³öµÄ¸½¼ÓÁË½Ó¿Ú¡°µ¯·´¡±µÄ×é¼ş
-            //Èç¹ûÃ»ÓĞ»ñÈ¡µ½´øÓĞµ¯·´½Ó¿ÚµÄ×é¼ş±ãÎª¿Õ
+            ICounter counterable = target.GetComponent<ICounter>();
+            //å®šä¹‰æ¥å£å®ä¾‹å¹¶èµ‹äºˆä»ç¢°æ’ä½“ä¸­ç­›é€‰å‡ºçš„é™„åŠ äº†æ¥å£â€œå¼¹åâ€çš„ç»„ä»¶
+            //å¦‚æœæ²¡æœ‰è·å–åˆ°å¸¦æœ‰å¼¹åæ¥å£çš„ç»„ä»¶ä¾¿ä¸ºç©º
             if (counterable != null && counterable.CanBeCountered)
             {
-                counterable.HandleCounter(); //ÔËĞĞ½Ó¿ÚÊµÀıµÄ·½·¨
-                ÒÑµ¯·´ = true;
+                counterable.HandleCounter(); //è¿è¡Œæ¥å£å®ä¾‹çš„æ–¹æ³•
+                isCounter = true;
             }
         }
-        return ÒÑµ¯·´;
+        return isCounter;
     }
-    public float »ñµÃµ¯·´¶¯×÷½©Ö±Ê±¼ä()
+    public float GetStunTimeAfterTryCounter()
     {
-        return ³¢ÊÔµ¯·´ºóÒ¡½©Ö±Ê±¼ä;
+        return stunTimeAfterTryCounter;
     }
 }

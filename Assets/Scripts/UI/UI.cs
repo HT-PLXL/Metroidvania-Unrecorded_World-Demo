@@ -2,11 +2,15 @@ using UnityEngine;
 
 public class UI : MonoBehaviour
 {
+    //åœ¨è¿™é‡Œå£°æ˜éœ€è¦çš„å„ç§UIç±»ï¼Œå¹¶åˆå§‹åŒ–å®ä¾‹
+    //æ–¹ä¾¿å…¶ä»–ç±»é€šè¿‡UIçš„å®ä¾‹uiè®¿é—®å„ç§UIç±»
     public UI_ItemTooltip itemToolTip { get; private set; }
     public UI_SkillTooltip skillTooltip { get; private set; }
     public UI_StatTooltip statsTooltip { get; private set; }
     public UI_SkillTree skillTreeUI { get; private set; }
     public UI_Bag bagUI { get; private set; }
+    public UI_Storage storageUI { get; private set; }
+
     private bool skillTreeEnable;
     private bool bagEnable;
     private void Awake()
@@ -14,17 +18,18 @@ public class UI : MonoBehaviour
         itemToolTip = GetComponentInChildren<UI_ItemTooltip>();
         skillTooltip = GetComponentInChildren<UI_SkillTooltip>();
         statsTooltip = GetComponentInChildren<UI_StatTooltip>();
-        skillTreeUI = GetComponentInChildren<UI_SkillTree>(true);//true»á²éÕÒËùÓĞ¶ÔÏó£¬°üÀ¨±»½ûÓÃµÄ
+        skillTreeUI = GetComponentInChildren<UI_SkillTree>(true);//trueä¼šæŸ¥æ‰¾æ‰€æœ‰å¯¹è±¡ï¼ŒåŒ…æ‹¬è¢«ç¦ç”¨çš„
         bagUI = GetComponentInChildren<UI_Bag>(true);
+        storageUI = GetComponentInChildren<UI_Storage>(true);
 
-        skillTreeEnable = skillTreeUI.gameObject.activeSelf;//Í¬²½¼¤»îÇé¿ö£¬·ÀÖ¹³öÏÖ³õÊ¼¼¤»î£¬È»ºóĞèÒªÁ½´Î²ÅÄÜ¹Øµô
+        skillTreeEnable = skillTreeUI.gameObject.activeSelf;//åŒæ­¥æ¿€æ´»æƒ…å†µï¼Œé˜²æ­¢å‡ºç°åˆå§‹æ¿€æ´»ï¼Œç„¶åéœ€è¦ä¸¤æ¬¡æ‰èƒ½å…³æ‰
         bagEnable = bagUI.gameObject.activeSelf;
     }
     public void ToggleSkillTreeUI()
     {
         skillTreeEnable = !skillTreeEnable;
 
-        if (skillTreeEnable && bagEnable)//ÏÈ¹Ø±ÕÆäËûUI
+        if (skillTreeEnable && bagEnable)//å…ˆå…³é—­å…¶ä»–UI
             ToggleBagUI();
 
         skillTreeUI.gameObject.SetActive(skillTreeEnable);
@@ -34,7 +39,7 @@ public class UI : MonoBehaviour
     {
         bagEnable = !bagEnable;
 
-        if (skillTreeEnable && bagEnable)//ÏÈ¹Ø±ÕÆäËûUI
+        if (skillTreeEnable && bagEnable)//å…ˆå…³é—­å…¶ä»–UI
             ToggleSkillTreeUI();
 
         bagUI.gameObject.SetActive(bagEnable);
@@ -43,10 +48,16 @@ public class UI : MonoBehaviour
     }
     public void CloseUI()
     {
-        skillTreeEnable = true;//ÏÈÉèÎªÕæ£¬·½·¨ÄÚ»á·´×ª£¬´Ó¶ø¹Ø±Õ
+        skillTreeEnable = true;//å…ˆè®¾ä¸ºçœŸï¼Œæ–¹æ³•å†…ä¼šåè½¬ï¼Œä»è€Œå…³é—­
         ToggleSkillTreeUI();
 
-        bagEnable = true;//ÏÈÉèÎªÕæ£¬·½·¨ÄÚ»á·´×ª£¬´Ó¶ø¹Ø±Õ
+        bagEnable = true;//å…ˆè®¾ä¸ºçœŸï¼Œæ–¹æ³•å†…ä¼šåè½¬ï¼Œä»è€Œå…³é—­
         ToggleBagUI();
+    }
+    public void SwitchOffAlltooltips()
+    {
+        itemToolTip.ShowTooltip(false, null);
+        skillTooltip.ShowTooltip(false, null);
+        statsTooltip.ShowTooltip(false, null);
     }
 }

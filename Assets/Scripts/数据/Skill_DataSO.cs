@@ -1,23 +1,23 @@
 using System;
 using UnityEngine;
-//´Ë½Å±¾ÊµÏÖ¼¼ÄÜÊı¾İ¿É×Ô¶¨Òå¶ÔÏó
-[CreateAssetMenu(menuName = "ÓÎÏ·ÉèÖÃ/¼¼ÄÜÊı¾İ", fileName = "¼¼ÄÜÊı¾İ-")]
+//æ­¤è„šæœ¬å®ç°æŠ€èƒ½æ•°æ®å¯è‡ªå®šä¹‰å¯¹è±¡
+[CreateAssetMenu(menuName = "æ¸¸æˆè®¾ç½®/æŠ€èƒ½æ•°æ®", fileName = "æŠ€èƒ½æ•°æ®-")]
 
 public class Skill_DataSO : ScriptableObject
 {
-    [Header("¼¼ÄÜĞÅÏ¢Éè¶¨")]
-    [cn("¼¼ÄÜÃû×Ö")] public string skillName;
-    [cn("½âËøĞèÒª¼¼ÄÜµã")] public int cost;
+    [Header("æŠ€èƒ½ä¿¡æ¯è®¾å®š")]
+    [cn("æŠ€èƒ½åå­—")] public string skillName;
+    [cn("è§£é”éœ€è¦æŠ€èƒ½ç‚¹")] public int cost;
     [TextArea]public string description;
-    [cn("¼¼ÄÜÍ¼±ê")] public Sprite icon;
-    [cn("Ä¬ÈÏ½âËø£¿")] public bool unlockedByDefault;
-    [cn("¼¼ÄÜÖÖÀà")] public SkillType skillType;
-    [cn("Éı¼¶ÏêÇé")] public UpgradeData upgradeData;
+    [cn("æŠ€èƒ½å›¾æ ‡")] public Sprite icon;
+    [cn("é»˜è®¤è§£é”ï¼Ÿ")] public bool unlockedByDefault;
+    [cn("æŠ€èƒ½ç§ç±»")] public SkillType skillType;
+    [cn("å‡çº§è¯¦æƒ…")] public UpgradeData upgradeData;
 }
 [Serializable]
 public class UpgradeData
 {
-    [cn("Éı¼¶ÖÖÀà")] public SkillUpgradeType upgradeType;
-    [cn("ÀäÈ´Ê±¼ä")] public float cooldown;
-    [cn("ÉËº¦±ÈÀı")] public DamageScaleFactor damageScale;
+    [cn("å‡çº§ç§ç±»")] public SkillUpgradeType upgradeType;
+    [cn("å†·å´æ—¶é—´")] public float cooldown;
+    [cn("ä¼¤å®³æ¯”ä¾‹")] public DamageScaleFactor damageScale;
 }

@@ -10,9 +10,9 @@ public class Player_AiredState : PlayerState
     {
         base.Update();
         if (player.moveInput.x != 0)
-            player.SetVelocity(player.moveInput.x * (player.moveSpeed * player.¿ÕÖÐÒÆ¶¯±¶ÂÊ), rb.linearVelocity.y);
+            player.SetVelocity(player.moveInput.x * (player.moveSpeed * player.airMoveMultiplier), rb.linearVelocity.y);
 
-        if (input.Player.ÆÕÍ¨¹¥»÷.WasPressedThisFrame())
+        if (input.Player.æ™®é€šæ”»å‡».WasPressedThisFrame())
             stateMachine.ChangeState(player.jumpAttackState);
     }
 

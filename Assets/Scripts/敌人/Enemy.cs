@@ -12,28 +12,27 @@ public class Enemy : Entity
     public Enemy_DeadState deadState;
     public Enemy_StunnedState stunnedState;
 
-    [Header("Õ½¶·Ï¸½Ú")]
-    public float battleMoveSpeed = 3;
-    public float attackDistance = 2;
-    public float battleTimeDuration = 5;
-    public float ×îĞ¡ºó³·¾àÀë = 1;
-    public Vector2 ºó³·ËÙ¶È;
+    [Header("æˆ˜æ–—ç»†èŠ‚")]
+    [cn("æˆ˜æ–—ç§»åŠ¨é€Ÿåº¦")]public float battleMoveSpeed = 3;
+    [cn("æ”»å‡»è·ç¦»")] public float attackDistance = 2;
+    [cn("æˆ˜æ–—çŠ¶æ€æŒç»­æ—¶é—´")] public float battleTimeDuration = 5;
+    [cn("æœ€å°åæ’¤è·ç¦»")] public float minBackJumpDistance = 1;
+    [cn("åæ’¤åŠ›åº¦")] public Vector2 backJumpSpeed;
 
-    [Header("ÒÆ¶¯Ï¸½Ú")]
-    public float idleTime = 2;
-    public float moveSpeed = 1.4f;
-    [Range(0,2)]
-    public float ÒÆ¶¯Óë¶¯»­ËÙÂÊ±È = 1;
+    [Header("ç§»åŠ¨ç»†èŠ‚")]
+    [cn("ç©ºé—²æ—¶é—´")] public float idleTime = 2;
+    [cn("ç§»åŠ¨é€Ÿåº¦")] public float moveSpeed = 1.4f;
+    [cn("ç§»åŠ¨ä¸åŠ¨ç”»é€Ÿç‡æ¯”")][Range(0,2)] public float moveAndAnimSpeedRatio = 1;
 
-    [Header("½©Ö±Ï¸½Ú")]
-    public float stunnedDuration = 1;
-    public Vector2 stunnedVelocity = new Vector2(7,7);
-    [SerializeField] protected bool canBeStunned;
+    [Header("åƒµç›´ç»†èŠ‚")]
+    [cn("åƒµç›´æ—¶é—´")] public float stunnedDuration = 1;
+    [cn("è¢«å¼¹åå‡»é£åŠ›åº¦")] public Vector2 stunnedVelocity = new Vector2(7,7);
+    [SerializeField][cn("æ˜¯å¦å¯è¢«å¼¹å")] protected bool canBeStunned;
 
-    [Header("detectPlayer")]
-    [SerializeField] private LayerMask Ê²Ã´ÊÇÍæ¼Ò;
-    [SerializeField] private Transform Íæ¼Ò¼ì²âÆğµã;
-    [SerializeField] private float Íæ¼Ò¼ì²â¾àÀë;
+    [Header("æ£€æµ‹ç©å®¶")]
+    [SerializeField][cn("ä»€ä¹ˆæ˜¯ç©å®¶")] private LayerMask whoIsPlayer;
+    [SerializeField][cn("ç©å®¶æ£€æµ‹èµ·ç‚¹")] private Transform detectPlayerStart;
+    [SerializeField][cn("ç©å®¶æ£€æµ‹è·ç¦»")] private float detectPlayerDistance;
 
     public Transform player { get; private set; }
     public float activeSlowDownmultiplier { get; private set; } = 1;
@@ -45,25 +44,13 @@ public class Enemy : Entity
     public float GetMoveSpeed() => moveSpeed * activeSlowDownmultiplier;
     public float GetBattleMoveSpeed() => battleMoveSpeed * activeSlowDownmultiplier;
 
-    protected override IEnumerator SlowDownEntityCo(float duration, float slowMultiplier)//±ù¶³¼õËÙÒì³£Ğ§¹ûÊµÏÖ
+    protected override IEnumerator SlowDownEntityCo(float duration, float slowMultiplier)//å†°å†»å‡é€Ÿå¼‚å¸¸æ•ˆæœå®ç°
     {
-        ////´æ´¢Ô­Ê¼Öµ
-        //float originalMoveSpeed = moveSpeed;
-        //float originalBattleSpeed = battleMoveSpeed;
-        //float originalAnimSpeed = anim.speed;//¶¯»­ËÙ¶È
-
         activeSlowDownmultiplier = 1 - slowMultiplier;
-
-        //moveSpeed = moveSpeed * speedMultiplier;
-        //battleMoveSpeed = battleMoveSpeed * speedMultiplier;
         anim.speed = anim.speed * activeSlowDownmultiplier;
         
         yield return new WaitForSeconds(duration);
         StopSlowDown();
-        ////»Ø¹éÔ­Ê¼Öµ
-        //moveSpeed = originalMoveSpeed;
-        //battleMoveSpeed = originalBattleSpeed;
-        //anim.speed = originalAnimSpeed;
     }
     public override void StopSlowDown()
     {
@@ -81,52 +68,52 @@ public class Enemy : Entity
 
         stateMachine.ChangeState(deadState);
     }
-    private void ´¦ÀíÍæ¼ÒËÀÍö()
+    private void HandlePlayerDeath()
     {
         stateMachine.ChangeState(idleState);
     }
-    public void ÊÜ»÷½øÈëÕ½¶·×´Ì¬(Transform player)
+    public void EnterCombatStateOnHit(Transform player)
     {
         if (stateMachine.currentState == battleState || stateMachine.currentState == attackState)
             return;
         this.player = player;
         stateMachine.ChangeState(battleState);
     }
-    public Transform »ñÈ¡Íæ¼Ò×é¼ş()
+    public Transform GetPlayerTransform()
     {
         if (player == null)
-            player = detectPlayer().transform;//ÔÚĞ¡¹ÖÕı³£¼ì²âµ½Íæ¼ÒÊ±±»µ÷ÓÃÖ´ĞĞ£¬´ËÊ±Îª¿Õ£¬»ñÈ¡Íæ¼Ò×é¼ş
-        return player;//Ğ¡¹ÖÊÜ»÷½øÈëÕ½¶·×´Ì¬ºó±»µ÷ÓÃ£¬È»ºó·µ»Ø¡°ÊµÌå¹¥»÷Ä¿±ê¼ì²â¡±ÖĞ»ñÈ¡²¢´«ÈëÕâÀïµÄthis.playerµÄplayer
+            player = detectPlayer().transform;//åœ¨å°æ€ªæ­£å¸¸æ£€æµ‹åˆ°ç©å®¶æ—¶è¢«è°ƒç”¨æ‰§è¡Œï¼Œæ­¤æ—¶ä¸ºç©ºï¼ŒGetPlayerTransform
+        return player;//å°æ€ªå—å‡»è¿›å…¥æˆ˜æ–—çŠ¶æ€åè¢«è°ƒç”¨ï¼Œç„¶åè¿”å›â€œå®ä½“æ”»å‡»ç›®æ ‡æ£€æµ‹â€ä¸­è·å–å¹¶ä¼ å…¥è¿™é‡Œçš„this.playerçš„player
     }
 
     public RaycastHit2D detectPlayer()
     {
-        RaycastHit2D hit = Physics2D.Raycast(Íæ¼Ò¼ì²âÆğµã.position, Vector2.right * Ãæ¶Ô·½Ïò, Íæ¼Ò¼ì²â¾àÀë, Ê²Ã´ÊÇÍæ¼Ò | whatIsGround);
-        if (hit.collider == null || hit.collider.gameObject.layer != LayerMask.NameToLayer("Íæ¼Ò"))
+        RaycastHit2D hit = Physics2D.Raycast(detectPlayerStart.position, Vector2.right * faceDirection, detectPlayerDistance, whoIsPlayer | whatIsGround);
+        if (hit.collider == null || hit.collider.gameObject.layer != LayerMask.NameToLayer("ç©å®¶"))
             return default;
         return hit;
-        // "|"±íÊ¾°´Î»»ò£¬¼ì²âµ½ÆäÖĞÒ»¸öÌõ¼ş¾ÍÖ´ĞĞÏÂÒ»¾ä
-        //rayÊÇÉäÏß£¬¼ì²âµÄÊÇ×îÏÈ£¬×î½üÅöµ½µÄÅö×²Ìå£¬Èç¹û¼ì²âµ½µØÃæ²ãÀà±ğµÄÇ½±Ú£¬¾ÍÖ»»á·µ»ØµØÃæ²ãÀà±ğÇ½±ÚµÄÅö×²Ìå
-        //RaycastHit2DÀàĞÍ·µ»ØÖµ°üº¬ÒşÊ½²¼¶û×ª»»£¬¼ì²âµ½Åö×²ÌåÎªtrue£¬·´Ö®false£¬Ïê¼ûEnemy_GroundStateÖĞ×¢ÊÍ
+        // "|"è¡¨ç¤ºæŒ‰ä½æˆ–ï¼Œæ£€æµ‹åˆ°å…¶ä¸­ä¸€ä¸ªæ¡ä»¶å°±æ‰§è¡Œä¸‹ä¸€å¥
+        //rayæ˜¯å°„çº¿ï¼Œæ£€æµ‹çš„æ˜¯æœ€å…ˆï¼Œæœ€è¿‘ç¢°åˆ°çš„ç¢°æ’ä½“ï¼Œå¦‚æœæ£€æµ‹åˆ°åœ°é¢å±‚ç±»åˆ«çš„å¢™å£ï¼Œå°±åªä¼šè¿”å›åœ°é¢å±‚ç±»åˆ«å¢™å£çš„ç¢°æ’ä½“
+        //RaycastHit2Dç±»å‹è¿”å›å€¼åŒ…å«éšå¼å¸ƒå°”è½¬æ¢ï¼Œæ£€æµ‹åˆ°ç¢°æ’ä½“ä¸ºtrueï¼Œåä¹‹falseï¼Œè¯¦è§Enemy_GroundStateä¸­æ³¨é‡Š
     }
     protected override void OnDrawGizmos()
     {
         base.OnDrawGizmos();
 
         Gizmos.color = Color.yellow;
-        Gizmos.DrawLine(Íæ¼Ò¼ì²âÆğµã.position, new Vector3(Íæ¼Ò¼ì²âÆğµã.position.x + (Ãæ¶Ô·½Ïò * Íæ¼Ò¼ì²â¾àÀë), Íæ¼Ò¼ì²âÆğµã.position.y , 0));
+        Gizmos.DrawLine(detectPlayerStart.position, new Vector3(detectPlayerStart.position.x + (faceDirection * detectPlayerDistance), detectPlayerStart.position.y , 0));
         Gizmos.color = Color.blue;
-        Gizmos.DrawLine(Íæ¼Ò¼ì²âÆğµã.position, new Vector3(Íæ¼Ò¼ì²âÆğµã.position.x + (Ãæ¶Ô·½Ïò * attackDistance), Íæ¼Ò¼ì²âÆğµã.position.y, 0));
+        Gizmos.DrawLine(detectPlayerStart.position, new Vector3(detectPlayerStart.position.x + (faceDirection * attackDistance), detectPlayerStart.position.y, 0));
         Gizmos.color = Color.blue;
-        Gizmos.DrawLine(Íæ¼Ò¼ì²âÆğµã.position, new Vector3(Íæ¼Ò¼ì²âÆğµã.position.x + (Ãæ¶Ô·½Ïò * ×îĞ¡ºó³·¾àÀë), Íæ¼Ò¼ì²âÆğµã.position.y, 0));
+        Gizmos.DrawLine(detectPlayerStart.position, new Vector3(detectPlayerStart.position.x + (faceDirection * minBackJumpDistance), detectPlayerStart.position.y, 0));
     }
     private void OnEnable()
     {
-        Player.ÔÚÍæ¼ÒËÀÍöÖ®Ê± += ´¦ÀíÍæ¼ÒËÀÍö;//Ê¹ÓÃ+=½«ÓÒÊ½·½·¨×¢²áµ½×óÊ½µÄ¾²Ì¬ÊÂ¼ş
-        //µ±×óÊ½¾²Ì¬ÊÂ¼ş±»Ö´ĞĞÊ±£¬ÓÒÊ½Ò²»á±»Ö´ĞĞ
+        Player.OnPlayerDeath += HandlePlayerDeath;//ä½¿ç”¨+=å°†å³å¼æ–¹æ³•æ³¨å†Œåˆ°å·¦å¼çš„é™æ€äº‹ä»¶
+        //å½“å·¦å¼é™æ€äº‹ä»¶è¢«æ‰§è¡Œæ—¶ï¼Œå³å¼ä¹Ÿä¼šè¢«æ‰§è¡Œ
     }
     private void OnDisable()
     {
-        Player.ÔÚÍæ¼ÒËÀÍöÖ®Ê± -= ´¦ÀíÍæ¼ÒËÀÍö;
+        Player.OnPlayerDeath -= HandlePlayerDeath;
     }
 }

@@ -1,15 +1,15 @@
 using System.Collections;
 using UnityEngine;
-//´ËÀà¼Ì³Ğ¸¸ÀàÊÓ¾õĞ§¹û£¬Í¬Ê±ÊµÏÖ²ĞÓ°Ğ§¹û
+//æ­¤ç±»ç»§æ‰¿çˆ¶ç±»è§†è§‰æ•ˆæœï¼ŒåŒæ—¶å®ç°æ®‹å½±æ•ˆæœ
 public class Player_VFX : Entity_VFX
 {
-    [Header("²ĞÓ°Ğ§¹û")]
+    [Header("æ®‹å½±æ•ˆæœ")]
     [Range(0.01f, 0.2f)]
-    [SerializeField][cn("¼ä¸ô")] private float echoInterval = 0.05f;
-    [SerializeField][cn("²ĞÓ°Ô¤ÖÆÌå")] private GameObject echoPrehab;
+    [SerializeField][cn("é—´éš”")] private float echoInterval = 0.05f;
+    [SerializeField][cn("æ®‹å½±é¢„åˆ¶ä½“")] private GameObject echoPrehab;
     private Coroutine echoCo;
 
-    public void CreateEffectForTarget(GameObject effectPrefab ,Transform target)//ÎªµĞÈËÓ¦ÓÃÌØĞ§
+    public void CreateEffectForTarget(GameObject effectPrefab ,Transform target)//ä¸ºæ•Œäººåº”ç”¨ç‰¹æ•ˆ
     {
         Instantiate(effectPrefab, target.position ,Quaternion.identity);
     }

@@ -205,7 +205,7 @@ AnimatorState:
   m_TimeParameterActive: 0
   m_Motion: {fileID: 7400000, guid: 7cff9338d85a25943b89ba1627e03702, type: 2}
   m_Tag: 
-  m_SpeedParameter: "\u653B\u51FB\u901F\u5EA6\u4E58\u6570"
+  m_SpeedParameter: attackSpeedMultiplier
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
@@ -360,7 +360,7 @@ AnimatorController:
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 9100000}
-  - m_Name: "\u653B\u51FB\u901F\u5EA6\u4E58\u6570"
+  - m_Name: attackSpeedMultiplier
     m_Type: 1
     m_DefaultFloat: 0
     m_DefaultInt: 0

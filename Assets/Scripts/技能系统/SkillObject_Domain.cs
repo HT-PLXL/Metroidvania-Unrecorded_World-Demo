@@ -3,11 +3,11 @@ using UnityEngine;
 public class SkillObject_Domain : SkillObject_Base
 {
     private Skill_Domain domainManager;
-    private float expandSpeed = 2;//À©´óËÙ¶È
+    private float expandSpeed = 2;//æ‰©å¤§é€Ÿåº¦
     private float slowDownPercent = 0.9f;
     private float duration;
     private Vector3 targetScale;
-    private bool isShrinking;//ËõĞ¡
+    private bool isShrinking;//ç¼©å°
 
     public void SetUpDomain(Skill_Domain domainManager)
     {
@@ -23,7 +23,7 @@ public class SkillObject_Domain : SkillObject_Base
     {
         HandleScale();
     }
-    private void HandleScale()//´¦Àí±ä´óÓëËõĞ¡
+    private void HandleScale()//å¤„ç†å˜å¤§ä¸ç¼©å°
     {
         float sizeDiffrence = Mathf.Abs(transform.localScale.x - targetScale.x);
         bool shouldChangeScale = sizeDiffrence > 0.1f;
@@ -35,14 +35,14 @@ public class SkillObject_Domain : SkillObject_Base
             Destroy(gameObject);
         }
     }
-    private void ShrinkDomain()//ËõĞ¡·½·¨
+    private void ShrinkDomain()//ç¼©å°æ–¹æ³•
     {
-        targetScale = Vector3.zero;//Ò»¶ÎÑÓ³Ùºóµ÷ÕûÆÚÍûËõ·ÅÎª0£¬Æô¶¯ËõĞ¡
+        targetScale = Vector3.zero;//ä¸€æ®µå»¶è¿Ÿåè°ƒæ•´æœŸæœ›ç¼©æ”¾ä¸º0ï¼Œå¯åŠ¨ç¼©å°
         isShrinking = true;
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (isShrinking)//²âÊÔ·¢ÏÖÈç¹û¹ÖÎïËÙ¶ÈºÜ¿ì£¬ÓĞ¿ÉÄÜ»áÅöµ½ÕıÔÚËõĞ¡µÄÁìÓò£¬Ê¹¹ÖÎïÔÙ´Î¼õËÙ£¬ËùÒÔÔö¼ÓÅĞ¶¨
+        if (isShrinking)//æµ‹è¯•å‘ç°å¦‚æœæ€ªç‰©é€Ÿåº¦å¾ˆå¿«ï¼Œæœ‰å¯èƒ½ä¼šç¢°åˆ°æ­£åœ¨ç¼©å°çš„é¢†åŸŸï¼Œä½¿æ€ªç‰©å†æ¬¡å‡é€Ÿï¼Œæ‰€ä»¥å¢åŠ åˆ¤å®š
             return;
         Enemy enemy = collision.GetComponent<Enemy>();
         if (enemy == null)

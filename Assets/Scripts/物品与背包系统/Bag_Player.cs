@@ -5,47 +5,48 @@ public class Bag_Player : Bag_Base
 {
     private Player player;
     [SerializeField] private ItemListDataSO itemDataBase;
-    public List<Bag_EquipmentSlot> equipmentSlotList;//Íæ¼Ò×°±¸²ÛÊµÀı£¬ÓÉunityÃæ°åÌí¼Ó
-
+    public List<Bag_EquipmentSlot> equipmentSlotList;//ç©å®¶è£…å¤‡æ§½å®ä¾‹ï¼Œç”±unityé¢æ¿æ·»åŠ 
+    public Bag_Storage storage { get; private set; }
 
     protected override void Awake()
     {
         base.Awake();
         player = GetComponent<Player>();
+        storage = FindFirstObjectByType<Bag_Storage>();
     }
     public void TryEquipItem(Bag_Item clickedItem)
     {
         Bag_Item item = SearchItem(clickedItem.itemData);
-        List<Bag_EquipmentSlot> slots = equipmentSlotList.FindAll(slot => slot.slotType == item.itemData.itemType);//ÅĞ¶Ï²¢ÕÒ³öËùÓĞ×°±¸²ÛÁĞ±íÀïÓëÏëÒª×°±¸µÄÎïÆ·ÏàÍ¬ÖÖÀàµÄ
-        foreach (var slot in slots)//±éÀúËùÓĞÍ¬Àà×°±¸²Û
+        List<Bag_EquipmentSlot> slots = equipmentSlotList.FindAll(slot => slot.slotType == item.itemData.itemType);//åˆ¤æ–­å¹¶æ‰¾å‡ºæ‰€æœ‰è£…å¤‡æ§½åˆ—è¡¨é‡Œä¸æƒ³è¦è£…å¤‡çš„ç‰©å“ç›¸åŒç§ç±»çš„
+        foreach (var slot in slots)//éå†æ‰€æœ‰åŒç±»è£…å¤‡æ§½
         {
-            if (slot.HasItem() == false)//ÅĞ¶ÏÊÇ·ñÓĞ¿Õ²ÛÎ»¿ÉÓÃ
+            if (slot.HasItem() == false)//åˆ¤æ–­æ˜¯å¦æœ‰ç©ºæ§½ä½å¯ç”¨
             {
                 EquipItem(item, slot);
                 return;
             }
         }
-        //×°±¸Ìæ»»¹¦ÄÜ£¬Ìæ»»µÚÒ»¸ö²ÛÎ»ÎïÆ·
-        //¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª
+        //è£…å¤‡æ›¿æ¢åŠŸèƒ½ï¼Œæ›¿æ¢ç¬¬ä¸€ä¸ªæ§½ä½ç‰©å“
+        //â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”
         var slotNeedReplace = slots[0];
         var itemNeedRemove = slotNeedReplace.equipmentItem;
-        RemoveEquipItem(itemNeedRemove, slotNeedReplace != null);//µ±²ÛÎ»ÂúÁË»ò±³°üÂúÁË²Å»áĞèÒªÌæ»»¹¦ÄÜ£¬slotNeedReplace !=null½«»áÎªtrue
+        RemoveEquipItem(itemNeedRemove, slotNeedReplace != null);//å½“æ§½ä½æ»¡äº†æˆ–èƒŒåŒ…æ»¡äº†æ‰ä¼šéœ€è¦æ›¿æ¢åŠŸèƒ½ï¼ŒslotNeedReplace !=nullå°†ä¼šä¸ºtrue
         EquipItem(item, slotNeedReplace);
     }
     private void EquipItem(Bag_Item itemNeedEquip, Bag_EquipmentSlot slot)
     {
         slot.equipmentItem = itemNeedEquip;
         slot.equipmentItem.AddModifiers(player.entityStats);
-        slot.equipmentItem.AddItemEffect(player);//×°±¸ĞÂ×°±¸Ê±³¢ÊÔ¶©ÔÄÎïÆ·Ğ§¹û
-        RemoveItem(itemNeedEquip);//´ÓÒÑÓĞÎïÆ·ÁĞ±íÒÆ³ı¸Õ¸Õ×°±¸µÄÎïÆ·
+        slot.equipmentItem.AddItemEffect(player);//è£…å¤‡æ–°è£…å¤‡æ—¶å°è¯•è®¢é˜…ç‰©å“æ•ˆæœ
+        RemoveOneItem(itemNeedEquip);//ä»å·²æœ‰ç‰©å“åˆ—è¡¨ç§»é™¤åˆšåˆšè£…å¤‡çš„ç‰©å“
     }
-    //µ±ÓĞÏàÍ¬±»¶¯Ğ§¹ûµÄ×°±¸Ê±£¬×°±¸ºóÔÙĞ¶ÏÂ£¬Ò»´ÎĞÔÇå³ıÁËËùÓĞÍ¬Ğ§¹û×°±¸¶ÔplayerÊµÀıµÄÒıÓÃ£¬µ¼ÖÂÆäËûÍ¬Ğ§¹û×°±¸ÒıÓÃÒì³£±¨´í£¬ËùÒÔĞèÒªÏÈĞ¶ºó×°
-    //¶ø±³°üÂúÁËÏÈĞ¶ºó×°»áµ¼ÖÂÏÂ·½·½·¨µÄifÓï¾äÖ´ĞĞ£¬´Ó¶øÍÌµôĞ¶ÏÂµÄ×°±¸£¬ËùÒÔĞèÒª¼ÓÉÏĞÂµÄboolÖµÅĞ¶ÏÌø¹ıÅĞ¶Ï
+    //å½“æœ‰ç›¸åŒè¢«åŠ¨æ•ˆæœçš„è£…å¤‡æ—¶ï¼Œè£…å¤‡åå†å¸ä¸‹ï¼Œä¸€æ¬¡æ€§æ¸…é™¤äº†æ‰€æœ‰åŒæ•ˆæœè£…å¤‡å¯¹playerå®ä¾‹çš„å¼•ç”¨ï¼Œå¯¼è‡´å…¶ä»–åŒæ•ˆæœè£…å¤‡å¼•ç”¨å¼‚å¸¸æŠ¥é”™ï¼Œæ‰€ä»¥éœ€è¦å…ˆå¸åè£…
+    //è€ŒèƒŒåŒ…æ»¡äº†å…ˆå¸åè£…ä¼šå¯¼è‡´ä¸‹æ–¹æ–¹æ³•çš„ifè¯­å¥æ‰§è¡Œï¼Œä»è€Œåæ‰å¸ä¸‹çš„è£…å¤‡ï¼Œæ‰€ä»¥éœ€è¦åŠ ä¸Šæ–°çš„boolå€¼åˆ¤æ–­è·³è¿‡åˆ¤æ–­
     public void RemoveEquipItem(Bag_Item itemNeedToRemove, bool NeedReplace = false)
     {
-        if (CanAddItem() == false && NeedReplace == false)//NeedReplaceÎªtrueÊ±ËµÃ÷ÔÚÌæ»»×°±¸£¬Ìø¹ı´Ë´¦µÄifÓï¾ä£¬·ÀÖ¹ÍÌ×°±¸
+        if (CanAddItem(itemNeedToRemove) == false && NeedReplace == false)//NeedReplaceä¸ºtrueæ—¶è¯´æ˜åœ¨æ›¿æ¢è£…å¤‡ï¼Œè·³è¿‡æ­¤å¤„çš„ifè¯­å¥ï¼Œé˜²æ­¢åè£…å¤‡
         {
-            Debug.Log("Ã»ÓĞ¿Õ¼äÈ¥Ğ¶ÏÂ×°±¸");
+            Debug.Log("æ²¡æœ‰ç©ºé—´å»å¸ä¸‹è£…å¤‡");
             return;
         }
         foreach (var slot in equipmentSlotList)
@@ -57,8 +58,8 @@ public class Bag_Player : Bag_Base
             }
         }
         itemNeedToRemove.RemoveModifiers(player.entityStats);
-        itemNeedToRemove.RemoveItemEffect();//Ğ¶ÏÂĞÂ×°±¸Ê±³¢ÊÔÈ¡Ïû¶©ÔÄÎïÆ·Ğ§¹û
-        AddItem(itemNeedToRemove);//·Å»ØÎïÆ·À¸
+        itemNeedToRemove.RemoveItemEffect();//å¸ä¸‹æ–°è£…å¤‡æ—¶å°è¯•å–æ¶ˆè®¢é˜…ç‰©å“æ•ˆæœ
+        AddItem(itemNeedToRemove);//æ”¾å›ç‰©å“æ 
     }
 
 
@@ -75,7 +76,7 @@ public class Bag_Player : Bag_Base
                 if (data.bag.ContainsKey(saveId) == false)
                     data.bag[saveId] = 0;
 
-                data.bag[saveId] += item.StackCount;//¶ÑµşÊıÁ¿
+                data.bag[saveId] += item.StackCount;//å †å æ•°é‡
             }
         }
         foreach (var slot in equipmentSlotList)
@@ -95,7 +96,7 @@ public class Bag_Player : Bag_Base
             ItemDataSO itemData = itemDataBase.GetItemData(saveId);
             if (itemData == null)
             {
-                Debug.LogWarning("ÎïÆ·Î´ÕÒµ½" + saveId);
+                Debug.LogWarning("ç‰©å“æœªæ‰¾åˆ°" + saveId);
                 continue;
             }
 
@@ -111,13 +112,13 @@ public class Bag_Player : Bag_Base
             string saveId = entry.Key;
             ItemType loadedSlotType = entry.Value;
             ItemDataSO itemData = itemDataBase.GetItemData(saveId);
-            Bag_Item itemNeedLoad = new Bag_Item(itemData);//ÓÃÊı¾İ´´½¨ĞÂÎïÆ·
+            Bag_Item itemNeedLoad = new Bag_Item(itemData);//ç”¨æ•°æ®åˆ›å»ºæ–°ç‰©å“
 
             var slot = equipmentSlotList.Find(slot => slot.slotType == loadedSlotType && slot.HasItem() == false);
             slot.equipmentItem = itemNeedLoad;
             slot.equipmentItem.AddModifiers(player.entityStats);
             slot.equipmentItem.AddItemEffect(player);
         }
-        TriggerUpdateUI();//¶©ÔÄ¸üĞÂ½ÇÉ«Êı¾İ±í·½·¨
+        TriggerUpdateUI();//è®¢é˜…æ›´æ–°è§’è‰²æ•°æ®è¡¨æ–¹æ³•
     }
 }

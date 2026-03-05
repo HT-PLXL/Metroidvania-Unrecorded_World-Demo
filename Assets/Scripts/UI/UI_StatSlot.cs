@@ -13,7 +13,7 @@ public class UI_StatSlot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandle
 
     private void OnValidate()
     {
-        gameObject.name = "Êı¾İ-" + statType.GetChineseName();
+        gameObject.name = "æ•°æ®-" + statType.GetChineseName();
         statName.text = statType.GetChineseName();
     }
     private void Awake()
@@ -33,10 +33,10 @@ public class UI_StatSlot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandle
     public void UpdateStatValue()
     {
         Stat statNeedUpdate = playerStats.GetStatByType(statType);
-        if (statNeedUpdate == null && statType != StatType.ElementDamage)//ÔªËØÉËº¦Ã»ÓĞ×¨ÊôÊı¾İ²»ÄÜÍ¨¹ıÖÖÀà²éÕÒ£¬ËùÒÔÎª¿Õ£¬µ«Ó¦¸Ã²Î¼ÓÏÂÃæµÄ²éÕÒµÃµ½¾ßÌåÖµ£¬¼´Ö»ÓĞ³öÏÖÆäËûÒì³£ÖÖÀà²Å·µ»Ønull
+        if (statNeedUpdate == null && statType != StatType.ElementDamage)//å…ƒç´ ä¼¤å®³æ²¡æœ‰ä¸“å±æ•°æ®ä¸èƒ½é€šè¿‡ç§ç±»æŸ¥æ‰¾ï¼Œæ‰€ä»¥ä¸ºç©ºï¼Œä½†åº”è¯¥å‚åŠ ä¸‹é¢çš„æŸ¥æ‰¾å¾—åˆ°å…·ä½“å€¼ï¼Œå³åªæœ‰å‡ºç°å…¶ä»–å¼‚å¸¸ç§ç±»æ‰è¿”å›null
             return;
         float value = 0;
-        switch (statType)//ÓÃÓÚµÃµ½¸÷Ïî¾ßÌåÊıÖµ
+        switch (statType)//ç”¨äºå¾—åˆ°å„é¡¹å…·ä½“æ•°å€¼
         {
             case StatType.Strength:
                 value = playerStats.major.strength.GetValue(); break;
@@ -85,7 +85,7 @@ public class UI_StatSlot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandle
         }
         statValue.text = IsPercentStat(statType) ? value + "%" : value.ToString();
     }
-    private bool IsPercentStat(StatType type)//ÅĞ¶ÏÊÇ·ñÒª¼Ó%·ûºÅ
+    private bool IsPercentStat(StatType type)//åˆ¤æ–­æ˜¯å¦è¦åŠ %ç¬¦å·
     {
         switch (type)
         {

@@ -1,17 +1,17 @@
 using UnityEngine;
 
-//¹ØÓÚObject_Buff£º¸øÓèÅö×²Ìå£¬ÉèÖÃÎªis Trigger£¬½«ÆäÉèÖÃÎª×¨Êô²ã¼¶£¬ÔÙÔÚunityÉèÖÃÀï¹Ø±Õ³ıÁËÓëÍæ¼ÒÖ®¼äµÄÅö×²
-//Ó¦ÓÃbuffµÄĞ­³ÌÔÚPlayer_StatsÄÚ
+//å…³äºObject_Buffï¼šç»™äºˆç¢°æ’ä½“ï¼Œè®¾ç½®ä¸ºis Triggerï¼Œå°†å…¶è®¾ç½®ä¸ºä¸“å±å±‚çº§ï¼Œå†åœ¨unityè®¾ç½®é‡Œå…³é—­é™¤äº†ä¸ç©å®¶ä¹‹é—´çš„ç¢°æ’
+//åº”ç”¨buffçš„åç¨‹åœ¨Player_Statså†…
 public class Object_Buff : MonoBehaviour
 {
     private SpriteRenderer sr;
     private Player_Stats statsToModify;
 
-    [Header("BuffÏ¸½Ú")]
+    [Header("Buffç»†èŠ‚")]
     [SerializeField] private BuffEffectData[] buffs;
     [SerializeField] private string buffName;
     [SerializeField] private float buffDuration = 4;
-    [Header("Æ¯¸¡Ï¸½Ú")]
+    [Header("æ¼‚æµ®ç»†èŠ‚")]
     [SerializeField] private float floatSpeed = 1f;
     [SerializeField] private float floatRange = 0.1f;
     private Vector3 startPosition;
@@ -22,10 +22,10 @@ public class Object_Buff : MonoBehaviour
     }
     private void Update()
     {
-        float yOffset = Mathf.Sin(Time.time * floatSpeed) * floatRange;//y = sin£¨x * k£© * ·¶Î§±ÈÀı
+        float yOffset = Mathf.Sin(Time.time * floatSpeed) * floatRange;//y = sinï¼ˆx * kï¼‰ * èŒƒå›´æ¯”ä¾‹
         transform.position = startPosition + new Vector3(0, yOffset);
     }
-    private void OnTriggerEnter2D(Collider2D collision)//Óëis Trigger¶ÔÓ¦µÄ´¥·¢º¯Êı
+    private void OnTriggerEnter2D(Collider2D collision)//ä¸is Triggerå¯¹åº”çš„è§¦å‘å‡½æ•°
     {
         statsToModify = collision.GetComponent<Player_Stats>();
 

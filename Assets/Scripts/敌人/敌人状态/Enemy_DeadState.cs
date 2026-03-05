@@ -9,13 +9,13 @@ public class Enemy_DeadState : EnemyState
     {
         anim.enabled = false;
 
-        rb.gravityScale = 12;//Ôö´óÖØÁ¦
+        rb.gravityScale = 12;//å¢å¤§é‡åŠ›
         rb.linearVelocity = new Vector2(rb.linearVelocity.x, 15);
         enemy.GetComponent<Collider2D>().enabled = false;
-        //Vector2 »÷·É·½Ïò = new Vector2(1, 1);
-        //float »÷·ÉÁ¦Á¿ = 5f;
-        //rb.AddForce(»÷·É·½Ïò * »÷·ÉÁ¦Á¿, ForceMode2D.Impulse);
-        //ÕâÀïĞ´µÄ²»ºÃ£¬Ê§È¥ËÙ¶È»òÕßÁ¦ºó»á´¹Ö±ÏÂÂä£¬ÓĞÊ±¼äÔÙÕÒÔ­Òò°É
-        stateMachine.¹Ø±Õ×´Ì¬»ú();
+        //Vector2 å‡»é£æ–¹å‘ = new Vector2(1, 1);
+        //float å‡»é£åŠ›é‡ = 5f;
+        //rb.AddForce(å‡»é£æ–¹å‘ * å‡»é£åŠ›é‡, ForceMode2D.Impulse);
+        //è¿™é‡Œå†™çš„ä¸å¥½ï¼Œå¤±å»é€Ÿåº¦æˆ–è€…åŠ›åä¼šå‚ç›´ä¸‹è½ï¼Œæœ‰æ—¶é—´å†æ‰¾åŸå› å§
+        stateMachine.DisableStateMachine();
     }
 }

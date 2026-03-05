@@ -3,12 +3,12 @@ using UnityEngine;
 [Serializable]
 public class Stat_DefenseGroup
 {
-    [cn("ÎïÀí»¤¼×")] public Stat armor;//»¤¼×
-    [cn("ÉÁ±ÜÂÊ")] public Stat evasion;//ÉÁ±ÜÂÊ
+    [cn("ç‰©ç†æŠ¤ç”²")] public Stat armor;//æŠ¤ç”²
+    [cn("é—ªé¿ç‡")] public Stat evasion;//é—ªé¿ç‡
 
-    //ÔªËØµÖ¿¹
-    [cn("»ğÑæ¿¹ĞÔ")] public Stat fireResistance;
-    [cn("±ùËª¿¹ĞÔ")] public Stat iceResistance;
-    [cn("À×µç¿¹ĞÔ")] public Stat lightningResistance;
+    //å…ƒç´ æŠµæŠ—
+    [cn("ç«ç„°æŠ—æ€§")] public Stat fireResistance;
+    [cn("å†°éœœæŠ—æ€§")] public Stat iceResistance;
+    [cn("é›·ç”µæŠ—æ€§")] public Stat lightningResistance;
 
 }

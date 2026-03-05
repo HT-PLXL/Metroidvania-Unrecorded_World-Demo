@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-//此类的一大作用是应用buff效果，可编程对象（物品效果）不能使用协程
+//姝ょ被鐨勪竴澶т綔鐢ㄦ槸搴旂敤buff鏁堟灉锛屽彲缂栫▼瀵硅薄锛堢墿鍝佹晥鏋滐級涓嶈兘浣跨敤鍗忕▼
 public class Player_Stats : Entity_Stats
 {
     private Bag_Player bag;
@@ -13,7 +13,7 @@ public class Player_Stats : Entity_Stats
     }
     public bool CanApplyBuff(string source)
     {
-        return activeBuff.Contains(source) == false;//如果正在生效的buff的列表中不包含尝试使用的buff，则返回true
+        return activeBuff.Contains(source) == false;//濡傛灉姝ｅ湪鐢熸晥鐨刡uff鐨勫垪琛ㄤ腑涓嶅寘鍚皾璇曚娇鐢ㄧ殑buff锛屽垯杩斿洖true
     }
     public void ApplyBuff(BuffEffectData[]buffNeedApply ,float duration,string source)
     {

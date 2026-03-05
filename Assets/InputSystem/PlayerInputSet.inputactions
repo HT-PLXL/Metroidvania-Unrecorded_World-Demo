@@ -112,6 +112,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "交互",
+                    "type": "Button",
+                    "id": "ca491b9f-b4a6-4921-b726-697c57b02a31",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -228,7 +237,7 @@
                 {
                     "name": "",
                     "id": "b7349bff-18b1-4605-afa5-094b76fc0509",
-                    "path": "<Keyboard>/f",
+                    "path": "<Keyboard>/e",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard & Mouse",
@@ -288,6 +297,17 @@
                     "processors": "",
                     "groups": ";Keyboard & Mouse",
                     "action": "开关角色UI",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "43fb13cc-796f-4432-ad64-c960b34b88c4",
+                    "path": "<Keyboard>/f",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard & Mouse",
+                    "action": "交互",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

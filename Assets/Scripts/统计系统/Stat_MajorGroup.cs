@@ -3,10 +3,10 @@ using UnityEngine;
 
 
 [Serializable]
-public class Stat_MajorGroup//Éè¶¨¶îÍâÊıÖµ
+public class Stat_MajorGroup//è®¾å®šé¢å¤–æ•°å€¼
 {
-    [cn("Á¦Á¿")] public Stat strength;//Á¦Á¿
-    [cn("Ãô½İ")] public Stat agility;//Ãô½İ
-    [cn("ÖÇÁ¦")] public Stat intelligence;//ÖÇÁ¦
-    [cn("»îÁ¦")] public Stat vitality;//Ã¿µã»îÁ¦ÖµÌáÉı5µã×î´óÉúÃüÖµ
+    [cn("åŠ›é‡")] public Stat strength;//åŠ›é‡
+    [cn("æ•æ·")] public Stat agility;//æ•æ·
+    [cn("æ™ºåŠ›")] public Stat intelligence;//æ™ºåŠ›
+    [cn("æ´»åŠ›")] public Stat vitality;//æ¯ç‚¹æ´»åŠ›å€¼æå‡5ç‚¹æœ€å¤§ç”Ÿå‘½å€¼
 }

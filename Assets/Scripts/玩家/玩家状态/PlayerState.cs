@@ -1,18 +1,18 @@
 using UnityEngine;
 
 public abstract class PlayerState : EntityState
-    //abstract±ä³É³éÏóÀà£¬Ê¹µÃ²»ÄÜÖ±½Ó·ÃÎÊ£¬Ïàµ±ÓÚ½«Æä±ä³ÉÒ»¸ö¸¸Àà£¬ÔÚ¼Ì³Ğºó£¬Æä×ÓÀà¿É·ÃÎÊ
+    //abstractå˜æˆæŠ½è±¡ç±»ï¼Œä½¿å¾—ä¸èƒ½ç›´æ¥è®¿é—®ï¼Œç›¸å½“äºå°†å…¶å˜æˆä¸€ä¸ªçˆ¶ç±»ï¼Œåœ¨ç»§æ‰¿åï¼Œå…¶å­ç±»å¯è®¿é—®
 {
     protected Player player;
     protected PlayerInputSet input;
     protected Player_SkillManager skillManager;
 
     public PlayerState(Player player, StateMachine stateMachine, string animBoolName):base(stateMachine,animBoolName)
-        //¹¹Ôìº¯Êı£¬Íê³É¶ÔÏó³õÊ¼»¯
+        //æ„é€ å‡½æ•°ï¼Œå®Œæˆå¯¹è±¡åˆå§‹åŒ–
     {
-        this.player = player;//Í¬É«¶ÔÓ¦£¬À¶É«µÄÊÇ´«Èë¹¹Ôìº¯ÊıµÄ²ÎÊı
+        this.player = player;//åŒè‰²å¯¹åº”ï¼Œè“è‰²çš„æ˜¯ä¼ å…¥æ„é€ å‡½æ•°çš„å‚æ•°
 
-        anim = player.anim;//¸ø¸¸ÀàºÍÉÏÃæÉùÃ÷µÄ¿ÕÊµÀı¸³Öµ
+        anim = player.anim;//ç»™çˆ¶ç±»å’Œä¸Šé¢å£°æ˜çš„ç©ºå®ä¾‹èµ‹å€¼
         rb = player.rb;
         input = player.input;
         entity_stats = player.entityStats;
@@ -23,12 +23,12 @@ public abstract class PlayerState : EntityState
         base.Update();
 
 
-        if (input.Player.³å´Ì.WasPressedThisFrame() && CanDash())
+        if (input.Player.å†²åˆº.WasPressedThisFrame() && CanDash())
         {
-            skillManager.dash.setSkillOnCooldown();//½øÈëÀäÈ´
+            skillManager.dash.setSkillOnCooldown();//è¿›å…¥å†·å´
             stateMachine.ChangeState(player.dashState);
         }
-        if(input.Player.ÖÕ¼«¼¼ÄÜ.WasPressedThisFrame() && skillManager.domain.CanUseSkill())//ÖÕ¼«¼¼ÄÜ--ÁìÓò
+        if(input.Player.ç»ˆææŠ€èƒ½.WasPressedThisFrame() && skillManager.domain.CanUseSkill())//ç»ˆææŠ€èƒ½--é¢†åŸŸ
         {
             if (skillManager.domain.IsInstantDomain())
                 skillManager.domain.CreateDomain();
@@ -41,13 +41,13 @@ public abstract class PlayerState : EntityState
     {
         base.UpdateAnimator();
         
-        anim.SetFloat("yVelocity", rb.linearVelocity.y);//½«yÖáËÙ¶È¸³Öµ¸ø¶¯»­Ê¦½çÃæµÄ²ÎÊıyVelocity£¬ÊµÏÖjump/fall¶¯»­ÇĞ»»
+        anim.SetFloat("yVelocity", rb.linearVelocity.y);//å°†yè½´é€Ÿåº¦èµ‹å€¼ç»™åŠ¨ç”»å¸ˆç•Œé¢çš„å‚æ•°yVelocityï¼Œå®ç°jump/fallåŠ¨ç”»åˆ‡æ¢
     }
     private bool CanDash()
     {
         if(skillManager.dash.CanUseSkill() == false)
             return false;
-        if (player.¼ì²âµ½Ç½±Ú)
+        if (player.isDetectWall)
             return false;
         if(stateMachine.currentState == player.dashState || stateMachine.currentState == player.domainState)
             return false;

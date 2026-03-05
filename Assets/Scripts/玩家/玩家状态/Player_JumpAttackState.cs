@@ -10,18 +10,18 @@ public class Player_JumpAttackState : PlayerState
     {
         base.Enter();
         是否接触过地面 = false;
-        player.SetVelocity(player.jumpAttackVelocity.x * player.面对方向, player.jumpAttackVelocity.y);
+        player.SetVelocity(player.jumpAttackVelocity.x * player.faceDirection, player.jumpAttackVelocity.y);
     }
     public override void Update()
     {
         base.Update();
-        if (player.检测到地面 && 是否接触过地面 == false)
+        if (player.isDetectGround && 是否接触过地面 == false)
         {
             是否接触过地面 = true;
             anim.SetTrigger("跳跃斩击触发器");//激活并进入“跳跃斩击结束”动画
             player.SetVelocity(0, rb.linearVelocity.y);
         }
-        if (triggerOver && player.检测到地面)//动画节点触发后“triggerOver”为true
+        if (triggerOver && player.isDetectGround)//动画节点触发后“triggerOver”为true
             stateMachine.ChangeState(player.idleState);
     }
 }

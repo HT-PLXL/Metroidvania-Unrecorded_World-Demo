@@ -78,7 +78,7 @@ public class Entity_VFX : MonoBehaviour
         GameObject vfx = Instantiate(hitPrefab, target.position, Quaternion.identity);//动态创建对象实例(unity中预制的对象，位置，旋转（四元数.无旋转）)
         if (isCrit == false)//将暴击特效排除在颜色修改之外，固定颜色
             vfx.GetComponentInChildren<SpriteRenderer>().color = GetHitVfxColor();//此处用于给打击特效上色,子类可重写GetHitVfxColor()，比如敌人重写默认灰色
-        if (entity.面对方向 == -1 && isCrit)//通过GetComponent获取并赋给entity的组件是同一个GameObject（玩家）上的，自然只与玩家的方向有关而与敌人的方向无关
+        if (entity.faceDirection == -1 && isCrit)//通过GetComponent获取并赋给entity的组件是同一个GameObject（玩家）上的，自然只与玩家的方向有关而与敌人的方向无关
             vfx.transform.Rotate(0, 180, 0);
     }
 

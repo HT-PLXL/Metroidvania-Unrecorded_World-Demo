@@ -18,7 +18,7 @@ public class Player_DomainState : PlayerState
         finalRiseDistance = GetEffectiveRiseDistance();
 
         player.SetVelocity(0, player.riseSpeed);
-        player.Hp.CanTakeDamage(false);//Ê¹³å´ÌÊ±ÎÞµÐ
+        player.Hp.CanTakeDamage(false);//ä½¿å†²åˆºæ—¶æ— æ•Œ
     }
     public override void Update()
     {
@@ -28,7 +28,7 @@ public class Player_DomainState : PlayerState
         if (isHovering)
         {
             skillManager.domain.HandleSpellCast();
-            if (stateTimer < 0)//¼¼ÄÜÊ±¼ä½áÊø
+            if (stateTimer < 0)//æŠ€èƒ½æ—¶é—´ç»“æŸ
             {
                 isHovering = false;
                 rb.gravityScale = originalGravity;
@@ -56,7 +56,7 @@ public class Player_DomainState : PlayerState
             skillManager.domain.CreateDomain();
         }
     }
-    private float GetEffectiveRiseDistance()//ÅÐ¶ÏºÍÌì»¨°å¾àÀë
+    private float GetEffectiveRiseDistance()//åˆ¤æ–­å’Œå¤©èŠ±æ¿è·ç¦»
     {
         RaycastHit2D hit2D = Physics2D.Raycast(player.transform.position, Vector2.up, player.riseMaxDistance, player.whatIsGround);
         return hit2D.collider != null ? hit2D.distance - 1 : player.riseMaxDistance;

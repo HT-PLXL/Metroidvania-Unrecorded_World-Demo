@@ -18,61 +18,59 @@ public class Enemy_BattleState : EnemyState
             UpdateTarget();
             lastTimeWasInBattle = Time.time;
         }
-        if (Õ½¶·Ê±¼ä½áÊø())
+        if (æˆ˜æ–—æ—¶é—´ç»“æŸ())
             stateMachine.ChangeState(enemy.idleState);
 
-        if (ÔÚ¹¥»÷¾àÀëÄÚ() && enemy.detectPlayer())
+        if (åœ¨æ”»å‡»è·ç¦»å†…() && enemy.detectPlayer())
             stateMachine.ChangeState(enemy.attackState);
         else
-            enemy.SetVelocity(enemy.GetBattleMoveSpeed() * ³¯ÏòÍæ¼ÒµÄ·½Ïò(), rb.linearVelocity.y);
+            enemy.SetVelocity(enemy.GetBattleMoveSpeed() * æœå‘ç©å®¶çš„æ–¹å‘(), rb.linearVelocity.y);
     }
     public override void Enter()
     {
         base.Enter();
 
         lastTimeWasInBattle = Time.time;
-        //Èç¹û±»Íæ¼Ò´òÈ´Ã»ÓĞ¼ì²âµ½Íæ¼Ò(±ÈÈçÔ¶³Ì¹¥»÷)£¬¾ÍĞèÒªÖ±½Ó°´ÕâÀïµÄ¼ÆÊ±µÈ´ı½áÊøÕ½¶·×´Ì¬
-        //ËäÈ»Õâ»¹ÊÇ»áÈÃĞ¡¹Ö¡°¿ìËÙ·£Õ¾¡±¹ş¹ş
-        //²»¼Ó»áÔÚÓÎÏ·Ê±¼ä´óÓÚ³ÖĞøÊ±¼äºóÃ¿´Î´¥·¢¶¼ÈÃĞ¡¹ÖÖ±½Ó½øÈë¿ÕÏĞ×´Ì¬È»ºóµÈ´ı½øÈëÒÆ¶¯×´Ì¬
-        //Èç¹ûÊÇÕı³£·¢ÏÖÍæ¼Ò£¬UpdateÀïÃ¿Ö¡¸üĞÂ¼ÆÊ±Î¬³ÖÕ½¶·×´Ì¬
+        //å¦‚æœè¢«ç©å®¶æ‰“å´æ²¡æœ‰æ£€æµ‹åˆ°ç©å®¶(æ¯”å¦‚è¿œç¨‹æ”»å‡»)ï¼Œå°±éœ€è¦ç›´æ¥æŒ‰è¿™é‡Œçš„è®¡æ—¶ç­‰å¾…ç»“æŸæˆ˜æ–—çŠ¶æ€
+        //è™½ç„¶è¿™è¿˜æ˜¯ä¼šè®©å°æ€ªâ€œå¿«é€Ÿç½šç«™â€å“ˆå“ˆ
+        //ä¸åŠ ä¼šåœ¨æ¸¸æˆæ—¶é—´å¤§äºæŒç»­æ—¶é—´åæ¯æ¬¡è§¦å‘éƒ½è®©å°æ€ªç›´æ¥è¿›å…¥ç©ºé—²çŠ¶æ€ç„¶åç­‰å¾…è¿›å…¥ç§»åŠ¨çŠ¶æ€
+        //å¦‚æœæ˜¯æ­£å¸¸å‘ç°ç©å®¶ï¼ŒUpdateé‡Œæ¯å¸§æ›´æ–°è®¡æ—¶ç»´æŒæˆ˜æ–—çŠ¶æ€
 
 
-        //if (player == null)//»ñÈ¡Ò»´Î×é¼ş×ãÒÓ
-        //    player = enemy.»ñÈ¡Íæ¼Ò×é¼ş();
-        player ??= enemy.»ñÈ¡Íæ¼Ò×é¼ş();
-        //??.ÊÇ¿ÕºÏ²¢¸³ÖµÔËËã·û£¬Èç¹û±äÁ¿Îª¿ÕÔò¸³Öµ£¬²»Îª¿ÕÔò²»Ö´ĞĞ
+        player ??= enemy.GetPlayerTransform();
+        //??.æ˜¯ç©ºåˆå¹¶èµ‹å€¼è¿ç®—ç¬¦ï¼Œå¦‚æœå˜é‡ä¸ºç©ºåˆ™èµ‹å€¼ï¼Œä¸ä¸ºç©ºåˆ™ä¸æ‰§è¡Œ
 
-        if (Ó¦¸Ãºó³·())
+        if (åº”è¯¥åæ’¤())
         {
-            rb.linearVelocity = new Vector2(enemy.ºó³·ËÙ¶È.x * enemy.activeSlowDownmultiplier * -³¯ÏòÍæ¼ÒµÄ·½Ïò(), enemy.ºó³·ËÙ¶È.y);
-            enemy.HandleFlip(³¯ÏòÍæ¼ÒµÄ·½Ïò());
+            rb.linearVelocity = new Vector2(enemy.backJumpSpeed.x * enemy.activeSlowDownmultiplier * -æœå‘ç©å®¶çš„æ–¹å‘(), enemy.backJumpSpeed.y);
+            enemy.HandleFlip(æœå‘ç©å®¶çš„æ–¹å‘());
         }
     }
 
-    private float ÓëÍæ¼ÒµÄ¾àÀë()
+    private float ä¸ç©å®¶çš„è·ç¦»()
     {
         if (player == null)
-            return float.MaxValue;//¼«´óÖµ
+            return float.MaxValue;//æå¤§å€¼
         return MathF.Abs(player.position.x - enemy.transform.position.x);
-        //MathFÊÇSystemÃüÃû¿Õ¼äÏÂµÄÒ»¸ö¾²Ì¬Àà£¬×¨ÃÅÓÃÓÚ´¦Àíµ¥¾«¶È¸¡µãÊı£¨float ÀàĞÍ£©
-        //MathFÎŞ·¨ÊµÀı»¯£¬ËùÓĞ³ÉÔ±£¨·½·¨¡¢³£Á¿£©¾ùÎª¾²Ì¬£¬ĞèÍ¨¹ıMathF.XXXÖ±½Óµ÷ÓÃ¡£
-        //Abs£ºabsolute£¬ÕâÀïÊÇ¾ø¶ÔÖµÔËËã
+        //MathFæ˜¯Systemå‘½åç©ºé—´ä¸‹çš„ä¸€ä¸ªé™æ€ç±»ï¼Œä¸“é—¨ç”¨äºå¤„ç†å•ç²¾åº¦æµ®ç‚¹æ•°ï¼ˆfloat ç±»å‹ï¼‰
+        //MathFæ— æ³•å®ä¾‹åŒ–ï¼Œæ‰€æœ‰æˆå‘˜ï¼ˆæ–¹æ³•ã€å¸¸é‡ï¼‰å‡ä¸ºé™æ€ï¼Œéœ€é€šè¿‡MathF.XXXç›´æ¥è°ƒç”¨ã€‚
+        //Absï¼šabsoluteï¼Œè¿™é‡Œæ˜¯ç»å¯¹å€¼è¿ç®—
     }
-    private bool Õ½¶·Ê±¼ä½áÊø() => Time.time > lastTimeWasInBattle + enemy.battleTimeDuration;
-    // =>»á¸ù¾İ ÅĞ¶Ï³ÉÁ¢Óë·ñ ·µ»ØÖµ
-    private bool ÔÚ¹¥»÷¾àÀëÄÚ()
+    private bool æˆ˜æ–—æ—¶é—´ç»“æŸ() => Time.time > lastTimeWasInBattle + enemy.battleTimeDuration;
+    // =>ä¼šæ ¹æ® åˆ¤æ–­æˆç«‹ä¸å¦ è¿”å›å€¼
+    private bool åœ¨æ”»å‡»è·ç¦»å†…()
     {
-        return ÓëÍæ¼ÒµÄ¾àÀë() < enemy.attackDistance;
-        //Ìõ¼şÅĞ¶Ï£¬Ğ¡ÓÚÔò·µ»Øtrue£¬·ñÔò·µ»Øfalse
-        //ÁíÒ»ÖÖĞ´·¨£ºprivate bool ÔÚ¹¥»÷¾àÀëÄÚ() => ÓëÍæ¼ÒµÄ¾àÀë() < enemy.attackDistance;
+        return ä¸ç©å®¶çš„è·ç¦»() < enemy.attackDistance;
+        //æ¡ä»¶åˆ¤æ–­ï¼Œå°äºåˆ™è¿”å›trueï¼Œå¦åˆ™è¿”å›false
+        //å¦ä¸€ç§å†™æ³•ï¼šprivate bool åœ¨æ”»å‡»è·ç¦»å†…() => ä¸ç©å®¶çš„è·ç¦»() < enemy.attackDistance;
     }
-    private bool Ó¦¸Ãºó³·() => ÓëÍæ¼ÒµÄ¾àÀë() < enemy.×îĞ¡ºó³·¾àÀë;
-    private int ³¯ÏòÍæ¼ÒµÄ·½Ïò()
+    private bool åº”è¯¥åæ’¤() => ä¸ç©å®¶çš„è·ç¦»() < enemy.minBackJumpDistance;
+    private int æœå‘ç©å®¶çš„æ–¹å‘()
     {
         if (player == null)
             return 0;
         return player.position.x > enemy.transform.position.x ? 1 : -1;
-        //Animator½çÃæÖĞ²ÎÊıxVelocityĞèÒªÁÙ½çÖµ0£¬1Óë-1
+        //Animatorç•Œé¢ä¸­å‚æ•°xVelocityéœ€è¦ä¸´ç•Œå€¼0ï¼Œ1ä¸-1
     }
     private void UpdateTarget()
     {

@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-//Õâ¸öÀàÊÇ±³°üÈİÆ÷½Å±¾£¬¹ÒÔØÔÚplayerÉÏ
+//è¿™ä¸ªç±»æ˜¯èƒŒåŒ…å®¹å™¨è„šæœ¬åŸºç±»
 public class Bag_Base : MonoBehaviour, ISaveable
 {
     public event Action OnBagChange;
@@ -16,21 +16,26 @@ public class Bag_Base : MonoBehaviour, ISaveable
         Bag_Item consumable = itemList.Find(item => item == itemNeedUse);
         if (consumable == null)
             return;
-        consumable.itemEffect.ExecuteEffect();//Ö´ĞĞµÀ¾ßĞ§¹û
+        consumable.itemEffect.ExecuteEffect();//æ‰§è¡Œé“å…·æ•ˆæœ
         if (consumable.StackCount > 1)
-            consumable.ReduceStackCount();//¼õÉÙÊıÁ¿
+            consumable.ReduceStackCount();//å‡å°‘æ•°é‡
         else
-            RemoveItem(consumable);//ÊıÁ¿Îª1Ö±½ÓÒÆ³ı
-        OnBagChange?.Invoke();//¸üĞÂUI
+            RemoveOneItem(consumable);//æ•°é‡ä¸º1ç›´æ¥ç§»é™¤
+        OnBagChange?.Invoke();//æ›´æ–°UI
     }
-    public bool CanAddItem() => itemList.Count < maxBagSize;//ÒÑÓĞÎïÆ·¸ñÊıĞ¡ÓÚ×î´ó¸ñ×ÓÊı
+    public bool CanAddItem(Bag_Item itemNeedToAdd)
+    {
+        bool hasStackable = SearchStackableItem(itemNeedToAdd) != null;
+        return hasStackable || itemList.Count < maxBagSize;//å·²æœ‰ç‰©å“æ ¼æ•°å°äºæœ€å¤§æ ¼å­æ•°
+    }
+
     public Bag_Item SearchStackableItem(Bag_Item itemTryToAddStack)
     {
         List<Bag_Item> stackableItemInBag = itemList.FindAll(item => item.itemData == itemTryToAddStack.itemData);
-        foreach (var anyStackableItem in stackableItemInBag)//Ã¿¸öÍ¬Àà¿É¶ÑµşÎïÆ·¶¼ÅĞ¶ÏÒ»´ÎÊÇ·ñ¿É¼ÌĞø¶Ñµş
+        foreach (var anyStackableItem in stackableItemInBag)//æ¯ä¸ªåŒç±»å¯å †å ç‰©å“éƒ½åˆ¤æ–­ä¸€æ¬¡æ˜¯å¦å¯ç»§ç»­å †å 
         {
             if (anyStackableItem.CanAddStackCount())
-                return anyStackableItem;//ÕÒµ½ÈÎÒâ¿É¼ÌĞø¶ÑµşµÄÎïÆ·¾Í½áÊø
+                return anyStackableItem;//æ‰¾åˆ°ä»»æ„å¯ç»§ç»­å †å çš„ç‰©å“å°±ç»“æŸ
         }
         return null;
     }
@@ -38,21 +43,25 @@ public class Bag_Base : MonoBehaviour, ISaveable
     {
         Bag_Item item = SearchStackableItem(itemNeedAdd);
         if (item != null)
-            item.AddStackCount();//Ôö¼Ó¶ÑµşÊıÁ¿
+            item.AddStackCount();//å¢åŠ å †å æ•°é‡
         else
-            itemList.Add(itemNeedAdd);//ĞÂ¼ÓÎïÆ·µ½itemList£¬Õ¼ÓÃÒ»¸öÎ»ÖÃ
-        OnBagChange?.Invoke();//Í¨ÖªUI_bag¸üĞÂ
+            itemList.Add(itemNeedAdd);//æ–°åŠ ç‰©å“åˆ°itemListï¼Œå ç”¨ä¸€ä¸ªä½ç½®
+        OnBagChange?.Invoke();//é€šçŸ¥UI_bagæ›´æ–°
     }
-    public void RemoveItem(Bag_Item itemNeedRemove)
+    public void RemoveOneItem(Bag_Item itemNeedRemove)
     {
-        itemList.Remove(itemNeedRemove);
-        OnBagChange?.Invoke();//Í¨ÖªUI_bag¸üĞÂ
+        Bag_Item item = itemList.Find(item => item == itemNeedRemove);
+        if (item.StackCount > 1)
+            item.ReduceStackCount();
+        else
+            itemList.Remove(itemNeedRemove);
+        OnBagChange?.Invoke();//é€šçŸ¥UI_bagæ›´æ–°
     }
     public Bag_Item SearchItem(ItemDataSO itemData)
     {
-        return itemList.Find(item => item.itemData == itemData);//ÅĞ¶Ï²¢·µ»ØÒÑÓĞÎïÆ·ÁĞ±íÓĞÃ»ÓĞÖ¸¶¨µÄÎïÆ·
+        return itemList.Find(item => item.itemData == itemData);//åˆ¤æ–­å¹¶è¿”å›å·²æœ‰ç‰©å“åˆ—è¡¨æœ‰æ²¡æœ‰æŒ‡å®šçš„ç‰©å“
     }
-    public void TriggerUpdateUI()=>OnBagChange?.Invoke();//¶©ÔÄ¸üĞÂ½ÇÉ«Êı¾İ±í·½·¨
+    public void TriggerUpdateUI() => OnBagChange?.Invoke();//è®¢é˜…æ›´æ–°è§’è‰²æ•°æ®è¡¨æ–¹æ³•
     public virtual void loadData(GameData data)
     {
 

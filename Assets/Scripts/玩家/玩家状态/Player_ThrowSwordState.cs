@@ -14,13 +14,13 @@ public class Player_ThrowSwordState : PlayerState
         player.HandleFlip(mouseDirection.x);
         skillManager.throwSword.GetTrajectory(mouseDirection);
 
-        if (input.Player.ÆÕÍ¨¹¥»÷.WasPerformedThisFrame())//ÖÀ³ö
+        if (input.Player.æ™®é€šæ”»å‡».WasPerformedThisFrame())//æ·å‡º
         {
             anim.SetBool("throwSwordPerformed", true);
-            skillManager.throwSword.EnableDots(false);//ÖÀ³öÒş²Ø¹ì¼£µã
+            skillManager.throwSword.EnableDots(false);//æ·å‡ºéšè—è½¨è¿¹ç‚¹
             skillManager.throwSword.GetDotDirection(mouseDirection);
         }
-        if (input.Player.ÖÀ½£.WasReleasedThisFrame() || triggerOver)//Ãé×¼½×¶ÎËÉÊÖÍË³öÒÔ¼°Í¶³ö½×¶Î´¥·¢½ÚµãÍË³ö(ÔÚ×îºóÒ»Ö¡ÉÏ)
+        if (input.Player.æ·å‰‘.WasReleasedThisFrame() || triggerOver)//ç„å‡†é˜¶æ®µæ¾æ‰‹é€€å‡ºä»¥åŠæŠ•å‡ºé˜¶æ®µè§¦å‘èŠ‚ç‚¹é€€å‡º(åœ¨æœ€åä¸€å¸§ä¸Š)
             stateMachine.ChangeState(player.idleState);
     }
     public override void Enter()
@@ -36,11 +36,11 @@ public class Player_ThrowSwordState : PlayerState
         anim.SetBool("throwSwordPerformed", false);
         skillManager.throwSword.EnableDots(false);
     }
-    private Vector2 MouseDirection()//»ñÈ¡Êó±êÎ»ÖÃ·½Ïò
+    private Vector2 MouseDirection()//è·å–é¼ æ ‡ä½ç½®æ–¹å‘
     {
         Vector2 playerPosition = player.transform.position;
         Vector2 worldMousePosition = mainCamera.ScreenToWorldPoint(player.mousePosition);
         Vector2 direction = worldMousePosition - playerPosition;
-        return direction.normalized;//¹éÒ»»¯£¬·µ»ØĞÂµÄ·½ÏòÏòÁ¿
+        return direction.normalized;//å½’ä¸€åŒ–ï¼Œè¿”å›æ–°çš„æ–¹å‘å‘é‡
     }
 }

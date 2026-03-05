@@ -24,7 +24,7 @@ public class CheckPoint : MonoBehaviour, ISaveable
 
     public void loadData(GameData data)
     {
-        bool active = data.saveCheckPoint == transform.position;// ÅĞ¶Ï±£´æµÄÎ»ÖÃÊÇ·ñµÈÓÚÄ³¸ö¼ì²éµãµÄÎ»ÖÃ
+        bool active = data.saveCheckPoint == transform.position;// åˆ¤æ–­ä¿å­˜çš„ä½ç½®æ˜¯å¦ç­‰äºæŸä¸ªæ£€æŸ¥ç‚¹çš„ä½ç½®
         ActivateCheckPoint(active);
         if (active)
             Player.Instance.TeleportPlayer(transform.position);

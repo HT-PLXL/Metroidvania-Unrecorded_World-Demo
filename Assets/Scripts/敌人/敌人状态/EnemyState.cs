@@ -16,9 +16,9 @@ public class EnemyState : EntityState
     {
         base.UpdateAnimator();
 
-        float Õ½¶·Ê±ÒÆ¶¯Óë¶¯»­ËÙÂÊ±È = enemy.battleMoveSpeed / enemy.moveSpeed;
-        anim.SetFloat("Õ½¶·Ê±ÒÆ¶¯Óë¶¯»­ËÙÂÊ±È", Õ½¶·Ê±ÒÆ¶¯Óë¶¯»­ËÙÂÊ±È);
-        anim.SetFloat("ÒÆ¶¯Óë¶¯»­ËÙÂÊ±È", enemy.ÒÆ¶¯Óë¶¯»­ËÙÂÊ±È);
-        anim.SetFloat("xVelocity", rb.linearVelocity.x);//»ìºÏÊ÷²ÎÊıÔÚbattle×´Ì¬ÇĞ»»idle/move¶¯»­
+        float moveAndAnimSpeedRatioOnCombat = enemy.battleMoveSpeed / enemy.moveSpeed;
+        anim.SetFloat("æˆ˜æ–—æ—¶ç§»åŠ¨ä¸åŠ¨ç”»é€Ÿç‡æ¯”", moveAndAnimSpeedRatioOnCombat);
+        anim.SetFloat("ç§»åŠ¨ä¸åŠ¨ç”»é€Ÿç‡æ¯”", enemy.moveAndAnimSpeedRatio);
+        anim.SetFloat("xVelocity", rb.linearVelocity.x);//æ··åˆæ ‘å‚æ•°åœ¨battleçŠ¶æ€åˆ‡æ¢idle/moveåŠ¨ç”»
     }
 }

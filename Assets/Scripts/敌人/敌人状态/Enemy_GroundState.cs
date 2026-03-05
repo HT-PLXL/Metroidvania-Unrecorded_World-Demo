@@ -12,10 +12,10 @@ public class Enemy_GroundState : EnemyState
 
         if (enemy.detectPlayer() == true)
             stateMachine.ChangeState(enemy.battleState);
-        //detectPlayer()·µ»ØµÄÊÇRaycastHit2D ÀàĞÍµÄ±äÁ¿hit
-        //ËüÊÇ Unity Îª 2D ÎïÀíÏµÍ³Ìá¹©µÄ½á¹¹Ìå£¬ÓÃÓÚ´æ´¢ÉäÏß¼ì²âµÄÃüÖĞĞÅÏ¢£¬°üº¬Åö×²Ìå£¨collider£©¡¢Åö×²µã£¨point£©¡¢Åö×²¾àÀë£¨distance£©µÈ¹Ø¼üÊı¾İ
-        //ÔÚ C# ÖĞ£¬RaycastHit2D½á¹¹Ìå´æÔÚÒşÊ½²¼¶û×ª»»£º
-        //µ± RaycastHit2D µÄ collider ÊôĞÔ²»ÎªnullÊ±£¬»á±»ÊÓÎªtrue
-        //µ± collider ÎªnullÊ±£¬»á±»ÊÓÎªfalse
+        //detectPlayer()è¿”å›çš„æ˜¯RaycastHit2D ç±»å‹çš„å˜é‡hit
+        //å®ƒæ˜¯ Unity ä¸º 2D ç‰©ç†ç³»ç»Ÿæä¾›çš„ç»“æ„ä½“ï¼Œç”¨äºå­˜å‚¨å°„çº¿æ£€æµ‹çš„å‘½ä¸­ä¿¡æ¯ï¼ŒåŒ…å«ç¢°æ’ä½“ï¼ˆcolliderï¼‰ã€ç¢°æ’ç‚¹ï¼ˆpointï¼‰ã€ç¢°æ’è·ç¦»ï¼ˆdistanceï¼‰ç­‰å…³é”®æ•°æ®
+        //åœ¨ C# ä¸­ï¼ŒRaycastHit2Dç»“æ„ä½“å­˜åœ¨éšå¼å¸ƒå°”è½¬æ¢ï¼š
+        //å½“ RaycastHit2D çš„ collider å±æ€§ä¸ä¸ºnullæ—¶ï¼Œä¼šè¢«è§†ä¸ºtrue
+        //å½“ collider ä¸ºnullæ—¶ï¼Œä¼šè¢«è§†ä¸ºfalse
     }
 }

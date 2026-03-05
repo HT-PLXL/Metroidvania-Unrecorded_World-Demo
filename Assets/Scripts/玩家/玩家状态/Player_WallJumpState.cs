@@ -9,7 +9,7 @@ public class Player_WallJumpState : PlayerState
     public override void Enter()
     {
         base.Enter();
-        player.SetVelocity(player.wallJumpForce.x * -player.面对方向, player.wallJumpForce.y);
+        player.SetVelocity(player.wallJumpForce.x * -player.faceDirection, player.wallJumpForce.y);
     }
 
     public override void Update()
@@ -19,7 +19,7 @@ public class Player_WallJumpState : PlayerState
         if (rb.linearVelocity.y < 0)
             stateMachine.ChangeState(player.fallState);
 
-        //if(player.检测到墙壁)
+        //if(player.isDetectWall)
         //    stateMachine.ChangeState(player.wallSlideState);
 
     }

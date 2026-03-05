@@ -12,7 +12,7 @@ public class Player_DashState : PlayerState
         base.Enter();
         skillManager.dash.OnstartEffect();
         player.vfx.DoEchoEffect(player.dashDuration);//冲刺残影
-        冲刺方向 = player.moveInput.x != 0 ? (((int)player.moveInput.x)) : player.面对方向;
+        冲刺方向 = player.moveInput.x != 0 ? (((int)player.moveInput.x)) : player.faceDirection;
         //使用冲刺方向而不是面对方向理论上能规避冲刺中可能出现的面对方向被改变导致冲刺变向的问题
         //右式能在进入冲刺状态时根据输入方向改变冲刺方向，否则只能先翻转再冲刺，影响手感
 
@@ -31,7 +31,7 @@ public class Player_DashState : PlayerState
         player.SetVelocity(player.dashSpeed * 冲刺方向, 0);
 
         if (stateTimer < 0)
-            if (player.检测到地面)
+            if (player.isDetectGround)
                 stateMachine.ChangeState(player.idleState);
             else
                 stateMachine.ChangeState(player.fallState);
@@ -48,9 +48,9 @@ public class Player_DashState : PlayerState
     }
     private void 取消状态()
     {
-        if (player.检测到墙壁)
+        if (player.isDetectWall)
         {
-            if (player.检测到地面)
+            if (player.isDetectGround)
                 stateMachine.ChangeState(player.idleState);
             else
                 stateMachine.ChangeState(player.wallSlideState);

@@ -1,14 +1,14 @@
 using UnityEngine;
 
 public abstract class EntityState
-    //abstrate±ä³É³éÏóÀà
+    //abstrateå˜æˆæŠ½è±¡ç±»
 {
     protected StateMachine stateMachine;
     protected string animBoolName;
-    protected Animator anim;//ÉùÃ÷animÅäºÏÏÂÃæ¹¹Ôìº¯ÊıÖĞanim½øĞĞËõĞ´
-    protected Rigidbody2D rb;//ÓÃÓÚËõĞ´
+    protected Animator anim;//å£°æ˜animé…åˆä¸‹é¢æ„é€ å‡½æ•°ä¸­animè¿›è¡Œç¼©å†™
+    protected Rigidbody2D rb;//ç”¨äºç¼©å†™
     protected Entity_Stats entity_stats;
-    protected float stateTimer;//×´Ì¬¼ÆÊ±Æ÷
+    protected float stateTimer;//çŠ¶æ€è®¡æ—¶å™¨
     protected bool triggerOver;
 
     public EntityState(StateMachine stateMachine, string animBoolName)
@@ -16,36 +16,36 @@ public abstract class EntityState
         this.stateMachine = stateMachine;
         this.animBoolName = animBoolName;
     }
-    public virtual void Enter()//virtual£ºĞé·½·¨£¬ÔÊĞí×ÓÀàÓÃoverride½øĞĞÖØĞ´£¬Enter·µ»ØÀàĞÍÎª¿Õ
+    public virtual void Enter()//virtualï¼šè™šæ–¹æ³•ï¼Œå…è®¸å­ç±»ç”¨overrideè¿›è¡Œé‡å†™ï¼ŒEnterè¿”å›ç±»å‹ä¸ºç©º
     {
-        //¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª×¢Òâ×ÓÀàÃ»ÓĞenter»á×Ô¶¯Ö´ĞĞ¸¸ÀàµÄenter¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª
+        //â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”æ³¨æ„å­ç±»æ²¡æœ‰enterä¼šè‡ªåŠ¨æ‰§è¡Œçˆ¶ç±»çš„enterâ€”â€”â€”â€”â€”â€”â€”â€”â€”â€”
 
         anim.SetBool(animBoolName, true);
         triggerOver = false;
     }
-    //ÔÚ½øÈë¸Ã×´Ì¬Ê±Ö´ĞĞÌØ¶¨²Ù×÷£¬¶ÔÓ¦ÏÂÃæExitÀë¿ª×´Ì¬Ê±Ö´ĞĞ²Ù×÷
+    //åœ¨è¿›å…¥è¯¥çŠ¶æ€æ—¶æ‰§è¡Œç‰¹å®šæ“ä½œï¼Œå¯¹åº”ä¸‹é¢Exitç¦»å¼€çŠ¶æ€æ—¶æ‰§è¡Œæ“ä½œ
     public virtual void Update()
     {
-        stateTimer -= Time.deltaTime;//ÓÒÊ½ÊÇÔöÁ¿Ê±¼ä£¬½áºÏÏà¹Ø´úÂë¾ÍÊÇ´ÓÄ³¸öÊ±¼ä¿ªÊ¼¼Ó¼õ£¬¿ÉÒÔÎª¸º
-        UpdateAnimator();//virtualÊôĞÔµÄ·½·¨±»µ÷ÓÃ»áÖ´ĞĞÆäÖØĞ´·½·¨
+        stateTimer -= Time.deltaTime;//å³å¼æ˜¯å¢é‡æ—¶é—´ï¼Œç»“åˆç›¸å…³ä»£ç å°±æ˜¯ä»æŸä¸ªæ—¶é—´å¼€å§‹åŠ å‡ï¼Œå¯ä»¥ä¸ºè´Ÿ
+        UpdateAnimator();//virtualå±æ€§çš„æ–¹æ³•è¢«è°ƒç”¨ä¼šæ‰§è¡Œå…¶é‡å†™æ–¹æ³•
     }
     public virtual void Exit()
     {
-        anim.SetBool(animBoolName, false);//ÒÔcurrentState.Exit()µÄidlestate.ExitÎªÀı£¬ËüÓĞ3²Î£¬µÚ3²ÎanimBoolNameÎªÊµÀıidle
-                                          //´Ë´¦Ö´ĞĞanim.SetBool£¬×Ö·û´®ÀàĞÍµÄ²ÎÊı¼¯ºÏ¡°animBoolName¡±È«²¿ĞŞ¸ÄÎªfalse£¬ÒòÎªÖ»´«ÁË1¸öµÚ3²Î£¬´ËÊ±ÄÚ²¿Ö»ÓĞ²ÎÊıidle£¬ĞŞ¸ÄÎªfalse
-                                          //×¢ÒâÉÏÃæÉùÃ÷µÄthis.animBoolName = animBoolName;Òò´ËÒ²¿ÉÒÔÀí½âÀ¨ºÅÖĞÎª£¨animBoolName = ÊµÀı²ÎÊıanimBoolName£¨¼´Îªidle£©£¬false£©
+        anim.SetBool(animBoolName, false);//ä»¥currentState.Exit()çš„idlestate.Exitä¸ºä¾‹ï¼Œå®ƒæœ‰3å‚ï¼Œç¬¬3å‚animBoolNameä¸ºå®ä¾‹idle
+                                          //æ­¤å¤„æ‰§è¡Œanim.SetBoolï¼Œå­—ç¬¦ä¸²ç±»å‹çš„å‚æ•°é›†åˆâ€œanimBoolNameâ€å…¨éƒ¨ä¿®æ”¹ä¸ºfalseï¼Œå› ä¸ºåªä¼ äº†1ä¸ªç¬¬3å‚ï¼Œæ­¤æ—¶å†…éƒ¨åªæœ‰å‚æ•°idleï¼Œä¿®æ”¹ä¸ºfalse
+                                          //æ³¨æ„ä¸Šé¢å£°æ˜çš„this.animBoolName = animBoolName;å› æ­¤ä¹Ÿå¯ä»¥ç†è§£æ‹¬å·ä¸­ä¸ºï¼ˆanimBoolName = å®ä¾‹å‚æ•°animBoolNameï¼ˆå³ä¸ºidleï¼‰ï¼Œfalseï¼‰
     }
     public void AnimTrigger()
     {
         triggerOver = true;
     }
-    public virtual void UpdateAnimator()//virtualÊôĞÔµÄ·½·¨±»µ÷ÓÃ»áÖ´ĞĞÆäÖØĞ´·½·¨
+    public virtual void UpdateAnimator()//virtualå±æ€§çš„æ–¹æ³•è¢«è°ƒç”¨ä¼šæ‰§è¡Œå…¶é‡å†™æ–¹æ³•
     {
 
     }
     public void SetAttackSpeed()
     {
         float attackSpeed = entity_stats.attack.attackSpeed.GetValue();
-        anim.SetFloat("¹¥»÷ËÙ¶È³ËÊı",attackSpeed);
+        anim.SetFloat("attackSpeedMultiplier", attackSpeed);
     }
 }

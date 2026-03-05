@@ -6,7 +6,7 @@ public class VFX自动控制器 : MonoBehaviour
 {
     private SpriteRenderer sr;
     [SerializeField] private bool 自动销毁 = true;
-    [SerializeField] private float 销毁延迟 = 1;
+    [SerializeField] private float 销毁延迟 = 1     ;
     [Header("淡化效果")]
     [SerializeField][cn("允许淡化？")]private bool canFade;
     [SerializeField][cn("淡化速度")] private float fadeSpeed=1;

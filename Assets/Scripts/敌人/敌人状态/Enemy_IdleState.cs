@@ -14,7 +14,7 @@ public class Enemy_IdleState : Enemy_GroundState
     public override void Update()
     {
         base.Update();
-        if (stateTimer < 0)//等待一会再移动
+        if (stateTimer < 0)//绛夊緟涓�浼氬啀绉诲姩
             stateMachine.ChangeState(enemy.moveState);
     }
 }

@@ -12,19 +12,19 @@ public class SkillObject_Sword : SkillObject_Base
 
     protected virtual void Update()
     {
-        transform.right = rb.linearVelocity;//½£¼â·½ÏòºÍtransform.rightÖØºÏ£¬Òò´Ë¿ÉÒÔÓÃËÙ¶È·½Ïò¸Ä±ä½£·½Ïò
+        transform.right = rb.linearVelocity;//å‰‘å°–æ–¹å‘å’Œtransform.righté‡åˆï¼Œå› æ­¤å¯ä»¥ç”¨é€Ÿåº¦æ–¹å‘æ”¹å˜å‰‘æ–¹å‘
         HandleComeBack();
     }
-    public virtual void SetUpSword(Skill_ThrowSword throwSword, Vector2 direction)//Å×³ö½£µÄ·½·¨£¬Í¬Ê±½ÓÊÕSkill_ThrowSwordµÄÖÀ½£Éı¼¶ĞÅÏ¢(¿ÉÓÚ¼¼ÄÜÈİÆ÷ĞŞ¸Ä)£¬²¢´«µİ¸ø¼¼ÄÜÊµÌå½Å±¾Ìæ»»Ä¬ÈÏÖµ
+    public virtual void SetUpSword(Skill_ThrowSword throwSword, Vector2 direction)//æŠ›å‡ºå‰‘çš„æ–¹æ³•ï¼ŒåŒæ—¶æ¥æ”¶Skill_ThrowSwordçš„æ·å‰‘å‡çº§ä¿¡æ¯(å¯äºæŠ€èƒ½å®¹å™¨ä¿®æ”¹)ï¼Œå¹¶ä¼ é€’ç»™æŠ€èƒ½å®ä½“è„šæœ¬æ›¿æ¢é»˜è®¤å€¼
     {
-        rb.linearVelocity = direction;//¸øÒ»¸ö³õËÙ¶È£¬¾Í×Ô¶¯×öĞ±Å×ÔË¶¯ÁË
-        //ÓÃ¼¼ÄÜÈİÆ÷ÖµÌæ»»Ä¬ÈÏÖµ
+        rb.linearVelocity = direction;//ç»™ä¸€ä¸ªåˆé€Ÿåº¦ï¼Œå°±è‡ªåŠ¨åšæ–œæŠ›è¿åŠ¨äº†
+        //ç”¨æŠ€èƒ½å®¹å™¨å€¼æ›¿æ¢é»˜è®¤å€¼
         this.throwSword = throwSword;
-        playerTransform = throwSword.transform.root;//Êµ¼ÊÉÏ»ñÈ¡µÄÊÇ¼¼ÄÜÈİÆ÷transform×é¼şµÄ¸ù×é¼şplayer.transform
+        playerTransform = throwSword.transform.root;//å®é™…ä¸Šè·å–çš„æ˜¯æŠ€èƒ½å®¹å™¨transformç»„ä»¶çš„æ ¹ç»„ä»¶player.transform
         playerStats = throwSword.player.entityStats;
         damageScale = throwSword.damageScale;
     }
-    protected void HandleComeBack()//ÅĞ¶Ï³¬¹ı×î´ó¾àÀë£¬»òÉè¶¨Ó¦¸Ã·µ»ØÊ±£¬Æ½»¬½Ó½üÍæ¼Ò²¢Ïú»Ù
+    protected void HandleComeBack()//åˆ¤æ–­è¶…è¿‡æœ€å¤§è·ç¦»ï¼Œæˆ–è®¾å®šåº”è¯¥è¿”å›æ—¶ï¼Œå¹³æ»‘æ¥è¿‘ç©å®¶å¹¶é”€æ¯
     {
         float distance = Vector2.Distance(transform.position, playerTransform.position);
         if(distance > maxDistance)
@@ -32,7 +32,7 @@ public class SkillObject_Sword : SkillObject_Base
         if (shouldComeBack == false)
             return;
         rb.simulated = false;
-        if (transform.parent != null && alreadyStop)//ÓÃÓÚ¶ÔÏóÅö×²ÌåÈ¡ÏûÕâÀàÌØÊâÇé¿ö£¬±ÈÈç÷¼÷ÃÅö×²ÌåÈ¡ÏûºóÏÂ×¹»áµÖÏû·µ»ØËÙ¶È
+        if (transform.parent != null && alreadyStop)//ç”¨äºå¯¹è±¡ç¢°æ’ä½“å–æ¶ˆè¿™ç±»ç‰¹æ®Šæƒ…å†µï¼Œæ¯”å¦‚éª·é«…ç¢°æ’ä½“å–æ¶ˆåä¸‹å ä¼šæŠµæ¶ˆè¿”å›é€Ÿåº¦
         {
             Collider2D parentCollider = transform.parent.GetComponent<Collider2D>();
             if (parentCollider != null && parentCollider.enabled ==false)
@@ -41,7 +41,7 @@ public class SkillObject_Sword : SkillObject_Base
                 alreadyStop = false;
             }
         }
-        transform.position = Vector2.MoveTowards(transform.position, playerTransform.position, comeBackSpeed * Time.deltaTime);//Æ½»¬ÒÆ¶¯½Ó½üÍæ¼ÒÈ»ºóÏú»Ù
+        transform.position = Vector2.MoveTowards(transform.position, playerTransform.position, comeBackSpeed * Time.deltaTime);//å¹³æ»‘ç§»åŠ¨æ¥è¿‘ç©å®¶ç„¶åé”€æ¯
         if (distance < 0.5f)
             Destroy(gameObject);
     }
@@ -57,8 +57,8 @@ public class SkillObject_Sword : SkillObject_Base
     }
     protected void StopSword(Collider2D collider)
     {
-        rb.simulated = false;//Í£Ö¹ÎïÀíÄ£Äâ£¬Õâ»áÁ¢¿ÌÍ£Ö¹ÒÆ¶¯
-        transform.parent = collider.transform;//°Ñ½Ó´¥µÄÅö×²ÌåÉèÎª¸¸¶ÔÏó£¬ÕâÑù¾Í»á¸ú×ÅËüÒ»ÆğÒÆ¶¯
+        rb.simulated = false;//åœæ­¢ç‰©ç†æ¨¡æ‹Ÿï¼Œè¿™ä¼šç«‹åˆ»åœæ­¢ç§»åŠ¨
+        transform.parent = collider.transform;//æŠŠæ¥è§¦çš„ç¢°æ’ä½“è®¾ä¸ºçˆ¶å¯¹è±¡ï¼Œè¿™æ ·å°±ä¼šè·Ÿç€å®ƒä¸€èµ·ç§»åŠ¨
         alreadyStop = true;
     }
 }

@@ -4,31 +4,29 @@ using UnityEngine;
 
 public class Entity : MonoBehaviour
 {
-    public event Action ·­×ªÖĞ;//ÉùÃ÷Ò»¸ö·â×°ÁËÎ¯ÍĞµÄÊÂ¼ş£¬Î¯ÍĞ¿ÉÒÔÀí½âÎªÈÎÎñÁĞ±í
+    public event Action OnFlip;//å£°æ˜ä¸€ä¸ªå°è£…äº†å§”æ‰˜çš„äº‹ä»¶ï¼Œå§”æ‰˜å¯ä»¥ç†è§£ä¸ºä»»åŠ¡åˆ—è¡¨
     public Animator anim { get; private set; }
     public Rigidbody2D rb { get; private set; }
     public Entity_Stats entityStats { get; private set; }
-    protected StateMachine stateMachine;//ÉùÃ÷×´Ì¬»úÈİÆ÷£¨¼´±äÁ¿stateMachine£©
+    protected StateMachine stateMachine;//å£°æ˜çŠ¶æ€æœºå®¹å™¨ï¼ˆå³å˜é‡stateMachineï¼‰
+    private bool isFacingRight = true;
+    public int faceDirection { get; private set; } = 1;//åŒºåˆ†æ­£è´Ÿï¼Œå¯å½“è¢«ä¹˜æ•°ç”¨äºç¡®å®šæ–¹å‘
 
+    [Header("ç¢°æ’æ£€æµ‹è¯¦æƒ…")]
+    [cn("ä»€ä¹ˆæ˜¯åœ°é¢")]public LayerMask whatIsGround;
+    [cn("åœ°é¢æ£€æµ‹è·ç¦»")][SerializeField] private float groundDetectionDistance;
+    [cn("å¢™å£æ£€æµ‹è·ç¦»")][SerializeField] private float wallDetectionDistance;
+    [cn("åœ°é¢æ£€æµ‹èµ·ç‚¹")][SerializeField] private Transform groundDetectionStart;
+    //å£°æ˜åœ°é¢æ£€æµ‹å†ç»™å®ƒèµ‹å€¼å®ä½“è‡ªèº«ï¼Œå°±å¯ä»¥ç”¨åœ°é¢æ£€æµ‹.positionä»£æ›¿xxx.position
+    //å¥½å¤„æ˜¯å¦‚æœæ‹–å…¥å­å¯¹è±¡ï¼Œå°±å¯ä»¥é€šè¿‡è°ƒæ•´å­å¯¹è±¡çš„ä½ç½®å®ç°ä»ä¸åŒçš„ä½ç½®æ¯”å¦‚èº«å‰è¿›è¡Œåœ°é¢æ£€æµ‹
+    [cn("æ ¸å¿ƒå¢™å£æ£€æµ‹ï¼ˆå¯¹è±¡ï¼‰")][SerializeField] private Transform majorWallDetection;
+    [cn("æ¬¡è¦å¢™å£æ£€æµ‹ï¼ˆå¯¹è±¡ï¼‰")][SerializeField] private Transform secondaryWallDetection;
+    public bool isDetectGround { get; private set; }
+    public bool isDetectWall { get; private set; }
 
-    private bool ÃæÏòÓÒ·½ = true;
-    public int Ãæ¶Ô·½Ïò { get; private set; } = 1;//Çø·ÖÕı¸º£¬¿Éµ±±»³ËÊıÓÃÓÚÈ·¶¨·½Ïò
-
-    [Header("Åö×²¼ì²â")]
-    public LayerMask whatIsGround;
-    [SerializeField] private float µØÃæ¼ì²â¾àÀë;
-    [SerializeField] private float Ç½±Ú¼ì²â¾àÀë;
-    [SerializeField] private Transform µØÃæ¼ì²âÆğµã;
-    //ÉùÃ÷µØÃæ¼ì²âÔÙ¸øËü¸³ÖµÊµÌå×ÔÉí£¬¾Í¿ÉÒÔÓÃµØÃæ¼ì²â.position´úÌæxxx.position
-    //ºÃ´¦ÊÇÈç¹ûÍÏÈë×Ó¶ÔÏó£¬¾Í¿ÉÒÔÍ¨¹ıµ÷Õû×Ó¶ÔÏóµÄÎ»ÖÃÊµÏÖ´Ó²»Í¬µÄÎ»ÖÃ±ÈÈçÉíÇ°½øĞĞµØÃæ¼ì²â
-    [SerializeField] private Transform Ê×ÒªµÄÇ½±Ú¼ì²â;
-    [SerializeField] private Transform ´ÎÒªµÄÇ½±Ú¼ì²â;
-    public bool ¼ì²âµ½µØÃæ { get; private set; }
-    public bool ¼ì²âµ½Ç½±Ú { get; private set; }
-
-    private Coroutine »÷ÍËĞ­³Ì;
-    private Coroutine slowDownCo;
-    private bool ±»»÷ÍË;
+    private Coroutine knockBackCo;//å‡»é€€åç¨‹
+    private Coroutine slowDownCo;//å‡é€Ÿåç¨‹
+    private bool isKnockBack;//è¢«å‡»é€€
 
     protected virtual void Awake()
     {
@@ -36,10 +34,9 @@ public class Entity : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         entityStats = GetComponent<Entity_Stats>();
 
-        stateMachine = new StateMachine();//ÎªstateMachine´´½¨ÊµÀı£¬È·±£±»Ê¹ÓÃÊ±´«³öµÄ²ÎÊı²»Îªnull
+        stateMachine = new StateMachine();//ä¸ºstateMachineåˆ›å»ºå®ä¾‹ï¼Œç¡®ä¿è¢«ä½¿ç”¨æ—¶ä¼ å‡ºçš„å‚æ•°ä¸ä¸ºnull
 
     }
-
     protected virtual void Start()
     {
 
@@ -47,9 +44,9 @@ public class Entity : MonoBehaviour
     protected virtual void Update()
     {
         stateMachine.UpdataActiveState();
-        Åö×²¼ì²â();
+        collisionDetection();
     }
-    public virtual void EntityDead()//ÊµÌåËÀÍö
+    public virtual void EntityDead()//å®ä½“æ­»äº¡
     {
 
     }
@@ -64,7 +61,7 @@ public class Entity : MonoBehaviour
         }
         slowDownCo = StartCoroutine(SlowDownEntityCo(duration, slowMultiplier));
     }
-    protected virtual IEnumerator SlowDownEntityCo(float duration, float slowMultiplier)//Ğ­³Ì£¬ÔÊĞíÔİÍ£²¢ÔÚ½«À´Ö´ĞĞº¯Êı
+    protected virtual IEnumerator SlowDownEntityCo(float duration, float slowMultiplier)//åç¨‹ï¼Œå…è®¸æš‚åœå¹¶åœ¨å°†æ¥æ‰§è¡Œå‡½æ•°
     {
         yield return null;
     }
@@ -73,73 +70,70 @@ public class Entity : MonoBehaviour
         StopCoroutine(slowDownCo);
         //slowDownCo = null;
     }
-    public void ÊÜ»÷»÷ÍË(Vector2 »÷ÍË, float ³ÖĞøÊ±¼ä)
+    public void StartknockBackCo(Vector2 knockBack, float duration)
     {
-        if (»÷ÍËĞ­³Ì != null)
-            StopCoroutine(»÷ÍËĞ­³Ì);
-        »÷ÍËĞ­³Ì = StartCoroutine(±»»÷ÍËĞ­³Ì(»÷ÍË, ³ÖĞøÊ±¼ä));
+        if (knockBackCo != null)
+            StopCoroutine(knockBackCo);
+        knockBackCo = StartCoroutine(wasKnockedBackCo(knockBack, duration));
     }
-    private IEnumerator ±»»÷ÍËĞ­³Ì(Vector2 »÷ÍË, float ³ÖĞøÊ±¼ä)
+    private IEnumerator wasKnockedBackCo(Vector2 knockBack, float duration)
     {
-        ±»»÷ÍË = true;
-        rb.linearVelocity = »÷ÍË;
-        yield return new WaitForSeconds(³ÖĞøÊ±¼ä);
+        isKnockBack = true;
+        rb.linearVelocity = knockBack;
+        yield return new WaitForSeconds(duration);
         rb.linearVelocity = Vector2.zero;
-        ±»»÷ÍË = false;
+        isKnockBack = false;
     }
     public void CurrentStateAnimTrigger()
     {
         stateMachine.currentState.AnimTrigger();
-        //×¢ÒâcurrentStateÊÇÔÚstateMachineÖĞ¶¨ÒåµÄEntityStateÀàĞÍ±äÁ¿
-        //ÊµÀı.ÊôĞÔ.¶ÔÊôĞÔËùÊôÀàĞÍÖ´ĞĞ·½·¨£¨£©
-        //ËùÒÔµ÷ÓÃµÄEntityStateÖĞµÄAnimTrigger()
+        //æ³¨æ„currentStateæ˜¯åœ¨stateMachineä¸­å®šä¹‰çš„EntityStateç±»å‹å˜é‡
+        //å®ä¾‹.å±æ€§.å¯¹å±æ€§æ‰€å±ç±»å‹æ‰§è¡Œæ–¹æ³•ï¼ˆï¼‰
+        //æ‰€ä»¥è°ƒç”¨çš„EntityStateä¸­çš„AnimTrigger()
     }
     public void SetVelocity(float xVelocity, float yVelocity)
     {
-        if (±»»÷ÍË)
-            return;//ÊÜ»÷banÒÆ¶¯
+        if (isKnockBack)
+            return;//å—å‡»banç§»åŠ¨
         rb.linearVelocity = new Vector2(xVelocity, yVelocity);
         HandleFlip(xVelocity);
     }
-
-    public void Flip()//·­×ª
+    public void Flip()//ç¿»è½¬
     {
         transform.Rotate(0, 180, 0);
-        ÃæÏòÓÒ·½ = !ÃæÏòÓÒ·½;
-        Ãæ¶Ô·½Ïò = Ãæ¶Ô·½Ïò * -1;
+        isFacingRight = !isFacingRight;
+        faceDirection = faceDirection * -1;
 
-        ·­×ªÖĞ?.Invoke();//ÊµÌå·­×ªµÄÊ±ºòµ÷ÓÃÊÂ¼ş±£³ÖÑªÌõ²»·­×ª
+        OnFlip?.Invoke();//å®ä½“ç¿»è½¬çš„æ—¶å€™è°ƒç”¨äº‹ä»¶ä¿æŒè¡€æ¡ä¸ç¿»è½¬
     }
-
-    public void HandleFlip(float xVelocity)//´¦Àí·­×ª
+    public void HandleFlip(float xVelocity)//å¤„ç†ç¿»è½¬
     {
-        if (xVelocity > 0 && ÃæÏòÓÒ·½ == false)
+        if (xVelocity > 0 && isFacingRight == false)
         {
             Flip();
         }
-        else if (xVelocity < 0 && ÃæÏòÓÒ·½ == true)
+        else if (xVelocity < 0 && isFacingRight == true)
         {
             Flip();
         }
     }
-
-    private void Åö×²¼ì²â()
+    private void collisionDetection()
     {
-        ¼ì²âµ½µØÃæ = Physics2D.Raycast(µØÃæ¼ì²âÆğµã.position, Vector2.down, µØÃæ¼ì²â¾àÀë, whatIsGround);
-        //2d.¹âÏßÍ¶Éä£¨ÆğÊ¼µã£¬·½Ïò£¬¾àÀë£¬ËùĞè¼ì²âÍ¼²ã£©
-        if (´ÎÒªµÄÇ½±Ú¼ì²â != null)
+        isDetectGround = Physics2D.Raycast(groundDetectionStart.position, Vector2.down, groundDetectionDistance, whatIsGround);
+        //2d.å…‰çº¿æŠ•å°„ï¼ˆèµ·å§‹ç‚¹ï¼Œæ–¹å‘ï¼Œè·ç¦»ï¼Œæ‰€éœ€æ£€æµ‹å›¾å±‚ï¼‰
+        if (secondaryWallDetection != null)
         {
-            ¼ì²âµ½Ç½±Ú = Physics2D.Raycast(Ê×ÒªµÄÇ½±Ú¼ì²â.position, Vector2.right * Ãæ¶Ô·½Ïò, Ç½±Ú¼ì²â¾àÀë, whatIsGround)
-                      && Physics2D.Raycast(´ÎÒªµÄÇ½±Ú¼ì²â.position, Vector2.right * Ãæ¶Ô·½Ïò, Ç½±Ú¼ì²â¾àÀë, whatIsGround);
+            isDetectWall = Physics2D.Raycast(majorWallDetection.position, Vector2.right * faceDirection, wallDetectionDistance, whatIsGround)
+                      && Physics2D.Raycast(secondaryWallDetection.position, Vector2.right * faceDirection, wallDetectionDistance, whatIsGround);
         }
         else
-            ¼ì²âµ½Ç½±Ú = Physics2D.Raycast(Ê×ÒªµÄÇ½±Ú¼ì²â.position, Vector2.right * Ãæ¶Ô·½Ïò, Ç½±Ú¼ì²â¾àÀë, whatIsGround);
+            isDetectWall = Physics2D.Raycast(majorWallDetection.position, Vector2.right * faceDirection, wallDetectionDistance, whatIsGround);
     }
-    protected virtual void OnDrawGizmos()//¸¨ÖúÏß
+    protected virtual void OnDrawGizmos()//è¾…åŠ©çº¿
     {
-        Gizmos.DrawLine(µØÃæ¼ì²âÆğµã.position, µØÃæ¼ì²âÆğµã.position + new Vector3(0, -µØÃæ¼ì²â¾àÀë, 0));
-        Gizmos.DrawLine(Ê×ÒªµÄÇ½±Ú¼ì²â.position, Ê×ÒªµÄÇ½±Ú¼ì²â.position + new Vector3(Ç½±Ú¼ì²â¾àÀë * Ãæ¶Ô·½Ïò, 0, 0));
-        if (´ÎÒªµÄÇ½±Ú¼ì²â != null)
-            Gizmos.DrawLine(´ÎÒªµÄÇ½±Ú¼ì²â.position, ´ÎÒªµÄÇ½±Ú¼ì²â.position + new Vector3(Ç½±Ú¼ì²â¾àÀë * Ãæ¶Ô·½Ïò, 0, 0));
+        Gizmos.DrawLine(groundDetectionStart.position, groundDetectionStart.position + new Vector3(0, -groundDetectionDistance, 0));
+        Gizmos.DrawLine(majorWallDetection.position, majorWallDetection.position + new Vector3(wallDetectionDistance * faceDirection, 0, 0));
+        if (secondaryWallDetection != null)
+            Gizmos.DrawLine(secondaryWallDetection.position, secondaryWallDetection.position + new Vector3(wallDetectionDistance * faceDirection, 0, 0));
     }
 }

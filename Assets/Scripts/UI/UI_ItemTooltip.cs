@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class UI_ItemTooltip : UI_Tooltip
 {
-    [SerializeField][cn("ÎïÆ·Ãû")] private TextMeshProUGUI itemName;
-    [SerializeField][cn("ÎïÆ·ÖÖÀà")] private TextMeshProUGUI itemType;
-    [SerializeField][cn("ÎïÆ·ĞÅÏ¢")] private TextMeshProUGUI itemInfo;
+    [SerializeField][cn("ç‰©å“å")] private TextMeshProUGUI itemName;
+    [SerializeField][cn("ç‰©å“ç§ç±»")] private TextMeshProUGUI itemType;
+    [SerializeField][cn("ç‰©å“ä¿¡æ¯")] private TextMeshProUGUI itemInfo;
 
     public void ShowTooltip(bool show, RectTransform targetRect, Bag_Item itemNeedToShow)
     {
@@ -15,12 +15,12 @@ public class UI_ItemTooltip : UI_Tooltip
         itemType.text = itemNeedToShow.itemData.itemType.ToString();
         itemInfo.text = GetItemInfo(itemNeedToShow);
     }
-    public string GetItemInfo(Bag_Item item)//Ğü¸¡Ê±ÎïÆ·ĞÅÏ¢À´Ô´
+    public string GetItemInfo(Bag_Item item)//æ‚¬æµ®æ—¶ç‰©å“ä¿¡æ¯æ¥æº
     {
-        if (item.itemData.itemType == ItemType.²ÄÁÏ)
-            return "ºÏ³É²ÄÁÏ";
-        if (item.itemData.itemType == ItemType.ÏûºÄÆ·)
-            return item.itemData.itemEffect.effectDescription;//ÏÔÊ¾ÏûºÄÆ·ÃèÊö
+        if (item.itemData.itemType == ItemType.ææ–™)
+            return "åˆæˆææ–™";
+        if (item.itemData.itemType == ItemType.æ¶ˆè€—å“)
+            return item.itemData.itemEffect.effectDescription;//æ˜¾ç¤ºæ¶ˆè€—å“æè¿°
         StringBuilder sb = new StringBuilder();
         sb.AppendLine("");
         foreach (var modifier in item.modifiers)
@@ -28,18 +28,18 @@ public class UI_ItemTooltip : UI_Tooltip
             string modifierType = modifier.statType.GetChineseName();
             string modifierValue = IsPercentStat(modifier.statType) ? modifier.value.ToString() + "%" : modifier.value.ToString();
 
-            string sign = modifier.value >= 0 ? "+" : "";//¸ººÅÓ¦µ±ÔÚÎïÆ·Êı¾İÀï
+            string sign = modifier.value >= 0 ? "+" : "";//è´Ÿå·åº”å½“åœ¨ç‰©å“æ•°æ®é‡Œ
             sb.AppendLine(sign + modifierValue + " " + modifierType);
         }
         if(item.itemEffect != null )
         {
             sb.AppendLine("");
-            sb.AppendLine("±»¶¯¼¼ÄÜ£º");
+            sb.AppendLine("è¢«åŠ¨æŠ€èƒ½ï¼š");
             sb.AppendLine(item.itemEffect.effectDescription);
         }
         return sb.ToString();
     }
-    private bool IsPercentStat(StatType type)//ÅĞ¶ÏÊÇ·ñÒª¼Ó%·ûºÅ
+    private bool IsPercentStat(StatType type)//åˆ¤æ–­æ˜¯å¦è¦åŠ %ç¬¦å·
     {
         switch (type)
         {

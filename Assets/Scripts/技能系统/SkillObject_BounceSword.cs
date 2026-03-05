@@ -4,14 +4,14 @@ using UnityEngine;
 public class SkillObject_BounceSword : SkillObject_Sword
 {
     //[SerializeField][cn("")]
-    [SerializeField][cn("µ¯ÉäËÙ¶È")] private float bounceSpeed = 15;
-    [SerializeField][cn("µ¯Éä´ÎÊı")] private int bounceNumber = 5;
+    [SerializeField][cn("å¼¹å°„é€Ÿåº¦")] private float bounceSpeed = 15;
+    [SerializeField][cn("å¼¹å°„æ¬¡æ•°")] private int bounceNumber = 5;
     private Collider2D[] targetEnemy;
     private Transform nextTarget;
     private List<Transform> alreadyUsed = new List<Transform>();
-    public override void SetUpSword(Skill_ThrowSword throwSword, Vector2 direction)//½ÓÊÕ¼¼ÄÜÈİÆ÷ÉèÖÃµÄÖµ¸²¸ÇÄ¬ÈÏÖµ
+    public override void SetUpSword(Skill_ThrowSword throwSword, Vector2 direction)//æ¥æ”¶æŠ€èƒ½å®¹å™¨è®¾ç½®çš„å€¼è¦†ç›–é»˜è®¤å€¼
     {
-        anim.SetTrigger("·É½£Ğı×ª");//¶¯»­½Úµã´¥·¢ÖÀ½£Éú³ÉºóÁ¢¼´Éè¶¨¶¯»­
+        anim.SetTrigger("é£å‰‘æ—‹è½¬");//åŠ¨ç”»èŠ‚ç‚¹è§¦å‘æ·å‰‘ç”Ÿæˆåç«‹å³è®¾å®šåŠ¨ç”»
         base.SetUpSword(throwSword, direction);
         bounceSpeed = throwSword.bounceSpeed;
         bounceNumber = throwSword.bounceNumber;
@@ -30,35 +30,35 @@ public class SkillObject_BounceSword : SkillObject_Sword
             rb.simulated = false;
         }
         DamageEnemyInRadius(transform, 1);
-        if (targetEnemy.Length <= 1 || bounceNumber == 0)//³õ´Î¼ì²âÄ¿±êÉÙÓÚµÈÓÚ1¸ö»ò´ÎÊıÉè¶¨Îª0
+        if (targetEnemy.Length <= 1 || bounceNumber == 0)//åˆæ¬¡æ£€æµ‹ç›®æ ‡å°‘äºç­‰äº1ä¸ªæˆ–æ¬¡æ•°è®¾å®šä¸º0
             ShouldComeBack();
-        //ºóĞø¿ÉÊµÏÖµ¥Ìå¸ßÉËº¦ÍêÉÆ
+        //åç»­å¯å®ç°å•ä½“é«˜ä¼¤å®³å®Œå–„
         else
             nextTarget = GetNextTarget();
     }
     private void HandleBounce()
     {
-        if (nextTarget == null)//ÓĞÄ¿±ê²Å¼ÌĞøÖ´ĞĞ
+        if (nextTarget == null)//æœ‰ç›®æ ‡æ‰ç»§ç»­æ‰§è¡Œ
             return;
         transform.position = Vector2.MoveTowards(transform.position, nextTarget.position, bounceSpeed * Time.deltaTime);
         if (Vector2.Distance(transform.position, nextTarget.position) < 1f)
         {
             DamageEnemyInRadius(transform, 1);
             BounceNextTarget();
-            if (bounceNumber == 0 || nextTarget == null)//´ÎÊıÓÃÍê/Ä¿±êÇå¿Õ
+            if (bounceNumber == 0 || nextTarget == null)//æ¬¡æ•°ç”¨å®Œ/ç›®æ ‡æ¸…ç©º
             {
-                nextTarget = null;//ÖØÖÃ£¬ÎªÏÂ´Î¼¼ÄÜ×ö×¼±¸
-                ShouldComeBack();//·µ»ØÍæ¼Ò
+                nextTarget = null;//é‡ç½®ï¼Œä¸ºä¸‹æ¬¡æŠ€èƒ½åšå‡†å¤‡
+                ShouldComeBack();//è¿”å›ç©å®¶
             }
         }
     }
     private void BounceNextTarget()
     {
         Transform newTarget = GetNextTarget();
-        // Ö»ÓĞ»ñÈ¡µ½ÓĞĞ§Ä¿±êÊ±£¬²Åµİ¼õ´ÎÊı
+        // åªæœ‰è·å–åˆ°æœ‰æ•ˆç›®æ ‡æ—¶ï¼Œæ‰é€’å‡æ¬¡æ•°
         if (newTarget != null)
         {
-            Debug.Log($"µ¯Éä´ÎÊıµİ¼õ£ºµ±Ç°Ê£Óà´ÎÊı={bounceNumber - 1}£¬Ä¿±ê={newTarget.name}");
+            Debug.Log($"å¼¹å°„æ¬¡æ•°é€’å‡ï¼šå½“å‰å‰©ä½™æ¬¡æ•°={bounceNumber - 1}ï¼Œç›®æ ‡={newTarget.name}");
             nextTarget = newTarget;
             bounceNumber--;
         }
@@ -67,23 +67,23 @@ public class SkillObject_BounceSword : SkillObject_Sword
             nextTarget = null;
         }
     }
-    private Transform GetNextTarget()//µÃµ½ÏÂ¸öÓĞĞ§´æ»îÄ¿±ê
+    private Transform GetNextTarget()//å¾—åˆ°ä¸‹ä¸ªæœ‰æ•ˆå­˜æ´»ç›®æ ‡
     {
         List<Transform> effectiveTarget = GetEffectiveTarget();
         if (effectiveTarget.Count == 0)
             return null;
-        int index = Random.Range(0, effectiveTarget.Count);//Ëæ»úÉú³ÉË÷Òı
-        Transform nextTarget = effectiveTarget[index];//È·¶¨Ä¿±ê
-        alreadyUsed.Add(nextTarget);//ÖÃÈëÒÑÑ¡ÁĞ±í£¬Ä¿±êÑ­»·ÍêÒ»±éÇ°²»»áÖØ¸´Ñ¡Ôñ
+        int index = Random.Range(0, effectiveTarget.Count);//éšæœºç”Ÿæˆç´¢å¼•
+        Transform nextTarget = effectiveTarget[index];//ç¡®å®šç›®æ ‡
+        alreadyUsed.Add(nextTarget);//ç½®å…¥å·²é€‰åˆ—è¡¨ï¼Œç›®æ ‡å¾ªç¯å®Œä¸€éå‰ä¸ä¼šé‡å¤é€‰æ‹©
         return nextTarget;
     }
-    private List<Transform> GetEffectiveTarget()//µÃµ½ËùÓĞÓĞĞ§´æ»îÄ¿±ê
+    private List<Transform> GetEffectiveTarget()//å¾—åˆ°æ‰€æœ‰æœ‰æ•ˆå­˜æ´»ç›®æ ‡
     {
         List<Transform> effectiveTargets = new List<Transform>();
         List<Transform> aliveTarget = GetAliveTarget();
         foreach (var enemy in aliveTarget)
         {
-            if (enemy != null && alreadyUsed.Contains(enemy.transform) == false)//ContainsÅĞ¶ÏÊÇ·ñ°üº¬£¬·µ»ØboolÖµ
+            if (enemy != null && alreadyUsed.Contains(enemy.transform) == false)//Containsåˆ¤æ–­æ˜¯å¦åŒ…å«ï¼Œè¿”å›boolå€¼
                 effectiveTargets.Add(enemy.transform);
         }
         //if (effectiveTargets.Count > 0)
@@ -104,7 +104,7 @@ public class SkillObject_BounceSword : SkillObject_Sword
         }
         return effectiveTargets;
     }
-    private List<Transform> GetAliveTarget()//µÃµ½ËùÓĞ´æ»îÄ¿±ê
+    private List<Transform> GetAliveTarget()//å¾—åˆ°æ‰€æœ‰å­˜æ´»ç›®æ ‡
     {
         List<Transform> alivetarget = new List<Transform>();
         foreach (var enemy in targetEnemy)

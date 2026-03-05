@@ -1,7 +1,7 @@
 using System;
 using System.Reflection;
 
-    //»ñÈ¡Ã¶¾ÙÖµµÄÖĞÎÄÃû³Æ
+    //è·å–æšä¸¾å€¼çš„ä¸­æ–‡åç§°
 public static class CnAttributeExtensions
 {
     public static string GetChineseName(this Enum enumValue)
@@ -11,11 +11,11 @@ public static class CnAttributeExtensions
         Type type = enumValue.GetType();
         string enumName = enumValue.ToString();
 
-        // »ñÈ¡¶ÔÓ¦µÄ×Ö¶ÎĞÅÏ¢
+        // è·å–å¯¹åº”çš„å­—æ®µä¿¡æ¯
         FieldInfo field = type.GetField(enumName);
         if (field == null) return enumName;
 
-        // »ñÈ¡ cn ÌØĞÔ
+        // è·å– cn ç‰¹æ€§
         cnAttribute attribute = field.GetCustomAttribute<cnAttribute>();
         return attribute?.ChineseName ?? enumName;
     }

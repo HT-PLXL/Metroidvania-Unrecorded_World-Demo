@@ -11,9 +11,9 @@ public class Bag_Item
     public Bag_Item(ItemDataSO itemData)
     {
         this.itemData = itemData;
-        modifiers = GetEquipmentData()?.modifier;//ÔÚÅĞ¶ÏÎïÆ·ÊÇ×°±¸ºó´´½¨ĞÂĞŞÊÎ·ûÁĞ±í±£´æ´«ÈëµÄÎïÆ·µÄĞŞÊÎ·û
+        modifiers = GetEquipmentData()?.modifier;//åœ¨åˆ¤æ–­ç‰©å“æ˜¯è£…å¤‡ååˆ›å»ºæ–°ä¿®é¥°ç¬¦åˆ—è¡¨ä¿å­˜ä¼ å…¥çš„ç‰©å“çš„ä¿®é¥°ç¬¦
         itemEffect = itemData.itemEffect;
-        itemId = itemData.itemName + Guid.NewGuid();//Éú³ÉÒ»¸ö¼¸ºõ²»¿ÉÄÜÖØ¸´µÄid
+        itemId = itemData.itemName + Guid.NewGuid();//ç”Ÿæˆä¸€ä¸ªå‡ ä¹ä¸å¯èƒ½é‡å¤çš„id
     }
     public void AddModifiers(Entity_Stats playerStats)
     {
@@ -28,14 +28,14 @@ public class Bag_Item
         foreach (var modifier in modifiers)
         {
             Stat statNeedModify = playerStats.GetStatByType(modifier.statType);
-            statNeedModify.RemoveModifier(itemId);//Ê¹ÓÃ²»ÖØ¸´µÄid×÷ÎªÀ´Ô´È¥ÒÆ³ıĞŞÊÎ·û£¬È·±£×¼È·
+            statNeedModify.RemoveModifier(itemId);//ä½¿ç”¨ä¸é‡å¤çš„idä½œä¸ºæ¥æºå»ç§»é™¤ä¿®é¥°ç¬¦ï¼Œç¡®ä¿å‡†ç¡®
         }
     }
-    public void AddItemEffect(Player player) => itemEffect?.Subscribe(player);//×°±¸ĞÂ×°±¸Ê±¶©ÔÄÎïÆ·Ğ§¹û£¨Èç¹ûÓĞ£©
-    public void RemoveItemEffect()=>itemEffect?.Unsubscribe();//Ğ¶ÏÂĞÂ×°±¸Ê±¶©ÔÄÎïÆ·Ğ§¹û£¨Èç¹ûÓĞ£©
+    public void AddItemEffect(Player player) => itemEffect?.Subscribe(player);//è£…å¤‡æ–°è£…å¤‡æ—¶è®¢é˜…ç‰©å“æ•ˆæœï¼ˆå¦‚æœæœ‰ï¼‰
+    public void RemoveItemEffect()=>itemEffect?.Unsubscribe();//å¸ä¸‹æ–°è£…å¤‡æ—¶è®¢é˜…ç‰©å“æ•ˆæœï¼ˆå¦‚æœæœ‰ï¼‰
     private EquipmentDataSO GetEquipmentData()
     {
-        if (itemData is EquipmentDataSO equipment)//¼ì²éitemDataÊÇ·ñÊÇEquipmentDataSOÀàĞÍ£¬Èç¹ûÊÇ¸³Öµ¸øequipment
+        if (itemData is EquipmentDataSO equipment)//æ£€æŸ¥itemDataæ˜¯å¦æ˜¯EquipmentDataSOç±»å‹ï¼Œå¦‚æœæ˜¯èµ‹å€¼ç»™equipment
             return equipment;
         return null;
     }

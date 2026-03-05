@@ -1,5 +1,5 @@
 using UnityEngine;
-//此类用于汇总数据，方便调用
+//姝ょ被鐢ㄤ簬姹囨�绘暟鎹紝鏂逛究璋冪敤
 [SerializeField]
 public class AttackData
 {
@@ -13,6 +13,6 @@ public class AttackData
     {
         physicalDamage = entityStats.GetPhysicalDamage(out isCrit, damageScale.phyiscal);
         elementalDamage = entityStats.GetElementalDamage(out element,damageScale.elemental);
-        effectData = new ElementEffectData(entityStats,damageScale);//传入自身的各种攻击数据，基础攻击比例
+        effectData = new ElementEffectData(entityStats,damageScale);//浼犲叆鑷韩鐨勫悇绉嶆敾鍑绘暟鎹紝鍩虹鏀诲嚮姣斾緥
     }
 }

@@ -9,7 +9,7 @@ public class UI_PlayerStats : MonoBehaviour
     {
         ui_StatSlots = GetComponentsInChildren<UI_StatSlot>();
         bag = FindFirstObjectByType<Bag_Player>();
-        bag.OnBagChange += UpdateStatsUI;//装备或卸下装备时顺带更新数据
+        bag.OnBagChange += UpdateStatsUI;//瑁呭鎴栧嵏涓嬭澶囨椂椤哄甫鏇存柊鏁版嵁
     }
     private void Start()
     {

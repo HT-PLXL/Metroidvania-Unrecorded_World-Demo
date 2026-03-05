@@ -2,10 +2,10 @@ using UnityEngine;
 
 public class SkillObject_Base : MonoBehaviour
 {
-    [SerializeField][cn("¼¼ÄÜ´ò»÷ÌØĞ§")]private GameObject onHitVfxBySkill;
-    [SerializeField][cn("µĞÈË")] protected LayerMask whoIsEneny;
-    [SerializeField][cn("¼ì²âÔ²ĞÄ")] protected Transform targetCheck;
-    [SerializeField][cn("¼ì²â·¶Î§")] protected float checkRadius = 1;
+    [SerializeField][cn("æŠ€èƒ½æ‰“å‡»ç‰¹æ•ˆ")]private GameObject onHitVfxBySkill;
+    [SerializeField][cn("æ•Œäºº")] protected LayerMask whoIsEneny;
+    [SerializeField][cn("æ£€æµ‹åœ†å¿ƒ")] protected Transform targetCheck;
+    [SerializeField][cn("æ£€æµ‹èŒƒå›´")] protected float checkRadius = 1;
     protected Animator anim;
     protected Rigidbody2D rb;
     protected Entity_Stats playerStats;
@@ -18,7 +18,7 @@ public class SkillObject_Base : MonoBehaviour
         anim = GetComponentInChildren<Animator>();
         rb = GetComponent<Rigidbody2D>();
     }
-    protected void DamageEnemyInRadius(Transform transform, float radius)//ÉËº¦·¶Î§ÄÚËùÓĞµĞÈË
+    protected void DamageEnemyInRadius(Transform transform, float radius)//ä¼¤å®³èŒƒå›´å†…æ‰€æœ‰æ•Œäºº
     {
         foreach (var target in AroundEnemy(transform, radius))
         {
@@ -28,25 +28,25 @@ public class SkillObject_Base : MonoBehaviour
             AttackData attackData = playerStats.GetAttackData(damageScale);
             float physicalDamage = attackData.physicalDamage;
             float elementalDamage = attackData.elementalDamage;
-            targetGotHit =  damageTarget.TakeDamage(physicalDamage, elementalDamage, attackData.element, transform);//Ôì³ÉÉËº¦£¬»ùÓÚÊ¹ÓÃÕßµÄÔªËØÉËº¦
+            targetGotHit =  damageTarget.TakeDamage(physicalDamage, elementalDamage, attackData.element, transform);//é€ æˆä¼¤å®³ï¼ŒåŸºäºä½¿ç”¨è€…çš„å…ƒç´ ä¼¤å®³
             if (attackData.element != ElementType.None)
-                target.GetComponent<Entity_StatusHandler>().ApplyStatusEffect(attackData.element, attackData.effectData); //effectData°üº¬¼¼ÄÜÉËº¦ºÍÊ±¼äµÈÊı¾İ
+                target.GetComponent<Entity_StatusHandler>().ApplyStatusEffect(attackData.element, attackData.effectData); //effectDataåŒ…å«æŠ€èƒ½ä¼¤å®³å’Œæ—¶é—´ç­‰æ•°æ®
             if (targetGotHit)
             {
                 lastTarget= target.transform;
                 Instantiate(onHitVfxBySkill, target.transform.position, Quaternion.identity);
             }
-            elementType = attackData.element;//´æ´¢Ò»·İÔªËØÖÖÀà¸ø×ÓÀàÓÃ
+            elementType = attackData.element;//å­˜å‚¨ä¸€ä»½å…ƒç´ ç§ç±»ç»™å­ç±»ç”¨
         }
     }
-    protected Transform SearchClosestTarget()//Ñ°ÕÒ·¶Î§ÄÚ×î½üÄ¿±ê
+    protected Transform SearchClosestTarget()//å¯»æ‰¾èŒƒå›´å†…æœ€è¿‘ç›®æ ‡
     {
         Transform target = null;
-        float closestDistance = Mathf.Infinity;//Éè¶¨×î½ü¾àÀë
+        float closestDistance = Mathf.Infinity;//è®¾å®šæœ€è¿‘è·ç¦»
         foreach (var enemy in AroundEnemy(transform, 10))
         {
             float distance = Vector2.Distance(transform.position, enemy.transform.position);
-            if (distance < closestDistance)//ÔÚ°ë¾¶10ÄÚËÑË÷£¬Ä¿±ê¾àÀëĞ¡ÓÚ×î½ü¾àÀëÔò³ÉÎªĞÂµÄ×î½ü¾àÀë
+            if (distance < closestDistance)//åœ¨åŠå¾„10å†…æœç´¢ï¼Œç›®æ ‡è·ç¦»å°äºæœ€è¿‘è·ç¦»åˆ™æˆä¸ºæ–°çš„æœ€è¿‘è·ç¦»
             {
                 target = enemy.transform;
                 closestDistance = distance;
@@ -54,11 +54,11 @@ public class SkillObject_Base : MonoBehaviour
         }
         return target;
     }
-    protected Collider2D[] AroundEnemy(Transform transform, float radius)//ËÑÑ°Ò»¶¨·¶Î§Ä¿±ê
+    protected Collider2D[] AroundEnemy(Transform transform, float radius)//æœå¯»ä¸€å®šèŒƒå›´ç›®æ ‡
     {
-        return Physics2D.OverlapCircleAll(transform.position, radius, whoIsEneny);//¼ì²âÄ¿±ê
+        return Physics2D.OverlapCircleAll(transform.position, radius, whoIsEneny);//æ£€æµ‹ç›®æ ‡
     }
-    protected virtual void OnDrawGizmos()//»­Ïß
+    protected virtual void OnDrawGizmos()//ç”»çº¿
     {
         if (targetCheck == null)
             targetCheck = transform;

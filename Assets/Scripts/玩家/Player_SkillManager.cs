@@ -1,7 +1,7 @@
 using UnityEngine;
 
-//Õâ¸ö½Å±¾ÓÃÓÚ¹ÜÀíÍæ¼ÒµÄ¼¼ÄÜ£¬Ğ´ĞÂ¼¼ÄÜÖÖÀàĞèÒªÀ´ÕâÀï¸üĞÂ
-//´´½¨ĞÂ¼¼ÄÜÖÖÀàµÄÊµÀı£¬»ñÈ¡×é¼ş£¬¸üĞÂÏÂ·½·½·¨-¸ù¾İ¼¼ÄÜÖÖÀà·µ»ØÊµÀıÓÃÓÚµ÷ÓÃ
+//è¿™ä¸ªè„šæœ¬ç”¨äºç®¡ç†ç©å®¶çš„æŠ€èƒ½ï¼Œå†™æ–°æŠ€èƒ½ç§ç±»éœ€è¦æ¥è¿™é‡Œæ›´æ–°
+//åˆ›å»ºæ–°æŠ€èƒ½ç§ç±»çš„å®ä¾‹ï¼Œè·å–ç»„ä»¶ï¼Œæ›´æ–°ä¸‹æ–¹æ–¹æ³•-æ ¹æ®æŠ€èƒ½ç§ç±»è¿”å›å®ä¾‹ç”¨äºè°ƒç”¨
 public class Player_SkillManager : MonoBehaviour
 {
     public Skill_Dash dash { get; private set; }
@@ -29,15 +29,15 @@ public class Player_SkillManager : MonoBehaviour
     {
         switch (type)
         {
-            case SkillType.³å´Ì: return dash;//·µ»ØÊµÀı£¨¼¼ÄÜ£©
-            case SkillType.Ä§ÄÜ¾§Ìå: return shard;
-            case SkillType.ÖÀ½£: return throwSword;
-            case SkillType.¿ËÂ¡: return clone;
-            case SkillType.ÁìÓò:return domain;
+            case SkillType.å†²åˆº: return dash;//è¿”å›å®ä¾‹ï¼ˆæŠ€èƒ½ï¼‰
+            case SkillType.é­”èƒ½æ™¶ä½“: return shard;
+            case SkillType.æ·å‰‘: return throwSword;
+            case SkillType.å…‹éš†: return clone;
+            case SkillType.é¢†åŸŸ:return domain;
 
 
             default:
-                Debug.Log($"ÉĞÎ´ÊµÏÖµÄ¼¼ÄÜ{type}");
+                Debug.Log($"å°šæœªå®ç°çš„æŠ€èƒ½{type}");
                 return null;
         }
     }

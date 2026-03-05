@@ -1,16 +1,16 @@
 using System;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "ÓÎÏ·ÉèÖÃ/ÎïÆ·Êı¾İ/×°±¸", fileName = "×°±¸-")]
+[CreateAssetMenu(menuName = "æ¸¸æˆè®¾ç½®/ç‰©å“æ•°æ®/è£…å¤‡", fileName = "è£…å¤‡-")]
 
 public class EquipmentDataSO : ItemDataSO
 {
-    [Header("ÎïÆ·ĞŞ¸Ä")]
-    public ItemModifier[] modifier;//ĞèÒªĞŞ¸ÄµÄÊôĞÔ
+    [Header("ç‰©å“ä¿®æ”¹")]
+    public ItemModifier[] modifier;//éœ€è¦ä¿®æ”¹çš„å±æ€§
 }
 
 [Serializable]
-public class ItemModifier//ĞÂÀà
+public class ItemModifier//æ–°ç±»
 { 
     public StatType statType;
     public float value;

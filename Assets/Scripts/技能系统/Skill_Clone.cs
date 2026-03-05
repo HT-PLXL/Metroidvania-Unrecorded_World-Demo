@@ -2,24 +2,24 @@ using UnityEngine;
 
 public class Skill_Clone : Skill_Base
 {
-    [SerializeField][cn("¿ËÂ¡ÌåÔ¤ÖÆÌå")] private GameObject clonePrefab;
-    [SerializeField][cn("¿ËÂ¡Ìå´æÔÚÊ±¼ä")] private float cloneDuration;
-    [Header("¾Ş³İöèÉı¼¶")]
-    [SerializeField][cn("×î´ó¹¥»÷´ÎÊı")][Range(0,3)]private int maxAttackCounts = 3;
-    [SerializeField][cn("¿ËÂ¡¼¸ÂÊ")] private float CloneChance = 0.33f;
-    [Header("Áé»êÁ£×Ó")]
-    [SerializeField][cn("µĞÈËÉËº¦×ªÖÎÁÆÁ¿°Ù·Ö±È")] private float damagePercentHeal = 0.3f;
-    [SerializeField][cn("¼õÉÙÀäÈ´Ê±¼ä(Ãë)")] private float cooldownReduceSeconds;
+    [SerializeField][cn("å…‹éš†ä½“é¢„åˆ¶ä½“")] private GameObject clonePrefab;
+    [SerializeField][cn("å…‹éš†ä½“å­˜åœ¨æ—¶é—´")] private float cloneDuration;
+    [Header("å·¨é½¿é²¨å‡çº§")]
+    [SerializeField][cn("æœ€å¤§æ”»å‡»æ¬¡æ•°")][Range(0,3)]private int maxAttackCounts = 3;
+    [SerializeField][cn("å…‹éš†å‡ ç‡")] private float CloneChance = 0.33f;
+    [Header("çµé­‚ç²’å­")]
+    [SerializeField][cn("æ•Œäººä¼¤å®³è½¬æ²»ç–—é‡ç™¾åˆ†æ¯”")] private float damagePercentHeal = 0.3f;
+    [SerializeField][cn("å‡å°‘å†·å´æ—¶é—´(ç§’)")] private float cooldownReduceSeconds;
 
-    public override void TryUseSkill()//°´¼üÖ´ĞĞ
+    public override void TryUseSkill()//æŒ‰é”®æ‰§è¡Œ
     {
         if (CanUseSkill() == false)
             return;
         CreateClone();
     }
-    public void CreateClone(Vector3? targetPosition = null)//Éú³ÉÊµÌå²¢½«´Ë´¦²ÎÊı´«ÈëÊµÌå½Å±¾£¬vector3? ÔÊĞíÎª¿ÕµÄ3Î¬ÏòÁ¿£¬Éè²»´«²ÎÊ±Ä¬ÈÏÖµÎªnull
+    public void CreateClone(Vector3? targetPosition = null)//ç”Ÿæˆå®ä½“å¹¶å°†æ­¤å¤„å‚æ•°ä¼ å…¥å®ä½“è„šæœ¬ï¼Œvector3? å…è®¸ä¸ºç©ºçš„3ç»´å‘é‡ï¼Œè®¾ä¸ä¼ å‚æ—¶é»˜è®¤å€¼ä¸ºnull
     {
-        Vector3 position = targetPosition ?? transform.position;//Ñ¡ÔñÉú³ÉÎ»ÖÃ£¬??¿ÕºÏ²¢ÔËËã·û£¬²»Îª¿ÕÔòÊ¹ÓÃ1Öµ£¬¿ÕÔòÊ¹ÓÃ2Öµ
+        Vector3 position = targetPosition ?? transform.position;//é€‰æ‹©ç”Ÿæˆä½ç½®ï¼Œ??ç©ºåˆå¹¶è¿ç®—ç¬¦ï¼Œä¸ä¸ºç©ºåˆ™ä½¿ç”¨1å€¼ï¼Œç©ºåˆ™ä½¿ç”¨2å€¼
         GameObject clone = Instantiate(clonePrefab, position, Quaternion.identity);
         clone.GetComponent<SkillObject_Clone>().SetUpClone(this);
     }
@@ -31,29 +31,29 @@ public class Skill_Clone : Skill_Base
     }
     public float GetcooldownReduceSeconds()
     {
-        if (upgradeType != SkillUpgradeType.Ä§ÄÜÅìÅÈ)
+        if (upgradeType != SkillUpgradeType.é­”èƒ½æ¾æ¹ƒ)
             return 0;
         return cooldownReduceSeconds;
     }
     public bool CanRemoveDebuff()
     {
-        return upgradeType == SkillUpgradeType.ÉñÊ¥¼Ó»¤;
+        return upgradeType == SkillUpgradeType.ç¥åœ£åŠ æŠ¤;
     }
     public bool ShouldUseTrail()
     {
-        return upgradeType == SkillUpgradeType.±¯ÃõÖ®Áé || upgradeType == SkillUpgradeType.ÉñÊ¥¼Ó»¤ || upgradeType == SkillUpgradeType.Ä§ÄÜÅìÅÈ;
+        return upgradeType == SkillUpgradeType.æ‚²æ‚¯ä¹‹çµ || upgradeType == SkillUpgradeType.ç¥åœ£åŠ æŠ¤ || upgradeType == SkillUpgradeType.é­”èƒ½æ¾æ¹ƒ;
     }
     public float GetCloneChance()
     {
-        if (upgradeType != SkillUpgradeType.ÓÀÉúÒâÖ¾)
+        if (upgradeType != SkillUpgradeType.æ°¸ç”Ÿæ„å¿—)
             return 0;
         return CloneChance;
     }
     public int GetMaxAttackCounts()
     {
-        if (upgradeType == SkillUpgradeType.Í¶Ó°Ò§ÈËÀ² || upgradeType == SkillUpgradeType.ÓÀÉúÒâÖ¾)
+        if (upgradeType == SkillUpgradeType.æŠ•å½±å’¬äººå•¦ || upgradeType == SkillUpgradeType.æ°¸ç”Ÿæ„å¿—)
             return 1;
-        if (upgradeType == SkillUpgradeType.¾Ş³İöè)
+        if (upgradeType == SkillUpgradeType.å·¨é½¿é²¨)
             return maxAttackCounts;
         return 0;
     }

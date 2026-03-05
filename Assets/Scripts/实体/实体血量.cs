@@ -17,7 +17,7 @@ public class EntityHp : MonoBehaviour, IDamageable
     [Header("血量回复")]
     [SerializeField] private float regenInterval = 1;
     [SerializeField] private bool canRegenHp = true;
-    [Header("受击击退")]
+    [Header("StartknockBackCo")]
     [SerializeField] private float 击退硬直时间 = .2f;
     [SerializeField] private Vector2 击退力度 = new Vector2(1.5f, 2f);
     [Header("强力攻击与击退")]
@@ -131,7 +131,7 @@ public class EntityHp : MonoBehaviour, IDamageable
     {
         float 持续时间 = 计算持续时间(finalDamage);
         Vector2 击退 = 计算受击方向与力度(finalDamage, 伤害来源);
-        entity?.受击击退(击退, 持续时间);
+        entity?.StartknockBackCo(击退, 持续时间);
     }
     private Vector2 计算受击方向与力度(float damage, Transform 伤害来源)
     {

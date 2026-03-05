@@ -3,11 +3,11 @@ using UnityEngine;
 
 public class Entity_Combat : MonoBehaviour
 {
-    public event Action<float> OnTakingPhysicalDamage;//´¥·¢ÊÂ¼şÊ±Ë³´ø´«ÈëÒ»¸öÖµ
+    public event Action<float> OnTakingPhysicalDamage;//è§¦å‘äº‹ä»¶æ—¶é¡ºå¸¦ä¼ å…¥ä¸€ä¸ªå€¼
     private Entity_VFX vfx;
-    private Entity_Stats stats;//ÉùÃ÷stats¼´¿ÉÊ¹ÓÃEntity_StatsÖĞGetAttackData()
+    private Entity_Stats stats;//å£°æ˜statså³å¯ä½¿ç”¨Entity_Statsä¸­GetAttackData()
     [HideInInspector] public DamageScaleFactor damageScale;
-    [Header("Ä¿±ê¼ì²â")]
+    [Header("ç›®æ ‡æ£€æµ‹")]
     [SerializeField] private Transform targetCheck;
     [SerializeField] private float targetCheckRadius = 1;
     [SerializeField] private LayerMask whatIsTarget;
@@ -17,9 +17,9 @@ public class Entity_Combat : MonoBehaviour
         stats = GetComponent<Entity_Stats>();
 
     }
-    public void PerformAttack()//Ö´ĞĞ¹¥»÷
+    public void PerformAttack()//æ‰§è¡Œæ”»å‡»
     {
-        foreach (var target in GetDetectColliders())//¶ÔÊÜ»÷Ä¿±êÖ´ĞĞ
+        foreach (var target in GetDetectColliders())//å¯¹å—å‡»ç›®æ ‡æ‰§è¡Œ
         {
             IDamageable damageTarget = target.GetComponent<IDamageable>();
             if (damageTarget == null)
@@ -29,20 +29,20 @@ public class Entity_Combat : MonoBehaviour
             float physicalDamage = attackData.physicalDamage;
             float elementalDamage = attackData.elementalDamage;
             //if (element != ElementType.None)
-            //    target.GetComponent<Entity_StatusHandler>().ApplyStatusEffect(attackData.element, attackData.effectData);//Ê¹ÓÃ¹¥»÷·½µÄÊı¾İÔÚÊÜ»÷·½Ó¦ÓÃÉËº¦ÓëĞ§¹û
-            //ÔİÊ±²»ÈÃÆÕ¹¥Ê¹ÓÃÔªËØÉËº¦ÒÔ¼°ÔªËØ¸½×ÅÌØĞ§
-            bool targetGotHit = damageTarget.TakeDamage(physicalDamage, elementalDamage, ElementType.None, transform);//ÔİÊ±²»ÈÃÆÕ¹¥Ê¹ÓÃÔªËØÉËº¦£¬´Ë´¦´«ÈëElementType.None
+            //    target.GetComponent<Entity_StatusHandler>().ApplyStatusEffect(attackData.element, attackData.effectData);//ä½¿ç”¨æ”»å‡»æ–¹çš„æ•°æ®åœ¨å—å‡»æ–¹åº”ç”¨ä¼¤å®³ä¸æ•ˆæœ
+            //æš‚æ—¶ä¸è®©æ™®æ”»ä½¿ç”¨å…ƒç´ ä¼¤å®³ä»¥åŠå…ƒç´ é™„ç€ç‰¹æ•ˆ
+            bool targetGotHit = damageTarget.TakeDamage(physicalDamage, elementalDamage, ElementType.None, transform);//æš‚æ—¶ä¸è®©æ™®æ”»ä½¿ç”¨å…ƒç´ ä¼¤å®³ï¼Œæ­¤å¤„ä¼ å…¥ElementType.None
             if (targetGotHit)
             {
-                OnTakingPhysicalDamage?.Invoke(physicalDamage);//´¥·¢ÊÂ¼şÊ±Ë³´ø´«ÈëÎïÀíÉËº¦
-                vfx.CreateHitVfx(target.transform, attackData.isCrit, attackData.element);//´´½¨´ò»÷ÌØĞ§Á£×Ó
+                OnTakingPhysicalDamage?.Invoke(physicalDamage);//è§¦å‘äº‹ä»¶æ—¶é¡ºå¸¦ä¼ å…¥ç‰©ç†ä¼¤å®³
+                vfx.CreateHitVfx(target.transform, attackData.isCrit, attackData.element);//åˆ›å»ºæ‰“å‡»ç‰¹æ•ˆç²’å­
             }
         }
     }
-    protected Collider2D[] GetDetectColliders()//»ñµÃ¼ì²âµ½µÄÅö×²Ìå
+    protected Collider2D[] GetDetectColliders()//è·å¾—æ£€æµ‹åˆ°çš„ç¢°æ’ä½“
     {
         return Physics2D.OverlapCircleAll(targetCheck.position, targetCheckRadius, whatIsTarget);
-        //OverlapCircleAll´æÔÚ¿ÉÄÜµÄĞÔÄÜÎÊÌâ£¬ºóĞøÔÙ¿´Ğè²»ĞèÒªÓÅ»¯°É¡£
+        //OverlapCircleAllå­˜åœ¨å¯èƒ½çš„æ€§èƒ½é—®é¢˜ï¼Œåç»­å†çœ‹éœ€ä¸éœ€è¦ä¼˜åŒ–å§ã€‚
     }
     private void OnDrawGizmos()
     {

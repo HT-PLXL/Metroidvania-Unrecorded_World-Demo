@@ -198,6 +198,15 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""交互"",
+                    ""type"": ""Button"",
+                    ""id"": ""ca491b9f-b4a6-4921-b726-697c57b02a31"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -314,7 +323,7 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""b7349bff-18b1-4605-afa5-094b76fc0509"",
-                    ""path"": ""<Keyboard>/f"",
+                    ""path"": ""<Keyboard>/e"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Keyboard & Mouse"",
@@ -376,6 +385,17 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
                     ""action"": ""开关角色UI"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""43fb13cc-796f-4432-ad64-c960b34b88c4"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard & Mouse"",
+                    ""action"": ""交互"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -413,6 +433,7 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
         m_Player_鼠标 = m_Player.FindAction("鼠标", throwIfNotFound: true);
         m_Player_终极技能 = m_Player.FindAction("终极技能", throwIfNotFound: true);
         m_Player_开关角色UI = m_Player.FindAction("开关角色UI", throwIfNotFound: true);
+        m_Player_交互 = m_Player.FindAction("交互", throwIfNotFound: true);
     }
 
     ~@PlayerInputSet()
@@ -505,6 +526,7 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_鼠标;
     private readonly InputAction m_Player_终极技能;
     private readonly InputAction m_Player_开关角色UI;
+    private readonly InputAction m_Player_交互;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -564,6 +586,10 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Player/开关角色UI".
         /// </summary>
         public InputAction @开关角色UI => m_Wrapper.m_Player_开关角色UI;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/交互".
+        /// </summary>
+        public InputAction @交互 => m_Wrapper.m_Player_交互;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -626,6 +652,9 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
             @开关角色UI.started += instance.On开关角色UI;
             @开关角色UI.performed += instance.On开关角色UI;
             @开关角色UI.canceled += instance.On开关角色UI;
+            @交互.started += instance.On交互;
+            @交互.performed += instance.On交互;
+            @交互.canceled += instance.On交互;
         }
 
         /// <summary>
@@ -673,6 +702,9 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
             @开关角色UI.started -= instance.On开关角色UI;
             @开关角色UI.performed -= instance.On开关角色UI;
             @开关角色UI.canceled -= instance.On开关角色UI;
+            @交互.started -= instance.On交互;
+            @交互.performed -= instance.On交互;
+            @交互.canceled -= instance.On交互;
         }
 
         /// <summary>
@@ -810,5 +842,12 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void On开关角色UI(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "交互" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void On交互(InputAction.CallbackContext context);
     }
 }

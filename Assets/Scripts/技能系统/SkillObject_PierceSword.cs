@@ -8,9 +8,9 @@ public class SkillObject_PierceSword : SkillObject_Sword
         base.SetUpSword(throwSword, direction);
         pierceNumber = throwSword.canPierceNumber;
     }
-    protected override void OnTriggerEnter2D(Collider2D collider)//飞行时穿透与伤害判定
+    protected override void OnTriggerEnter2D(Collider2D collider)//椋炶鏃剁┛閫忎笌浼ゅ鍒ゅ畾
     {
-        bool HitGround = collider.gameObject.layer == LayerMask.NameToLayer("地面");
+        bool HitGround = collider.gameObject.layer == LayerMask.NameToLayer("鍦伴潰");
         if(pierceNumber <= 0|| HitGround)
         {
             DamageEnemyInRadius(transform, checkRadius);

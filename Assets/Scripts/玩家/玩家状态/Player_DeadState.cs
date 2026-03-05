@@ -9,6 +9,6 @@ public class Player_DeadState : PlayerState
     {
         base.Enter();
         input.Disable();
-        rb.simulated = false;//ÒÆ³ıÎïÀíÄ£Äâ£¬»áÒ»²¢È¥µôÅö×²ÌåµÈ
+        rb.simulated = false;//ç§»é™¤ç‰©ç†æ¨¡æ‹Ÿï¼Œä¼šä¸€å¹¶å»æ‰ç¢°æ’ä½“ç­‰
     }
 }

@@ -8,7 +8,7 @@ public class Player_AnimationTrigger : Entity_AnimationTrigger
         base.Awake();
         player = GetComponentInParent<Player>();
     }
-    private void ThrowSword()//ÖÀ½£
+    private void ThrowSword()//æŽ·å‰‘
     {
         player.skillManager.throwSword.ThrowSword();
     }

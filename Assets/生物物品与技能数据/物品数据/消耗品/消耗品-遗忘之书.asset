@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: "\u6D88\u8017\u54C1-\u9057\u5FD8\u4E4B\u4E66"
   m_EditorClassIdentifier: 
   itemName: "\u9057\u5FD8\u4E4B\u4E66"
-  icon: {fileID: 258022059, guid: d8922fa682394c34387c8e6ae7c48e68, type: 3}
+  icon: {fileID: 3653258361786527596, guid: 6df671555535cce438f5502f352eba42, type: 3}
   itemType: 4
   maxStackCount: 1
   itemEffect: {fileID: 11400000, guid: fb682be911c12b64fbaa9878e6fc8bb5, type: 2}

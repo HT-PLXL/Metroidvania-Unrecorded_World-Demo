@@ -5,26 +5,26 @@ using UnityEngine;
 public class FileDataHandler
 {
     private string fullPath;
-    private bool encryptData;//¼ÓÃÜÊı¾İ
+    private bool encryptData;//åŠ å¯†æ•°æ®
     private string codeWord = "hjh1214179741";
     public FileDataHandler(string dataPath, string dataFileName, bool encryptData)
     {
-        fullPath = Path.Combine(dataPath, dataFileName);//Éú³ÉÂ·¾¶
+        fullPath = Path.Combine(dataPath, dataFileName);//ç”Ÿæˆè·¯å¾„
         this.encryptData = encryptData;
     }
     public void SaveData(GameData gameData)
     {
         try
         {
-            Directory.CreateDirectory(Path.GetDirectoryName(fullPath)); //Èç¹ûÄ¿Â¼²»´æÔÚÔò´´½¨Ä¿Â¼
-            string dataNeedSava = JsonUtility.ToJson(gameData, true);//×ª»»ÓÎÏ·Êı¾İÎªjsonÎÄ¼ş
+            Directory.CreateDirectory(Path.GetDirectoryName(fullPath)); //å¦‚æœç›®å½•ä¸å­˜åœ¨åˆ™åˆ›å»ºç›®å½•
+            string dataNeedSava = JsonUtility.ToJson(gameData, true);//è½¬æ¢æ¸¸æˆæ•°æ®ä¸ºjsonæ–‡ä»¶
 
             if(encryptData)
-                dataNeedSava = EncryptDecrypt(dataNeedSava);//¼ÓÃÜ
+                dataNeedSava = EncryptDecrypt(dataNeedSava);//åŠ å¯†
 
-            using (FileStream stream = new FileStream(fullPath, FileMode.Create))//´ò¿ª»ò´´½¨ÎÄ¼ş
+            using (FileStream stream = new FileStream(fullPath, FileMode.Create))//æ‰“å¼€æˆ–åˆ›å»ºæ–‡ä»¶
             {
-                using (StreamWriter write = new StreamWriter(stream))//½«jsonĞÅÏ¢Ğ´ÈëÎÄ¼ş
+                using (StreamWriter write = new StreamWriter(stream))//å°†jsonä¿¡æ¯å†™å…¥æ–‡ä»¶
                 {
                     write.Write(dataNeedSava);
                 }
@@ -32,7 +32,7 @@ public class FileDataHandler
         }
         catch (Exception e)
         {
-            Debug.LogError("±£´æÊı¾İÖÁÎÄ¼şÊ±³ö´í" + fullPath + "\n" + e);
+            Debug.LogError("ä¿å­˜æ•°æ®è‡³æ–‡ä»¶æ—¶å‡ºé”™" + fullPath + "\n" + e);
         }
     }
 
@@ -40,21 +40,21 @@ public class FileDataHandler
     {
         GameData loadData = null;
 
-        if (File.Exists(fullPath))//²éÕÒÎÄ¼ş
+        if (File.Exists(fullPath))//æŸ¥æ‰¾æ–‡ä»¶
         {
             try
             {
                 string dataToLoad = "";
-                using (FileStream stream = new FileStream(fullPath, FileMode.Open))//´ò¿ªËü
+                using (FileStream stream = new FileStream(fullPath, FileMode.Open))//æ‰“å¼€å®ƒ
                 {
                     using (StreamReader reader = new StreamReader(stream))
-                        dataToLoad = reader.ReadToEnd();//¶ÁÈ¡ĞÅÏ¢
+                        dataToLoad = reader.ReadToEnd();//è¯»å–ä¿¡æ¯
                 }
 
                 if (encryptData)
-                    dataToLoad = EncryptDecrypt(dataToLoad);//½âÃÜ
+                    dataToLoad = EncryptDecrypt(dataToLoad);//è§£å¯†
 
-                loadData = JsonUtility.FromJson<GameData>(dataToLoad);//×ª»¯»ØÓÎÏ·Êı¾İ
+                loadData = JsonUtility.FromJson<GameData>(dataToLoad);//è½¬åŒ–å›æ¸¸æˆæ•°æ®
             }
             catch (Exception e)
             {
@@ -65,7 +65,7 @@ public class FileDataHandler
     }
     public void Delete()
     {
-        if (File.Exists(fullPath))//Èç¹û´æÔÚ
+        if (File.Exists(fullPath))//å¦‚æœå­˜åœ¨
             File.Delete(fullPath);
     }
 

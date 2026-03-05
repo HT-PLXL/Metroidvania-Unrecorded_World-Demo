@@ -3491,7 +3491,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 2012321987, guid: d8922fa682394c34387c8e6ae7c48e68, type: 3}
+  m_Sprite: {fileID: -1991372946, guid: d8922fa682394c34387c8e6ae7c48e68, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -10567,7 +10567,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -1967946306, guid: d8922fa682394c34387c8e6ae7c48e68, type: 3}
+  m_Sprite: {fileID: 651381140, guid: d8922fa682394c34387c8e6ae7c48e68, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -13705,7 +13705,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2faedf88b471a294c911193438ad4bb4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uiItemSlotParent: {fileID: 2660110740062788329}
+  bagSlotsParent: {fileID: 0}
   uiEquipSlotParent: {fileID: 3335147423272471962}
 --- !u!1 &3960046486638016058
 GameObject:
@@ -24346,7 +24346,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -1967946306, guid: d8922fa682394c34387c8e6ae7c48e68, type: 3}
+  m_Sprite: {fileID: 1450659570, guid: d8922fa682394c34387c8e6ae7c48e68, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -26555,7 +26555,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -262405695, guid: d8922fa682394c34387c8e6ae7c48e68, type: 3}
+  m_Sprite: {fileID: -1967946306, guid: d8922fa682394c34387c8e6ae7c48e68, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -29062,7 +29062,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 1310896174, guid: d8922fa682394c34387c8e6ae7c48e68, type: 3}
+  m_Sprite: {fileID: 1783201745, guid: d8922fa682394c34387c8e6ae7c48e68, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

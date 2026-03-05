@@ -20,30 +20,10 @@ public class UI_Tooltip : MonoBehaviour
         }
         UpdatePosition(targetRect);
     }
-    //private void UpdatePosition(RectTransform targetRect)
-    //{
-    //    float screenCenterX = Screen.width / 2f;
-    //    float screenTop = Screen.height;
-    //    float screenBottom = 0;
 
-    //    Vector2 targetPosition = targetRect.position;
-    //    targetPosition.x = targetPosition.x > screenCenterX ? targetPosition.x - offset.x : targetPosition.x + offset.x;
-
-    //    float halfHeight = rect.sizeDelta.y / 2f;//当锚点居中时：sizeDelta = 实际尺寸
-    //    float topY = targetPosition.y + halfHeight;
-    //    float bottomY = targetPosition.y - halfHeight;
-
-    //    if (topY > screenTop)
-    //        targetPosition.y = screenTop - halfHeight - offset.y;//保证面板最少距离屏幕上方 offset.y 远
-    //    else if (bottomY < screenBottom)
-    //        targetPosition.y = screenBottom + halfHeight + offset.y;
-
-    //    rect.position = targetPosition;
-    //}
     private void UpdatePosition(RectTransform targetRect)
     {
-        // 假设 Canvas 是 ScreenSpace-Overlay 模式
-        // 假设 Tooltip 的锚点和轴心点都是中心
+
         // 获取目标位置（屏幕坐标）
         Vector3 targetPos = targetRect.position;
         // 获取 Tooltip 尺寸

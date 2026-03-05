@@ -1,25 +1,25 @@
 using System.Collections;
 using UnityEngine;
-//¹ÒÔØÔÚ¼¼ÄÜÈİÆ÷ÉÏ£¬ÏÂ·½ÉùÃ÷µÄ²ÎÊıÓÃÀ´ÔÚ¼¼ÄÜÈİÆ÷ĞŞ¸Ä¶ÔÓ¦¼¼ÄÜÊµÌå½Å±¾ÉùÃ÷µÄ²ÎÊıµÄÖµ
+//æŒ‚è½½åœ¨æŠ€èƒ½å®¹å™¨ä¸Šï¼Œä¸‹æ–¹å£°æ˜çš„å‚æ•°ç”¨æ¥åœ¨æŠ€èƒ½å®¹å™¨ä¿®æ”¹å¯¹åº”æŠ€èƒ½å®ä½“è„šæœ¬å£°æ˜çš„å‚æ•°çš„å€¼
 public class Skill_Shard : Skill_Base
 {
     private SkillObject_Shard currentShard;
     private EntityHp playerHp;
-    [SerializeField][cn("Ë®¾§Ô¤ÖÆÌå")] private GameObject shardPerfab;
-    [SerializeField][cn("Òı±¬Ê±¼ä")] private float detonateTime = 2;
-    [Header("´ÅÁ¦Éı¼¶")]
-    [SerializeField][cn("·ÉĞĞËÙ¶È")] private float shardSpeed = 7;
+    [SerializeField][cn("æ°´æ™¶é¢„åˆ¶ä½“")] private GameObject shardPerfab;
+    [SerializeField][cn("å¼•çˆ†æ—¶é—´")] private float detonateTime = 2;
+    [Header("ç£åŠ›å‡çº§")]
+    [SerializeField][cn("é£è¡Œé€Ÿåº¦")] private float shardSpeed = 7;
 
-    [Header("³äÄÜÉı¼¶")]
-    [SerializeField][cn("×î´óÊıÁ¿")] private int maxNumber = 3;
-    [SerializeField][cn("µ±Ç°¿ÉÓÃÊıÁ¿")] private int currentNumber;
-    [SerializeField][cn("ÕıÔÚ³äÄÜ£¿")] private bool isCharging;//ÕıÔÚ³äÄÜ
+    [Header("å……èƒ½å‡çº§")]
+    [SerializeField][cn("æœ€å¤§æ•°é‡")] private int maxNumber = 3;
+    [SerializeField][cn("å½“å‰å¯ç”¨æ•°é‡")] private int currentNumber;
+    [SerializeField][cn("æ­£åœ¨å……èƒ½ï¼Ÿ")] private bool isCharging;//æ­£åœ¨å……èƒ½
 
-    [Header("³¬Ê±¿ÕÉı¼¶")]
-    [SerializeField][cn("³ÖĞøÊ±¼ä")] private float shardDuration = 10;
+    [Header("è¶…æ—¶ç©ºå‡çº§")]
+    [SerializeField][cn("æŒç»­æ—¶é—´")] private float shardDuration = 10;
 
-    [Header("Ê±¿Õ»ØËİÉı¼¶")]
-    [SerializeField][cn("Ê¹ÓÃÇ°ÑªÁ¿")] private float originalHp;
+    [Header("æ—¶ç©ºå›æº¯å‡çº§")]
+    [SerializeField][cn("ä½¿ç”¨å‰è¡€é‡")] private float originalHp;
     protected override void Awake()
     {
         base.Awake();
@@ -30,15 +30,15 @@ public class Skill_Shard : Skill_Base
     {
         if (CanUseSkill() == false)
             return;
-        if (Unlocked(SkillUpgradeType.²»ÎÈ¶¨Ä§ÄÜ¾§Ìå))
+        if (Unlocked(SkillUpgradeType.ä¸ç¨³å®šé­”èƒ½æ™¶ä½“))
             HandleShard();
-        if (Unlocked(SkillUpgradeType.´ÅÁ¦Éı¼¶))
+        if (Unlocked(SkillUpgradeType.ç£åŠ›å‡çº§))
             HandleShareMoving();
-        if (Unlocked(SkillUpgradeType.³äÄÜÉı¼¶))
+        if (Unlocked(SkillUpgradeType.å……èƒ½å‡çº§))
             HandleShardSplit();
-        if (Unlocked(SkillUpgradeType.³¬Ê±¿ÕÉı¼¶))
+        if (Unlocked(SkillUpgradeType.è¶…æ—¶ç©ºå‡çº§))
             HandleShardTeleport();
-        if (Unlocked(SkillUpgradeType.Ê±¿Õ»ØËİÉı¼¶))
+        if (Unlocked(SkillUpgradeType.æ—¶ç©ºå›æº¯å‡çº§))
             HandleShardTeleportAndRegen();
     }
     private void HandleShardTeleportAndRegen()
@@ -54,7 +54,7 @@ public class Skill_Shard : Skill_Base
             setSkillOnCooldown();
         }
     }
-    private void HandleShardTeleport()//´«ËÍ
+    private void HandleShardTeleport()//ä¼ é€
     {
         if (currentShard == null)
         {
@@ -66,7 +66,7 @@ public class Skill_Shard : Skill_Base
             setSkillOnCooldown();
         }
     }
-    private void SwapPlayerAndShard()//½»»»Î»ÖÃ
+    private void SwapPlayerAndShard()//äº¤æ¢ä½ç½®
     {
         Vector3 shardPosition = currentShard.transform.position;
         Vector3 playerPosition = player.transform.position;
@@ -75,7 +75,7 @@ public class Skill_Shard : Skill_Base
         player.TeleportPlayer(shardPosition);
         currentShard.Explode();
     }
-    private void HandleShardSplit()//split·ÖÁÑ
+    private void HandleShardSplit()//splitåˆ†è£‚
     {
         if (currentNumber <= 0)
             return;
@@ -114,23 +114,23 @@ public class Skill_Shard : Skill_Base
         GameObject shard = Instantiate(shardPerfab, transform.position, Quaternion.identity);
         currentShard = shard.GetComponent<SkillObject_Shard>();
         currentShard.SetUpShard(this);
-        if (Unlocked(SkillUpgradeType.³¬Ê±¿ÕÉı¼¶) || Unlocked(SkillUpgradeType.Ê±¿Õ»ØËİÉı¼¶))
-            currentShard.OnExplode += Cooldown;//¶©ÔÄCooldown()
+        if (Unlocked(SkillUpgradeType.è¶…æ—¶ç©ºå‡çº§) || Unlocked(SkillUpgradeType.æ—¶ç©ºå›æº¯å‡çº§))
+            currentShard.OnExplode += Cooldown;//è®¢é˜…Cooldown()
     }
-    public void CreateOriginalShard(Transform target = null, bool shardCanMove = false)//²»´«ÈëshardCanMoveËµÃ÷ÊÇ´ÅÁ¦/³äÄÜÉı¼¶ĞèÒªÉú³ÉË®¾§£¬´«ÈëshardCanMove=trueÔòÊÇ¼¼ÄÜÄ§ÄÜºäÕ¨ĞèÒªÉú³ÉË®¾§
+    public void CreateOriginalShard(Transform target = null, bool shardCanMove = false)//ä¸ä¼ å…¥shardCanMoveè¯´æ˜æ˜¯ç£åŠ›/å……èƒ½å‡çº§éœ€è¦ç”Ÿæˆæ°´æ™¶ï¼Œä¼ å…¥shardCanMove=trueåˆ™æ˜¯æŠ€èƒ½é­”èƒ½è½°ç‚¸éœ€è¦ç”Ÿæˆæ°´æ™¶
     {
-        bool canMove = shardCanMove != false ? shardCanMove : Unlocked(SkillUpgradeType.´ÅÁ¦Éı¼¶) || Unlocked(SkillUpgradeType.³äÄÜÉı¼¶);
+        bool canMove = shardCanMove != false ? shardCanMove : Unlocked(SkillUpgradeType.ç£åŠ›å‡çº§) || Unlocked(SkillUpgradeType.å……èƒ½å‡çº§);
         GameObject shard = Instantiate(shardPerfab, transform.position, Quaternion.identity);
-        shard.GetComponent<SkillObject_Shard>().SetUpShard(this, detonateTime, canMove, shardSpeed,target);//µ÷ÓÃÖØÔØµÄ·½·¨
+        shard.GetComponent<SkillObject_Shard>().SetUpShard(this, detonateTime, canMove, shardSpeed,target);//è°ƒç”¨é‡è½½çš„æ–¹æ³•
     }
     public void CreateDomainShard(Transform Target)
     {
 
     }
 
-    public float GetDetonateTime()//Ñ¡Ôñ´æÔÚÊ±¼ä
+    public float GetDetonateTime()//é€‰æ‹©å­˜åœ¨æ—¶é—´
     {
-        if (Unlocked(SkillUpgradeType.³¬Ê±¿ÕÉı¼¶) || Unlocked(SkillUpgradeType.Ê±¿Õ»ØËİÉı¼¶))
+        if (Unlocked(SkillUpgradeType.è¶…æ—¶ç©ºå‡çº§) || Unlocked(SkillUpgradeType.æ—¶ç©ºå›æº¯å‡çº§))
             return shardDuration;
         return detonateTime;
     }

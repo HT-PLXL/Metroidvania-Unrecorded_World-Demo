@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-[Serializable]//ÉèÎª¿ÉĞòÁĞ»¯²ÅÄÜÔÚÆäËû½Å±¾ÓÃĞòÁĞ»¯Õ¹Ê¾ÔÚunityÃæ°åÉÏ
+[Serializable]//è®¾ä¸ºå¯åºåˆ—åŒ–æ‰èƒ½åœ¨å…¶ä»–è„šæœ¬ç”¨åºåˆ—åŒ–å±•ç¤ºåœ¨unityé¢æ¿ä¸Š
 public class ElementEffectData
 {
     public float chillDuration;

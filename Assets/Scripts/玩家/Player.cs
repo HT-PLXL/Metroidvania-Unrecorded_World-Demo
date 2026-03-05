@@ -1,20 +1,21 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Player : Entity
 {
-    public static Player Instance;//ÔÚÕû¸öÓÎÏ·Á÷³ÌÖĞ£¬ÀàÖ»ĞèÒªÒ»¸öÊµÀıÊ±²ÅÊÊºÏÉèÎª¾²Ì¬ÊµÀı
-    public static event Action ÔÚÍæ¼ÒËÀÍöÖ®Ê±;
-    //static¾²Ì¬£¬ºó½Ó·½·¨£¬Ö±½ÓÊ¹ÓÃÀàÃû+·½·¨£¨£©µ÷ÓÃ£¬µ«Ö»ÄÜ·ÃÎÊ¾²Ì¬µÄ·½·¨ºÍÊôĞÔ£¬²»ÄÜ·ÃÎÊÊµÀı³ÉÔ±
-    //static event£º¾²Ì¬ÊÂ¼ş²»ĞèÒª´´½¨ÀàµÄ¶ÔÏó¾Í¿ÉÒÔ¶©ÔÄ£¨subscribe£©»ò´¥·¢£¨invoke£©
-    //Èç¹ûÊÇstatic event£¬¿ÉÒÔÓÃ+=»òÕß-=½«Ò»¸ö·½·¨ÔÚÊÂ¼şÉÏ×¢²á/ÒÆ³ı
-    public PlayerInputSet input { get; private set; }//ÕâÀïµÄPlayerInputSetÊÇĞÂÊäÈë½Å±¾
+    public static Player Instance;//åœ¨æ•´ä¸ªæ¸¸æˆæµç¨‹ä¸­ï¼Œç±»åªéœ€è¦ä¸€ä¸ªå®ä¾‹æ—¶æ‰é€‚åˆè®¾ä¸ºé™æ€å®ä¾‹
+    public static event Action OnPlayerDeath;
+    //staticé™æ€ï¼Œåæ¥æ–¹æ³•ï¼Œç›´æ¥ä½¿ç”¨ç±»å+æ–¹æ³•ï¼ˆï¼‰è°ƒç”¨ï¼Œä½†åªèƒ½è®¿é—®é™æ€çš„æ–¹æ³•å’Œå±æ€§ï¼Œä¸èƒ½è®¿é—®å®ä¾‹æˆå‘˜
+    //static eventï¼šé™æ€äº‹ä»¶ä¸éœ€è¦åˆ›å»ºç±»çš„å¯¹è±¡å°±å¯ä»¥è®¢é˜…ï¼ˆsubscribeï¼‰æˆ–è§¦å‘ï¼ˆinvokeï¼‰
+    //å¦‚æœæ˜¯static eventï¼Œå¯ä»¥ç”¨+=æˆ–è€…-=å°†ä¸€ä¸ªæ–¹æ³•åœ¨äº‹ä»¶ä¸Šæ³¨å†Œ/ç§»é™¤
+    public PlayerInputSet input { get; private set; }//è¿™é‡Œçš„PlayerInputSetæ˜¯æ–°è¾“å…¥è„šæœ¬
 
-    //´´½¨ĞÂ×´Ì¬Á÷³Ì£ºÏÈÔÚÊäÈë´°¿ÚÉèÖÃ°´¼ü£¬È»ºóÈ¥¶¯»­´°¿ÚÑ¡Ôñ¶¯»­Ö¡
-    //ÔÙÈ¥¶¯»­Ê¦´°¿ÚÉèÖÃ´¥·¢ºÍ½áÊøµÄĞèÒªµÄ²ÎÊı
-    //´´½¨×´Ì¬½Å±¾£¬ÔÚ´ËÉùÃ÷¹«¿ªµÄ½Å±¾ÀàĞÍ+±äÁ¿
-    //×îºóÔÚAwake£¨£©ÖĞnew²ÎÊıºó´´½¨ĞÂµÄ×´Ì¬½Å±¾Ğ´¼Ì³Ğ£¬´¥·¢¡¢½áÊøºÍ×´Ì¬×ª»»
+    //åˆ›å»ºæ–°çŠ¶æ€æµç¨‹ï¼šå…ˆåœ¨è¾“å…¥çª—å£è®¾ç½®æŒ‰é”®ï¼Œç„¶åå»åŠ¨ç”»çª—å£é€‰æ‹©åŠ¨ç”»å¸§
+    //å†å»åŠ¨ç”»å¸ˆçª—å£è®¾ç½®è§¦å‘å’Œç»“æŸçš„éœ€è¦çš„å‚æ•°
+    //åˆ›å»ºçŠ¶æ€è„šæœ¬ï¼Œåœ¨æ­¤å£°æ˜å…¬å¼€çš„è„šæœ¬ç±»å‹+å˜é‡
+    //æœ€ååœ¨Awakeï¼ˆï¼‰ä¸­newå‚æ•°ååˆ›å»ºæ–°çš„çŠ¶æ€è„šæœ¬å†™ç»§æ‰¿ï¼Œè§¦å‘ã€ç»“æŸå’ŒçŠ¶æ€è½¬æ¢
     private UI ui;
     public Player_SkillManager skillManager { get; private set; }
     public Player_VFX vfx { get; private set; }
@@ -22,7 +23,7 @@ public class Player : Entity
     public Entity_StatusHandler statusHandler { get; private set; }
     public Player_Combat playerCombat { get; private set; }
 
-
+    //â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”çŠ¶æ€â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”
     public Player_IdleState idleState { get; private set; }
     public Player_MoveState moveState { get; private set; }
     public Player_JumpState jumpState { get; private set; }
@@ -36,31 +37,28 @@ public class Player : Entity
     public Player_CounterAttactState counterAttactState { get; private set; }
     public Player_ThrowSwordState throwSwordState { get; private set; }
     public Player_DomainState domainState { get; private set; }
-
-    [Header("¹¥»÷Ï¸½Ú")]
-    public Vector2[] attackVelocity;
-    public Vector2 jumpAttackVelocity;
-    public float ¹¥»÷Ê±ËÙ¶È³ÖĞøÊ±¼ä = 0.1f;
-    public float Á¬ÕĞÖØÖÃÊ±¼ä = 1;
-    private Coroutine ¹¥»÷ÅÅ¶Ó;
-
-    [Header("ÒÆ¶¯ÏêÇé")]
-    public float moveSpeed;
-    public float jumpForce;
-    public Vector2 wallJumpForce;
-    [Range(0, 1)]//»¬¶¯Ìõ
-    public float ¿ÕÖĞÒÆ¶¯±¶ÂÊ = 0.7f;
-    [Range(0, 1)]
-    public float »¬Ç½ÏÂ½µ±¶ÂÊ = 0.7f;
+    //â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”çŠ¶æ€â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”
+    [Header("æ”»å‡»ç»†èŠ‚")]
+    [cn("æ”»å‡»é€Ÿåº¦")] public Vector2[] attackVelocity;
+    [cn("è·³è·ƒæ”»å‡»æ—¶é€Ÿåº¦")] public Vector2 jumpAttackVelocity;
+    [cn("è·³è·ƒæ”»å‡»æŒç»­æ—¶é—´")] public float attackSpeedDuration = 0.1f;
+    [cn("è¿æ‹›é‡ç½®æ—¶é—´")] public float comboResetTime = 1;
+    private Coroutine comboQueueCo;//è¿æ‹›æ’é˜Ÿåç¨‹
+    [Header("ç§»åŠ¨è¯¦æƒ…")]
+    [cn("ç§»åŠ¨é€Ÿåº¦")] public float moveSpeed;
+    [cn("è·³è·ƒåŠ›åº¦")] public float jumpForce;
+    [cn("è¹¬å¢™è·³åŠ›åº¦")] public Vector2 wallJumpForce;
+    [cn("ç©ºä¸­ç§»åŠ¨å€ç‡")][Range(0, 1)] public float airMoveMultiplier = 0.7f;
+    [cn("æ»‘å¢™ä¸‹é™å€ç‡")][Range(0, 1)] public float WallSlideMultiplier = 0.4f;
     [Space]
-    public float dashDuration = .25f;
-    public float dashSpeed = 20f;
-    [Header("ÖÕ¼«¼¼ÄÜÏêÇé")]
-    public float riseSpeed = 25;
-    public float riseMaxDistance = 3;
+    [cn("å†²åˆºæŒç»­æ—¶é—´")] public float dashDuration = .25f;
+    [cn("å†²åˆºé€Ÿåº¦")] public float dashSpeed = 20f;
+    [Header("ç»ˆææŠ€èƒ½è¯¦æƒ…")]
+    [cn("ä¸Šå‡é€Ÿåº¦")] public float riseSpeed = 25;
+    [cn("æœ€å¤§ä¸Šå‡è·ç¦»")] public float riseMaxDistance = 3;
 
     public Vector2 moveInput { get; private set; }
-    //moveinputÔÚunity PlayerInputSet½çÃæ±»Ó³ÉäÎªÕûÊıÖµ
+    //moveinputåœ¨unity PlayerInputSetç•Œé¢è¢«æ˜ å°„ä¸ºæ•´æ•°å€¼
     public Vector2 mousePosition { get; private set; }
 
     protected override void Awake()
@@ -68,7 +66,7 @@ public class Player : Entity
         base.Awake();
 
         Instance = this;
-        ui = FindAnyObjectByType<UI>();//È«¾Ö·¶Î§²éÕÒµÚÒ»¸öÀàĞÍÎªUIµÄ¶ÔÏó
+        ui = FindAnyObjectByType<UI>();//å…¨å±€èŒƒå›´æŸ¥æ‰¾ç¬¬ä¸€ä¸ªç±»å‹ä¸ºUIçš„å¯¹è±¡
         input = new PlayerInputSet();
         skillManager = GetComponent<Player_SkillManager>();
         vfx = GetComponent<Player_VFX>();
@@ -76,45 +74,45 @@ public class Player : Entity
         statusHandler = GetComponent<Entity_StatusHandler>();
         playerCombat = GetComponent<Player_Combat>();
 
-        idleState = new Player_IdleState(this, stateMachine, "idle");//³ÈÉ«ÄÚÈİÊÇ¶¯»­Ê¦½çÃæµÄ²ÎÊı£¬±ØĞëÒ»ÖÂ
+        idleState = new Player_IdleState(this, stateMachine, "idle");//æ©™è‰²å†…å®¹æ˜¯åŠ¨ç”»å¸ˆç•Œé¢çš„å‚æ•°ï¼Œå¿…é¡»ä¸€è‡´
         moveState = new Player_MoveState(this, stateMachine, "move");
         jumpState = new Player_JumpState(this, stateMachine, "jumpFall");
         fallState = new Player_FallState(this, stateMachine, "jumpFall");
         deadState = new Player_DeadState(this, stateMachine, "dead");
-        counterAttactState = new Player_CounterAttactState(this, stateMachine, "µ¯·´");
-        wallSlideState = new Player_WallSlideState(this, stateMachine, "Ç½±Ú»¬¶¯");
+        counterAttactState = new Player_CounterAttactState(this, stateMachine, "å¼¹å");
+        wallSlideState = new Player_WallSlideState(this, stateMachine, "å¢™å£æ»‘åŠ¨");
         wallJumpState = new Player_WallJumpState(this, stateMachine, "jumpFall");
-        dashState = new Player_DashState(this, stateMachine, "³å´Ì");
-        attackState = new Player_AttackState(this, stateMachine, "ÆÕÍ¨¹¥»÷");
-        jumpAttackState = new Player_JumpAttackState(this, stateMachine, "ÌøÔ¾Õ¶»÷");
+        dashState = new Player_DashState(this, stateMachine, "å†²åˆº");
+        attackState = new Player_AttackState(this, stateMachine, "æ™®é€šæ”»å‡»");
+        jumpAttackState = new Player_JumpAttackState(this, stateMachine, "è·³è·ƒæ–©å‡»");
         throwSwordState = new Player_ThrowSwordState(this, stateMachine, "throwSword");
         domainState = new Player_DomainState(this, stateMachine, "jumpFall");
-        //ÖØÖĞÖ®ÖØ£¬´Ë´¦Í¨¹ınew½«²ÎÊı´«µİ¸ø¸÷×´Ì¬½Å±¾²¢Ö´ĞĞÆä¹¹Ôìº¯Êı
-        //ÔÙÍ¨¹ıËûÃÇµÄ¹¹Ôìº¯ÊıÖĞµÄ¡°£ºbase¡±´«µİ²ÎÊı¸øËûÃÇµÄ¸¸ÀàPlayerState
-        //ÓÚÊÇ¸÷×ÓÀà×´Ì¬½Å±¾±ã¿ÉÒÔÍ¨¹ı¸¸ÀàÖĞÉùÃ÷µÄstateMachineÖ´ĞĞ²Ù×÷,Èçµ÷ÓÃ×´Ì¬»úÖĞµÄ¹«¿ª·½·¨
-        //Èç¹ûÃ»ÓĞĞ´ÏÔÊ½µÄ¹¹Ôìº¯Êı£¬»áÉú³ÉÒ»¸öÒşÊ½µÄÔËĞĞ£¬Èç´Ë´¦µÄStateMachine
+        //é‡ä¸­ä¹‹é‡ï¼Œæ­¤å¤„é€šè¿‡newå°†å‚æ•°ä¼ é€’ç»™å„çŠ¶æ€è„šæœ¬å¹¶æ‰§è¡Œå…¶æ„é€ å‡½æ•°
+        //å†é€šè¿‡ä»–ä»¬çš„æ„é€ å‡½æ•°ä¸­çš„â€œï¼šbaseâ€ä¼ é€’å‚æ•°ç»™ä»–ä»¬çš„çˆ¶ç±»PlayerState
+        //äºæ˜¯å„å­ç±»çŠ¶æ€è„šæœ¬ä¾¿å¯ä»¥é€šè¿‡çˆ¶ç±»ä¸­å£°æ˜çš„stateMachineæ‰§è¡Œæ“ä½œ,å¦‚è°ƒç”¨çŠ¶æ€æœºä¸­çš„å…¬å¼€æ–¹æ³•
+        //å¦‚æœæ²¡æœ‰å†™æ˜¾å¼çš„æ„é€ å‡½æ•°ï¼Œä¼šç”Ÿæˆä¸€ä¸ªéšå¼çš„è¿è¡Œï¼Œå¦‚æ­¤å¤„çš„StateMachine
 
     }
     protected override void Start()
     {
         base.Start();
-        stateMachine.Initalize(idleState);
+        stateMachine.Initialize(idleState);
     }
-    public void TeleportPlayer(Vector3 position) => transform.position = position;//´«ËÍÍæ¼Ò
+    public void TeleportPlayer(Vector3 position) => transform.position = position;//ä¼ é€ç©å®¶
     protected override IEnumerator SlowDownEntityCo(float duration, float slowMultiplier)
     {
-        //´æ´¢Ô­Ê¼Öµ¿ªÊ¼
+        //å­˜å‚¨åŸå§‹å€¼å¼€å§‹
         float originalMoveSpeed = moveSpeed;
         float originalJumpSpeed = jumpForce;
-        float originalanimSpeed = anim.speed;//¶¯»­ËÙ¶È
+        float originalanimSpeed = anim.speed;//åŠ¨ç”»é€Ÿåº¦
         Vector2 originalWallJump = wallJumpForce;
         Vector2 originalJumpAttackVelocity = jumpAttackVelocity;
-        Vector2[] originalAttackVelocity = new Vector2[attackVelocity.Length];//¹¥»÷ËÙ¶ÈÊÇ3¶ÎÆÕ¹¥µÄ²»Í¬Êı¾İ£¬´æ´¢ÔÚÊı×é£¨ÒıÓÃÀàĞÍ£¬±äÁ¿Êµ¼ÊÖ»ÊÇ¸öÖ¸Õë£©²»ÄÜ¼òµ¥µÄ¸³Öµ±£´æ£¬ËùÒÔÓÃforÑ­»·¿½±´Ô­Êı×é
+        Vector2[] originalAttackVelocity = new Vector2[attackVelocity.Length];//æ”»å‡»é€Ÿåº¦æ˜¯3æ®µæ™®æ”»çš„ä¸åŒæ•°æ®ï¼Œå­˜å‚¨åœ¨æ•°ç»„ï¼ˆå¼•ç”¨ç±»å‹ï¼Œå˜é‡å®é™…åªæ˜¯ä¸ªæŒ‡é’ˆï¼‰ä¸èƒ½ç®€å•çš„èµ‹å€¼ä¿å­˜ï¼Œæ‰€ä»¥ç”¨forå¾ªç¯æ‹·è´åŸæ•°ç»„
         for (int i = 0; i < attackVelocity.Length; i++)
         {
             originalAttackVelocity[i] = attackVelocity[i];
         }
-        //´æ´¢Ô­Ê¼Öµ½áÊø
+        //å­˜å‚¨åŸå§‹å€¼ç»“æŸ
         float speedMultiplier = 1 - slowMultiplier;
 
         moveSpeed = moveSpeed * speedMultiplier;
@@ -129,7 +127,7 @@ public class Player : Entity
         }
 
         yield return new WaitForSeconds(duration);
-        //»Ø¹éÔ­Ê¼Öµ
+        //å›å½’åŸå§‹å€¼
         moveSpeed = originalMoveSpeed;
         jumpForce = originalJumpSpeed;
         anim.speed = originalanimSpeed;
@@ -144,38 +142,65 @@ public class Player : Entity
     public override void EntityDead()
     {
         base.EntityDead();
-        ÔÚÍæ¼ÒËÀÍöÖ®Ê±?.Invoke();//ÓÃInvokeÖ´ĞĞÎ¯ÍĞ£¬
+        OnPlayerDeath?.Invoke();//ç”¨Invokeæ‰§è¡Œå§”æ‰˜ï¼Œ
         stateMachine.ChangeState(deadState);
     }
-    public void ÑÓ³Ù½øÈë¹¥»÷×´Ì¬()
+    public void DelayEnterAttackState()
     {
-        if (¹¥»÷ÅÅ¶Ó != null)
-            StopCoroutine(¹¥»÷ÅÅ¶Ó);
-        ¹¥»÷ÅÅ¶Ó = StartCoroutine(ÑÓ³Ù½øÈë¹¥»÷×´Ì¬Ğ­Í¬³ÌĞò());
-        //×óÊ½½ÓÊÕµÄÊÇÏÂÃæµÄÁ÷³Ì¿ØÖÆÆ÷ÀàĞÍµÄÖ¡½áÊø´¦Àí
+        if (comboQueueCo != null)
+            StopCoroutine(comboQueueCo);
+        comboQueueCo = StartCoroutine(DelayEnterAttackStateCo());
+        //å·¦å¼æ¥æ”¶çš„æ˜¯ä¸‹é¢çš„æµç¨‹æ§åˆ¶å™¨ç±»å‹çš„å¸§ç»“æŸå¤„ç†
     }
-    private IEnumerator ÑÓ³Ù½øÈë¹¥»÷×´Ì¬Ğ­Í¬³ÌĞò()//IEÔÚunityÖĞ±»µ±×öÖ´ĞĞÁ÷³Ì¿ØÖÆÆ÷
+    private IEnumerator DelayEnterAttackStateCo()//åœ¨å½“å‰å¸§ç»“æŸæ—¶æ‰å…è®¸çŠ¶æ€è½¬æ¢ï¼Œç•™å‡ºè¶³å¤Ÿæ—¶é—´
     {
-        yield return new WaitForEndOfFrame();//Éú³ÉÑÓ³Ù²¢·µ»Ø¡ª¡ªÖ¡½áÊø´¦Àí£¨Ò»Ö¡µÄ×îºóÒ»¼şÊÂ£©
-        stateMachine.ChangeState(attackState);//PlayerStateÖĞEnter»áË¢ĞÂboolÖµÎªÕæ
+        yield return new WaitForEndOfFrame();//ç”Ÿæˆå»¶è¿Ÿå¹¶è¿”å›â€”â€”å¸§ç»“æŸå¤„ç†ï¼ˆä¸€å¸§çš„æœ€åä¸€ä»¶äº‹ï¼‰
+        stateMachine.ChangeState(attackState);//PlayerStateä¸­Enterä¼šåˆ·æ–°boolå€¼ä¸ºçœŸ
     }
-    private void OnEnable()//OnableÔÚAwakeºóÖ´ĞĞ£¬ÓÃÓÚÆô¶¯ÊäÈëÏµÍ³
+    private void TryInteract()//å¯»æ‰¾æœ€è¿‘å¯äº¤äº’å¯¹è±¡å¹¶äº¤äº’
+    {
+        Transform closest = null;
+        float closestDistance = Mathf.Infinity;
+        Collider2D[] objectsAround = Physics2D.OverlapCircleAll(transform.position, 0.5f);
+
+        foreach (var target in objectsAround)
+        {
+            IInteractable interactable = target.GetComponent<IInteractable>();
+            if (interactable == null)
+                continue;
+            float distance = Vector2.Distance(transform.position, target.transform.position);
+            if (distance < closestDistance)
+            {
+                closestDistance = distance;
+                closest = target.transform;
+            }
+        }
+        if (closest == null)
+            return;
+        closest.GetComponent<IInteractable>().Interact();
+    }
+    private void OnEnable()//Onableåœ¨Awakeåæ‰§è¡Œï¼Œç”¨äºå¯åŠ¨è¾“å…¥ç³»ç»Ÿ
     {
         input.Enable();
-        input.Player.Êó±ê.performed += ctx => mousePosition = ctx.ReadValue<Vector2>();
+        input.Player.é¼ æ ‡.performed += ctx => mousePosition = ctx.ReadValue<Vector2>();
         input.Player.Movement.performed += ctx => moveInput = ctx.ReadValue<Vector2>();
         input.Player.Movement.canceled += ctx => moveInput = Vector2.zero;
-        //ÊµÀı.·ÃÎÊPlayerµÄMovementÄ£¿é
-        //.performed += ctx => ...ÎªÊäÈë¶¯×÷µÄ ¡°performed¡± ÊÂ¼ş×¢²á»Øµ÷º¯Êı
-        //µ±ÊäÈë±»Ö´ĞĞ£¨¼´¼ì²âµ½ÓĞĞ§ÊäÈë£©Ê±´¥·¢¡£
-        //¶ÔÓ¦»¹ÓĞstartedºÍcanceledÊÂ¼ş£¬¶ÔÓ¦°´ÏÂ£¨¿ªÊ¼£©ºÍÌ§Æğ£¨Í£Ö¹£©
-        //ctxÎªcontext£¬Ç°ºóĞè±£³ÖÒ»ÖÂ
+        input.Player.å¼€å…³æŠ€èƒ½æ ‘.performed += ctx => ui.ToggleSkillTreeUI();
+        input.Player.å¼€å…³è§’è‰²UI.performed += ctx => ui.ToggleBagUI();
+        input.Player.å…³é—­æ‰€æœ‰UI.performed += ctx => ui.CloseUI();
+        input.Player.æ–½æ³•.performed += ctx => skillManager.shard.TryUseSkill();
+        input.Player.æ–½æ³•.performed += ctx => skillManager.clone.TryUseSkill();//è®°å¾—è°ƒæ•´
+        input.Player.äº¤äº’.performed += ctx => TryInteract();
+        //input.Player.å…·ä½“åŠ¨ä½œ.æŒ‰é”® æ‰§è¡Œ/æŒ‰ä¸‹/æŠ¬èµ· += ctx => æ–¹æ³•
+        //.performedè¾“å…¥å®Œæˆ / startedæŒ‰ä¸‹ / canceledæŠ¬èµ· æ˜¯InputActionç±»å‹çš„äº‹ä»¶
+        //ctxä¸ºInputAction.CallbackContext çš„å®ä¾‹ctxï¼ŒåŒ…å«æŒ‰é”®å€¼ï¼Œè¾“å…¥çš„è®¾å¤‡ï¼Œè§¦å‘æ—¶é—´ç­‰
+        //å¦‚æœä¸éœ€è¦ä½¿ç”¨ctxï¼Œå¯ä»¥ç”¨ _ ä»£æ›¿ä½œä¸ºå‚æ•°å ä½ç¬¦
 
-        input.Player.¿ª¹Ø¼¼ÄÜÊ÷.performed += ctx => ui.ToggleSkillTreeUI();
-        input.Player.¿ª¹Ø½ÇÉ«UI.performed += ctx => ui.ToggleBagUI();
-        input.Player.¹Ø±ÕËùÓĞUI.performed += ctx => ui.CloseUI();
-        input.Player.Ê©·¨.performed += ctx => skillManager.shard.TryUseSkill();
-        input.Player.Ê©·¨.performed += ctx => skillManager.clone.TryUseSkill();//¼ÇµÃµ÷Õû
+        // å®Œæ•´çš„åŒ¿åå‡½æ•°å†™æ³• ä»¥äº¤äº’ä¸ºä¾‹
+        //input.Player.äº¤äº’.performed += delegate (InputAction.CallbackContext ctx)
+        //{
+        //    TryInteract(); // è¦æ‰§è¡Œçš„é€»è¾‘
+        //};
     }
     private void OnDisable()
     {
