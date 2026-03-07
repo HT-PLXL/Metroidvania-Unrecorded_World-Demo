@@ -17,6 +17,22 @@ MonoBehaviour:
   itemType: 1
   maxStackCount: 1
   itemEffect: {fileID: 11400000, guid: 9c93771312aa6f949b41bf9fe6f6ad1f, type: 2}
+  itemPrice: 1388
+  minStackCountInShop: 1
+  maxStackCountInShop: 1
+  craftRecipe:
+  - itemData: {fileID: 11400000, guid: 28ccaf08e3fd513438fbe3f40046f991, type: 2}
+    stackCount: 2
+    itemEffect: {fileID: 0}
+  - itemData: {fileID: 11400000, guid: 71feda8aeaafc1b47bd8993bc5c8b6e8, type: 2}
+    stackCount: 2
+    itemEffect: {fileID: 0}
+  - itemData: {fileID: 11400000, guid: 9715d1d72bd28b142bd7b2a695c9e288, type: 2}
+    stackCount: 1
+    itemEffect: {fileID: 0}
+  - itemData: {fileID: 11400000, guid: 2fdb703f7daa8ae47bf551ee3dd01168, type: 2}
+    stackCount: 16
+    itemEffect: {fileID: 0}
   modifier:
   - statType: 7
     value: 30

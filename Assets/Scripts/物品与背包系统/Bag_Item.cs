@@ -1,16 +1,22 @@
 using System;
-
+using System.Text;
+                  //——————物品类——————
 [Serializable]
 public class Bag_Item
 {
     private string itemId;
     public ItemDataSO itemData;
-    public int StackCount = 1;
+    public int stackCount = 1;
     public ItemModifier[] modifiers { get; private set; }
     public ItemEffectDataSO itemEffect;
+
+    public int buyPrice {  get; private set; }
+    public float sellPrice { get; private set; }
     public Bag_Item(ItemDataSO itemData)
     {
         this.itemData = itemData;
+        buyPrice = itemData.itemPrice;
+        sellPrice = itemData.itemPrice * .5f;
         modifiers = GetEquipmentData()?.modifier;//在判断物品是装备后创建新修饰符列表保存传入的物品的修饰符
         itemEffect = itemData.itemEffect;
         itemId = itemData.itemName + Guid.NewGuid();//生成一个几乎不可能重复的id
@@ -39,7 +45,49 @@ public class Bag_Item
             return equipment;
         return null;
     }
-    public bool CanAddStackCount() => StackCount < itemData.maxStackCount;
-    public void AddStackCount() => StackCount++;
-    public void ReduceStackCount() => StackCount--;
+    public bool CanAddStackCount() => stackCount < itemData.maxStackCount;
+    public void AddStackCount() => stackCount++;
+    public void ReduceStackCount() => stackCount--;
+
+    public string GetItemInfo()
+    {
+        if (itemData.itemType == ItemType.材料)
+            return "合成材料";
+        if (itemData.itemType == ItemType.消耗品)
+            return itemData.itemEffect.effectDescription;//显示消耗品描述
+        StringBuilder sb = new StringBuilder();
+
+        foreach (var modifier in modifiers)
+        {
+            string modifierType = modifier.statType.GetChineseName();
+            string modifierValue = IsPercentStat(modifier.statType) ? modifier.value.ToString() + "%" : modifier.value.ToString();
+
+            string sign = modifier.value >= 0 ? "+" : "";//负号应当在物品数据里
+            sb.AppendLine(sign + modifierValue + " " + modifierType);
+        }
+        if (itemEffect != null)
+        {
+            sb.AppendLine("");
+            sb.AppendLine("被动技能：");
+            sb.AppendLine(itemEffect.effectDescription);
+        }
+        return sb.ToString();
+    }
+    private bool IsPercentStat(StatType type)//判断是否要加%符号
+    {
+        switch (type)
+        {
+            case StatType.AttackSpeed:
+            case StatType.CritChance:
+            case StatType.CritPower:
+            case StatType.Evasion:
+            case StatType.ArmorReduction:
+            case StatType.FireResistance:
+            case StatType.IceResistance:
+            case StatType.LightningResistance:
+                return true;
+            default:
+                return false;
+        }
+    }
 }

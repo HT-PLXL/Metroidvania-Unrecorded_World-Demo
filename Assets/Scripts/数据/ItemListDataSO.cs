@@ -2,7 +2,7 @@ using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "游戏设置/物品数据/物品列表", fileName = "列表物品-")]
+[CreateAssetMenu(menuName = "游戏设置/物品数据/物品列表", fileName = "物品列表-")]
 
 public class ItemListDataSO : ScriptableObject
 {

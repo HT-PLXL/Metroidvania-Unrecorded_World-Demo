@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
-//此类挂载于具体槽位的父对象，如背包，提供一个更新槽位信息的方法并更新内部所有已有信息的槽位
+//此类挂载于具体槽位的父对象，背包，仓库，材料仓库，提供一个更新槽位信息的方法并更新内部所有已有信息的槽位
 public class UI_ItemSlotParent : MonoBehaviour
 {
     private UI_ItemSlot[] slots;

@@ -15,7 +15,14 @@ public class Object_Blacksmith : Object_NPC, IInteractable
     }
     public void Interact()//互动方法
     {
-        ui.storageUI.SetupStorage(bag, storage);//将本类获取的背包和仓库实例传递进去
+        ui.storageUI.SetupStorageUI(storage);//将本类获取的背包和仓库实例传递进去
+        ui.craftUI.SetUpCraftUI(storage);
+        if (ui.storageUI.gameObject.activeSelf || ui.craftUI.gameObject.activeSelf)
+        {
+            ui.storageUI.gameObject.SetActive(false);
+            ui.craftUI.gameObject.SetActive(false);
+            return;
+        }
         ui.storageUI.gameObject.SetActive(true);
     }
     protected override void OnTriggerEnter2D(Collider2D collider)
@@ -28,6 +35,7 @@ public class Object_Blacksmith : Object_NPC, IInteractable
     {
         base.OnTriggerExit2D(collider);
         ui.SwitchOffAlltooltips();
-        ui.storageUI.gameObject.SetActive(false);
+        ui.storageUI?.gameObject.SetActive(false);
+        ui.craftUI?.gameObject.SetActive(false);
     }
 }

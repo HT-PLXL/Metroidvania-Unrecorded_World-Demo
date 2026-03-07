@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UI_Storage : MonoBehaviour
 {
@@ -7,10 +8,11 @@ public class UI_Storage : MonoBehaviour
     [SerializeField]private UI_ItemSlotParent bagParent;
     [SerializeField]private UI_ItemSlotParent StorageParent;
     [SerializeField]private UI_ItemSlotParent materialStorageParent;
-    public void SetupStorage(Bag_Player bag, Bag_Storage storage)
+
+    public void SetupStorageUI(Bag_Storage storage)
     {
-        this.bag = bag;
         this.storage = storage;
+        bag = storage.bag;
         storage.OnBagChange += UpdateUI;
         UpdateUI();
 
@@ -21,9 +23,14 @@ public class UI_Storage : MonoBehaviour
             slot.SetStorage(storage);
         }
     }
-
+    private void OnEnable()
+    {
+        UpdateUI();
+    }
     private void UpdateUI()
     {
+        if(storage == null)
+            return;
         bagParent.UpdateSlots(bag.itemList);
         StorageParent.UpdateSlots(storage.itemList);
         materialStorageParent.UpdateSlots(storage.materialList);

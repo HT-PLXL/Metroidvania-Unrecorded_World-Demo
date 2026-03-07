@@ -4,8 +4,7 @@ using UnityEngine;
 public class UI_Tooltip : MonoBehaviour
 {
     private RectTransform rect;//Rectangle矩形
-    [SerializeField] private Vector2 offset = new Vector2(200, 20);
-
+    [SerializeField] private Vector2 offset = new Vector2(60, 20);
     protected virtual void Awake()
     {
         rect = GetComponent<RectTransform>();
@@ -13,6 +12,8 @@ public class UI_Tooltip : MonoBehaviour
 
     public virtual void ShowTooltip(bool show, RectTransform targetRect)
     {
+        if (rect == null)//防止停止运行时报错
+            return;
         if (show == false)
         {
             rect.position = new Vector3(8888, 8888);
@@ -23,29 +24,26 @@ public class UI_Tooltip : MonoBehaviour
 
     private void UpdatePosition(RectTransform targetRect)
     {
-
-        // 获取目标位置（屏幕坐标）
+        Vector3 mouseScreenPosition = Input.mousePosition;
         Vector3 targetPos = targetRect.position;
-        // 获取 Tooltip 尺寸
         Vector2 tooltipSize = rect.rect.size;
-        // 计算新位置
-        Vector3 newPos = targetPos;
-        // 水平方向：左右切换
+        Vector3 halfTooltip = tooltipSize / 2f;
+        if (mouseScreenPosition.y + halfTooltip.y > Screen.height)
+            targetPos.y = Screen.height - halfTooltip.y - offset.y;
+        else if (mouseScreenPosition.y < halfTooltip.y)
+            targetPos.y = halfTooltip.y + offset.y;
         if (targetPos.x > Screen.width / 2f)
         {
-            newPos.x = targetPos.x - tooltipSize.x / 2f - offset.x;
+            targetPos.x = targetPos.x - tooltipSize.x / 2f - offset.x;
         }
         else
         {
-            newPos.x = targetPos.x + tooltipSize.x / 2f + offset.x;
+            targetPos.x = targetPos.x + tooltipSize.x / 2f + offset.x;
         }
-        // 垂直方向：保持与目标对齐，边界检查
-        float halfHeight = tooltipSize.y / 2f;
-        newPos.y = targetPos.y + offset.y;
-        newPos.y = Mathf.Clamp(newPos.y, halfHeight + offset.y,Screen.height - halfHeight - offset.y);
-        // 应用位置
-        rect.position = newPos;
+        rect.position = targetPos;
+
     }
+
     protected string GetColorText(string color, string text)
     {
         return $"<color={color}>{text}</color>";

@@ -24,6 +24,6 @@ public class UI_StorageSlot : UI_ItemSlot
         if (slotType == StorageSlotType.PlayerBagSlot)
             storage.FromPlayerToStorage(itemInSlot, AllIn);
 
-        ui.itemToolTip.ShowTooltip(false, null);
+        ui.itemTooltip.ShowTooltip(false, null);
     }
 }

@@ -8070,6 +8070,8 @@ MonoBehaviour:
   itemName: {fileID: 9168993895701367500}
   itemType: {fileID: 4877408617308508024}
   itemInfo: {fileID: 6289054339804749997}
+  itemPrice: {fileID: 0}
+  shopItemInfo: {fileID: 0}
 --- !u!114 &370945078335434159
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13706,7 +13708,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bagSlotsParent: {fileID: 0}
-  uiEquipSlotParent: {fileID: 3335147423272471962}
+  uiEquipSlotParent: {fileID: 0}
 --- !u!1 &3960046486638016058
 GameObject:
   m_ObjectHideFlags: 0

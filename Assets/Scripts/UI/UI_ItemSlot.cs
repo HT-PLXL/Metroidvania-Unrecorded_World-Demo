@@ -12,6 +12,7 @@ public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler, IPointerEnterHand
     [Header("物品槽设置")]
     [SerializeField] private Image itemIcon;//unity面板选择
     [SerializeField] private TextMeshProUGUI itemStackCount;
+
     protected void Awake()
     {
         ui = GetComponentInParent<UI>();
@@ -31,7 +32,7 @@ public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler, IPointerEnterHand
         color.a = 0.9f;
         itemIcon.color = color;
         itemIcon.sprite = itemInSlot.itemData.icon;
-        itemStackCount.text = item.StackCount > 1 ? item.StackCount.ToString() : "";
+        itemStackCount.text = item.stackCount > 1 ? item.stackCount.ToString() : "";
     }
 
     public virtual void OnPointerDown(PointerEventData eventData)//接口赋予的方法，确定玩家点击背包的物品槽实例
@@ -47,18 +48,20 @@ public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler, IPointerEnterHand
         else
             bag.TryEquipItem(itemInSlot);//尝试装备点击的物品
         if (itemInSlot == null)//最后一个有装备的格子在装备后会为空，需要再次判断
-            ui.itemToolTip.ShowTooltip(false, null);
+            ui.itemTooltip.ShowTooltip(false, null);
     }
 
-    public void OnPointerEnter(PointerEventData eventData)
+    public virtual void OnPointerEnter(PointerEventData eventData)
     {
         if (itemInSlot == null)
             return;
-        ui.itemToolTip.ShowTooltip(true, rect, itemInSlot);
+
+        ui.itemTooltip.ShowTooltip(true, rect, itemInSlot);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        ui.itemToolTip.ShowTooltip(false, null);
+        ui.itemTooltip.ShowTooltip(false, null);
     }
+
 }

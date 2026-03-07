@@ -17,7 +17,7 @@ public class Bag_Base : MonoBehaviour, ISaveable
         if (consumable == null)
             return;
         consumable.itemEffect.ExecuteEffect();//执行道具效果
-        if (consumable.StackCount > 1)
+        if (consumable.stackCount > 1)
             consumable.ReduceStackCount();//减少数量
         else
             RemoveOneItem(consumable);//数量为1直接移除
@@ -51,7 +51,7 @@ public class Bag_Base : MonoBehaviour, ISaveable
     public void RemoveOneItem(Bag_Item itemNeedRemove)
     {
         Bag_Item item = itemList.Find(item => item == itemNeedRemove);
-        if (item.StackCount > 1)
+        if (item.stackCount > 1)
             item.ReduceStackCount();
         else
             itemList.Remove(itemNeedRemove);
@@ -61,7 +61,7 @@ public class Bag_Base : MonoBehaviour, ISaveable
     {
         return itemList.Find(item => item.itemData == itemData);//判断并返回已有物品列表有没有指定的物品
     }
-    public void TriggerUpdateUI() => OnBagChange?.Invoke();//订阅更新角色数据表方法
+    public void TriggerUpdateUI() => OnBagChange?.Invoke();//触发所有绑定了库存变动事件OnBagChange的UI更新方法
     public virtual void loadData(GameData data)
     {
 

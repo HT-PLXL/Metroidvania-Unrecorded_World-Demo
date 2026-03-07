@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class Bag_Player : Bag_Base
 {
+    public int gold = 10000;
     private Player player;
     [SerializeField] private ItemListDataSO itemDataBase;
     public List<Bag_EquipmentSlot> equipmentSlotList;//玩家装备槽实例，由unity面板添加
@@ -76,7 +77,7 @@ public class Bag_Player : Bag_Base
                 if (data.bag.ContainsKey(saveId) == false)
                     data.bag[saveId] = 0;
 
-                data.bag[saveId] += item.StackCount;//堆叠数量
+                data.bag[saveId] += item.stackCount;//堆叠数量
             }
         }
         foreach (var slot in equipmentSlotList)
