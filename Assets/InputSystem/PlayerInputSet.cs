@@ -137,24 +137,6 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""开关技能树"",
-                    ""type"": ""Button"",
-                    ""id"": ""92fc6f09-adeb-447f-a3a5-4a33cb4b60fe"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""关闭所有UI"",
-                    ""type"": ""Button"",
-                    ""id"": ""92d46a3e-1ae1-42ac-b73e-e1bec8d7e6c4"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
                     ""name"": ""施法"",
                     ""type"": ""Button"",
                     ""id"": ""23a9a1ee-4765-4630-9540-f5bdbda53086"",
@@ -191,18 +173,18 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""开关角色UI"",
+                    ""name"": ""快捷物品槽1"",
                     ""type"": ""Button"",
-                    ""id"": ""e5bae10c-6dfc-4511-bef6-d4d7ab6b42c0"",
+                    ""id"": ""4401da07-7a28-4217-8d59-8fbfc9580319"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""交互"",
+                    ""name"": ""快捷物品槽2"",
                     ""type"": ""Button"",
-                    ""id"": ""ca491b9f-b4a6-4921-b726-697c57b02a31"",
+                    ""id"": ""8796e025-f5a0-42eb-aaae-aaf3d0eaab51"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
@@ -311,34 +293,12 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""6551d63e-0853-4b0c-babf-09e4b8868e6b"",
-                    ""path"": ""<Keyboard>/l"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Keyboard & Mouse"",
-                    ""action"": ""开关技能树"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""b7349bff-18b1-4605-afa5-094b76fc0509"",
                     ""path"": ""<Keyboard>/e"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Keyboard & Mouse"",
                     ""action"": ""施法"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""802d6426-f585-48b9-bc1b-97c30271e39a"",
-                    ""path"": ""<Keyboard>/escape"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Keyboard & Mouse"",
-                    ""action"": ""关闭所有UI"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -377,23 +337,131 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""633a0c6b-f018-4a74-b854-08a70b85a285"",
-                    ""path"": ""<Keyboard>/c"",
+                    ""id"": ""b027393e-b201-47c0-955e-0ac9dc43347d"",
+                    ""path"": ""<Keyboard>/1"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Keyboard & Mouse"",
-                    ""action"": ""开关角色UI"",
+                    ""action"": ""快捷物品槽1"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
-                    ""id"": ""43fb13cc-796f-4432-ad64-c960b34b88c4"",
+                    ""id"": ""25325570-f447-4ba4-974e-0c1f43db1f42"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard & Mouse"",
+                    ""action"": ""快捷物品槽2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""UI"",
+            ""id"": ""26e5a3fd-94b5-42c6-9406-c931114316ae"",
+            ""actions"": [
+                {
+                    ""name"": ""开关设置UI"",
+                    ""type"": ""Button"",
+                    ""id"": ""5fa9eb3f-1410-44c9-99db-76288de900f2"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""交互"",
+                    ""type"": ""Button"",
+                    ""id"": ""691e3dbe-81bc-46af-a0c0-8b8010c11b1d"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""开关角色与背包UI"",
+                    ""type"": ""Button"",
+                    ""id"": ""77f070c2-8138-43e7-8d69-759b0b19f628"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""开关技能树UI"",
+                    ""type"": ""Button"",
+                    ""id"": ""e52eaff5-f296-4c74-9bd4-4d5c891747b2"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""代替输入"",
+                    ""type"": ""Button"",
+                    ""id"": ""ceba9d4f-72fe-4d68-8fe6-1280c4fa17b4"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""8af884a8-0e6c-4058-a5b0-e9b2953a7faa"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard & Mouse"",
+                    ""action"": ""开关设置UI"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b11e7c13-f3c5-484c-a085-f3dca34c1c4a"",
                     ""path"": ""<Keyboard>/f"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Keyboard & Mouse"",
                     ""action"": ""交互"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a7090087-1952-4fb5-bf09-cbc3a519893f"",
+                    ""path"": ""<Keyboard>/c"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard & Mouse"",
+                    ""action"": ""开关角色与背包UI"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""255738a9-80f2-4dd5-b279-f73d86415074"",
+                    ""path"": ""<Keyboard>/l"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard & Mouse"",
+                    ""action"": ""开关技能树UI"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""86ddced1-7f70-441e-8252-58d494eaf427"",
+                    ""path"": ""<Keyboard>/leftCtrl"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""代替输入"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -426,19 +494,25 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
         m_Player_冲刺 = m_Player.FindAction("冲刺", throwIfNotFound: true);
         m_Player_普通攻击 = m_Player.FindAction("普通攻击", throwIfNotFound: true);
         m_Player_弹反 = m_Player.FindAction("弹反", throwIfNotFound: true);
-        m_Player_开关技能树 = m_Player.FindAction("开关技能树", throwIfNotFound: true);
-        m_Player_关闭所有UI = m_Player.FindAction("关闭所有UI", throwIfNotFound: true);
         m_Player_施法 = m_Player.FindAction("施法", throwIfNotFound: true);
         m_Player_掷剑 = m_Player.FindAction("掷剑", throwIfNotFound: true);
         m_Player_鼠标 = m_Player.FindAction("鼠标", throwIfNotFound: true);
         m_Player_终极技能 = m_Player.FindAction("终极技能", throwIfNotFound: true);
-        m_Player_开关角色UI = m_Player.FindAction("开关角色UI", throwIfNotFound: true);
-        m_Player_交互 = m_Player.FindAction("交互", throwIfNotFound: true);
+        m_Player_快捷物品槽1 = m_Player.FindAction("快捷物品槽1", throwIfNotFound: true);
+        m_Player_快捷物品槽2 = m_Player.FindAction("快捷物品槽2", throwIfNotFound: true);
+        // UI
+        m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
+        m_UI_开关设置UI = m_UI.FindAction("开关设置UI", throwIfNotFound: true);
+        m_UI_交互 = m_UI.FindAction("交互", throwIfNotFound: true);
+        m_UI_开关角色与背包UI = m_UI.FindAction("开关角色与背包UI", throwIfNotFound: true);
+        m_UI_开关技能树UI = m_UI.FindAction("开关技能树UI", throwIfNotFound: true);
+        m_UI_代替输入 = m_UI.FindAction("代替输入", throwIfNotFound: true);
     }
 
     ~@PlayerInputSet()
     {
         UnityEngine.Debug.Assert(!m_Player.enabled, "This will cause a leak and performance issues, PlayerInputSet.Player.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_UI.enabled, "This will cause a leak and performance issues, PlayerInputSet.UI.Disable() has not been called.");
     }
 
     /// <summary>
@@ -519,14 +593,12 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_冲刺;
     private readonly InputAction m_Player_普通攻击;
     private readonly InputAction m_Player_弹反;
-    private readonly InputAction m_Player_开关技能树;
-    private readonly InputAction m_Player_关闭所有UI;
     private readonly InputAction m_Player_施法;
     private readonly InputAction m_Player_掷剑;
     private readonly InputAction m_Player_鼠标;
     private readonly InputAction m_Player_终极技能;
-    private readonly InputAction m_Player_开关角色UI;
-    private readonly InputAction m_Player_交互;
+    private readonly InputAction m_Player_快捷物品槽1;
+    private readonly InputAction m_Player_快捷物品槽2;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -559,14 +631,6 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
         /// </summary>
         public InputAction @弹反 => m_Wrapper.m_Player_弹反;
         /// <summary>
-        /// Provides access to the underlying input action "Player/开关技能树".
-        /// </summary>
-        public InputAction @开关技能树 => m_Wrapper.m_Player_开关技能树;
-        /// <summary>
-        /// Provides access to the underlying input action "Player/关闭所有UI".
-        /// </summary>
-        public InputAction @关闭所有UI => m_Wrapper.m_Player_关闭所有UI;
-        /// <summary>
         /// Provides access to the underlying input action "Player/施法".
         /// </summary>
         public InputAction @施法 => m_Wrapper.m_Player_施法;
@@ -583,13 +647,13 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
         /// </summary>
         public InputAction @终极技能 => m_Wrapper.m_Player_终极技能;
         /// <summary>
-        /// Provides access to the underlying input action "Player/开关角色UI".
+        /// Provides access to the underlying input action "Player/快捷物品槽1".
         /// </summary>
-        public InputAction @开关角色UI => m_Wrapper.m_Player_开关角色UI;
+        public InputAction @快捷物品槽1 => m_Wrapper.m_Player_快捷物品槽1;
         /// <summary>
-        /// Provides access to the underlying input action "Player/交互".
+        /// Provides access to the underlying input action "Player/快捷物品槽2".
         /// </summary>
-        public InputAction @交互 => m_Wrapper.m_Player_交互;
+        public InputAction @快捷物品槽2 => m_Wrapper.m_Player_快捷物品槽2;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -631,12 +695,6 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
             @弹反.started += instance.On弹反;
             @弹反.performed += instance.On弹反;
             @弹反.canceled += instance.On弹反;
-            @开关技能树.started += instance.On开关技能树;
-            @开关技能树.performed += instance.On开关技能树;
-            @开关技能树.canceled += instance.On开关技能树;
-            @关闭所有UI.started += instance.On关闭所有UI;
-            @关闭所有UI.performed += instance.On关闭所有UI;
-            @关闭所有UI.canceled += instance.On关闭所有UI;
             @施法.started += instance.On施法;
             @施法.performed += instance.On施法;
             @施法.canceled += instance.On施法;
@@ -649,12 +707,12 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
             @终极技能.started += instance.On终极技能;
             @终极技能.performed += instance.On终极技能;
             @终极技能.canceled += instance.On终极技能;
-            @开关角色UI.started += instance.On开关角色UI;
-            @开关角色UI.performed += instance.On开关角色UI;
-            @开关角色UI.canceled += instance.On开关角色UI;
-            @交互.started += instance.On交互;
-            @交互.performed += instance.On交互;
-            @交互.canceled += instance.On交互;
+            @快捷物品槽1.started += instance.On快捷物品槽1;
+            @快捷物品槽1.performed += instance.On快捷物品槽1;
+            @快捷物品槽1.canceled += instance.On快捷物品槽1;
+            @快捷物品槽2.started += instance.On快捷物品槽2;
+            @快捷物品槽2.performed += instance.On快捷物品槽2;
+            @快捷物品槽2.canceled += instance.On快捷物品槽2;
         }
 
         /// <summary>
@@ -681,12 +739,6 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
             @弹反.started -= instance.On弹反;
             @弹反.performed -= instance.On弹反;
             @弹反.canceled -= instance.On弹反;
-            @开关技能树.started -= instance.On开关技能树;
-            @开关技能树.performed -= instance.On开关技能树;
-            @开关技能树.canceled -= instance.On开关技能树;
-            @关闭所有UI.started -= instance.On关闭所有UI;
-            @关闭所有UI.performed -= instance.On关闭所有UI;
-            @关闭所有UI.canceled -= instance.On关闭所有UI;
             @施法.started -= instance.On施法;
             @施法.performed -= instance.On施法;
             @施法.canceled -= instance.On施法;
@@ -699,12 +751,12 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
             @终极技能.started -= instance.On终极技能;
             @终极技能.performed -= instance.On终极技能;
             @终极技能.canceled -= instance.On终极技能;
-            @开关角色UI.started -= instance.On开关角色UI;
-            @开关角色UI.performed -= instance.On开关角色UI;
-            @开关角色UI.canceled -= instance.On开关角色UI;
-            @交互.started -= instance.On交互;
-            @交互.performed -= instance.On交互;
-            @交互.canceled -= instance.On交互;
+            @快捷物品槽1.started -= instance.On快捷物品槽1;
+            @快捷物品槽1.performed -= instance.On快捷物品槽1;
+            @快捷物品槽1.canceled -= instance.On快捷物品槽1;
+            @快捷物品槽2.started -= instance.On快捷物品槽2;
+            @快捷物品槽2.performed -= instance.On快捷物品槽2;
+            @快捷物品槽2.canceled -= instance.On快捷物品槽2;
         }
 
         /// <summary>
@@ -738,6 +790,146 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
     /// Provides a new <see cref="PlayerActions" /> instance referencing this action map.
     /// </summary>
     public PlayerActions @Player => new PlayerActions(this);
+
+    // UI
+    private readonly InputActionMap m_UI;
+    private List<IUIActions> m_UIActionsCallbackInterfaces = new List<IUIActions>();
+    private readonly InputAction m_UI_开关设置UI;
+    private readonly InputAction m_UI_交互;
+    private readonly InputAction m_UI_开关角色与背包UI;
+    private readonly InputAction m_UI_开关技能树UI;
+    private readonly InputAction m_UI_代替输入;
+    /// <summary>
+    /// Provides access to input actions defined in input action map "UI".
+    /// </summary>
+    public struct UIActions
+    {
+        private @PlayerInputSet m_Wrapper;
+
+        /// <summary>
+        /// Construct a new instance of the input action map wrapper class.
+        /// </summary>
+        public UIActions(@PlayerInputSet wrapper) { m_Wrapper = wrapper; }
+        /// <summary>
+        /// Provides access to the underlying input action "UI/开关设置UI".
+        /// </summary>
+        public InputAction @开关设置UI => m_Wrapper.m_UI_开关设置UI;
+        /// <summary>
+        /// Provides access to the underlying input action "UI/交互".
+        /// </summary>
+        public InputAction @交互 => m_Wrapper.m_UI_交互;
+        /// <summary>
+        /// Provides access to the underlying input action "UI/开关角色与背包UI".
+        /// </summary>
+        public InputAction @开关角色与背包UI => m_Wrapper.m_UI_开关角色与背包UI;
+        /// <summary>
+        /// Provides access to the underlying input action "UI/开关技能树UI".
+        /// </summary>
+        public InputAction @开关技能树UI => m_Wrapper.m_UI_开关技能树UI;
+        /// <summary>
+        /// Provides access to the underlying input action "UI/代替输入".
+        /// </summary>
+        public InputAction @代替输入 => m_Wrapper.m_UI_代替输入;
+        /// <summary>
+        /// Provides access to the underlying input action map instance.
+        /// </summary>
+        public InputActionMap Get() { return m_Wrapper.m_UI; }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Enable()" />
+        public void Enable() { Get().Enable(); }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Disable()" />
+        public void Disable() { Get().Disable(); }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.enabled" />
+        public bool enabled => Get().enabled;
+        /// <summary>
+        /// Implicitly converts an <see ref="UIActions" /> to an <see ref="InputActionMap" /> instance.
+        /// </summary>
+        public static implicit operator InputActionMap(UIActions set) { return set.Get(); }
+        /// <summary>
+        /// Adds <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
+        /// </summary>
+        /// <param name="instance">Callback instance.</param>
+        /// <remarks>
+        /// If <paramref name="instance" /> is <c>null</c> or <paramref name="instance"/> have already been added this method does nothing.
+        /// </remarks>
+        /// <seealso cref="UIActions" />
+        public void AddCallbacks(IUIActions instance)
+        {
+            if (instance == null || m_Wrapper.m_UIActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_UIActionsCallbackInterfaces.Add(instance);
+            @开关设置UI.started += instance.On开关设置UI;
+            @开关设置UI.performed += instance.On开关设置UI;
+            @开关设置UI.canceled += instance.On开关设置UI;
+            @交互.started += instance.On交互;
+            @交互.performed += instance.On交互;
+            @交互.canceled += instance.On交互;
+            @开关角色与背包UI.started += instance.On开关角色与背包UI;
+            @开关角色与背包UI.performed += instance.On开关角色与背包UI;
+            @开关角色与背包UI.canceled += instance.On开关角色与背包UI;
+            @开关技能树UI.started += instance.On开关技能树UI;
+            @开关技能树UI.performed += instance.On开关技能树UI;
+            @开关技能树UI.canceled += instance.On开关技能树UI;
+            @代替输入.started += instance.On代替输入;
+            @代替输入.performed += instance.On代替输入;
+            @代替输入.canceled += instance.On代替输入;
+        }
+
+        /// <summary>
+        /// Removes <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
+        /// </summary>
+        /// <remarks>
+        /// Calling this method when <paramref name="instance" /> have not previously been registered has no side-effects.
+        /// </remarks>
+        /// <seealso cref="UIActions" />
+        private void UnregisterCallbacks(IUIActions instance)
+        {
+            @开关设置UI.started -= instance.On开关设置UI;
+            @开关设置UI.performed -= instance.On开关设置UI;
+            @开关设置UI.canceled -= instance.On开关设置UI;
+            @交互.started -= instance.On交互;
+            @交互.performed -= instance.On交互;
+            @交互.canceled -= instance.On交互;
+            @开关角色与背包UI.started -= instance.On开关角色与背包UI;
+            @开关角色与背包UI.performed -= instance.On开关角色与背包UI;
+            @开关角色与背包UI.canceled -= instance.On开关角色与背包UI;
+            @开关技能树UI.started -= instance.On开关技能树UI;
+            @开关技能树UI.performed -= instance.On开关技能树UI;
+            @开关技能树UI.canceled -= instance.On开关技能树UI;
+            @代替输入.started -= instance.On代替输入;
+            @代替输入.performed -= instance.On代替输入;
+            @代替输入.canceled -= instance.On代替输入;
+        }
+
+        /// <summary>
+        /// Unregisters <param cref="instance" /> and unregisters all input action callbacks via <see cref="UIActions.UnregisterCallbacks(IUIActions)" />.
+        /// </summary>
+        /// <seealso cref="UIActions.UnregisterCallbacks(IUIActions)" />
+        public void RemoveCallbacks(IUIActions instance)
+        {
+            if (m_Wrapper.m_UIActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        /// <summary>
+        /// Replaces all existing callback instances and previously registered input action callbacks associated with them with callbacks provided via <param cref="instance" />.
+        /// </summary>
+        /// <remarks>
+        /// If <paramref name="instance" /> is <c>null</c>, calling this method will only unregister all existing callbacks but not register any new callbacks.
+        /// </remarks>
+        /// <seealso cref="UIActions.AddCallbacks(IUIActions)" />
+        /// <seealso cref="UIActions.RemoveCallbacks(IUIActions)" />
+        /// <seealso cref="UIActions.UnregisterCallbacks(IUIActions)" />
+        public void SetCallbacks(IUIActions instance)
+        {
+            foreach (var item in m_Wrapper.m_UIActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_UIActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    /// <summary>
+    /// Provides a new <see cref="UIActions" /> instance referencing this action map.
+    /// </summary>
+    public UIActions @UI => new UIActions(this);
     private int m_KeyboardMouseSchemeIndex = -1;
     /// <summary>
     /// Provides access to the input control scheme.
@@ -794,20 +986,6 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void On弹反(InputAction.CallbackContext context);
         /// <summary>
-        /// Method invoked when associated input action "开关技能树" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-        /// </summary>
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void On开关技能树(InputAction.CallbackContext context);
-        /// <summary>
-        /// Method invoked when associated input action "关闭所有UI" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-        /// </summary>
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void On关闭所有UI(InputAction.CallbackContext context);
-        /// <summary>
         /// Method invoked when associated input action "施法" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
@@ -836,12 +1014,34 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void On终极技能(InputAction.CallbackContext context);
         /// <summary>
-        /// Method invoked when associated input action "开关角色UI" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "快捷物品槽1" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void On开关角色UI(InputAction.CallbackContext context);
+        void On快捷物品槽1(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "快捷物品槽2" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void On快捷物品槽2(InputAction.CallbackContext context);
+    }
+    /// <summary>
+    /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "UI" which allows adding and removing callbacks.
+    /// </summary>
+    /// <seealso cref="UIActions.AddCallbacks(IUIActions)" />
+    /// <seealso cref="UIActions.RemoveCallbacks(IUIActions)" />
+    public interface IUIActions
+    {
+        /// <summary>
+        /// Method invoked when associated input action "开关设置UI" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void On开关设置UI(InputAction.CallbackContext context);
         /// <summary>
         /// Method invoked when associated input action "交互" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
@@ -849,5 +1049,26 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void On交互(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "开关角色与背包UI" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void On开关角色与背包UI(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "开关技能树UI" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void On开关技能树UI(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "代替输入" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void On代替输入(InputAction.CallbackContext context);
     }
 }

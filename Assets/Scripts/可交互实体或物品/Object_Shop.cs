@@ -13,13 +13,18 @@ public class Object_Shop : Object_NPC, IInteractable
     protected override void Update()
     {
         base.Update();
-        if(Input.GetKeyDown(KeyCode.Z))
+        if (Input.GetKeyDown(KeyCode.Z))
             shop.FillShopList();
     }
-    public void Interact()//互动方法
+    public void Interact()//F互动方法
     {
         ui.shopUI.SetupShopUI(shop, bag);
-        ui.shopUI.gameObject.SetActive(true);
+        if (ui.shopUI.gameObject.activeSelf)//二次交互关闭
+        {
+            ui.ToggleShopUI(false);
+            return;
+        }
+        ui.ToggleShopUI(true);
     }
 
     protected override void OnTriggerEnter2D(Collider2D collision)
@@ -32,7 +37,14 @@ public class Object_Shop : Object_NPC, IInteractable
     protected override void OnTriggerExit2D(Collider2D collision)
     {
         base.OnTriggerExit2D(collision);
-        ui.SwitchOffAlltooltips();
-        ui.shopUI.gameObject.SetActive(false);
+        try
+        {
+            ui.ToggleShopUI(false);
+        }
+        catch
+        {
+            // 忽略退出运行模式时的 MissingReferenceException
+            // 因为对象可能在场景卸载时已被销毁 
+        }
     }
 }

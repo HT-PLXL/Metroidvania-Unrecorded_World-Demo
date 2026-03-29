@@ -407,27 +407,27 @@ MonoBehaviour:
   whatIsGround:
     serializedVersion: 2
     m_Bits: 64
-  "\u5730\u9762\u68C0\u6D4B\u8DDD\u79BB": 0.5
-  "\u5899\u58C1\u68C0\u6D4B\u8DDD\u79BB": 0.5
-  "\u5730\u9762\u68C0\u6D4B\u8D77\u70B9": {fileID: 7011839629001484720}
-  "\u9996\u8981\u7684\u5899\u58C1\u68C0\u6D4B": {fileID: 2570734923937443840}
-  "\u6B21\u8981\u7684\u5899\u58C1\u68C0\u6D4B": {fileID: 0}
+  groundDetectionDistance: 0.6
+  wallDetectionDistance: 0.8
+  groundDetectionStart: {fileID: 7011839629001484720}
+  majorWallDetection: {fileID: 2570734923937443840}
+  secondaryWallDetection: {fileID: 0}
   battleMoveSpeed: 3
   attackDistance: 2
   battleTimeDuration: 5
-  "\u6700\u5C0F\u540E\u64A4\u8DDD\u79BB": 1
-  "\u540E\u64A4\u901F\u5EA6": {x: 5, y: 3}
+  minBackJumpDistance: 1
+  backJumpSpeed: {x: 5, y: 3}
   idleTime: 2
   moveSpeed: 1.4
-  "\u79FB\u52A8\u4E0E\u52A8\u753B\u901F\u7387\u6BD4": 1
+  moveAndAnimSpeedRatio: 1
   stunnedDuration: 1
   stunnedVelocity: {x: 7, y: 7}
   canBeStunned: 0
-  "\u4EC0\u4E48\u662F\u73A9\u5BB6":
+  whoIsPlayer:
     serializedVersion: 2
     m_Bits: 128
-  "\u73A9\u5BB6\u68C0\u6D4B\u8D77\u70B9": {fileID: 2570734923937443840}
-  "\u73A9\u5BB6\u68C0\u6D4B\u8DDD\u79BB": 10
+  detectPlayerStart: {fileID: 2570734923937443840}
+  detectPlayerDistance: 10
 --- !u!50 &4365503161234189596
 Rigidbody2D:
   serializedVersion: 5
@@ -532,7 +532,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentHp: 0
-  isDead: 0
   regenInterval: 1
   canRegenHp: 1
   "\u51FB\u9000\u786C\u76F4\u65F6\u95F4": 0.2
@@ -576,7 +575,7 @@ MonoBehaviour:
   defaultStatSetup: {fileID: 11400000, guid: 32a1e0964c64c0245ac9c8d333284138, type: 2}
   resources:
     maxHp:
-      baseValue: 100
+      baseValue: 2000
       modifiers: []
     HpRegen:
       baseValue: 0
@@ -586,7 +585,7 @@ MonoBehaviour:
       baseValue: 1
       modifiers: []
     damage:
-      baseValue: 10
+      baseValue: 300
       modifiers: []
     critChance:
       baseValue: 0
@@ -728,7 +727,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 0}
   m_FillRect: {fileID: 1823242828343390430}
   m_HandleRect: {fileID: 0}

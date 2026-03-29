@@ -13,17 +13,17 @@ public class Object_Blacksmith : Object_NPC, IInteractable
         anim = GetComponentInChildren<Animator>();
         anim.SetBool("isBlacksmith", true);
     }
-    public void Interact()//互动方法
+    public void Interact()//F互动方法
     {
-        ui.storageUI.SetupStorageUI(storage);//将本类获取的背包和仓库实例传递进去
-        ui.craftUI.SetUpCraftUI(storage);
+        ui.storageUI.SetupStorageUI(storage);//初始化库存界面
+        ui.craftUI.SetUpCraftUI(storage);//初始化制作面版
+        //第二次互动关闭
         if (ui.storageUI.gameObject.activeSelf || ui.craftUI.gameObject.activeSelf)
         {
-            ui.storageUI.gameObject.SetActive(false);
-            ui.craftUI.gameObject.SetActive(false);
-            return;
+            ui.ToggleStorageUI(false);//关闭库存UI和制作UI和提示板
+            return;//直接退出
         }
-        ui.storageUI.gameObject.SetActive(true);
+        ui.ToggleStorageUI(true);
     }
     protected override void OnTriggerEnter2D(Collider2D collider)
     {
@@ -34,8 +34,14 @@ public class Object_Blacksmith : Object_NPC, IInteractable
     protected override void OnTriggerExit2D(Collider2D collider)
     {
         base.OnTriggerExit2D(collider);
-        ui.SwitchOffAlltooltips();
-        ui.storageUI?.gameObject.SetActive(false);
-        ui.craftUI?.gameObject.SetActive(false);
+        try
+        {
+            ui.ToggleStorageUI(false);//关闭库存UI和制作UI和提示板
+        }
+        catch
+        {
+            // 忽略退出运行模式时的 MissingReferenceException
+            // 因为对象可能在场景卸载时已被销毁 
+        }
     }
 }

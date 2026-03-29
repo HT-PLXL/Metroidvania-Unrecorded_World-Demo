@@ -1,11 +1,12 @@
 using System;
 using System.Collections;
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class Player : Entity
 {
-    public static Player Instance;//在整个游戏流程中，类只需要一个实例时才适合设为静态实例
+    public static Player instance;//在整个游戏流程中，类只需要一个实例时才适合设为静态实例
     public static event Action OnPlayerDeath;
     //static静态，后接方法，直接使用类名+方法（）调用，但只能访问静态的方法和属性，不能访问实例成员
     //static event：静态事件不需要创建类的对象就可以订阅（subscribe）或触发（invoke）
@@ -16,12 +17,14 @@ public class Player : Entity
     //再去动画师窗口设置触发和结束的需要的参数
     //创建状态脚本，在此声明公开的脚本类型+变量
     //最后在Awake（）中new参数后创建新的状态脚本写继承，触发、结束和状态转换
-    private UI ui;
+    public UI ui {  get; private set; }
     public Player_SkillManager skillManager { get; private set; }
     public Player_VFX vfx { get; private set; }
-    public EntityHp Hp { get; private set; }
+    public EntityHp hp { get; private set; }
     public Entity_StatusHandler statusHandler { get; private set; }
     public Player_Combat playerCombat { get; private set; }
+    public Bag_Player bag { get; private set; }
+    public Player_Stats stats { get; private set; }
 
     //————————————状态————————————
     public Player_IdleState idleState { get; private set; }
@@ -65,14 +68,18 @@ public class Player : Entity
     {
         base.Awake();
 
-        Instance = this;
+        instance = this;
         ui = FindAnyObjectByType<UI>();//全局范围查找第一个类型为UI的对象
         input = new PlayerInputSet();
         skillManager = GetComponent<Player_SkillManager>();
         vfx = GetComponent<Player_VFX>();
-        Hp = GetComponent<EntityHp>();
+        hp = GetComponent<EntityHp>();
         statusHandler = GetComponent<Entity_StatusHandler>();
         playerCombat = GetComponent<Player_Combat>();
+        bag = GetComponent<Bag_Player>();
+        stats = GetComponent<Player_Stats>();
+
+        ui.SetupControlUI(input,this);//初始化UI输入控制
 
         idleState = new Player_IdleState(this, stateMachine, "idle");//橙色内容是动画师界面的参数，必须一致
         moveState = new Player_MoveState(this, stateMachine, "move");
@@ -157,7 +164,7 @@ public class Player : Entity
         yield return new WaitForEndOfFrame();//生成延迟并返回——帧结束处理（一帧的最后一件事）
         stateMachine.ChangeState(attackState);//PlayerState中Enter会刷新bool值为真
     }
-    private void TryInteract()//寻找最近可交互对象并交互
+    public void TryInteract()//寻找最近可交互对象并交互
     {
         Transform closest = null;
         float closestDistance = Mathf.Infinity;
@@ -181,30 +188,28 @@ public class Player : Entity
     }
     private void OnEnable()//Onable在Awake后执行，用于启动输入系统
     {
-        input.Enable();
+        input.Enable();//启动输入系统
         input.Player.鼠标.performed += ctx => mousePosition = ctx.ReadValue<Vector2>();
         input.Player.Movement.performed += ctx => moveInput = ctx.ReadValue<Vector2>();
         input.Player.Movement.canceled += ctx => moveInput = Vector2.zero;
-        input.Player.开关技能树.performed += ctx => ui.ToggleSkillTreeUI();
-        input.Player.开关角色UI.performed += ctx => ui.ToggleBagUI();
-        input.Player.关闭所有UI.performed += ctx => ui.CloseUI();
         input.Player.施法.performed += ctx => skillManager.shard.TryUseSkill();
         input.Player.施法.performed += ctx => skillManager.clone.TryUseSkill();//记得调整
-        input.Player.交互.performed += ctx => TryInteract();
+        input.Player.快捷物品槽1.performed += ctx => bag.TryUseQuickItemInSlot(1);
+        input.Player.快捷物品槽2.performed += ctx => bag.TryUseQuickItemInSlot(2);
         //input.Player.具体动作.按键 执行/按下/抬起 += ctx => 方法
         //.performed输入完成 / started按下 / canceled抬起 是InputAction类型的事件
         //ctx为InputAction.CallbackContext 的实例ctx，包含按键值，输入的设备，触发时间等
         //如果不需要使用ctx，可以用 _ 代替作为参数占位符
 
-        // 完整的匿名函数写法 以交互为例
-        //input.Player.交互.performed += delegate (InputAction.CallbackContext ctx)
+        // 完整的匿名函数写法 以施法为例
+        //input.Player.施法.performed += delegate (InputAction.CallbackContext ctx)
         //{
-        //    TryInteract(); // 要执行的逻辑
+        //    TryUseSkill(); // 要执行的逻辑
         //};
     }
     private void OnDisable()
     {
-        input.Disable();
+        input.Disable();//关闭输入系统
     }
 
 

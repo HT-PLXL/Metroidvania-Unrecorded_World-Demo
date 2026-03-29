@@ -8,15 +8,15 @@ public class ItemEffect_Buff : ItemEffectDataSO
     [SerializeField] private BuffEffectData[] buffsNeedApply;
     [SerializeField] private float duration;
     [SerializeField] private string source = Guid.NewGuid().ToString();//不重复的id
-    private Player_Stats playerStats;
 
-    public override bool CanBeUsed()
+    public override bool CanBeUsed(Player player)
     {
-        if (playerStats == null)
-            playerStats = FindFirstObjectByType<Player_Stats>();
 
-        if (playerStats.CanApplyBuff(source))
+        if (player.stats.CanApplyBuff(source))
+        {
+            this.player = player;
             return true;
+        }
         else
         {
             Debug.Log("不能应用相同的buff");
@@ -25,6 +25,7 @@ public class ItemEffect_Buff : ItemEffectDataSO
     }
     public override void ExecuteEffect()//执行效果
     {
-        playerStats.ApplyBuff(buffsNeedApply, duration, source);
+        player.stats.ApplyBuff(buffsNeedApply, duration, source);
+        player = null;
     }
 }

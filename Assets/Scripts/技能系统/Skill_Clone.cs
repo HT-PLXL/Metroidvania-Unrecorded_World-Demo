@@ -16,6 +16,7 @@ public class Skill_Clone : Skill_Base
         if (CanUseSkill() == false)
             return;
         CreateClone();
+        setSkillOnCooldown();
     }
     public void CreateClone(Vector3? targetPosition = null)//生成实体并将此处参数传入实体脚本，vector3? 允许为空的3维向量，设不传参时默认值为null
     {

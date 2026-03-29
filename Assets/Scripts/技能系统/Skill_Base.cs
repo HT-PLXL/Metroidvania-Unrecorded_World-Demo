@@ -17,15 +17,35 @@ public class Skill_Base : MonoBehaviour
         skillManager = GetComponentInParent<Player_SkillManager>();
         lastTimeUsed = lastTimeUsed - cooldown;//初始/重生时重置冷却
         damageScale = new DamageScaleFactor();//暂时没做技能数据，所以需要初始化一下
+
     }
     public virtual void TryUseSkill()
     {
 
     }
     protected bool OnCooldown() => Time.time < lastTimeUsed + cooldown;
-    public void setSkillOnCooldown() => lastTimeUsed = Time.time;//使其进入冷却
-    public void ReduceCooldown(float cooldownReduction) => lastTimeUsed = lastTimeUsed - cooldownReduction;//减少冷却时间
-    public void ResetCooldown() => lastTimeUsed = Time.time - cooldown;//重置冷却时间
+    public void setSkillOnCooldown()
+    {
+        player.ui.gameUI.GetSkillSlot(skillType).StartCooldown(cooldown);
+        lastTimeUsed = Time.time;//使其进入冷却
+    }
+    public void ReduceCooldown(float cooldownReduction)
+    {
+        lastTimeUsed = lastTimeUsed - cooldownReduction;//减少冷却时间
+        if (OnCooldown())
+        {
+            var skillSlot = player.ui.gameUI.GetSkillSlot(skillType);
+            if(skillSlot.gameObject.activeSelf ==false)
+                return;
+            skillSlot.timePassed += cooldownReduction;
+            skillSlot.newCo(cooldown, skillSlot.timePassed);
+        }
+    }
+    public void ResetCooldown()
+    {
+        player.ui.gameUI.GetSkillSlot(skillType).ResetCooldown();
+        lastTimeUsed = Time.time - cooldown;//重置冷却时间
+    }
 
     public virtual bool CanUseSkill()
     {
@@ -38,11 +58,14 @@ public class Skill_Base : MonoBehaviour
         }
         return true;
     }
-    public void SetSkillUpgrade(UpgradeData Type)//更新升级后数据
+    public void SetSkillUpgrade(Skill_DataSO skillData)//更新升级后数据
     {
+        UpgradeData Type = skillData.upgradeData;
         upgradeType = Type.upgradeType;
         cooldown = Type.cooldown;
         damageScale = Type.damageScale;
+
+        player.ui.gameUI.GetSkillSlot(skillType).SetupSkillSlot(skillData);
         ResetCooldown();
     }
     protected bool Unlocked(SkillUpgradeType upgradeCheck) => upgradeType == upgradeCheck;

@@ -22,7 +22,7 @@ public class SkillObject_Shard : SkillObject_Base
     public void SetUpShard(Skill_Shard shard)
     {
         this.skillShard = shard;
-        playerStats = shard.player.entityStats;
+        playerStats = shard.player.stats;
         damageScale = shard.damageScale;
         float time = shard.GetDetonateTime();
         Invoke(nameof(Explode), time);//延迟time后执行，这是继承了MonoBehaviour的内置方法
@@ -30,7 +30,7 @@ public class SkillObject_Shard : SkillObject_Base
     public void SetUpShard(Skill_Shard shard, float detonationTime, bool canMove, float shardSpeed, Transform target = null)//重载
     {
         this.skillShard = shard;
-        playerStats = shard.player.entityStats;
+        playerStats = shard.player.stats;
         damageScale = shard.damageScale;
         Invoke(nameof(Explode), detonationTime);//延迟detonationTime后执行，这是继承了MonoBehaviour的内置方法
         if (canMove)

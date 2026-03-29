@@ -4,16 +4,16 @@ using UnityEngine;
 
 public class Entity : MonoBehaviour
 {
-    public event Action OnFlip;//声明一个封装了委托的事件，委托可以理解为任务列表
+    public event Action OnFlip;
     public Animator anim { get; private set; }
     public Rigidbody2D rb { get; private set; }
-    public Entity_Stats entityStats { get; private set; }
+    public Entity_SFX sfx { get; private set; }
     protected StateMachine stateMachine;//声明状态机容器（即变量stateMachine）
     private bool isFacingRight = true;
     public int faceDirection { get; private set; } = 1;//区分正负，可当被乘数用于确定方向
 
     [Header("碰撞检测详情")]
-    [cn("什么是地面")]public LayerMask whatIsGround;
+    [cn("什么是地面")] public LayerMask whatIsGround;
     [cn("地面检测距离")][SerializeField] private float groundDetectionDistance;
     [cn("墙壁检测距离")][SerializeField] private float wallDetectionDistance;
     [cn("地面检测起点")][SerializeField] private Transform groundDetectionStart;
@@ -32,7 +32,7 @@ public class Entity : MonoBehaviour
     {
         anim = GetComponentInChildren<Animator>();
         rb = GetComponent<Rigidbody2D>();
-        entityStats = GetComponent<Entity_Stats>();
+        sfx = GetComponent<Entity_SFX>();
 
         stateMachine = new StateMachine();//为stateMachine创建实例，确保被使用时传出的参数不为null
 

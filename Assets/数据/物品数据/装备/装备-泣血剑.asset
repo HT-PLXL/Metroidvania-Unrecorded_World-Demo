@@ -1,0 +1,50 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5efc5f4960cb424eac1777908bf337d, type: 3}
+  m_Name: "\u88C5\u5907-\u6CE3\u8840\u5251"
+  m_EditorClassIdentifier: 
+  itemName: "\u6CE3\u8840\u5251"
+  icon: {fileID: 8796641721362945431, guid: 6df671555535cce438f5502f352eba42, type: 3}
+  itemType: 1
+  maxStackCount: 1
+  itemEffect: {fileID: 11400000, guid: 9c93771312aa6f949b41bf9fe6f6ad1f, type: 2}
+  itemRarity: 950
+  maxDropChance: 100
+  dropChance: 5.1
+  level: "\u91D1\u8272\u4F20\u8BF4"
+  itemPrice: 5388
+  minStackCountInShop: 1
+  maxStackCountInShop: 1
+  craftRecipe:
+  - itemData: {fileID: 11400000, guid: 28ccaf08e3fd513438fbe3f40046f991, type: 2}
+    stackCount: 2
+    itemEffect: {fileID: 0}
+  - itemData: {fileID: 11400000, guid: 71feda8aeaafc1b47bd8993bc5c8b6e8, type: 2}
+    stackCount: 2
+    itemEffect: {fileID: 0}
+  - itemData: {fileID: 11400000, guid: 9715d1d72bd28b142bd7b2a695c9e288, type: 2}
+    stackCount: 1
+    itemEffect: {fileID: 0}
+  - itemData: {fileID: 11400000, guid: 2fdb703f7daa8ae47bf551ee3dd01168, type: 2}
+    stackCount: 16
+    itemEffect: {fileID: 0}
+  modifier:
+  - statType: 7
+    value: 30
+  - statType: 6
+    value: 0.1
+  - statType: 3
+    value: 10
+  - statType: 8
+    value: 20
+  - statType: 9
+    value: 20

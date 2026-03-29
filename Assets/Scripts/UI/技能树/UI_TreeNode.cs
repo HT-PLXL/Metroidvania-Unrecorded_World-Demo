@@ -23,19 +23,17 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     [SerializeField] private string lockedColor = "#B0B0B0";
     private Color lastColor;
 
-    private void Awake()
+    private void OnEnable()
     {
-        ui = GetComponentInParent<UI>();
-        rect = GetComponent<RectTransform>();
-        skillTree = GetComponentInParent<UI_SkillTree>();
-        connectHandle = GetComponent<UI_TreeConnectHandle>();
-
-        UpdateIconColor(GetColor(lockedColor));//设置初始颜色为暗色调
+        //用于修复开启技能树后出现的异常问题
+        if (isUnlocked)
+            UpdateIconColor(Color.white);
+        else
+            UpdateIconColor(GetColor(lockedColor));//设置初始颜色为暗色调
     }
     private void Start()
     {
-        if (skillData.unlockedByDefault)
-            Unlock();
+        UnlockedDefaultSkill();
     }
     private void OnValidate()//用于编辑器模式下的数据验证和初始化的特殊生命周期方法
     {
@@ -46,13 +44,20 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         skillCost = skillData.cost;
         gameObject.name = "UI树节点 - " + skillName;
     }
-    private void OnEnable()
+    public void UnlockedDefaultSkill()
     {
-        //用于修复开启技能树后出现的异常问题
-        if (isUnlocked)
-            UpdateIconColor(Color.white);
-        else
-            UpdateIconColor(GetColor(lockedColor));
+        //初始化
+        GetNeedComponents();
+        //解锁默认技能
+        if (skillData.unlockedByDefault)
+            Unlock();
+    }
+    private void GetNeedComponents()
+    {
+        ui = GetComponentInParent<UI>();
+        rect = GetComponent<RectTransform>();
+        skillTree = GetComponentInParent<UI_SkillTree>(true);
+        connectHandle = GetComponent<UI_TreeConnectHandle>();
     }
     public void RefundSkillPoint()
     {
@@ -69,22 +74,24 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     }
     private void Unlock()
     {
+        //if (isUnlocked)
+        //    return;
+
         isUnlocked = true;
         UpdateIconColor(Color.white);//恢复原色
-        skillTree.RemoveSkillPoint(skillData.cost);
+            skillTree.RemoveSkillPoint(skillData.cost);
         LockConflictNodes();
         connectHandle.UnlockConnectionLineImage(true);//改变连接线颜色
 
-        skillTree.skillManager.GetSkillByType(skillData.skillType).SetSkillUpgrade(skillData.upgradeData);
+        skillTree.skillManager.GetSkillByType(skillData.skillType).SetSkillUpgrade(skillData);
     }
-    public void UnlockByUsingSaveData()//用于读档
+    public void UnlockOnLoadData()//用于读档
     {
         isUnlocked = true;
         UpdateIconColor(Color.white);//恢复原色
         LockConflictNodes();
 
         connectHandle.UnlockConnectionLineImage(true);//改变连接线颜色
-
     }
     private bool CanBeUnlocked()//判断节点能否被解锁
     {
@@ -135,7 +142,7 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     }
     public void OnPointerEnter(PointerEventData eventData)
     {
-        ui.skillTooltip.showTooltip(true, rect, this);
+        ui.skillTooltip.ShowTooltip(true, rect,skillData ,this);
 
         if (isUnlocked == false && islocked == false)
         {

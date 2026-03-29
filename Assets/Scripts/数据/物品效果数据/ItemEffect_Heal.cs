@@ -8,7 +8,7 @@ public class ItemEffect_Heal :ItemEffectDataSO
     public override void ExecuteEffect()
     {
         Player player = FindFirstObjectByType<Player>();
-        float healAmount = player.entityStats.GetMaxHp() * healPercent;
-        player.Hp.IncreaseHp(healAmount);
+        float healAmount = player.stats.GetMaxHp() * healPercent;
+        player.hp.IncreaseHp(healAmount);
     }
 }

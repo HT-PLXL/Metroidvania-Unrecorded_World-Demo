@@ -19,6 +19,6 @@ public class ItemEffectOnTakingDamage : ItemEffectDataSO
     }
     private void HealOnTakingDamage(float damage)
     {
-        player.Hp.IncreaseHp(damage * healPercentOnAttack);
+        player.hp.IncreaseHp(damage * healPercentOnAttack);
     }
 }

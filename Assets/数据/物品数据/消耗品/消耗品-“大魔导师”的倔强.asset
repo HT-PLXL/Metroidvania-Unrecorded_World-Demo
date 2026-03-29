@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ba21156e10555b44ac0bf4c392c4f25, type: 3}
+  m_Name: "\u6D88\u8017\u54C1-\u201C\u5927\u9B54\u5BFC\u5E08\u201D\u7684\u5014\u5F3A"
+  m_EditorClassIdentifier: 
+  itemName: "\u201C\u5927\u9B54\u5BFC\u5E08\u201D\u7684\u5014\u5F3A"
+  icon: {fileID: -7165076937192758615, guid: 6df671555535cce438f5502f352eba42, type: 3}
+  itemType: 4
+  maxStackCount: 5
+  itemEffect: {fileID: 11400000, guid: 7f3f4713f69fb7f4ea7c3670d94ff775, type: 2}
+  itemRarity: 844
+  maxDropChance: 75
+  dropChance: 15.7
+  level: "\u7D2B\u8272\u53F2\u8BD7"
+  itemPrice: 300
+  minStackCountInShop: 1
+  maxStackCountInShop: 1
+  craftRecipe: []

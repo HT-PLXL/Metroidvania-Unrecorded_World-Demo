@@ -21,7 +21,7 @@ public class SkillObject_Sword : SkillObject_Base
         //用技能容器值替换默认值
         this.throwSword = throwSword;
         playerTransform = throwSword.transform.root;//实际上获取的是技能容器transform组件的根组件player.transform
-        playerStats = throwSword.player.entityStats;
+        playerStats = throwSword.player.stats;
         damageScale = throwSword.damageScale;
     }
     protected void HandleComeBack()//判断超过最大距离，或设定应该返回时，平滑接近玩家并销毁

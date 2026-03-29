@@ -6,19 +6,27 @@ public class 箱子 : MonoBehaviour, IDamageable
     private Animator anim;
     private Rigidbody2D rb;
     private Entity_VFX vfx;
+    private Entity_DropManager dropManager;
     [Header("打开细节")]
-    [SerializeField] private Vector2 被击退;
+    [SerializeField][cn("被击退力度")] private Vector2 knockBack;
+    [SerializeField][cn("开启掉落物机制？")] private bool CanDropItem = true;
     private void Awake()
     {
         anim = GetComponentInChildren<Animator>();
         rb = GetComponentInChildren<Rigidbody2D>();
         vfx = GetComponent<Entity_VFX>();
+        dropManager = GetComponent<Entity_DropManager>();
     }
-    public bool TakeDamage(float damage,float elementalDamage,ElementType element, Transform damageDealer)
+    public bool TakeDamage(float damage, float elementalDamage, ElementType element, Transform damageDealer)
     {
+        if (CanDropItem == true)
+        {
+            dropManager?.DropItems();
+            CanDropItem = false;
+        }
         vfx.播放受伤视觉效果(ElementType.None);
         anim.SetBool("打开宝箱", true);
-        rb.linearVelocity = 被击退;
+        rb.linearVelocity = knockBack;
         rb.angularVelocity = Random.Range(-200f, 200f);
 
         return true;

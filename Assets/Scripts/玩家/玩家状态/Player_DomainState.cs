@@ -18,7 +18,7 @@ public class Player_DomainState : PlayerState
         finalRiseDistance = GetEffectiveRiseDistance();
 
         player.SetVelocity(0, player.riseSpeed);
-        player.Hp.CanTakeDamage(false);//使冲刺时无敌
+        player.hp.CanTakeDamage(false);//使无敌
     }
     public override void Update()
     {
@@ -40,7 +40,7 @@ public class Player_DomainState : PlayerState
     {
         base.Exit();
         canCreateDomain = false;
-        player.Hp.CanTakeDamage(true);
+        player.hp.CanTakeDamage(true);
 
     }
     private void Hover()

@@ -9,7 +9,7 @@ public class EnemyState : EntityState
 
         rb = enemy.rb;
         anim = enemy.anim;
-        entity_stats = enemy.entityStats;
+        entity_stats = enemy.stats;
     }
 
     public override void UpdateAnimator()

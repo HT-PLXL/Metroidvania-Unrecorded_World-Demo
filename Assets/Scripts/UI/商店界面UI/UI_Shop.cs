@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 
 public class UI_Shop : MonoBehaviour
@@ -9,6 +10,8 @@ public class UI_Shop : MonoBehaviour
     [SerializeField] private UI_ItemSlotParent shopSlotsParent;
     [SerializeField] private UI_ItemSlotParent bagSlotsParent;
     [SerializeField] private UI_EquipSlotParent equipSlotsParent;
+    [SerializeField] private TextMeshProUGUI gold;
+
 
     public void SetupShopUI(Bag_Shop shop, Bag_Player bag)
     {
@@ -29,6 +32,7 @@ public class UI_Shop : MonoBehaviour
     {
         if (bag == null)
             return;
+        gold.text = bag.gold.ToString();
         bagSlotsParent.UpdateSlots(bag.itemList);
         shopSlotsParent.UpdateSlots(shop.itemList);
         equipSlotsParent.UpdateEquipmentSlots(bag.equipmentSlotList);

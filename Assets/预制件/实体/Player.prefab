@@ -442,7 +442,7 @@ MonoBehaviour:
   skillType: 1
   upgradeType: 0
   clonePrefab: {fileID: 7238544822331427751, guid: 04644607660c5284191974c59e5c6067, type: 3}
-  cloneDuration: 15
+  cloneDuration: 0.5
   maxAttackCounts: 3
   CloneChance: 0.5
   damagePercentHeal: 0.3
@@ -462,17 +462,17 @@ MonoBehaviour:
   cooldown: 0
   skillType: 4
   upgradeType: 0
-  maxSize: 25
+  maxSize: 16.5
   expandSpeed: 5
   domainPrefab: {fileID: 458962604043481438, guid: abda3f3b6739deb40abc409328a749d4, type: 3}
   slowDownPercent: 0.7
   slowDownDuration: 5
   cloneCount: 10
   cloneUpgradeSlowDownPercent: 1
-  cloneUpgradeDuration: 8
+  cloneUpgradeDuration: 5
   shardCount: 20
   shardUpgradeSlowDownPercent: 1
-  shardUpgradeDuration: 6
+  shardUpgradeDuration: 5
 --- !u!1 &7205622043282848179
 GameObject:
   m_ObjectHideFlags: 0
@@ -551,7 +551,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 0}
   m_FillRect: {fileID: 5076842191665188609}
   m_HandleRect: {fileID: 0}
@@ -563,6 +563,135 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!1 &7368600823979395999
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8578221172412440613}
+  - component: {fileID: 642679691267825399}
+  m_Layer: 7
+  m_Name: Audio Source
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8578221172412440613
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7368600823979395999}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3647942062935756572}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!82 &642679691267825399
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7368600823979395999}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &7449162479970182870
 GameObject:
   m_ObjectHideFlags: 0
@@ -576,12 +705,13 @@ GameObject:
   - component: {fileID: 7059242899662855689}
   - component: {fileID: 7027081028632775230}
   - component: {fileID: 4424357360078094880}
-  - component: {fileID: 3368050990897466779}
+  - component: {fileID: 8520344367611111643}
   - component: {fileID: 2268904719615525663}
   - component: {fileID: 206754725612186566}
   - component: {fileID: 3322671050382212496}
   - component: {fileID: 4178190509274449795}
   - component: {fileID: 6348513434114713659}
+  - component: {fileID: 1758771361336168078}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -608,6 +738,7 @@ Transform:
   - {fileID: 5261994478554980834}
   - {fileID: 7833605398312975326}
   - {fileID: 3611865437068143084}
+  - {fileID: 8578221172412440613}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7246745693989808706
@@ -625,27 +756,35 @@ MonoBehaviour:
   maxBagSize: 15
   itemList: []
   itemDataBase: {fileID: 11400000, guid: a2bf550ed7567bc4a9a3876107abed6b, type: 2}
+  gold: 10000
   equipmentSlotList:
   - slotType: 1
     equipmentItem:
       itemData: {fileID: 0}
-      StackCount: 0
+      stackCount: 0
       itemEffect: {fileID: 0}
   - slotType: 2
     equipmentItem:
       itemData: {fileID: 0}
-      StackCount: 0
+      stackCount: 0
       itemEffect: {fileID: 0}
   - slotType: 3
     equipmentItem:
       itemData: {fileID: 0}
-      StackCount: 0
+      stackCount: 0
       itemEffect: {fileID: 0}
   - slotType: 3
     equipmentItem:
       itemData: {fileID: 0}
-      StackCount: 0
+      stackCount: 0
       itemEffect: {fileID: 0}
+  quickItems:
+  - itemData: {fileID: 0}
+    stackCount: 0
+    itemEffect: {fileID: 0}
+  - itemData: {fileID: 0}
+    stackCount: 0
+    itemEffect: {fileID: 0}
 --- !u!114 &7059242899662855689
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -661,23 +800,23 @@ MonoBehaviour:
   whatIsGround:
     serializedVersion: 2
     m_Bits: 64
-  "\u5730\u9762\u68C0\u6D4B\u8DDD\u79BB": 1.4
-  "\u5899\u58C1\u68C0\u6D4B\u8DDD\u79BB": 0.4
-  "\u5730\u9762\u68C0\u6D4B\u8D77\u70B9": {fileID: 3647942062935756572}
-  "\u9996\u8981\u7684\u5899\u58C1\u68C0\u6D4B": {fileID: 5261994478554980834}
-  "\u6B21\u8981\u7684\u5899\u58C1\u68C0\u6D4B": {fileID: 7833605398312975326}
+  groundDetectionDistance: 1.35
+  wallDetectionDistance: 0.41
+  groundDetectionStart: {fileID: 3647942062935756572}
+  majorWallDetection: {fileID: 5261994478554980834}
+  secondaryWallDetection: {fileID: 7833605398312975326}
   attackVelocity:
   - {x: 3, y: 1.5}
   - {x: 1, y: 2.5}
   - {x: 2.75, y: 1.75}
-  jumpAttackVelocity: {x: 0, y: 0}
-  "\u653B\u51FB\u65F6\u901F\u5EA6\u6301\u7EED\u65F6\u95F4": 0.1
-  "\u8FDE\u62DB\u91CD\u7F6E\u65F6\u95F4": 1
+  jumpAttackVelocity: {x: 3, y: 6}
+  attackSpeedDuration: 0.1
+  comboResetTime: 1
   moveSpeed: 8
   jumpForce: 12
   wallJumpForce: {x: 6, y: 13}
-  "\u7A7A\u4E2D\u79FB\u52A8\u500D\u7387": 0.7
-  "\u6ED1\u5899\u4E0B\u964D\u500D\u7387": 0.4
+  airMoveMultiplier: 0.7
+  WallSlideMultiplier: 0.4
   dashDuration: 0.25
   dashSpeed: 20
   riseSpeed: 25
@@ -746,7 +885,7 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: -0.32656634}
   m_Size: {x: 0.7624041, y: 1.9660771}
   m_Direction: 0
---- !u!114 &3368050990897466779
+--- !u!114 &8520344367611111643
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -755,7 +894,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7449162479970182870}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2d29c0bbfe409844abd409cfb1748ae5, type: 3}
+  m_Script: {fileID: 11500000, guid: 0dc760ab27965a740bac4d91aa8e750a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   currentHp: 0
@@ -793,7 +932,7 @@ MonoBehaviour:
   whatIsTarget:
     serializedVersion: 2
     m_Bits: 256
-  "\u5C1D\u8BD5\u5F39\u53CD\u540E\u6447\u50F5\u76F4\u65F6\u95F4": 0.25
+  stunTimeAfterTryCounter: 0.25
 --- !u!114 &206754725612186566
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -917,6 +1056,20 @@ MonoBehaviour:
     vitality:
       baseValue: 0
       modifiers: []
+--- !u!114 &1758771361336168078
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7449162479970182870}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3547d3a8c6e91b5479841994ae8c11a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackHit: "\u73A9\u5BB6\u653B\u51FB\u547D\u4E2D"
+  attackMiss: "\u73A9\u5BB6\u653B\u51FB\u672A\u547D\u4E2D"
 --- !u!1 &8662707446638711288
 GameObject:
   m_ObjectHideFlags: 0

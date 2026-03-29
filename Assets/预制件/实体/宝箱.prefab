@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8091453218270199482}
   - component: {fileID: 8171377804968719239}
+  - component: {fileID: 3146040970581544551}
   - component: {fileID: 8839283745382681146}
   - component: {fileID: 2688278436299429403}
   - component: {fileID: 432290134444965257}
@@ -48,7 +49,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f2643a9399054a4a872a524ad4f1b6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  "\u88AB\u51FB\u9000": {x: 0, y: 5}
+  knockBack: {x: 0, y: 5}
+  CanDropItem: 1
+--- !u!114 &3146040970581544551
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3851832721351227365}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a26352c5c35fec64b96729fe34e10c27, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemDropPrefab: {fileID: 3034355854937215860, guid: c3e533edd0e64b0438a89a33df59a5e9, type: 3}
+  dropData: {fileID: 11400000, guid: db1408eb5b556d9428bdd3b76b7c78c5, type: 2}
+  maxRarityAmount: 1600
+  maxItemsToDrop: 3
 --- !u!61 &8839283745382681146
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -141,7 +159,7 @@ MonoBehaviour:
   hitVfxColor: {r: 1, g: 1, b: 1, a: 1}
   chillVfx: {r: 0, g: 1, b: 1, a: 1}
   burnVfx: {r: 1, g: 0, b: 0, a: 1}
-  electrifyVfx: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  lightningVfx: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1 &8004618124093085361
 GameObject:
   m_ObjectHideFlags: 0

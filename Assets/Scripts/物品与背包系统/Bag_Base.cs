@@ -5,16 +5,20 @@ using UnityEngine;
 public class Bag_Base : MonoBehaviour, ISaveable
 {
     public event Action OnBagChange;
+    protected Player player;
     public int maxBagSize = 15;
-    public List<Bag_Item> itemList = new List<Bag_Item>();
+    public List<Bag_Item> itemList = new List<Bag_Item>();//注意itemList根据子类变化
+    [SerializeField] protected ItemListDataSO itemDataBase;
     protected virtual void Awake()
     {
-
+        player = GetComponent<Player>();
     }
-    public void TryUseItem(Bag_Item itemNeedUse)
+    public void TryUseItem(Bag_Item itemNeedUse)//使用消耗品
     {
         Bag_Item consumable = itemList.Find(item => item == itemNeedUse);
         if (consumable == null)
+            return;
+        if (consumable.itemEffect.CanBeUsed(player) == false)//针对buff消耗品
             return;
         consumable.itemEffect.ExecuteEffect();//执行道具效果
         if (consumable.stackCount > 1)
@@ -31,13 +35,7 @@ public class Bag_Base : MonoBehaviour, ISaveable
 
     public Bag_Item SearchStackableItem(Bag_Item itemTryToAddStack)
     {
-        List<Bag_Item> stackableItemInBag = itemList.FindAll(item => item.itemData == itemTryToAddStack.itemData);
-        foreach (var anyStackableItem in stackableItemInBag)//每个同类可堆叠物品都判断一次是否可继续堆叠
-        {
-            if (anyStackableItem.CanAddStackCount())
-                return anyStackableItem;//找到任意可继续堆叠的物品就结束
-        }
-        return null;
+        return itemList.Find(item => item.itemData == itemTryToAddStack.itemData && item.CanAddStackCount());
     }
     public void AddItem(Bag_Item itemNeedAdd)
     {
@@ -57,18 +55,22 @@ public class Bag_Base : MonoBehaviour, ISaveable
             itemList.Remove(itemNeedRemove);
         OnBagChange?.Invoke();//通知UI_bag更新
     }
-    public Bag_Item SearchItem(ItemDataSO itemData)
+    public Bag_Item SearchItem(Bag_Item itemNeedFind)//注意找的是指定的单组物品，和下面方法不同
     {
-        return itemList.Find(item => item.itemData == itemData);//判断并返回已有物品列表有没有指定的物品
+        return itemList.Find(item => item == itemNeedFind);//判断并返回已有物品列表有没有指定的物品
+    }
+    public Bag_Item SearchSameItem(Bag_Item itemNeedFind)//注意找的是物品数据，和上面方法不同
+    {
+        return itemList.Find(item => item.itemData == itemNeedFind.itemData);//判断并返回已有物品列表有没有指定的物品
     }
     public void TriggerUpdateUI() => OnBagChange?.Invoke();//触发所有绑定了库存变动事件OnBagChange的UI更新方法
-    public virtual void loadData(GameData data)
-    {
-
-    }
-
     public virtual void SavaData(ref GameData data)
     {
-
+        //在子类重写
     }
+    public virtual void loadData(GameData data)
+    {
+        //在子类重写
+    }
+
 }

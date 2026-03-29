@@ -2,7 +2,7 @@ public class StateMachine
 {
     public EntityState currentState { get; private set; }
     public bool canChangeState = true;
-    public void Initialize(EntityState startState)
+    public void Initialize(EntityState startState)//初始化
     {
         currentState = startState;
         currentState.Enter();

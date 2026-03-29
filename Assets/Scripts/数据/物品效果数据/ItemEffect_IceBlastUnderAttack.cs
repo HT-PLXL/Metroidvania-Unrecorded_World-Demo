@@ -16,7 +16,7 @@ public class ItemEffect_IceBlastUnderAttack : ItemEffectDataSO
     public override void ExecuteEffect()
     {
         bool noCooldown = Time.time >= lastTimeBeUsed + cooldown;
-        bool meetCondition = player.Hp.GetHpPercent() <= HpPercentTrigger;
+        bool meetCondition = player.hp.GetHpPercent() <= HpPercentTrigger;
 
         if (noCooldown && meetCondition)
         {
@@ -43,12 +43,12 @@ public class ItemEffect_IceBlastUnderAttack : ItemEffectDataSO
     public override void Subscribe(Player player)//订阅
     {
         base.Subscribe(player);
-        player.Hp.OnUnderAttack += ExecuteEffect;
+        player.hp.OnUnderAttack += ExecuteEffect;
     }
     public override void Unsubscribe()
     {
         base.Unsubscribe();
-        player.Hp.OnUnderAttack -= ExecuteEffect;
+        player.hp.OnUnderAttack -= ExecuteEffect;
         player = null;
     }
 }

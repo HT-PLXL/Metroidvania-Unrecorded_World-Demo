@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class Enemy : Entity
 {
+    public Entity_Stats stats { get; private set; }
     public EnemyHp enemyHp {  get; private set; }
 
     public Enemy_IdleState idleState;
@@ -40,6 +41,7 @@ public class Enemy : Entity
     {
         base.Awake();
         enemyHp = GetComponent<EnemyHp>();
+        stats = GetComponent<Entity_Stats>();
     }
     public float GetMoveSpeed() => moveSpeed * activeSlowDownmultiplier;
     public float GetBattleMoveSpeed() => battleMoveSpeed * activeSlowDownmultiplier;

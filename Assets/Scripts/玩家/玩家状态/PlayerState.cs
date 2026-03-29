@@ -15,7 +15,7 @@ public abstract class PlayerState : EntityState
         anim = player.anim;//给父类和上面声明的空实例赋值
         rb = player.rb;
         input = player.input;
-        entity_stats = player.entityStats;
+        entity_stats = player.stats;
         skillManager = player.skillManager;
     }
     public override void Update()
@@ -28,9 +28,9 @@ public abstract class PlayerState : EntityState
             skillManager.dash.setSkillOnCooldown();//进入冷却
             stateMachine.ChangeState(player.dashState);
         }
-        if(input.Player.终极技能.WasPressedThisFrame() && skillManager.domain.CanUseSkill())//终极技能--领域
-        {
-            if (skillManager.domain.IsInstantDomain())
+        if(input.Player.终极技能.WasPressedThisFrame() && skillManager.domain.CanUseSkill() && stateMachine.currentState != player.domainState)
+        {   //终极技能--领域,第三个条件用于防止在领域状态再开领域
+            if (skillManager.domain.IsInstantDomain())//普通领域
                 skillManager.domain.CreateDomain();
             else
                 stateMachine.ChangeState(player.domainState);

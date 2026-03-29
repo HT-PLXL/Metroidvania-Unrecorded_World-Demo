@@ -17,11 +17,11 @@ public class SkillObject_Clone : SkillObject_Base
     public void SetUpClone(Skill_Clone cloneManager)
     {
         this.cloneManager = cloneManager;
-        playerStats = cloneManager.player.entityStats;
+        playerStats = cloneManager.player.stats;
         damageScale = cloneManager.damageScale;
         maxAttackCounts = cloneManager.GetMaxAttackCounts();
         playerTransform = cloneManager.transform.root;
-        playerHp = cloneManager.player.Hp;
+        playerHp = cloneManager.player.hp;
         skillManager = cloneManager.skillManager;
         playerStatusHandler = cloneManager.player.statusHandler;
         flipClone();

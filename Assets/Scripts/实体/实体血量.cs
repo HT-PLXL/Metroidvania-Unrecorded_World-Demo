@@ -5,10 +5,13 @@ using UnityEngine.UI;
 public class EntityHp : MonoBehaviour, IDamageable
 {
     public event Action OnUnderAttack;
+    public event Action OnHpUpdate;
     private Slider HpBar;
     private Entity_VFX entityVfx;
     private Entity entity;
     private Entity_Stats entityStats;
+    private Entity_DropManager dropManager;//掉落物管理器
+    private bool miniHpActive;
 
     public float lastDamage { get; private set; }//用于灵魂粒子
     public bool isDead { get; private set; }
@@ -30,11 +33,15 @@ public class EntityHp : MonoBehaviour, IDamageable
         entityVfx = GetComponent<Entity_VFX>();
         HpBar = GetComponentInChildren<Slider>();
         entityStats = GetComponent<Entity_Stats>();
+        dropManager = GetComponent<Entity_DropManager>();
+
         if (entityStats != null)
         {
             currentHp = entityStats.GetMaxHp();
+            OnHpUpdate += HpBarUpdate;
             HpBarUpdate();
             InvokeRepeating(nameof(RegenHp), 0, regenInterval);//自带的重复调用函数(方法名，延迟，间隔)，方法名可以使用‘ “方法名” ’，但使用nameof转为字符串利于修改，比如ctrl+R+R的名称修改
+            //上面这个重复延迟执行方法也可以让血条更新
         }
     }
     public virtual bool TakeDamage(float damage, float elementalDamage, ElementType element, Transform damageSource)//对受击目标执行
@@ -96,13 +103,15 @@ public class EntityHp : MonoBehaviour, IDamageable
         float newHp = currentHp + healAmount;
         float maxHp = entityStats.GetMaxHp();
         currentHp = Mathf.Min(newHp, maxHp);//限制增加后的血量不高于最大血量
-        HpBarUpdate();
+
+        OnHpUpdate?.Invoke();
     }
     public void ReduceHp(float damage)
     {
         entityVfx?.播放受伤视觉效果(ElementType.None);//此处是变白效果，打击效果在实体战斗中
         currentHp -= damage;
-        HpBarUpdate();
+
+        OnHpUpdate?.Invoke();
         if (currentHp <= 0)
             Die();
     }
@@ -110,7 +119,8 @@ public class EntityHp : MonoBehaviour, IDamageable
     {
         entityVfx?.播放受伤视觉效果(element);//此处是变白效果，打击效果在实体战斗中
         currentHp -= damage;
-        HpBarUpdate();
+
+        OnHpUpdate?.Invoke();
         if (currentHp <= 0)
             Die();
     }
@@ -119,13 +129,18 @@ public class EntityHp : MonoBehaviour, IDamageable
         isDead = true;
         entity.EntityDead();
         entityVfx.StopAllVfx();
+        dropManager?.DropItems();//怪物掉落物
     }
     private void HpBarUpdate()
     {
-        if (HpBar == null)
+        if (HpBar == null && HpBar.transform.parent.gameObject.activeSelf == false)
             return;
 
         HpBar.value = currentHp / entityStats.GetMaxHp();
+    }
+    public void EnableHpBar(bool enable)
+    {
+        HpBar?.transform.parent.gameObject.SetActive(enable);
     }
     private void 施加击退(Transform 伤害来源, float finalDamage)
     {

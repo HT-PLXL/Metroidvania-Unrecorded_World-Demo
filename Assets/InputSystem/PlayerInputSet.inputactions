@@ -51,24 +51,6 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "开关技能树",
-                    "type": "Button",
-                    "id": "92fc6f09-adeb-447f-a3a5-4a33cb4b60fe",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "关闭所有UI",
-                    "type": "Button",
-                    "id": "92d46a3e-1ae1-42ac-b73e-e1bec8d7e6c4",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "施法",
                     "type": "Button",
                     "id": "23a9a1ee-4765-4630-9540-f5bdbda53086",
@@ -105,18 +87,18 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "开关角色UI",
+                    "name": "快捷物品槽1",
                     "type": "Button",
-                    "id": "e5bae10c-6dfc-4511-bef6-d4d7ab6b42c0",
+                    "id": "4401da07-7a28-4217-8d59-8fbfc9580319",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
                 },
                 {
-                    "name": "交互",
+                    "name": "快捷物品槽2",
                     "type": "Button",
-                    "id": "ca491b9f-b4a6-4921-b726-697c57b02a31",
+                    "id": "8796e025-f5a0-42eb-aaae-aaf3d0eaab51",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -225,34 +207,12 @@
                 },
                 {
                     "name": "",
-                    "id": "6551d63e-0853-4b0c-babf-09e4b8868e6b",
-                    "path": "<Keyboard>/l",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";Keyboard & Mouse",
-                    "action": "开关技能树",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "b7349bff-18b1-4605-afa5-094b76fc0509",
                     "path": "<Keyboard>/e",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard & Mouse",
                     "action": "施法",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "802d6426-f585-48b9-bc1b-97c30271e39a",
-                    "path": "<Keyboard>/escape",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";Keyboard & Mouse",
-                    "action": "关闭所有UI",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -291,23 +251,131 @@
                 },
                 {
                     "name": "",
-                    "id": "633a0c6b-f018-4a74-b854-08a70b85a285",
-                    "path": "<Keyboard>/c",
+                    "id": "b027393e-b201-47c0-955e-0ac9dc43347d",
+                    "path": "<Keyboard>/1",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard & Mouse",
-                    "action": "开关角色UI",
+                    "action": "快捷物品槽1",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "43fb13cc-796f-4432-ad64-c960b34b88c4",
+                    "id": "25325570-f447-4ba4-974e-0c1f43db1f42",
+                    "path": "<Keyboard>/2",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard & Mouse",
+                    "action": "快捷物品槽2",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "UI",
+            "id": "26e5a3fd-94b5-42c6-9406-c931114316ae",
+            "actions": [
+                {
+                    "name": "开关设置UI",
+                    "type": "Button",
+                    "id": "5fa9eb3f-1410-44c9-99db-76288de900f2",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "交互",
+                    "type": "Button",
+                    "id": "691e3dbe-81bc-46af-a0c0-8b8010c11b1d",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "开关角色与背包UI",
+                    "type": "Button",
+                    "id": "77f070c2-8138-43e7-8d69-759b0b19f628",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "开关技能树UI",
+                    "type": "Button",
+                    "id": "e52eaff5-f296-4c74-9bd4-4d5c891747b2",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "代替输入",
+                    "type": "Button",
+                    "id": "ceba9d4f-72fe-4d68-8fe6-1280c4fa17b4",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "8af884a8-0e6c-4058-a5b0-e9b2953a7faa",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard & Mouse",
+                    "action": "开关设置UI",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b11e7c13-f3c5-484c-a085-f3dca34c1c4a",
                     "path": "<Keyboard>/f",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard & Mouse",
                     "action": "交互",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a7090087-1952-4fb5-bf09-cbc3a519893f",
+                    "path": "<Keyboard>/c",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard & Mouse",
+                    "action": "开关角色与背包UI",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "255738a9-80f2-4dd5-b279-f73d86415074",
+                    "path": "<Keyboard>/l",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard & Mouse",
+                    "action": "开关技能树UI",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "86ddced1-7f70-441e-8252-58d494eaf427",
+                    "path": "<Keyboard>/leftCtrl",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "代替输入",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

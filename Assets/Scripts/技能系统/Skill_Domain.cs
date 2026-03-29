@@ -30,7 +30,7 @@ public class Skill_Domain : Skill_Base
         GameObject domain = Instantiate(domainPrefab, transform.position, Quaternion.identity);
         domain.GetComponent<SkillObject_Domain>().SetUpDomain(this);
     }
-    public void HandleSpellCast()
+    public void HandleSpellCast()//SpellCast法术释放
     {
         spellCastTimer -= Time.deltaTime;
         if (currentTarget == null)
@@ -46,8 +46,8 @@ public class Skill_Domain : Skill_Base
     {
         if(upgradeType == SkillUpgradeType.时空领域_虚妄意志)
         {
-            Vector3 offect = Random.value < 0.5f ? new Vector2(1, 0) : new Vector2(-1, 0);
-            skillManager.clone.CreateClone(target.position + offect);
+            Vector3 offset = Random.value < 0.5f ? new Vector2(1, 0) : new Vector2(-1, 0);
+            skillManager.clone.CreateClone(target.position + offset);
         }
         if (upgradeType == SkillUpgradeType.时空领域_魔能轰炸)
         {
