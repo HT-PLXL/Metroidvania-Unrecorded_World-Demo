@@ -3,9 +3,11 @@ using UnityEngine;
 
 public class Enemy_BattleState : EnemyState
 {
-    private Transform player;
-    private Transform lastTarget;
-    private float lastTimeWasInBattle;
+    protected Transform player;
+    protected Transform lastTarget;
+    protected float lastTimeWasInBattle;
+    protected float lastTimeAttack = -999;
+    public bool canNotJumpBack;
     public Enemy_BattleState(Enemy enemy, StateMachine stateMachine, string animBoolName) : base(enemy, stateMachine, animBoolName)
     {
     }
@@ -13,18 +15,25 @@ public class Enemy_BattleState : EnemyState
     {
         base.Update();
 
-        if (enemy.detectPlayer() == true)
+        if (enemy.DetectPlayer() == true)//检测到玩家刷新战斗时间
         {
             UpdateTarget();
             lastTimeWasInBattle = Time.time;
         }
-        if (战斗时间结束())
+
+        if (BattleTimeOver())//战斗时间结束返回空闲状态
             stateMachine.ChangeState(enemy.idleState);
 
-        if (在攻击距离内() && enemy.detectPlayer())
+        if (InAttackRange() && enemy.DetectPlayer() && CanAttack())
+        {
+            lastTimeAttack = Time.time;
             stateMachine.ChangeState(enemy.attackState);
+        }
         else
-            enemy.SetVelocity(enemy.GetBattleMoveSpeed() * 朝向玩家的方向(), rb.linearVelocity.y);
+        {
+            float xVelocity = enemy.ShouldChasePlayer ? enemy.GetBattleMoveSpeed()  : 0.0001f;//使用一个极小数，确保几乎不动的同时也能正常翻转
+            enemy.SetVelocity(xVelocity * DirectionToPlayer(), rb.linearVelocity.y);
+        }
     }
     public override void Enter()
     {
@@ -40,14 +49,14 @@ public class Enemy_BattleState : EnemyState
         player ??= enemy.GetPlayerTransform();
         //??.是空合并赋值运算符，如果变量为空则赋值，不为空则不执行
 
-        if (应该后撤())
+        if (ShouldBackJump()&& canNotJumpBack)
         {
-            rb.linearVelocity = new Vector2(enemy.backJumpSpeed.x * enemy.activeSlowDownmultiplier * -朝向玩家的方向(), enemy.backJumpSpeed.y);
-            enemy.HandleFlip(朝向玩家的方向());
+            rb.linearVelocity = new Vector2(enemy.backJumpSpeed.x * enemy.activeSlowDownmultiplier * -DirectionToPlayer(), enemy.backJumpSpeed.y);
+            enemy.HandleFlip(DirectionToPlayer());
         }
     }
-
-    private float 与玩家的距离()
+    protected  bool CanAttack() => Time.time > lastTimeAttack + enemy.attackCooldown;//冷却结束才可攻击
+    protected float GetDistanceToPlayer()
     {
         if (player == null)
             return float.MaxValue;//极大值
@@ -56,31 +65,32 @@ public class Enemy_BattleState : EnemyState
         //MathF无法实例化，所有成员（方法、常量）均为静态，需通过MathF.XXX直接调用。
         //Abs：absolute，这里是绝对值运算
     }
-    private bool 战斗时间结束() => Time.time > lastTimeWasInBattle + enemy.battleTimeDuration;
+    protected bool BattleTimeOver() => Time.time > lastTimeWasInBattle + enemy.battleTimeDuration;
     // =>会根据 判断成立与否 返回值
-    private bool 在攻击距离内()
+    protected bool InAttackRange()
     {
-        return 与玩家的距离() < enemy.attackDistance;
+        return GetDistanceToPlayer() < enemy.attackDistance;
         //条件判断，小于则返回true，否则返回false
-        //另一种写法：private bool 在攻击距离内() => 与玩家的距离() < enemy.attackDistance;
+        //另一种写法：private bool InAttackRange() => GetDistanceToPlayer() < enemy.attackDistance;
     }
-    private bool 应该后撤() => 与玩家的距离() < enemy.minBackJumpDistance;
-    private int 朝向玩家的方向()
+    protected bool ShouldBackJump() => GetDistanceToPlayer() < enemy.minBackJumpDistance;
+    protected int DirectionToPlayer()
     {
         if (player == null)
             return 0;
         return player.position.x > enemy.transform.position.x ? 1 : -1;
         //Animator界面中参数xVelocity需要临界值0，1与-1
     }
-    private void UpdateTarget()
+    protected void UpdateTarget()
     {
-        if (enemy.detectPlayer() == false)
+        if (enemy.DetectPlayer() == false)
             return;
-        Transform newTarget = enemy.detectPlayer().transform;
+        Transform newTarget = enemy.DetectPlayer().transform;
         if (newTarget != lastTarget)
         {
             lastTarget = newTarget;
             player = newTarget;
         }
     }
+
 }

@@ -17,6 +17,34 @@ public class Entity_Stats : MonoBehaviour
     {
         return new AttackData(this, damageScale);
     }
+    /// <summary>
+    /// 通过降低/提升的百分比调整子史莱姆的属性
+    /// </summary>
+    /// <param name="reduction">降低百分比</param>
+    /// <param name="increase">提升百分比</param>
+    public void GetNewSlimeStat(Stat_ResourceGroup resourceGroup, Stat_AttackGroup offenseGroup, Stat_DefenseGroup defenseGroup, float reduction, float increase)
+    {   //没有在此修改的值就是大史莱姆的默认值
+
+        // 提升的属性
+        attack.attackSpeed.SetBaseValue(offenseGroup.attackSpeed.GetValue() * increase);
+        attack.critChance.SetBaseValue(offenseGroup.critChance.GetValue() * increase);
+        attack.critPower.SetBaseValue(offenseGroup.critPower.GetValue() * increase);
+        attack.fireDamage.SetBaseValue(offenseGroup.fireDamage.GetValue() * increase);
+        attack.iceDamage.SetBaseValue(offenseGroup.iceDamage.GetValue() * increase);
+        attack.lightningDamage.SetBaseValue(offenseGroup.lightningDamage.GetValue() * increase);
+
+        defense.evasion.SetBaseValue(defenseGroup.evasion.GetValue() * increase);
+
+        // 降低的属性
+        attack.damage.SetBaseValue(offenseGroup.damage.GetValue() * reduction);
+        resources.maxHp.SetBaseValue(resourceGroup.maxHp.GetValue() * reduction);
+        resources.HpRegen.SetBaseValue(resourceGroup.HpRegen.GetValue() * reduction);
+
+        defense.armor.SetBaseValue(defenseGroup.armor.GetValue() * reduction);
+        defense.lightningResistance.SetBaseValue(defenseGroup.lightningResistance.GetValue() * reduction);
+        defense.fireResistance.SetBaseValue(defenseGroup.fireResistance.GetValue() * reduction);
+        defense.iceResistance.SetBaseValue(defenseGroup.iceResistance.GetValue() * reduction);
+    }
     public float GetElementalDamage(out ElementType element, float scareFactor = 1)//scareFactor比例因子，用于实现不同倍率的伤害
     {
         float fireDamage = attack.fireDamage.GetValue();
@@ -107,7 +135,7 @@ public class Entity_Stats : MonoBehaviour
         float critPower = GetCritPower() / 100;
 
         isCrit = Random.Range(0, 100) < critChance;//注意形参列表中已经声明isCrit为bool值
-        float finalDamage = isCrit ? baseDamage * critPower : baseDamage;
+        float finalDamage = isCrit ? baseDamage *(1+ critPower) : baseDamage;
         return finalDamage * scareFactor;
     }
     public float GetBaseDamage() => attack.damage.GetValue() + (major.strength.GetValue() * 2f);

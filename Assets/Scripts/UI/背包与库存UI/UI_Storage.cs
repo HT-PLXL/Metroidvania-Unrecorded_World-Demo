@@ -29,7 +29,7 @@ public class UI_Storage : MonoBehaviour
     }
     private void UpdateUI()
     {
-        if(storage == null)
+        if(storage == null|| bag==null)
             return;
         bagParent.UpdateSlots(bag.itemList);
         StorageParent.UpdateSlots(storage.itemList);

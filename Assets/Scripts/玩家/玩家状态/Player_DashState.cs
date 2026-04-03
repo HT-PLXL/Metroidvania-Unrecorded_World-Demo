@@ -22,6 +22,7 @@ public class Player_DashState : PlayerState
         rb.gravityScale = 0;
         //重力设置为0，水平冲刺无下落
         player.hp.CanTakeDamage(false);//使冲刺时无敌
+        player.gameObject.layer = LayerMask.NameToLayer("不可选中");
     }
     public override void Update()
     {
@@ -45,6 +46,8 @@ public class Player_DashState : PlayerState
         player.hp.CanTakeDamage(true);
         player.SetVelocity(0, 0);
         rb.gravityScale = 原始重力;
+        player.gameObject.layer = LayerMask.NameToLayer("玩家");
+
     }
     private void 取消状态()
     {

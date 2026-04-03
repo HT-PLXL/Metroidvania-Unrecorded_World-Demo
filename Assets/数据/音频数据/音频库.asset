@@ -30,3 +30,13 @@ MonoBehaviour:
     clips:
     - {fileID: 8300000, guid: 3371d26685e532b47b405c3f30f4285c, type: 3}
     volume: 0.15
+  mainMenuMusic:
+  - audioName: "\u4E3B\u83DC\u5355\u97F3\u4E50\u5217\u8868"
+    clips:
+    - {fileID: 8300000, guid: ebac301900cd86346a5f06199ec3b62f, type: 3}
+    volume: 0.5
+  playMusic:
+  - audioName: "\u6DF7\u642D\u97F3\u4E50\u7EC4"
+    clips:
+    - {fileID: 8300000, guid: ddf226997672c084db96c4f92f887ea5, type: 3}
+    volume: 0.5

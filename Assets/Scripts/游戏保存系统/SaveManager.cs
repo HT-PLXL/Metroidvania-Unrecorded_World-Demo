@@ -50,6 +50,7 @@ public class SaveManager : MonoBehaviour
     {
         dataHandler = new FileDataHandler(Application.persistentDataPath, fileName, IsEncryptData);//创建携带最新文件信息的处理器
         dataHandler.Delete();
+        Debug.Log("存档删除");
     }
     private void OnApplicationQuit()//在关闭游戏时
     {

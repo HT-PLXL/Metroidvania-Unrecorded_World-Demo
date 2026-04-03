@@ -18,6 +18,8 @@ public class Object_Shop : Object_NPC, IInteractable
     }
     public void Interact()//F互动方法
     {
+        if (shop == null || bag == null)
+            return;
         ui.shopUI.SetupShopUI(shop, bag);
         if (ui.shopUI.gameObject.activeSelf)//二次交互关闭
         {
@@ -29,22 +31,28 @@ public class Object_Shop : Object_NPC, IInteractable
 
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
-        base.OnTriggerEnter2D(collision);
-        bag = playerTransform.GetComponent<Bag_Player>();
-        shop.SetBag(bag);
+        if (((1 << collision.gameObject.layer) & WhatIsPlayer) != 0)
+        {
+            base.OnTriggerEnter2D(collision);
+            bag = playerTransform.GetComponent<Bag_Player>();
+            shop.SetBag(bag);
+        }
     }
 
     protected override void OnTriggerExit2D(Collider2D collision)
     {
-        base.OnTriggerExit2D(collision);
-        try
+        if (((1 << collision.gameObject.layer) & WhatIsPlayer) != 0)
         {
-            ui.ToggleShopUI(false);
-        }
-        catch
-        {
-            // 忽略退出运行模式时的 MissingReferenceException
-            // 因为对象可能在场景卸载时已被销毁 
+            base.OnTriggerExit2D(collision);
+            try
+            {
+                ui.ToggleShopUI(false);
+            }
+            catch
+            {
+                // 忽略退出运行模式时的 MissingReferenceException
+                // 因为对象可能在场景卸载时已被销毁 
+            }
         }
     }
 }

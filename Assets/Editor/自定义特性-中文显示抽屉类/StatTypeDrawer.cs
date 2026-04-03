@@ -3,7 +3,7 @@ using System;
 using UnityEditor;
 using UnityEngine;
 
-// ×Ô¶¨ÒåÃ¶¾ÙµÄ PropertyDrawer
+// è‡ªå®šä¹‰æšä¸¾çš„ PropertyDrawer
 [CustomPropertyDrawer(typeof(StatType))]
 public class StatTypeDrawer : PropertyDrawer
 {
@@ -11,11 +11,11 @@ public class StatTypeDrawer : PropertyDrawer
     {
         if (property.propertyType == SerializedPropertyType.Enum)
         {
-            // »ñÈ¡Ã¶¾ÙÀàĞÍºÍËùÓĞÖµ
+            // è·å–æšä¸¾ç±»å‹å’Œæ‰€æœ‰å€¼
             string[] enumNames = property.enumDisplayNames;
             int currentIndex = property.enumValueIndex;
 
-            // ×ª»»ÎªÖĞÎÄÑ¡Ïî
+            // è½¬æ¢ä¸ºä¸­æ–‡é€‰é¡¹
             string[] chineseOptions = new string[enumNames.Length];
             Type enumType = fieldInfo.FieldType;
 
@@ -32,7 +32,7 @@ public class StatTypeDrawer : PropertyDrawer
                 }
             }
 
-            // ÏÔÊ¾ÏÂÀ­²Ëµ¥
+            // æ˜¾ç¤ºä¸‹æ‹‰èœå•
             int newIndex = EditorGUI.Popup(position, label.text, currentIndex, chineseOptions);
             if (newIndex != currentIndex)
             {

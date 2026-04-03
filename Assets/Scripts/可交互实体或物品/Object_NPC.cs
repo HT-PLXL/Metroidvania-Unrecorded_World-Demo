@@ -4,6 +4,7 @@ public class Object_NPC : MonoBehaviour
 {
     protected Transform playerTransform;
     protected UI ui;//供子类通过ui实例访问其他UI相关脚本
+    [SerializeField] protected LayerMask WhatIsPlayer;
     [SerializeField] private Transform npc;
     [SerializeField] private GameObject npcToolTip;
     private bool facingRight = true;
@@ -12,7 +13,7 @@ public class Object_NPC : MonoBehaviour
     [SerializeField] private float floatSpeed = 5f;
     [SerializeField] private float floatRange = 0.1f;
     private Vector3 startPosition;
-    protected  virtual void Awake()
+    protected virtual void Awake()
     {
         ui = FindFirstObjectByType<UI>();
         startPosition = npcToolTip.transform.position;
@@ -25,7 +26,7 @@ public class Object_NPC : MonoBehaviour
     }
     protected void HandleToolTipFloat()
     {
-        if(npcToolTip.activeSelf)
+        if (npcToolTip.activeSelf)
         {
             float yOffect = Mathf.Sin(Time.time * floatSpeed) * floatRange;
             npcToolTip.transform.position = startPosition + new Vector3(0, yOffect);
@@ -47,15 +48,18 @@ public class Object_NPC : MonoBehaviour
             facingRight = true;
         }
     }
-    protected virtual void OnTriggerEnter2D(Collider2D collider)
+    protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
-        playerTransform = collider.transform;
-        npcToolTip.SetActive(true);
+        if (((1 << collision.gameObject.layer) & WhatIsPlayer) != 0)
+        {
+            playerTransform = collision.transform;
+            npcToolTip.SetActive(true);
+        }
     }
-    protected virtual void OnTriggerExit2D(Collider2D collider)
+    protected virtual void OnTriggerExit2D(Collider2D collision)
     {
-        npcToolTip.SetActive(false);
+        if (((1 << collision.gameObject.layer) & WhatIsPlayer) != 0)
+            npcToolTip.SetActive(false);
     }
-
 
 }

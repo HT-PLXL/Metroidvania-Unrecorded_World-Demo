@@ -20,7 +20,7 @@ public class Enemy_StunnedState : EnemyState
     public override void Update()
     {
         base.Update();
-        if (stateTimer < 0)
+        if (stateTimer < 0 && enemy.stunRecovery == false)//僵直时间结束且未启用僵直恢复动画
             stateMachine.ChangeState(enemy.idleState);
     }
 }

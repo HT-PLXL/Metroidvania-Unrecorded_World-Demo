@@ -7,6 +7,7 @@ public class Entity : MonoBehaviour
     public event Action OnFlip;
     public Animator anim { get; private set; }
     public Rigidbody2D rb { get; private set; }
+    public Collider2D col { get; private set; }
     public Entity_SFX sfx { get; private set; }
     protected StateMachine stateMachine;//声明状态机容器（即变量stateMachine）
     private bool isFacingRight = true;
@@ -33,6 +34,7 @@ public class Entity : MonoBehaviour
         anim = GetComponentInChildren<Animator>();
         rb = GetComponent<Rigidbody2D>();
         sfx = GetComponent<Entity_SFX>();
+        col = GetComponent<Collider2D>();
 
         stateMachine = new StateMachine();//为stateMachine创建实例，确保被使用时传出的参数不为null
 

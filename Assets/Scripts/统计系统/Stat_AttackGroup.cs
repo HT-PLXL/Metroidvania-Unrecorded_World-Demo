@@ -7,7 +7,7 @@ public class Stat_AttackGroup
 
     [cn("物理伤害")] public Stat damage;
     [cn("暴击率")] public Stat critChance;
-    [cn("暴击伤害")] public Stat critPower;
+    [cn("暴击伤害倍率(1+基础值/100)")] public Stat critPower;
     [cn("护甲削减")] public Stat armorReduction;//护甲削减
     //元素伤害
     [cn("火焰伤害")] public Stat fireDamage;

@@ -19,7 +19,6 @@ public class GameData
     public SerializableDictionary<string, bool> unlockedCheckPoints;//保存的重生点的位置
     public SerializableDictionary<string, Vector3> scenePortals;//<场景名，传送门坐标>
     public string portalToSceneName;
-    public bool returnFormTown;
 
     public string lastScenePlayed;
     public Vector3 lastPlayerPosition;

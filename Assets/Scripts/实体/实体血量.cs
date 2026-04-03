@@ -1,4 +1,5 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -20,7 +21,7 @@ public class EntityHp : MonoBehaviour, IDamageable
     [Header("血量回复")]
     [SerializeField] private float regenInterval = 1;
     [SerializeField] private bool canRegenHp = true;
-    [Header("StartknockBackCo")]
+    [Header("击退")]
     [SerializeField] private float 击退硬直时间 = .2f;
     [SerializeField] private Vector2 击退力度 = new Vector2(1.5f, 2f);
     [Header("强力攻击与击退")]
@@ -35,6 +36,9 @@ public class EntityHp : MonoBehaviour, IDamageable
         entityStats = GetComponent<Entity_Stats>();
         dropManager = GetComponent<Entity_DropManager>();
 
+    }
+    protected virtual void Start()
+    {   //这个更新血量不能在Awake中实现，否则会影响创建的子史莱姆血量
         if (entityStats != null)
         {
             currentHp = entityStats.GetMaxHp();
