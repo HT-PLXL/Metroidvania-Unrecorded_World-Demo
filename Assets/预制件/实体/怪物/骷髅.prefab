@@ -507,7 +507,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d72810eac195ec42aa7607fd10f9f3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageScale:
+  basicDamageScale:
     phyiscal: 1
     elemental: 1
     chillDuration: 3
@@ -537,11 +537,11 @@ MonoBehaviour:
   currentHp: 0
   regenInterval: 1
   canRegenHp: 1
-  "\u51FB\u9000\u786C\u76F4\u65F6\u95F4": 0.2
-  "\u51FB\u9000\u529B\u5EA6": {x: 1.5, y: 2}
-  "\u5F3A\u529B\u51FB\u9000\u4F24\u5BB3\u9608\u503C": 0.3
-  "\u5F3A\u529B\u51FB\u9000\u786C\u76F4\u65F6\u95F4": 0.5
-  "\u5F3A\u529B\u51FB\u9000\u529B\u5EA6": {x: 7, y: 7}
+  hitBackStunDuration: 0.2
+  hitBackForce: {x: 1.5, y: 2}
+  powerfulHitBackThreshold: 0.3
+  powerfulHitBackDuration: 0.5
+  powerfulHitBackForce: {x: 7, y: 7}
 --- !u!114 &2213665616490006735
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -551,18 +551,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 2706603861296093732}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: db4d8533b6972754c84a8e5fd0127494, type: 3}
+  m_Script: {fileID: 11500000, guid: 99aa0c92a73b7d74498e7562a1d01208, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  "\u53D7\u4F24\u6750\u8D28": {fileID: 2100000, guid: e7a73d4d64b4ab04c92e76242c06b489, type: 2}
-  "\u53D7\u4F24\u89C6\u89C9\u6548\u679C\u6301\u7EED\u65F6\u95F4": 0.2
+  beAttackMaterial: {fileID: 2100000, guid: e7a73d4d64b4ab04c92e76242c06b489, type: 2}
+  beAttackVFXDuration: 0.2
   hitVfx: {fileID: 2480556560465659715, guid: f1bfa83ea562e8448a91bbbf756e9b57, type: 3}
   critHitVfx: {fileID: 1443265509929969890, guid: c77bc308a98f36d48be407939fd266b9, type: 3}
-  hitVfxColor: {r: 0.37254903, g: 0.37254903, b: 0.37254903, a: 1}
-  chillVfx: {r: 0, g: 1, b: 1, a: 1}
-  burnVfx: {r: 1, g: 0, b: 0, a: 1}
-  lightningVfx: {r: 0, g: 0, b: 0, a: 0}
-  "\u653B\u51FB\u8B66\u544A": {fileID: 45925868029101763}
+  chillVfx: {r: 0.18396229, g: 0.49631125, b: 1, a: 1}
+  burnVfx: {r: 0.9339623, g: 0.44137442, b: 0, a: 1}
+  lightningVfx: {r: 0.7735849, g: 0.6319838, b: 0.28826985, a: 1}
+  attackWarning: {fileID: 45925868029101763}
 --- !u!114 &5273389805861228254
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,8 +1,6 @@
 using System;
 using System.Collections;
-using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class Player : Entity
 {
@@ -16,7 +14,7 @@ public class Player : Entity
     //创建新状态流程：先在输入窗口设置按键，然后去动画窗口选择动画帧
     //再去动画师窗口设置触发和结束的需要的参数
     //创建状态脚本，在此声明公开的脚本类型+变量
-    //最后在Awake（）中new参数后创建新的状态脚本写继承，触发、结束和状态转换
+    //最后在Awake（）中new参数后在新的状态脚本写继承，触发、结束和状态转换
     public UI ui {  get; private set; }
     public Player_SkillManager skillManager { get; private set; }
     public Player_VFX vfx { get; private set; }
@@ -211,7 +209,4 @@ public class Player : Entity
     {
         input.Disable();//关闭输入系统
     }
-
-
-
 }

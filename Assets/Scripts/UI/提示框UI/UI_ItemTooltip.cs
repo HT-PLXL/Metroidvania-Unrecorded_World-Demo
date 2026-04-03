@@ -41,7 +41,7 @@ public class UI_ItemTooltip : UI_Tooltip
             return "#9932CC";//紫色
         if (rarity < 951)//对应 5.1% - 15% 掉落率
             return "#FFD700";//金色
-        return "red";    //对应 0.1% - 5% 掉落率
+        return "red";//红色，对应 0.1% - 5% 掉落率
 
     }
 }

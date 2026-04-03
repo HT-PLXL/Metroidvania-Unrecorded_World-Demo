@@ -41,10 +41,9 @@ public class Enemy_BattleState : EnemyState
 
         lastTimeWasInBattle = Time.time;
         //如果被玩家打却没有检测到玩家(比如远程攻击)，就需要直接按这里的计时等待结束战斗状态
-        //虽然这还是会让小怪“快速罚站”哈哈
+        //虽然这还是会让小怪“快速罚站”
         //不加会在游戏时间大于持续时间后每次触发都让小怪直接进入空闲状态然后等待进入移动状态
         //如果是正常发现玩家，Update里每帧更新计时维持战斗状态
-
 
         player ??= enemy.GetPlayerTransform();
         //??.是空合并赋值运算符，如果变量为空则赋值，不为空则不执行
@@ -66,12 +65,9 @@ public class Enemy_BattleState : EnemyState
         //Abs：absolute，这里是绝对值运算
     }
     protected bool BattleTimeOver() => Time.time > lastTimeWasInBattle + enemy.battleTimeDuration;
-    // =>会根据 判断成立与否 返回值
     protected bool InAttackRange()
     {
         return GetDistanceToPlayer() < enemy.attackDistance;
-        //条件判断，小于则返回true，否则返回false
-        //另一种写法：private bool InAttackRange() => GetDistanceToPlayer() < enemy.attackDistance;
     }
     protected bool ShouldBackJump() => GetDistanceToPlayer() < enemy.minBackJumpDistance;
     protected int DirectionToPlayer()

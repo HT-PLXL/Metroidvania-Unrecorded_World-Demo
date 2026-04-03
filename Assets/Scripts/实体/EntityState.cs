@@ -31,9 +31,9 @@ public abstract class EntityState
     }
     public virtual void Exit()
     {
-        anim.SetBool(animBoolName, false);//以currentState.Exit()的idlestate.Exit为例，它有3参，第3参animBoolName为实例idle
-                                          //此处执行anim.SetBool，字符串类型的参数集合“animBoolName”全部修改为false，因为只传了1个第3参，此时内部只有参数idle，修改为false
-                                          //注意上面声明的this.animBoolName = animBoolName;因此也可以理解括号中为（animBoolName = 实例参数animBoolName（即为idle），false）
+        anim.SetBool(animBoolName, false);
+        //以currentState.Exit()的idlestate.Exit为例，它有3参，第3参animBoolName为实例idle                                 
+        //此处执行anim.SetBool，字符串类型的参数集合“animBoolName”全部修改为false，因为只传了1个第3参，此时内部只有参数idle，修改为false                                 
     }
     public void AnimTrigger()
     {

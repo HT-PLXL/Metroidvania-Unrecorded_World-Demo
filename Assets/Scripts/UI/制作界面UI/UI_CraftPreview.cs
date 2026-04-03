@@ -11,7 +11,7 @@ public class UI_CraftPreview : MonoBehaviour
 
     private Coroutine co;
 
-    [Header("Item Preview Setup")]
+    [Header("制作预览细节")]
     [SerializeField] private Image itemIcon;
     [SerializeField] private TextMeshProUGUI itemName;
     [SerializeField] private TextMeshProUGUI itemInfo;

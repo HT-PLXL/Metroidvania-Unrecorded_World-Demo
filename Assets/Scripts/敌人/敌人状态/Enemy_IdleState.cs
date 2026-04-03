@@ -4,7 +4,6 @@ public class Enemy_IdleState : Enemy_GroundState
 {
     public Enemy_IdleState(Enemy enemy, StateMachine stateMachine, string animBoolName) : base(enemy, stateMachine, animBoolName)
     {
-
     }
     public override void Enter()
     {

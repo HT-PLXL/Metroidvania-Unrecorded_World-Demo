@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 //角色UI的组件，管理子类物品槽

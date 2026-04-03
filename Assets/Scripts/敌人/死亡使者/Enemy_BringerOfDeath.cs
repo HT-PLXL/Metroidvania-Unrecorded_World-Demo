@@ -54,12 +54,6 @@ public class Enemy_BringerOfDeath : Enemy, ICounter
         defaultTeleportChance = chanceToTeleport;
         offsetY = col.bounds.size.y / 2f;
     }
-    protected override void Update()
-    {
-        base.Update();
-        Debug.Log($"{stateMachine.currentState}");
-
-    }
     public void HandleCounter()//实现接口
     {
         stateMachine.ChangeState(stunnedState);
@@ -97,7 +91,6 @@ public class Enemy_BringerOfDeath : Enemy, ICounter
             yield return new WaitForSeconds(skillCastRate);
         }
         SetUseSkillPerformed(true);
-        Debug.Log("??!!!666");
     }
     public bool CanTeleport()
     {

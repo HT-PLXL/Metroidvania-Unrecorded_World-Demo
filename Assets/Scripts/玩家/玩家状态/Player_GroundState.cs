@@ -12,7 +12,6 @@ public class Player_GroundState : PlayerState
         base.Update();
         if (rb.linearVelocity.y < 0 && player.isDetectGround == false)
             stateMachine.ChangeState(player.fallState);
-        //2.5p和2.6p两处末尾修复bug使用，但此处未出现bug，使用上述代码显然会影响后续二段跳功能
 
         //输入PlayerInputSet界面填入的名称
         if (input.Player.Jump.WasPressedThisFrame())//WasPressedThisFrame是新输入系统PlayerInputSet脚本定义的

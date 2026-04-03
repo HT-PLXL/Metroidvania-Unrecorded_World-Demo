@@ -14,7 +14,7 @@ public class UI_CraftListButton : MonoBehaviour
     {
         if (craftData == null)
         {
-            Debug.Log("You need to assign craft list data!");
+            Debug.Log("你需要分配可制作物品列表");
             return;
         }
 

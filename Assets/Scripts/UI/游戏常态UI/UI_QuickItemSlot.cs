@@ -40,9 +40,6 @@ public class UI_QuickItemSlot : UI_ItemSlot
     }
     public override void OnPointerDown(PointerEventData eventData)
     {
-        //List<Bag_Item> consumables = bag.itemList.FindAll(item => item.itemData.itemType == ItemType.消耗品);
-        //if (consumables.Count == 0)
-        //    return;
         ui.gameUI.OpenQuickItemSelect(this, rect);
     }
 }

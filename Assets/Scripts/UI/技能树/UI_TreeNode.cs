@@ -74,9 +74,6 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     }
     private void Unlock()
     {
-        //if (isUnlocked)
-        //    return;
-
         isUnlocked = true;
         UpdateIconColor(Color.white);//恢复原色
             skillTree.RemoveSkillPoint(skillData.cost);

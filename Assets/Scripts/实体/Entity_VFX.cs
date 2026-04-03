@@ -7,31 +7,27 @@ public class Entity_VFX : MonoBehaviour
     private Entity entity;
 
     [Header("受伤视觉效果")]
-    [SerializeField] private Material 受伤材质;
-    [SerializeField] private float 受伤视觉效果持续时间 = 0.2f;
+    [SerializeField] private Material beAttackMaterial;
+    [SerializeField] private float beAttackVFXDuration = 0.2f;
 
     private Material originalMaterial;
-    private Coroutine 受伤视觉协程;
+    private Coroutine beAttackVFXCo;
     private Coroutine statsCo;
-
 
     [Header("攻击特效")]
     [SerializeField] private GameObject hitVfx;
     [SerializeField] private GameObject critHitVfx;
-    [SerializeField] private Color hitVfxColor = Color.white;
 
     [Header("元素颜色")]
     [SerializeField] private Color chillVfx;
     [SerializeField] private Color burnVfx;
     [SerializeField] private Color lightningVfx;
-    //private Color originalHitVfxColor;
 
     private void Awake()
     {
         entity = GetComponent<Entity>();
         sr = GetComponentInChildren<SpriteRenderer>();
         originalMaterial = sr.material;
-        //originalHitVfxColor = hitVfxColor;
         ColorUtility.TryParseHtmlString("#009AFF", out chillVfx);
         ColorUtility.TryParseHtmlString("#FFD700", out lightningVfx);
         ColorUtility.TryParseHtmlString("#EA5420", out burnVfx);
@@ -69,7 +65,6 @@ public class Entity_VFX : MonoBehaviour
             yield return new WaitForSeconds(tickInterval);
             timeHasPassed = timeHasPassed + tickInterval;//会有一定的时间误差，持续时间最好设置为间隔时间的倍数
         }
-        //statsCo = null;
         sr.color = Color.white;//循环结束后设置为默认颜色
     }
     public void CreateHitVfx(Transform target, bool isCrit, ElementType element)//transform包含了位置，旋转，缩放
@@ -97,25 +92,25 @@ public class Entity_VFX : MonoBehaviour
             case ElementType.Lightning:
                 return lightningVfx;
             default:
-                ColorUtility.TryParseHtmlString("#740EC1", out Color color);
+                ColorUtility.TryParseHtmlString("#009AFF", out Color color);
                 return color;
         }
     }
 
-    private IEnumerator 受伤视觉效果转变()
+    private IEnumerator BeAttackVFXSwitch()
     {
-        sr.material = 受伤材质;
-        yield return new WaitForSeconds(受伤视觉效果持续时间);
+        sr.material = beAttackMaterial;
+        yield return new WaitForSeconds(beAttackVFXDuration);
         sr.material = originalMaterial;
     }
-    public void 播放受伤视觉效果(ElementType element)
+    public void PlayBeAttackVFX(ElementType element)
     {
-        if (受伤视觉协程 != null)
-            StopCoroutine(受伤视觉协程);
+        if (beAttackVFXCo != null)
+            StopCoroutine(beAttackVFXCo);
         //连续受击，前面的协程会在后面的运行过程中就把材质转变为默认材质，因此需要停止
         if (element != ElementType.None)
             return;
-        受伤视觉协程 = StartCoroutine(受伤视觉效果转变());//启动IEnumerator
+        beAttackVFXCo = StartCoroutine(BeAttackVFXSwitch());//启动IEnumerator
     }
 
 }

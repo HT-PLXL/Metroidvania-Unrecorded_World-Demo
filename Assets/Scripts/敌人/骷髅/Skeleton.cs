@@ -1,9 +1,8 @@
 using UnityEngine;
-
-public class 骷髅 : Enemy , ICounter
+//怪物——骷髅脚本
+public class Skeleton : Enemy , ICounter
 {
     public bool CanBeCountered { get => canBeStunned;}
-    //读取CanBeCounter时，返回类中canBeStunned的值
 
     protected override void Awake()
     {

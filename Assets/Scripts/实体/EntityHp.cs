@@ -1,5 +1,4 @@
 using System;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,22 +11,22 @@ public class EntityHp : MonoBehaviour, IDamageable
     private Entity entity;
     private Entity_Stats entityStats;
     private Entity_DropManager dropManager;//掉落物管理器
-    private bool miniHpActive;
+    //private bool miniHpActive;
 
     public float lastDamage { get; private set; }//用于灵魂粒子
     public bool isDead { get; private set; }
     protected bool canTakeDamage = true;
     [SerializeField] public float currentHp;
     [Header("血量回复")]
-    [SerializeField] private float regenInterval = 1;
-    [SerializeField] private bool canRegenHp = true;
-    [Header("击退")]
-    [SerializeField] private float 击退硬直时间 = .2f;
-    [SerializeField] private Vector2 击退力度 = new Vector2(1.5f, 2f);
+    [SerializeField][cn("回复间隔")] private float regenInterval = 1;
+    [SerializeField][cn("允许自动回复？")] private bool canRegenHp = true;
+    [Header("hitBack")]
+    [SerializeField][cn("击退硬直时间")] private float hitBackStunDuration = .2f;
+    [SerializeField][cn("击退力度")] private Vector2 hitBackForce = new Vector2(1.5f, 2f);
     [Header("强力攻击与击退")]
-    [SerializeField] private float 强力击退伤害阈值 = 0.3f;
-    [SerializeField] private float 强力击退硬直时间 = 0.5f;
-    [SerializeField] private Vector2 强力击退力度 = new Vector2(7, 7);
+    [SerializeField][cn("强力击退(伤害/血量)阈值")] private float powerfulHitBackThreshold = 0.3f;
+    [SerializeField][cn("强力击退硬直时间")] private float powerfulHitBackDuration = 0.5f;
+    [SerializeField][cn("强力击退力度")] private Vector2 powerfulHitBackForce = new Vector2(7, 7);
     protected virtual void Awake()
     {
         entity = GetComponent<Entity>();
@@ -68,7 +67,7 @@ public class EntityHp : MonoBehaviour, IDamageable
         float resistance = entityStats != null ? entityStats.GetElementalResistance(element) : 0;
         float finalElementalDamage = elementalDamage * (1 - resistance);
 
-        施加击退(damageSource, element != ElementType.None ? finalElementalDamage : finalPhysicalDamage);
+        UseHitBack(damageSource, element != ElementType.None ? finalElementalDamage : finalPhysicalDamage);
 
         if (element == ElementType.None)
             ReduceHp(finalPhysicalDamage);
@@ -112,7 +111,7 @@ public class EntityHp : MonoBehaviour, IDamageable
     }
     public void ReduceHp(float damage)
     {
-        entityVfx?.播放受伤视觉效果(ElementType.None);//此处是变白效果，打击效果在实体战斗中
+        entityVfx?.PlayBeAttackVFX(ElementType.None);//此处是变白效果，打击效果在实体战斗中
         currentHp -= damage;
 
         OnHpUpdate?.Invoke();
@@ -121,7 +120,7 @@ public class EntityHp : MonoBehaviour, IDamageable
     }
     public void ReduceHp(float damage, ElementType element)//元素伤害专用，不播放变白效果
     {
-        entityVfx?.播放受伤视觉效果(element);//此处是变白效果，打击效果在实体战斗中
+        entityVfx?.PlayBeAttackVFX(element);//此处是变白效果，打击效果在实体战斗中
         currentHp -= damage;
 
         OnHpUpdate?.Invoke();
@@ -146,28 +145,28 @@ public class EntityHp : MonoBehaviour, IDamageable
     {
         HpBar?.transform.parent.gameObject.SetActive(enable);
     }
-    private void 施加击退(Transform 伤害来源, float finalDamage)
+    private void UseHitBack(Transform damageSource, float finalDamage)
     {
-        float 持续时间 = 计算持续时间(finalDamage);
-        Vector2 击退 = 计算受击方向与力度(finalDamage, 伤害来源);
-        entity?.StartknockBackCo(击退, 持续时间);
+        float duration = CalculateDuration(finalDamage);
+        Vector2 hitBack = CalculateDirectionAndForce(finalDamage, damageSource);
+        entity?.StartknockBackCo(hitBack, duration);
     }
-    private Vector2 计算受击方向与力度(float damage, Transform 伤害来源)
+    private Vector2 CalculateDirectionAndForce(float damage, Transform damageSource)
     {
-        int direction = transform.position.x > 伤害来源.position.x ? 1 : -1;
-        Vector2 击退 = IsHeavyDamage(damage) ? 强力击退力度 : 击退力度;
-        击退.x = 击退.x * direction;
-        return 击退;
+        int direction = transform.position.x > damageSource.position.x ? 1 : -1;
+        Vector2 hitBack = IsHeavyDamage(damage) ? powerfulHitBackForce : hitBackForce;
+        hitBack.x = hitBack.x * direction;
+        return hitBack;
     }
-    private float 计算持续时间(float damage)
+    private float CalculateDuration(float damage)
     {
-        return IsHeavyDamage(damage) ? 强力击退硬直时间 : 击退硬直时间;
+        return IsHeavyDamage(damage) ? powerfulHitBackDuration : hitBackStunDuration;
     }
     private bool IsHeavyDamage(float damage)
     {
         if (entityStats == null)
             return false;
         else
-            return damage / entityStats.GetMaxHp() > 强力击退伤害阈值;
+            return damage / entityStats.GetMaxHp() > powerfulHitBackThreshold;
     }
 }

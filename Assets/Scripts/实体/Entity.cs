@@ -108,7 +108,7 @@ public class Entity : MonoBehaviour
 
         OnFlip?.Invoke();//实体翻转的时候调用事件保持血条不翻转
     }
-    public void HandleFlip(float xVelocity)//处理翻转
+    public void HandleFlip(float xVelocity)//handleFlip
     {
         if (xVelocity > 0 && isFacingRight == false)
         {

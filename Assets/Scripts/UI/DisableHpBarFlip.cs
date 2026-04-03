@@ -1,6 +1,7 @@
 using UnityEngine;
 
-public class 禁用血条翻转 : MonoBehaviour
+//该类用于禁用血条翻转
+public class DisableHpBarFlip : MonoBehaviour
 {
     private Entity entity;
     private void Awake()
@@ -9,13 +10,13 @@ public class 禁用血条翻转 : MonoBehaviour
     }
     private void OnEnable()
     {
-        entity.OnFlip += 处理翻转;//给事件订阅新委托
+        entity.OnFlip += handleFlip;//给事件订阅新委托
     }
     private void OnDisable()
     {
-        entity.OnFlip -= 处理翻转;
+        entity.OnFlip -= handleFlip;
     }
-private void 处理翻转()
+private void handleFlip()
     {
         transform.rotation = Quaternion.identity;//旋转值保持默认
     }

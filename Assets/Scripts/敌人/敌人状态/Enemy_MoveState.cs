@@ -18,5 +18,4 @@ public class Enemy_MoveState : Enemy_GroundState
         if(enemy.isDetectGround == false || enemy.isDetectWall)
             stateMachine.ChangeState(enemy.idleState);
     }
-
 }

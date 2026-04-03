@@ -1,6 +1,6 @@
 using UnityEngine;
 [System.Serializable]
-public class 视差层
+public class ParallaxPicture
 {
     [SerializeField] private Transform picture;
     [SerializeField] private float parallaxMultiplier;//视差倍率

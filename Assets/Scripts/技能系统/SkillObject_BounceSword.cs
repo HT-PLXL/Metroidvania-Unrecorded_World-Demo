@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class SkillObject_BounceSword : SkillObject_Sword
 {
-    //[SerializeField][cn("")]
     [SerializeField][cn("弹射速度")] private float bounceSpeed = 15;
     [SerializeField][cn("弹射次数")] private int bounceNumber = 5;
     private Collider2D[] targetEnemy;
@@ -86,13 +85,6 @@ public class SkillObject_BounceSword : SkillObject_Sword
             if (enemy != null && alreadyUsed.Contains(enemy.transform) == false)//Contains判断是否包含，返回bool值
                 effectiveTargets.Add(enemy.transform);
         }
-        //if (effectiveTargets.Count > 0)
-        //    return effectiveTargets;
-        //else
-        //{
-        //    alreadyUsed.Clear();
-        //    return aliveTarget;
-        //}
         if (effectiveTargets.Count == 0)
         {
             alreadyUsed.Clear();

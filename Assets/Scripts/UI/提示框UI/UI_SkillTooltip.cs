@@ -17,7 +17,7 @@ public class UI_SkillTooltip : UI_Tooltip
     [SerializeField] private string WarningHex;
 
     [SerializeField] private Color testColor;
-    [SerializeField] private string lockedSkillText = "？？降下枷锁\n\n该技能已锁定";
+    [SerializeField] private string lockedSkillText = "此技能路线已被锁定";
     public Coroutine textEffectCo;
     protected override void Awake()
     {

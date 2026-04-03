@@ -4,7 +4,6 @@ public class Enemy_Slime : Enemy, ICounter
 {
     public bool CanBeCountered { get => canBeStunned; }
     private Transform BattleTarget;
-    //读取CanBeCounter时，返回类中canBeStunned的值
     [SerializeField][cn("子史莱姆预制体")] private GameObject childSlimePrefab;
     [SerializeField][cn("分裂数量")] private int splitCount = 2;
     [SerializeField][cn("出现时扩散速度")] private Vector2 velocityOnCreation;
@@ -35,9 +34,7 @@ public class Enemy_Slime : Enemy, ICounter
     }
     public override void EntityDead()
     {
-        //anim.SetBool("dead", true);
         stateMachine.ChangeState(deadState);
-        //Debug.Log("787878787878");
     }
     public void HandleCounter()//实现反击接口
     {

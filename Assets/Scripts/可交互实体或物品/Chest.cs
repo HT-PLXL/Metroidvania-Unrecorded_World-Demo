@@ -1,6 +1,6 @@
 using UnityEngine;
-
-public class 箱子 : MonoBehaviour, IDamageable
+//宝箱脚本
+public class Chest : MonoBehaviour, IDamageable
 {
     //当类附加了接口的时候，就必须实现接口的功能，相当于一种约束
     private Animator anim;
@@ -24,7 +24,7 @@ public class 箱子 : MonoBehaviour, IDamageable
             dropManager?.DropItems();
             CanDropItem = false;
         }
-        vfx.播放受伤视觉效果(ElementType.None);
+        vfx.PlayBeAttackVFX(ElementType.None);
         anim.SetBool("打开宝箱", true);
         rb.linearVelocity = knockBack;
         rb.angularVelocity = Random.Range(-200f, 200f);

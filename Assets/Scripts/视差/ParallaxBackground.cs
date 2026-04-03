@@ -1,12 +1,12 @@
 using UnityEngine;
 
-public class 视差背景 : MonoBehaviour
+public class ParallaxBackground : MonoBehaviour
 {
     private Camera mainCamera;
     private float lastCameraXPosition;
     private float cameraHalfWidth;
 
-    [SerializeField] private 视差层[] backgroundPictures;
+    [SerializeField] private ParallaxPicture[] backgroundPictures;
 
     private void Awake()
     {
@@ -26,7 +26,7 @@ public class 视差背景 : MonoBehaviour
         float cameraLeftEdge = currentCameraXPosition - cameraHalfWidth;
         float cameraRightEdge = currentCameraXPosition + cameraHalfWidth;
 
-        foreach (视差层 Picture in backgroundPictures)
+        foreach (ParallaxPicture Picture in backgroundPictures)
         {
             Picture.Move(moveDistance);
             Picture.LoopBackground(cameraLeftEdge, cameraRightEdge);
@@ -34,7 +34,7 @@ public class 视差背景 : MonoBehaviour
     }
     private void CalculatePictureWidth()
     { 
-        foreach (视差层 Picture in backgroundPictures)
+        foreach (ParallaxPicture Picture in backgroundPictures)
             Picture.CalculatePictureWidth();
     }
 

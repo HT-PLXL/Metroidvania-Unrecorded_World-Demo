@@ -132,15 +132,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41761716d276d28448bd4da8b6c7e7f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  "\u81EA\u52A8\u9500\u6BC1": 1
-  "\u9500\u6BC1\u5EF6\u8FDF": 1
+  autoDestroy: 1
+  destroydelay: 1
   canFade: 1
   fadeSpeed: 4
-  "\u662F\u5426\u542F\u7528\u968F\u673A\u504F\u79FB": 0
-  "\u662F\u5426\u542F\u7528\u968F\u673A\u65CB\u8F6C": 0
-  "\u6700\u5C0F\u65CB\u8F6C": 0
-  "\u6700\u5927\u65CB\u8F6C": 360
-  "x\u6700\u5927\u504F\u79FB": 0.5
-  "x\u6700\u5C0F\u504F\u79FB": -0.5
-  "y\u6700\u5927\u504F\u79FB": 0.5
-  "y\u6700\u5C0F\u504F\u79FB": -0.5
+  enableOffset: 0
+  enableRotation: 0
+  minRotation: 0
+  maxRotation: 360
+  xMaxOffset: 0.5
+  xMinOffset: -0.5
+  yMaxOffset: 0.5
+  yMinOffset: -0.5

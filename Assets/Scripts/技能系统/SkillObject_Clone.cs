@@ -48,15 +48,6 @@ public class SkillObject_Clone : SkillObject_Base
         if (target != null && target.position.x < transform.position.x)
             transform.Rotate(0, 180, 0);
     }
-    //private void HandleTrailMovement()//处理灵魂粒子轨迹位置，此时复制体动画已关闭
-    //{
-    //    transform.position = Vector2.MoveTowards(transform.position, playerTransform.position, trailMoveSpeed * Time.deltaTime);
-    //    if (Vector2.Distance(transform.position, playerTransform.position) < 0.5f)
-    //    {
-    //        HandleTouchPlayer();
-    //        Destroy(gameObject);
-    //    }
-    //}
     private void HandleTrailMovement()//处理灵魂粒子轨迹位置，此时复制体动画已关闭
     {
         transform.position = Vector2.MoveTowards(transform.position, playerTransform.position, trailMoveSpeed * Time.deltaTime);

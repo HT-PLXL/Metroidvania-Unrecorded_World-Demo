@@ -16,8 +16,8 @@ public class EnemyState : EntityState
     {
         base.UpdateAnimator();
 
-        float moveAndAnimSpeedRatioOnCombat = enemy.battleMoveSpeed / enemy.moveSpeed;
-        anim.SetFloat("战斗时移动与动画速率比", moveAndAnimSpeedRatioOnCombat);
+        float Ratio = enemy.battleMoveSpeed / enemy.moveSpeed;
+        anim.SetFloat("战斗时移动与动画速率比", Ratio);
         anim.SetFloat("移动与动画速率比", enemy.moveAndAnimSpeedRatio);
         anim.SetFloat("xVelocity", rb.linearVelocity.x);//混合树参数在battle状态切换idle/move动画
     }

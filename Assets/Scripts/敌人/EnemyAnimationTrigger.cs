@@ -3,23 +3,23 @@ using UnityEngine;
 public class EnemyAnimationTrigger : Entity_AnimationTrigger
 {
     private Enemy enemy;
-    private 敌人视觉效果 enemyVFX;
+    private Enemy_VFX enemyVFX;
     private Enemy_BringerOfDeath bringerOfDeath;
     protected override void Awake()
     {
         base.Awake();
         enemy = GetComponentInParent<Enemy>();
-        enemyVFX = GetComponentInParent<敌人视觉效果>();
+        enemyVFX = GetComponentInParent<Enemy_VFX>();
         bringerOfDeath = enemy as Enemy_BringerOfDeath;
     }
     private void EnableCounterWindow()
     {
-        enemyVFX.可弹出攻击警告(true);
+        enemyVFX.PlayAttackWarning(true);
         enemy.EnableCounterWindow(true);
     }
     private void DisableCounterWindow()
     {
-        enemyVFX.可弹出攻击警告(false);
+        enemyVFX.PlayAttackWarning(false);
         enemy.EnableCounterWindow(false);
     }
     private void SetStunRecoverT()//用于启用僵直恢复动画

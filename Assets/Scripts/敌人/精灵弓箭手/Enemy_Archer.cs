@@ -3,7 +3,6 @@ using UnityEngine;
 public class Enemy_Archer : Enemy
 {
     public bool CanBeCountered { get => canBeStunned; }
-    //读取CanBeCounter时，返回类中canBeStunned的值
     public Archer_BattleState ArcherBattleState { get; set; }
     [Header("弓箭手细节")]
     [SerializeField][cn("箭矢预制体")] private GameObject arrowPrefab;
