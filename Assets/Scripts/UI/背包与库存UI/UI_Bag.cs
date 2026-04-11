@@ -26,6 +26,4 @@ public class UI_Bag : MonoBehaviour
         uiEquipSlotParent.UpdateEquipmentSlots(bag.equipmentSlotList);
         gold.text = bag.gold.ToString();
     }
-
-
 }

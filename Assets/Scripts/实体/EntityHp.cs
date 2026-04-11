@@ -49,9 +49,6 @@ public class EntityHp : MonoBehaviour, IDamageable
     }
     public virtual bool TakeDamage(float damage, float elementalDamage, ElementType element, Transform damageSource)//对受击目标执行
     {
-        //if (isDead || canTakeDamage == false)
-        //    return false;
-
         if (attackEvaded())//闪避
         {
             Debug.Log($"{gameObject.name} evaded the attack!");

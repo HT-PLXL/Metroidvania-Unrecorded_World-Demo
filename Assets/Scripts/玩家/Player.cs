@@ -102,6 +102,11 @@ public class Player : Entity
     {
         base.Start();
         stateMachine.Initialize(idleState);
+
+        // 加载血条开关状态
+        bool hpBarEnabled = PlayerPrefs.GetInt("HpBarEnabled", 1) == 1;
+        if (hp != null)
+            hp.EnableHpBar(hpBarEnabled);
     }
     public void TeleportPlayer(Vector3 position) => transform.position = position;//传送玩家
     protected override IEnumerator SlowDownEntityCo(float duration, float slowMultiplier)

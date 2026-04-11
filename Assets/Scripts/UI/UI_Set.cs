@@ -10,18 +10,28 @@ public class UI_Set : MonoBehaviour
     [SerializeField] private float mixerMultiplier = 25;
     [Header("背景音乐音量设置")]
     [SerializeField][cn("背景音乐滑动条")] private Slider bgmSlider;
-    [SerializeField][cn("填入混音器选择暴露出的参数")] private string bgmParameter;
+    [SerializeField][cn("填入混音器选择暴露出的参数")] private string bgmParameter = "BGMVolume";
     [Header("音效音量设置")]
     [SerializeField][cn("音效滑动条")] private Slider sfxSlider;
-    [SerializeField][cn("填入混音器选择暴露出的参数")] private string sfxParameter;
+    private const string hpBarKey = "HpBarEnabled";
     private void Start()
     {
         player = FindFirstObjectByType<Player>();
         hpBarToggle.onValueChanged.AddListener(OnToggleMiniHpBar);
+        hpBarToggle.onValueChanged.AddListener(SaveHpBarState);
     }
     private void OnToggleMiniHpBar(bool isOpen)
     {
-        player.hp.EnableHpBar(isOpen);
+        // 确保 player 和 player.hp 存在
+        if (player == null)
+            player = FindFirstObjectByType<Player>();
+
+        if (player != null && player.hp != null)
+            player.hp.EnableHpBar(isOpen);
+    }
+    private void SaveHpBarState(bool isOpen)
+    {
+        PlayerPrefs.SetInt(hpBarKey, isOpen ? 1 : 0);
     }
     public void ToggleToMainMenuButton()
     {
@@ -31,34 +41,38 @@ public class UI_Set : MonoBehaviour
     //每次值变动都会把滑动条当前的Value值作为参数传入选定的方法，即下面的方法BGMSliderValue(float value)
     public void BGMSliderValue(float value)//在组件中设置最小值为0.0001
     {
-        float newValue = Mathf.Log10(value) * mixerMultiplier;
-        audioMixer.SetFloat(bgmParameter, newValue);
+        float dB = Mathf.Log10(Mathf.Max(value, 0.0001f)) * mixerMultiplier;
+        audioMixer.SetFloat(bgmParameter, dB);
+        // 保存到PlayerPrefs
+        PlayerPrefs.SetFloat(bgmParameter, value);
     }
     public void SFXSliderValue(float value)
     {
-        float newValue = Mathf.Log10(value) * mixerMultiplier;
-        audioMixer.SetFloat(sfxParameter, newValue);
-    }
-    /// <summary>
-    /// 自定义，用于被调用，解决音量设置需要设置界面激活，OnEnable才会执行的问题
-    /// </summary>
-    public void LoadVolume()
-    {
-        sfxSlider.value = PlayerPrefs.GetFloat(sfxParameter, .6f);
-        bgmSlider.value = PlayerPrefs.GetFloat(bgmParameter, .6f);
+        // 直接设置AudioManager的全局SFX音量
+        AudioManager.SetSFXGlobalVolume(value);
     }
     private void OnEnable()
     {
-        //PlayerPrefs 是 Unity 提供的本地数据持久化存储系统，能存int，float，string
-        // 从 PlayerPrefs 读取音量值（如果不存在则默认 0.6f）
-        sfxSlider.value = PlayerPrefs.GetFloat(sfxParameter, .6f);
-        bgmSlider.value = PlayerPrefs.GetFloat(bgmParameter, .6f);
+        // 加载BGM音量（线性值）并应用到Mixer
+        float savedBgm = PlayerPrefs.GetFloat(bgmParameter, 0.6f);
+        bgmSlider.value = savedBgm;
+        BGMSliderValue(savedBgm);
+
+        // 加载SFX音量并应用到AudioManager
+        float savedSfx = PlayerPrefs.GetFloat("SFXGlobalVolume", 0.6f);
+        sfxSlider.value = savedSfx;
+        AudioManager.SetSFXGlobalVolume(savedSfx);
+
+        // 加载血条开关状态
+        bool hpBarEnabled = PlayerPrefs.GetInt(hpBarKey, 1) == 1; // 默认开启(1)
+        hpBarToggle.SetIsOnWithoutNotify(hpBarEnabled); // 不触发回调，避免重复调用
+        OnToggleMiniHpBar(hpBarEnabled); // 手动应用设置
     }
 
     private void OnDisable()
     {
-        // 保存当前音量值到 PlayerPrefs
-        PlayerPrefs.SetFloat(sfxParameter, sfxSlider.value);
+        // 保存当前值（BGM已在BGMSliderValue中保存，但为了保险再保存一次）
         PlayerPrefs.SetFloat(bgmParameter, bgmSlider.value);
+        PlayerPrefs.SetFloat("SFXGlobalVolume", sfxSlider.value);
     }
 }

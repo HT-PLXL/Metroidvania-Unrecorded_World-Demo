@@ -963,7 +963,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddcc5887d6c62664ebf6305b0df2f5d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  beAttackMaterial: {fileID: 0}
+  beAttackMaterial: {fileID: 2100000, guid: e7a73d4d64b4ab04c92e76242c06b489, type: 2}
   beAttackVFXDuration: 0.2
   hitVfx: {fileID: 2480556560465659715, guid: f1bfa83ea562e8448a91bbbf756e9b57, type: 3}
   critHitVfx: {fileID: 1443265509929969890, guid: c77bc308a98f36d48be407939fd266b9, type: 3}

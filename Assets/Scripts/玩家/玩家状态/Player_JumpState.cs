@@ -25,8 +25,5 @@ public class Player_JumpState : Player_AiredState
             //起跳时攻击，状态变化为：跳跃-跳跃斩击-下落
             //因此需要补充判定——不处于跳跃斩击状态
             stateMachine.ChangeState(player.fallState);
-
     }
-
-
 }

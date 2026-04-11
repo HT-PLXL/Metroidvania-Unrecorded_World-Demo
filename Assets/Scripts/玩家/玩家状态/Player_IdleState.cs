@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class Player_IdleState : Player_GroundState
 {
-
     public Player_IdleState(Player player, StateMachine stateMachine, string stateName) : base(player, stateMachine, stateName)
     {
     }
@@ -27,8 +26,4 @@ public class Player_IdleState : Player_GroundState
             stateMachine.ChangeState(player.moveState);
 
     }
-
-
-
-
 }

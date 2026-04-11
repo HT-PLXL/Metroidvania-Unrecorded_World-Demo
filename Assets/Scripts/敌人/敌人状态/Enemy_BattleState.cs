@@ -88,5 +88,4 @@ public class Enemy_BattleState : EnemyState
             player = newTarget;
         }
     }
-
 }

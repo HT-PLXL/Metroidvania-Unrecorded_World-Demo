@@ -10,5 +10,4 @@ public class Stat_DefenseGroup
     [cn("火焰抗性")] public Stat fireResistance;
     [cn("冰霜抗性")] public Stat iceResistance;
     [cn("雷电抗性")] public Stat lightningResistance;
-
 }

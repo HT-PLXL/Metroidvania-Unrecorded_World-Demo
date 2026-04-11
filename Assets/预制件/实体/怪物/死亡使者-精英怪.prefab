@@ -102,7 +102,7 @@ MonoBehaviour:
   deadPrefab: {fileID: 7521345348199700031, guid: dc021773092eeb24a972a4cf90820412, type: 3}
   skillAmount: 6
   skillCastRate: 1
-  SkillCooldown: 1
+  SkillCooldown: 20
   playerOffset: {x: 4, y: 0.6}
 --- !u!50 &2512711866130851975
 Rigidbody2D:

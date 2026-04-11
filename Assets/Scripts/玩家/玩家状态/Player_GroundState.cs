@@ -23,13 +23,4 @@ public class Player_GroundState : PlayerState
         if (input.Player.掷剑.WasPressedThisFrame()&& skillManager.throwSword.CanUseSkill())
             stateMachine.ChangeState(player.throwSwordState);
     }
-
-
-
-
-
-
-
-
-
 }

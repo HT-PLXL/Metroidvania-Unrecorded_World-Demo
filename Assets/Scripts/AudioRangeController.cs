@@ -13,7 +13,7 @@ public class AudioRangeController : MonoBehaviour
     {
         player = Player.instance.transform;
         source = GetComponent<AudioSource>();
-        maxVolume = source.volume;
+        maxVolume = source.volume; // 原始最大音量（不带全局系数）
     }
 
     private void Update()
@@ -23,8 +23,9 @@ public class AudioRangeController : MonoBehaviour
 
         float distance = Vector2.Distance(player.position, transform.position);
         float t = Mathf.Clamp01(1 - (distance / minDistanceCanHearSound));
-        //平滑插值
-        float targetVolume = Mathf.Lerp(0, maxVolume, t * t);
+        float distanceVolume = t * t;
+        // 最终音量 = 原始最大音量 * 全局SFX系数 * 距离衰减
+        float targetVolume = maxVolume * AudioManager.GetSFXGlobalVolume() * distanceVolume;
         if (Mathf.Abs(source.volume - targetVolume) > 0.01f)
             source.volume = Mathf.Lerp(source.volume, targetVolume, Time.deltaTime * 5);
         else

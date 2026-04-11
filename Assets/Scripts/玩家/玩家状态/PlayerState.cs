@@ -53,11 +53,4 @@ public abstract class PlayerState : EntityState
             return false;
         return true;
     }
-
-
-
-
-
-
-
 }

@@ -20,9 +20,6 @@ public class Player_WallSlideState : PlayerState
 
         if (player.isDetectGround)
             stateMachine.ChangeState(player.idleState);
-
-
-
     }
     private void HandleFlip()
     {
@@ -31,6 +28,5 @@ public class Player_WallSlideState : PlayerState
             //player中有根据x轴及“isFacingRight”进行角色翻转的功能，因此这里无需担心
         else
             player.SetVelocity(player.moveInput.x, rb.linearVelocity.y * player.WallSlideMultiplier);
-
     }
 }
