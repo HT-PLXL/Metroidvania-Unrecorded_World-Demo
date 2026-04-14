@@ -45,7 +45,7 @@ public class Entity : MonoBehaviour
     }
     protected virtual void Update()
     {
-        stateMachine.UpdataActiveState();
+        stateMachine.UpdataActiveState();//给状态类提供一个Update()
         collisionDetection();
     }
     public virtual void EntityDead()//实体死亡

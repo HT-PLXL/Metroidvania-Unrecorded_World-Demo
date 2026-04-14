@@ -1467,11 +1467,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   backgroundPictures:
   - picture: {fileID: 1609973342}
-    parallaxMultiplier: 1
-    pictureWidthOffset: 10
+    parallaxX: 0
+    parallaxY: 0
+    widthOffset: 10
   - picture: {fileID: 1189723023}
-    parallaxMultiplier: 0.8
-    pictureWidthOffset: 10
+    parallaxX: 0
+    parallaxY: 0
+    widthOffset: 10
 --- !u!1001 &1258514401
 PrefabInstance:
   m_ObjectHideFlags: 0

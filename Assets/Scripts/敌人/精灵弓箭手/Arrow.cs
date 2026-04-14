@@ -1,8 +1,9 @@
 using UnityEngine;
 
-public class Arrow : MonoBehaviour,ICounter
+public class Arrow : MonoBehaviour, ICounter
 {
     [SerializeField] private LayerMask whatIsTarget;
+    [SerializeField] private LayerMask whatIsGround;
     private Collider2D col;
     private Rigidbody2D rb;
     private Entity_Combat combat;
@@ -14,12 +15,12 @@ public class Arrow : MonoBehaviour,ICounter
     {
         rb = GetComponent<Rigidbody2D>();
         col = GetComponent<Collider2D>();
-        anim= GetComponentInChildren<Animator>();
+        anim = GetComponentInChildren<Animator>();
         this.combat = combat;
 
         rb.linearVelocity = new Vector2(xVelocity, 0);
         if (rb.linearVelocity.x < 0)
-            transform.Rotate(0, 180,0);
+            transform.Rotate(0, 180, 0);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -29,6 +30,9 @@ public class Arrow : MonoBehaviour,ICounter
         if (((1 << collision.gameObject.layer) & whatIsTarget) != 0)
         {
             combat.PerformAttackOnTarget(collision.transform);
+        }
+        if (((1 << collision.gameObject.layer) & whatIsTarget) != 0 || ((1 << collision.gameObject.layer) & whatIsGround) != 0)
+        {
             StopArrowOnHit(collision.transform);
         }
     }
@@ -36,10 +40,10 @@ public class Arrow : MonoBehaviour,ICounter
     {
         rb.linearVelocity = Vector2.zero;
         //刚体类型设置为运动学（Kinematic）由代码控制运动，不受重力、物理力影响，但可与其它物体碰撞并推动它们
-        rb.bodyType = RigidbodyType2D.Kinematic; 
+        rb.bodyType = RigidbodyType2D.Kinematic;
         col.enabled = false;
-        anim.enabled =false;//禁用动画
-        GetComponentInChildren<TrailRenderer>().enabled =false;//关闭轨迹
+        anim.enabled = false;//禁用动画
+        GetComponentInChildren<TrailRenderer>().enabled = false;//关闭轨迹
         transform.parent = target;
         Destroy(gameObject, 3);
     }

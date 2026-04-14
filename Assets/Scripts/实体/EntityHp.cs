@@ -24,7 +24,7 @@ public class EntityHp : MonoBehaviour, IDamageable
     [SerializeField][cn("击退硬直时间")] private float hitBackStunDuration = .2f;
     [SerializeField][cn("击退力度")] private Vector2 hitBackForce = new Vector2(1.5f, 2f);
     [Header("强力攻击与击退")]
-    [SerializeField][cn("强力击退(伤害/血量)阈值")] private float powerfulHitBackThreshold = 0.3f;
+    [SerializeField][cn("强力击退(伤害/最大血量)阈值")] private float powerfulHitBackThreshold = 0.3f;
     [SerializeField][cn("强力击退硬直时间")] private float powerfulHitBackDuration = 0.5f;
     [SerializeField][cn("强力击退力度")] private Vector2 powerfulHitBackForce = new Vector2(7, 7);
     protected virtual void Awake()

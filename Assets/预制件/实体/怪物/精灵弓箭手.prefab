@@ -1130,10 +1130,10 @@ MonoBehaviour:
   regenInterval: 1
   canRegenHp: 1
   hitBackStunDuration: 0.2
-  hitBackForce: {x: 1.5, y: 2}
+  hitBackForce: {x: 0, y: 2}
   powerfulHitBackThreshold: 0.3
   powerfulHitBackDuration: 0.5
-  powerfulHitBackForce: {x: 7, y: 7}
+  powerfulHitBackForce: {x: 0, y: 7}
 --- !u!114 &8545399038298846204
 MonoBehaviour:
   m_ObjectHideFlags: 0

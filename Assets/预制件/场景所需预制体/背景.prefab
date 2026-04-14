@@ -487,11 +487,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   backgroundPictures:
   - picture: {fileID: 6967829507321178195}
-    parallaxMultiplier: 1
-    pictureWidthOffset: 10
+    parallaxX: 1
+    parallaxY: 0.05
+    widthOffset: 10
   - picture: {fileID: 305457191642175385}
-    parallaxMultiplier: 0.8
-    pictureWidthOffset: 10
+    parallaxX: 0.8
+    parallaxY: 0
+    widthOffset: 10
 --- !u!1 &8913627854612305662
 GameObject:
   m_ObjectHideFlags: 0

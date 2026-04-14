@@ -62,6 +62,8 @@ public class Player : Entity
     //moveinput在unity PlayerInputSet界面被映射为整数值
     public Vector2 mousePosition { get; private set; }
 
+    public bool canJumpTwo;
+
     protected override void Awake()
     {
         base.Awake();

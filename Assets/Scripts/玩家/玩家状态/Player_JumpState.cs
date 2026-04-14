@@ -15,7 +15,13 @@ public class Player_JumpState : Player_AiredState
     public override void Update()
     {
         base.Update();
-        
+
+        if (player.canJumpTwo && input.Player.Jump.WasPressedThisFrame())
+        {
+            player.SetVelocity(0, player.jumpForce);
+            player.canJumpTwo = false;
+        }
+
         if (rb.linearVelocity.y < 0 && stateMachine.currentState != player.jumpAttackState)
             //父类是空中状态，父类的update检测并执行Changestate（）进入空中斩击状态
             //而changestate（）会在同一帧执行exit（）和enter（）

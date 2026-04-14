@@ -15,7 +15,11 @@ public class Player_GroundState : PlayerState
 
         //输入PlayerInputSet界面填入的名称
         if (input.Player.Jump.WasPressedThisFrame())//WasPressedThisFrame是新输入系统PlayerInputSet脚本定义的
+        {
+            player.canJumpTwo = true;
             stateMachine.ChangeState(player.jumpState);
+        }
+
         if (input.Player.普通攻击.WasPressedThisFrame())
             stateMachine.ChangeState(player.attackState);
         if (input.Player.弹反.WasPressedThisFrame())
