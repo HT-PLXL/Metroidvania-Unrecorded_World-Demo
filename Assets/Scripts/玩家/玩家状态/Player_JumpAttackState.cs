@@ -1,5 +1,3 @@
-using UnityEngine;
-
 public class Player_JumpAttackState : PlayerState
 {
     private bool hadPerformed;//限制只执行一次
@@ -9,8 +7,9 @@ public class Player_JumpAttackState : PlayerState
     public override void Enter()
     {
         base.Enter();
+        player.SetVelocity(rb.linearVelocity.x, -20);
         hadPerformed = false;
-        player.SetVelocity(player.jumpAttackVelocity.x * player.faceDirection, player.jumpAttackVelocity.y);
+        //player.SetVelocity(player.jumpAttackVelocity.x * player.faceDirection, player.jumpAttackVelocity.y);
     }
     public override void Update()
     {
@@ -22,7 +21,9 @@ public class Player_JumpAttackState : PlayerState
             player.SetVelocity(0, rb.linearVelocity.y);
         }
         if (triggerOver && player.isDetectGround)//动画节点触发后“triggerOver”为true
+        {
             stateMachine.ChangeState(player.idleState);
+        }
     }
 }
 //————————————————————重要————————————————————

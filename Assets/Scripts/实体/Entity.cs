@@ -27,7 +27,7 @@ public class Entity : MonoBehaviour
 
     private Coroutine knockBackCo;//击退协程
     private Coroutine slowDownCo;//减速协程
-    private bool isKnockBack;//被击退
+    protected bool isKnockBack;//被击退
 
     protected virtual void Awake()
     {
@@ -47,6 +47,10 @@ public class Entity : MonoBehaviour
     {
         stateMachine.UpdataActiveState();//给状态类提供一个Update()
         collisionDetection();
+    }
+    protected virtual void FixedUpdate()
+    {
+        stateMachine.FixedUpdateForPlayerState();//给状态类提供一个FixedUpdate()
     }
     public virtual void EntityDead()//实体死亡
     {

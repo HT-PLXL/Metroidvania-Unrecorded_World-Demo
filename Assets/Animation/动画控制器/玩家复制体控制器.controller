@@ -137,7 +137,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: "\u73A9\u5BB6\u590D\u5236\u4F53\u666E\u653B1"
+  m_Name: "\u590D\u5236\u4F53\u666E\u653B1"
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
@@ -166,7 +166,7 @@ BlendTree:
   m_Name: Blend Tree
   m_Childs:
   - serializedVersion: 2
-    m_Motion: {fileID: 7400000, guid: 0937a067002280b4e84a958e4a154e7c, type: 2}
+    m_Motion: {fileID: 7400000, guid: 3695358bfcae2e244a8e87abc66b4efc, type: 2}
     m_Threshold: -1
     m_Position: {x: 0, y: 0}
     m_TimeScale: 1
@@ -174,7 +174,7 @@ BlendTree:
     m_DirectBlendParameter: yVelocity
     m_Mirror: 0
   - serializedVersion: 2
-    m_Motion: {fileID: 7400000, guid: e0095077bd5c9244f99513e84f31e5cd, type: 2}
+    m_Motion: {fileID: 7400000, guid: 4e4b2402de18f6b49beaee972eb28dc2, type: 2}
     m_Threshold: 0
     m_Position: {x: 0, y: 0}
     m_TimeScale: 1
@@ -226,7 +226,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: "\u73A9\u5BB6\u590D\u5236\u4F53\u666E\u653B2"
+  m_Name: "\u590D\u5236\u4F53\u666E\u653B2"
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
@@ -253,7 +253,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: "\u73A9\u5BB6\u590D\u5236\u4F53\u666E\u653B3"
+  m_Name: "\u590D\u5236\u4F53\u666E\u653B3"
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []

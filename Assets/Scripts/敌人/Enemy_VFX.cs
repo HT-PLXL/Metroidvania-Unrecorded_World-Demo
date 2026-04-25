@@ -9,7 +9,7 @@ public class Enemy_VFX : Entity_VFX
     {
         attackWarning.SetActive(enable);
     }
-    public override Color GetHitVfxColor()
+    public override Color GetHitVfxColor(Transform target)
     {
         ColorUtility.TryParseHtmlString("#ABABAB", out Color color);
         return color;

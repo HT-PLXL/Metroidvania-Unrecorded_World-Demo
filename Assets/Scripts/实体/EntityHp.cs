@@ -9,7 +9,7 @@ public class EntityHp : MonoBehaviour, IDamageable
     private Slider HpBar;
     private Entity_VFX entityVfx;
     private Entity entity;
-    private Entity_Stats entityStats;
+    protected Entity_Stats entityStats;
     private Entity_DropManager dropManager;//掉落物管理器
     //private bool miniHpActive;
 
@@ -54,6 +54,8 @@ public class EntityHp : MonoBehaviour, IDamageable
             Debug.Log($"{gameObject.name} evaded the attack!");
             return false;
         }
+        if (canTakeDamage == false)
+            return true;
 
         Entity_Stats attackerStats = damageSource.GetComponent<Entity_Stats>();
         float armorReduction = attackerStats != null ? attackerStats.GetArmorReduction() : 0;
@@ -110,6 +112,11 @@ public class EntityHp : MonoBehaviour, IDamageable
     {
         entityVfx?.PlayBeAttackVFX(ElementType.None);//此处是变白效果，打击效果在实体战斗中
         currentHp -= damage;
+        if (currentHp <= 0)
+        {
+            canRegenHp = false;
+            currentHp = 0;
+        }
 
         OnHpUpdate?.Invoke();
         if (currentHp <= 0)
@@ -119,6 +126,11 @@ public class EntityHp : MonoBehaviour, IDamageable
     {
         entityVfx?.PlayBeAttackVFX(element);//此处是变白效果，打击效果在实体战斗中
         currentHp -= damage;
+        if (currentHp <= 0)
+        {
+            canRegenHp = false;
+            currentHp = 0;
+        }
 
         OnHpUpdate?.Invoke();
         if (currentHp <= 0)
@@ -133,7 +145,7 @@ public class EntityHp : MonoBehaviour, IDamageable
     }
     private void HpBarUpdate()
     {
-        if (HpBar == null && HpBar.transform.parent.gameObject.activeSelf == false)
+        if (HpBar == null || HpBar.transform.parent.gameObject.activeSelf == false)
             return;
 
         HpBar.value = currentHp / entityStats.GetMaxHp();

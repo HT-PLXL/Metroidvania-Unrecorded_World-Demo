@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class Player_AttackState : PlayerState
@@ -10,7 +11,7 @@ public class Player_AttackState : PlayerState
     private bool IsComboSuccessful;
     public Player_AttackState(Player player, StateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
-        if(maxComboCount != player.attackVelocity.Length)
+        if (maxComboCount != player.attackVelocity.Length)
             maxComboCount = player.attackVelocity.Length;
         //限制/确定数组和连招总数是否一致，没啥用哈哈
     }
@@ -21,11 +22,11 @@ public class Player_AttackState : PlayerState
         ResetComboIndex();
         SetAttackSpeed();
 
-        attackDirection = player.moveInput.x != 0 ? (((int)player.moveInput.x)): player.faceDirection;
+        attackDirection = player.moveInput.x != 0 ? (((int)player.moveInput.x)) : player.faceDirection;
 
         anim.SetInteger("普通攻击索引", comboIndex);
 
-        CreateAttackSpeed();
+        _ = CreateAttackSpeed();//对Enter丢弃异步方法的延迟，在执行到延迟任务时立刻继续执行
     }
 
 
@@ -63,9 +64,11 @@ public class Player_AttackState : PlayerState
         if (speedOnAttackingTimer < 0)
             player.SetVelocity(0, rb.linearVelocity.y);
     }
-    private void CreateAttackSpeed()
+    private async Task CreateAttackSpeed()//async Task 异步 任务
     {
         Vector2 speedOnAttacking = player.attackVelocity[comboIndex - 1];
+        if (comboIndex == 2)//对第二段普攻使用
+            await Task.Delay(player.attackVelocityDelay);//攻击时突进速度的应用延迟
         speedOnAttackingTimer = player.attackSpeedDuration;
         player.SetVelocity(speedOnAttacking.x * attackDirection, speedOnAttacking.y);
         //这里的攻击方向改变速度方向，使得进入攻击状态时获得一个翻转的机会（player.HandleFlip）

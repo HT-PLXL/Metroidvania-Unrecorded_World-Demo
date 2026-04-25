@@ -26,4 +26,10 @@ public class Player_IdleState : Player_GroundState
             stateMachine.ChangeState(player.moveState);
 
     }
+    public override void FixedUpdate()
+    {
+        base.FixedUpdate();
+        // 每帧设置 idle 的期望速度，同时自动叠加上平台速度
+        player.SetVelocity(0, rb.linearVelocity.y);
+    }
 }

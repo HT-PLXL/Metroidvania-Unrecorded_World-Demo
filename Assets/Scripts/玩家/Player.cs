@@ -15,7 +15,7 @@ public class Player : Entity
     //再去动画师窗口设置触发和结束的需要的参数
     //创建状态脚本，在此声明公开的脚本类型+变量
     //最后在Awake（）中new参数后在新的状态脚本写继承，触发、结束和状态转换
-    public UI ui {  get; private set; }
+    public UI ui { get; private set; }
     public Player_SkillManager skillManager { get; private set; }
     public Player_VFX vfx { get; private set; }
     public EntityHp hp { get; private set; }
@@ -40,16 +40,17 @@ public class Player : Entity
     public Player_DomainState domainState { get; private set; }
     //————————————状态————————————
     [Header("攻击细节")]
-    [cn("攻击速度")] public Vector2[] attackVelocity;
-    [cn("跳跃攻击时速度")] public Vector2 jumpAttackVelocity;
-    [cn("跳跃攻击持续时间")] public float attackSpeedDuration = 0.1f;
+    [cn("攻击时突进速度")] public Vector2[] attackVelocity;
+    [cn("二段普攻突进速度延迟应用时间(毫秒)")] public int attackVelocityDelay;
+    [cn("跳劈时初始速度-(暂时废弃)")] public Vector2 jumpAttackVelocity;
+    [cn("攻击时突进速度的持续时间")] public float attackSpeedDuration = 0.1f;
     [cn("连招重置时间")] public float comboResetTime = 1;
     private Coroutine comboQueueCo;//连招排队协程
     [Header("移动详情")]
     [cn("移动速度")] public float moveSpeed;
     [cn("跳跃力度")] public float jumpForce;
     [cn("蹬墙跳力度")] public Vector2 wallJumpForce;
-    [cn("空中移动倍率")][Range(0, 1)] public float airMoveMultiplier = 0.7f;
+    [cn("跳跃时空中水平移动倍率")][Range(0, 1)] public float airMoveMultiplier = 0.7f;
     [cn("滑墙下降倍率")][Range(0, 1)] public float WallSlideMultiplier = 0.4f;
     [Space]
     [cn("冲刺持续时间")] public float dashDuration = .25f;
@@ -62,7 +63,10 @@ public class Player : Entity
     //moveinput在unity PlayerInputSet界面被映射为整数值
     public Vector2 mousePosition { get; private set; }
 
-    public bool canJumpTwo;
+    public bool canJumpTwo { get; set; }
+    public MovingPlatform currentPlatform { get; private set; }   // 当前站立的平台
+    private bool isOnMovingPlatform;   // 脚底接触平台表面
+
 
     protected override void Awake()
     {
@@ -79,7 +83,7 @@ public class Player : Entity
         bag = GetComponent<Bag_Player>();
         stats = GetComponent<Player_Stats>();
 
-        ui.SetupControlUI(input,this);//初始化UI输入控制
+        ui.SetupControlUI(input, this);//初始化UI输入控制
 
         idleState = new Player_IdleState(this, stateMachine, "idle");//橙色内容是动画师界面的参数，必须一致
         moveState = new Player_MoveState(this, stateMachine, "move");
@@ -191,6 +195,10 @@ public class Player : Entity
             return;
         closest.GetComponent<IInteractable>().Interact();
     }
+    public bool CompareCurrentState(EntityState entityState)
+    {
+        return stateMachine.currentState == entityState;
+    }
     private void OnEnable()//Onable在Awake后执行，用于启动输入系统
     {
         input.Enable();//启动输入系统
@@ -215,5 +223,49 @@ public class Player : Entity
     private void OnDisable()
     {
         input.Disable();//关闭输入系统
+    }
+
+    protected override void FixedUpdate()
+    {
+        base.FixedUpdate(); // 状态机先计算玩家自身的移动速度
+
+        if (currentPlatform != null)
+        {
+            Vector2 vel = rb.linearVelocity;
+
+            // 只在地面状态时才同步平台的全部速度，空中状态完全由玩家自身控制
+            if (isOnMovingPlatform && stateMachine.currentState is Player_GroundState)
+            {
+                vel.x += currentPlatform.Velocity.x;   // 水平跟随平台
+                vel.y = currentPlatform.Velocity.y;    // 垂直跟随平台
+            }
+
+            rb.linearVelocity = vel;
+        }
+    }
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (collision.gameObject.TryGetComponent<MovingPlatform>(out var platform))
+        {
+            // 检查是否有接触点的法线接近垂直向上（玩家踩在平台上）
+            foreach (ContactPoint2D contact in collision.contacts)
+            {
+                if (contact.normal.y > 0.7f)
+                {
+                    currentPlatform = platform;
+                    isOnMovingPlatform = true;
+                    return; // 找到一个就够
+                }
+            }
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.TryGetComponent<MovingPlatform>(out var platform) && platform == currentPlatform)
+        {
+            currentPlatform = null;
+            isOnMovingPlatform = false;
+        }
     }
 }

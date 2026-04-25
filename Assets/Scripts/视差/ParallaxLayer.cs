@@ -33,4 +33,3 @@ public class ParallaxLayer : MonoBehaviour
         lastPosition = mainCamera.position;                       // 更新
     }
 }
-

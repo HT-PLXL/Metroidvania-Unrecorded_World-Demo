@@ -40,7 +40,7 @@ public class Enemy : Entity
     [HideInInspector] public bool stunRecovery;//僵直恢复
 
     public bool haveDeadAnim { get; set; }
-    public Transform player { get; private set; }
+    public Transform player { get; set; }//旧时为private set
     public float activeSlowDownmultiplier { get; private set; } = 1;
     protected override void Awake()
     {
@@ -89,6 +89,8 @@ public class Enemy : Entity
     }
     private void HandlePlayerDeath()
     {
+        if (idleState == null)
+            return;
         stateMachine.ChangeState(idleState);
     }
     public void TryEnterCombatState(Transform player)

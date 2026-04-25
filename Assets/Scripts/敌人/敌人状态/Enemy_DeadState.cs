@@ -17,7 +17,7 @@ public class Enemy_DeadState : EnemyState
             stateMachine.DisableStateMachine();//关闭状态机不允许再切换状态
             rb.simulated = false;//停止物理模拟
             enemy.col.enabled = false;//关闭碰撞体，动画期间不允许再被攻击
-            enemy.enemyHp.EnableHpBar(false);//关闭血条
+            enemy.enemyHp?.EnableHpBar(false);//关闭血条
             enemy.AfterDie();//额外处理内容
         }
         else

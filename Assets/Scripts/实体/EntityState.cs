@@ -16,18 +16,20 @@ public abstract class EntityState
         this.stateMachine = stateMachine;
         this.animBoolName = animBoolName;
     }
-    public virtual void Enter()//virtual：虚方法，允许子类用override进行重写，Enter返回类型为空
+    public virtual void Enter()
     {
-        //——————————注意子类没有enter会自动执行父类的enter——————————
-
         anim.SetBool(animBoolName, true);
         triggerOver = false;
     }
     //在进入该状态时执行特定操作，对应下面Exit离开状态时执行操作
-    public virtual void Update()
+    public virtual void Update()//注意实体状态是没有继承MonoBehaviour的，此处由其他脚本调用
     {
-        stateTimer -= Time.deltaTime;//右式是增量时间，结合相关代码就是从某个时间开始加减，可以为负
-        UpdateAnimator();//virtual属性的方法被调用会执行其重写方法
+        stateTimer -= Time.deltaTime;
+        UpdateAnimator();//是virtual方法，供子类调用
+    }
+    public virtual void FixedUpdate()//注意实体状态是没有继承MonoBehaviour的，此处由其他脚本调用
+    {
+
     }
     public virtual void Exit()
     {

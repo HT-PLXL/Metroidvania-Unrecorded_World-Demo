@@ -5,7 +5,6 @@ public class BackgroundLoop : MonoBehaviour
 {
     private Camera mainCamera;
     private float bgWidth;    // 背景宽度
-
     void Start()
     {
         mainCamera = Camera.main;
