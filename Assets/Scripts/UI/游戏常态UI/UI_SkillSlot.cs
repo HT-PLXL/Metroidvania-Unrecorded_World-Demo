@@ -17,7 +17,7 @@ public class UI_SkillSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     [SerializeField] private Image cooldownImage;
     [SerializeField] private string inputKeyName;
     [SerializeField] private TextMeshProUGUI inputKeyText;
-    [SerializeField] private GameObject conflictSlot;
+    [SerializeField] public GameObject conflictSlot;
     public float timePassed;
     public Coroutine co;
 
@@ -42,6 +42,8 @@ public class UI_SkillSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
         inputKeyText.text = inputKeyName;
         skillIcon.sprite = selectedSkill.icon;
+
+        skillIcon.color = Color.white;  // <-- 添加这行，确保图标不透明
 
         if (conflictSlot != null)
             conflictSlot.SetActive(false);
@@ -84,6 +86,23 @@ public class UI_SkillSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         if (co != null)
             StopCoroutine(co);
         co = StartCoroutine(CooldownCo(cooldown, newTimePassed));
+    }
+    public void ClearSlot()
+    {
+        skillData = null;
+        if (skillIcon != null)
+        {
+            skillIcon.sprite = null;
+            skillIcon.color = new Color(1, 1, 1, 0); // 完全透明
+        }
+        inputKeyText.text = "";
+        cooldownImage.fillAmount = 0;
+        if (co != null)
+        {
+            StopCoroutine(co);
+            co = null;
+        }
+        timePassed = 0;
     }
 
     public void OnPointerEnter(PointerEventData eventData)

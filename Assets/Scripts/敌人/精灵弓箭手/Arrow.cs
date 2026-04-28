@@ -18,6 +18,7 @@ public class Arrow : MonoBehaviour, ICounter
         anim = GetComponentInChildren<Animator>();
         this.combat = combat;
 
+
         rb.linearVelocity = new Vector2(xVelocity, 0);
         if (rb.linearVelocity.x < 0)
             transform.Rotate(0, 180, 0);

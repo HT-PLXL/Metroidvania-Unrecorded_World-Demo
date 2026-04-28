@@ -19,22 +19,24 @@ public class SkillObject_Shard : SkillObject_Base
         target = newtarget == null ? SearchClosestTarget() : newtarget;
         this.speed = speed;
     }
-    public void SetUpShard(Skill_Shard shard)
+    public void SetUpShard(Skill_Shard shard, bool isPhysicalDamage)
     {
         this.skillShard = shard;
+        this.isPhysicalDamage = isPhysicalDamage;
         playerStats = shard.player.stats;
         damageScale = shard.damageScale;
         float time = shard.GetDetonateTime();
         Invoke(nameof(Explode), time);//延迟time后执行，这是继承了MonoBehaviour的内置方法
     }
-    public void SetUpShard(Skill_Shard shard, float detonationTime, bool canMove, float shardSpeed, Transform target = null)//重载
+    public void SetUpShard(Skill_Shard shard, float detonationTime, bool canMove, float shardSpeed, bool isPhysicalDamage, Transform target = null)//重载
     {
         this.skillShard = shard;
+        this.isPhysicalDamage = isPhysicalDamage;
         playerStats = shard.player.stats;
         damageScale = shard.damageScale;
         Invoke(nameof(Explode), detonationTime);//延迟detonationTime后执行，这是继承了MonoBehaviour的内置方法
         if (canMove)
-            MoveToClosestTarget(shardSpeed,target);
+            MoveToClosestTarget(shardSpeed, target);
     }
     public void Explode()//爆炸方法
     {

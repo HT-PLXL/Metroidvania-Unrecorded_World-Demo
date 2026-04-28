@@ -21,7 +21,9 @@ public class UI : MonoBehaviour
     public UI_Set gameSetUI { get; private set; }
     public UI_DeathScreen deathScreenUI { get; private set; }
     public UI_FadeScreen fadeScreenUI { get; private set; }
+    public UI_AttributeUpgrade AttributeUpgradeUI { get; private set; }
 
+    private GameObject currentUI;
     private bool skillTreeEnable;
     private bool bagEnable;
     private void Awake()
@@ -39,6 +41,7 @@ public class UI : MonoBehaviour
         gameSetUI = GetComponentInChildren<UI_Set>(true);
         deathScreenUI = GetComponentInChildren<UI_DeathScreen>(true);
         fadeScreenUI = GetComponentInChildren<UI_FadeScreen>(true);
+        AttributeUpgradeUI = GetComponentInChildren<UI_AttributeUpgrade>(true);
 
         skillTreeEnable = skillTreeUI.gameObject.activeSelf;//同步激活情况，防止出现初始激活，然后需要两次才能关掉
         bagEnable = bagUI.gameObject.activeSelf;
@@ -51,8 +54,8 @@ public class UI : MonoBehaviour
     {
         this.input = input;
         this.input.UI.交互.performed += ctx => player.TryInteract();
-        this.input.UI.开关技能树UI.performed += ctx => ToggleSkillTreeUI();
-        this.input.UI.开关角色与背包UI.performed += ctx => ToggleBagUI();
+        this.input.UI.开关技能树UI.performed += ctx => SwitchTo(skillTreeUI.gameObject);
+        this.input.UI.开关角色与背包UI.performed += ctx => SwitchTo(bagUI.gameObject);
         this.input.UI.代替输入.performed += ctx => alternativeInput = true;
         this.input.UI.代替输入.canceled += ctx => alternativeInput = false;
         this.input.UI.开关设置UI.performed += ctx =>
@@ -76,19 +79,18 @@ public class UI : MonoBehaviour
         skillTreeEnable = false;
         bagEnable = false;
 
-        CloseAllTooltips();
         StopPlayerControl(true);
         SwitchTo(gameSetUI.gameObject);
     }
     public void OpenGameUI()
     {
-        CloseAllTooltips();
         StopPlayerControl(false);
         SwitchTo(gameUI.gameObject);
     }
     public void OpenDeathScreenUI()
     {
-        SwitchTo(deathScreenUI.gameObject);
+        if (deathScreenUI.gameObject.activeSelf == false)
+            SwitchTo(deathScreenUI.gameObject);
         input.Disable();
     }
     private void StopPlayerControl(bool needStop)//开关玩家控制
@@ -98,36 +100,44 @@ public class UI : MonoBehaviour
         else
             input.Player.Enable();
     }
-    public void ToggleSkillTreeUI()
-    {
-        if (gameSetUI.gameObject.activeSelf)
-            return;
-        skillTreeEnable = !skillTreeEnable;
+    //public void ToggleSkillTreeUI()
+    //{
+    //    if (gameSetUI.gameObject.activeSelf)
+    //        return;
+    //    skillTreeEnable = !skillTreeEnable;
 
-        if (skillTreeEnable && bagEnable)//先关闭其他UI
-            ToggleBagUI();
+    //    if (skillTreeEnable && bagEnable)//先关闭其他UI
+    //        ToggleBagUI();
 
-        skillTreeUI.gameObject.SetActive(skillTreeEnable);
-        skillTooltip.ShowTooltip(false, null);
+    //    skillTreeUI.gameObject.SetActive(skillTreeEnable);
+    //    skillTooltip.ShowTooltip(false, null);
 
-        StopPlayerControl(skillTreeEnable);
-    }
-    public void ToggleBagUI()
-    {
-        if (gameSetUI.gameObject.activeSelf)
-            return;
-        bagEnable = !bagEnable;
+    //    StopPlayerControl(skillTreeEnable);
+    //}
+    //public void ToggleBagUI()
+    //{
+    //    if (gameSetUI.gameObject.activeSelf)
+    //        return;
+    //    bagEnable = !bagEnable;
 
-        if (skillTreeEnable && bagEnable)//先关闭其他UI
-            ToggleSkillTreeUI();
+    //    if (skillTreeEnable && bagEnable)//先关闭其他UI
+    //        ToggleSkillTreeUI();
 
-        bagUI.gameObject.SetActive(bagEnable);
-        statsTooltip.ShowTooltip(false, null);
-        itemTooltip.ShowTooltip(false, null);
+    //    bagUI.gameObject.SetActive(bagEnable);
+    //    statsTooltip.ShowTooltip(false, null);
+    //    itemTooltip.ShowTooltip(false, null);
 
-        StopPlayerControl(bagEnable);
+    //    StopPlayerControl(bagEnable);
 
-    }
+    //}
+    //public void CloseUI()
+    //{
+    //    skillTreeEnable = true;//先设为真，方法内会反转，从而关闭
+    //    ToggleSkillTreeUI();
+
+    //    bagEnable = true;//先设为真，方法内会反转，从而关闭
+    //    ToggleBagUI();
+    //}
     public void ToggleStorageUI(bool strageUIEnable)//开关铁匠铺UI
     {
         storageUI.gameObject.SetActive(strageUIEnable);
@@ -146,24 +156,33 @@ public class UI : MonoBehaviour
             CloseAllTooltips();
     }
 
-    public void CloseUI()
-    {
-        skillTreeEnable = true;//先设为真，方法内会反转，从而关闭
-        ToggleSkillTreeUI();
-
-        bagEnable = true;//先设为真，方法内会反转，从而关闭
-        ToggleBagUI();
-    }
     public void CloseAllTooltips()
     {
         itemTooltip.ShowTooltip(false, null);
         skillTooltip.ShowTooltip(false, null);
         statsTooltip.ShowTooltip(false, null);
     }
-    private void SwitchTo(GameObject objectNeedSwitch)
+    public void SwitchTo(GameObject objectNeedSwitch, bool exit = false)
     {
-        foreach(var ui in allUI)
+        Debug.Log("1111111");
+        bool shouldClose = objectNeedSwitch.gameObject.activeSelf;
+        currentUI = null;
+        foreach (var ui in allUI)
+        {
+            if (ui.activeSelf)//存在任意非gameUI激活则执行
+            {
+                currentUI = ui;
+            }
+        }
+
+        CloseAllTooltips();
+        foreach (var ui in allUI)
             ui.gameObject.SetActive(false);
+        StopPlayerControl(false);
+
+        if (shouldClose || exit || currentUI == AttributeUpgradeUI.gameObject || currentUI == craftUI.gameObject)//如果开关的是当前激活的或离开检测范围true或二级UI则不执行打开(等于关闭UI)
+            return;
         objectNeedSwitch.SetActive(true);
+        StopPlayerControl(true);
     }
 }

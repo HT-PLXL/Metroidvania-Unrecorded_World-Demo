@@ -1,10 +1,11 @@
 using System;
 using System.Text;
-                  //——————物品类——————
+using UnityEngine;
+//——————物品类——————
 [Serializable]
 public class Bag_Item
 {
-    private string itemId;
+    [SerializeField] private string persistentId;  // 持久化ID
     public ItemDataSO itemData;
     public int stackCount = 1;
     public ItemModifier[] modifiers { get; private set; }
@@ -12,21 +13,26 @@ public class Bag_Item
 
     public int buyPrice {  get; private set; }
     public float sellPrice { get; private set; }
-    public Bag_Item(ItemDataSO itemData)
+    public Bag_Item(ItemDataSO itemData, string existingId = null)
     {
         this.itemData = itemData;
         buyPrice = itemData.itemPrice;
         sellPrice = itemData.itemPrice * .5f;
         modifiers = GetEquipmentData()?.modifier;//在判断物品是装备后创建新修饰符列表保存传入的物品的修饰符
         itemEffect = itemData.itemEffect;
-        itemId = itemData.itemName + Guid.NewGuid();//生成一个几乎不可能重复的id
+        // 如果传入了 existingId，则使用；否则生成新ID
+        if (!string.IsNullOrEmpty(existingId))
+            persistentId = existingId;
+        else
+            persistentId = itemData.itemName + "_" + Guid.NewGuid().ToString();
     }
+    public string GetInstanceId() => persistentId;
     public void AddModifiers(Entity_Stats playerStats)
     {
         foreach (var modifier in modifiers)
         {
             Stat statNeedModify = playerStats.GetStatByType(modifier.statType);
-            statNeedModify.AddModifier(modifier.value, itemId);
+            statNeedModify.AddModifier(modifier.value, persistentId);
         }
     }
     public void RemoveModifiers(Entity_Stats playerStats)
@@ -34,7 +40,7 @@ public class Bag_Item
         foreach (var modifier in modifiers)
         {
             Stat statNeedModify = playerStats.GetStatByType(modifier.statType);
-            statNeedModify.RemoveModifier(itemId);//使用不重复的id作为来源去移除修饰符，确保准确
+            statNeedModify.RemoveModifier(persistentId);//使用不重复的id作为来源去移除修饰符，确保准确
         }
     }
     public void AddItemEffect(Player player) => itemEffect?.Subscribe(player);//装备新装备时订阅物品效果（如果有）

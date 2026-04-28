@@ -900,6 +900,8 @@ MonoBehaviour:
   groundDetectionStart: {fileID: 6158452901779129421}
   majorWallDetection: {fileID: 5248988780003225057}
   secondaryWallDetection: {fileID: 0}
+  enemyId: "\u6D4B\u8BD5\u5173\u5361 1_\u77F3\u5DE8\u4EBA_77125560"
+  isRebirthOnLoad: 1
   battleMoveSpeed: 2
   attackDistance: 6
   battleTimeDuration: 5
@@ -1138,6 +1140,11 @@ MonoBehaviour:
     vitality:
       baseValue: 0
       modifiers: []
+  immunePhysical: 0
+  immuneFire: 0
+  immuneIce: 0
+  immuneLightning: 0
+  currentWeaponElement: 0
 --- !u!114 &3609235677627919638
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1153,6 +1160,7 @@ MonoBehaviour:
   lightningVfx: {fileID: 8159136254417894736, guid: 7e7fd2f69777e404ea3a48f1d23dc295, type: 3}
   currentCharge: 0
   maxCharge: 1
+  lightningDamageMultiplier: 5
 --- !u!1 &5376732345159623825
 GameObject:
   m_ObjectHideFlags: 0

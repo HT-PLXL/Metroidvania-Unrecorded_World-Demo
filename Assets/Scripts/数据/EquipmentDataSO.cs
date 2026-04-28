@@ -5,8 +5,15 @@ using UnityEngine;
 
 public class EquipmentDataSO : ItemDataSO
 {
+    [Header("武器元素（仅武器有效）")]
+    public ElementType weaponElement;
     [Header("物品修改")]
     public ItemModifier[] modifier;//需要修改的属性
+    [Header("免疫效果")]
+    public bool immunePhysical;
+    public bool immuneFire;
+    public bool immuneIce;
+    public bool immuneLightning;
 }
 
 [Serializable]

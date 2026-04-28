@@ -8,10 +8,10 @@ public class SkillObject_BounceSword : SkillObject_Sword
     private Collider2D[] targetEnemy;
     private Transform nextTarget;
     private List<Transform> alreadyUsed = new List<Transform>();
-    public override void SetUpSword(Skill_ThrowSword throwSword, Vector2 direction)//接收技能容器设置的值覆盖默认值
+    public override void SetUpSword(Skill_ThrowSword throwSword, Vector2 direction, bool isPhysicalDamage)//接收技能容器设置的值覆盖默认值
     {
         anim.SetTrigger("飞剑旋转");//动画节点触发掷剑生成后立即设定动画
-        base.SetUpSword(throwSword, direction);
+        base.SetUpSword(throwSword, direction, isPhysicalDamage);
         bounceSpeed = throwSword.bounceSpeed;
         bounceNumber = throwSword.bounceNumber;
         checkRadius = throwSword.checkRadius;

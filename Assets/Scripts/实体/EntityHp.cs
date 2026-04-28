@@ -11,6 +11,7 @@ public class EntityHp : MonoBehaviour, IDamageable
     private Entity entity;
     protected Entity_Stats entityStats;
     private Entity_DropManager dropManager;//掉落物管理器
+    private LayerMask arrowLayer;
     //private bool miniHpActive;
 
     public float lastDamage { get; private set; }//用于灵魂粒子
@@ -47,11 +48,11 @@ public class EntityHp : MonoBehaviour, IDamageable
             //上面这个重复延迟执行方法也可以让血条更新
         }
     }
-    public virtual bool TakeDamage(float damage, float elementalDamage, ElementType element, Transform damageSource)//对受击目标执行
+    public virtual bool TakeDamage(float damage, float elementalDamage, ElementType element, Transform damageSource, bool isCrit = false)
     {
-        if (attackEvaded())//闪避
+        if (attackEvaded())
         {
-            Debug.Log($"{gameObject.name} evaded the attack!");
+            Debug.Log($"{gameObject.name} 闪避了攻击!");
             return false;
         }
         if (canTakeDamage == false)
@@ -60,23 +61,79 @@ public class EntityHp : MonoBehaviour, IDamageable
         Entity_Stats attackerStats = damageSource.GetComponent<Entity_Stats>();
         float armorReduction = attackerStats != null ? attackerStats.GetArmorReduction() : 0;
 
-        float mitigation = entityStats != null ? entityStats.GetArmorMitigation(armorReduction) : 0;//护甲在实体自身上，可以直接使用，削减在攻击者身上，需要获取并提供给方法以计算最终减免比例
+        float mitigation = entityStats != null ? entityStats.GetArmorMitigation(armorReduction) : 0;
         float finalPhysicalDamage = damage * (1 - mitigation);
+
+        // 免疫检测
+        if (entityStats != null)
+        {
+            if (entityStats.immunePhysical) finalPhysicalDamage = 0;
+            if (element == ElementType.Fire && entityStats.immuneFire) elementalDamage = 0;
+            if (element == ElementType.Ice && entityStats.immuneIce) elementalDamage = 0;
+            if (element == ElementType.Lightning && entityStats.immuneLightning) elementalDamage = 0;
+        }
 
         float resistance = entityStats != null ? entityStats.GetElementalResistance(element) : 0;
         float finalElementalDamage = elementalDamage * (1 - resistance);
-
-        UseHitBack(damageSource, element != ElementType.None ? finalElementalDamage : finalPhysicalDamage);
+        if (damageSource.GetComponent<Enemy_Archer>() != null)
+        {
+            Enemy_Archer archer = damageSource.GetComponent<Enemy_Archer>();
+            if(archer.HearyHitback == true)
+            {
+                int direction = transform.position.x > damageSource.position.x ? 1 : -1;
+                Vector2 hitback = new Vector2(12 * direction, 3);
+                entity?.StartknockBackCo(hitback, 0.3f);
+            }
+            else
+                UseHitBack(damageSource, element != ElementType.None ? finalElementalDamage : finalPhysicalDamage);
+        }
+        else
+            UseHitBack(damageSource, element != ElementType.None ? finalElementalDamage : finalPhysicalDamage);
 
         if (element == ElementType.None)
             ReduceHp(finalPhysicalDamage);
         else
             ReduceHp(finalElementalDamage, element);
+
         lastDamage = finalPhysicalDamage + finalElementalDamage;
 
-        OnUnderAttack?.Invoke();//每次受到攻击执行
+        // 显示伤害跳字（跟随自身）
+        Vector3 popupPos = transform.position + Vector3.up * 1f;
+        DamagePopupManager.Instance?.ShowDamage(popupPos, lastDamage, element, isCrit, transform);
+
+        OnUnderAttack?.Invoke();
         return true;
     }
+    //public virtual bool TakeDamage(float damage, float elementalDamage, ElementType element, Transform damageSource)//对受击目标执行
+    //{
+    //    if (attackEvaded())//闪避
+    //    {
+    //        Debug.Log($"{gameObject.name} evaded the attack!");
+    //        return false;
+    //    }
+    //    if (canTakeDamage == false)
+    //        return true;
+
+    //    Entity_Stats attackerStats = damageSource.GetComponent<Entity_Stats>();
+    //    float armorReduction = attackerStats != null ? attackerStats.GetArmorReduction() : 0;
+
+    //    float mitigation = entityStats != null ? entityStats.GetArmorMitigation(armorReduction) : 0;//护甲在实体自身上，可以直接使用，削减在攻击者身上，需要获取并提供给方法以计算最终减免比例
+    //    float finalPhysicalDamage = damage * (1 - mitigation);
+
+    //    float resistance = entityStats != null ? entityStats.GetElementalResistance(element) : 0;
+    //    float finalElementalDamage = elementalDamage * (1 - resistance);
+
+    //    UseHitBack(damageSource, element != ElementType.None ? finalElementalDamage : finalPhysicalDamage);
+
+    //    if (element == ElementType.None)
+    //        ReduceHp(finalPhysicalDamage);
+    //    else
+    //        ReduceHp(finalElementalDamage, element);
+    //    lastDamage = finalPhysicalDamage + finalElementalDamage;
+
+    //    OnUnderAttack?.Invoke();//每次受到攻击执行
+    //    return true;
+    //}
     public float GetHpPercent()
     {
         float hpPercent = currentHp / entityStats.GetMaxHp();
@@ -105,6 +162,12 @@ public class EntityHp : MonoBehaviour, IDamageable
         float newHp = currentHp + healAmount;
         float maxHp = entityStats.GetMaxHp();
         currentHp = Mathf.Min(newHp, maxHp);//限制增加后的血量不高于最大血量
+
+        if (healAmount != 0)
+        {
+            // 显示治疗跳字（根据实体位置，偏移一点头上方）
+            DamagePopupManager.Instance?.ShowHeal(transform.position + Vector3.up * 1f, healAmount, transform);
+        }
 
         OnHpUpdate?.Invoke();
     }
@@ -178,4 +241,6 @@ public class EntityHp : MonoBehaviour, IDamageable
         else
             return damage / entityStats.GetMaxHp() > powerfulHitBackThreshold;
     }
+    // 提供给子类安全触发 HP 更新事件的方法
+    protected void TriggerHpUpdate() => OnHpUpdate?.Invoke();
 }

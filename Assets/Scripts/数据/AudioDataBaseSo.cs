@@ -44,7 +44,7 @@ public class AudioClipData
 {
     public string audioName;
     public List<AudioClip> clips = new List<AudioClip>();//内置的音频片段类
-    [Range(0f, 1f)] public float volume = 1f;
+    [cn("音量")][Range(0f, 1f)] public float volume = 1f;
 
     public AudioClip GetRandomClip()
     {

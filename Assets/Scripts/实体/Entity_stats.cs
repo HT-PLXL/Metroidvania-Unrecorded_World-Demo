@@ -8,6 +8,13 @@ public class Entity_Stats : MonoBehaviour
     [cn("攻击")] public Stat_AttackGroup attack;
     [cn("防御")] public Stat_DefenseGroup defense;
     [cn("基础附加属性")] public Stat_MajorGroup major;
+    [Header("免疫设定")]
+    public bool immunePhysical;
+    public bool immuneFire;
+    public bool immuneIce;
+    public bool immuneLightning;
+
+    [HideInInspector] public ElementType currentWeaponElement = ElementType.None;
 
     protected virtual void Awake()
     {
@@ -17,6 +24,7 @@ public class Entity_Stats : MonoBehaviour
     {
         return new AttackData(this, damageScale);
     }
+    public void SetWeaponElement(ElementType element) => currentWeaponElement = element;
     /// <summary>
     /// 通过降低/提升的百分比调整子史莱姆的属性
     /// </summary>
@@ -45,40 +53,61 @@ public class Entity_Stats : MonoBehaviour
         defense.fireResistance.SetBaseValue(defenseGroup.fireResistance.GetValue() * reduction);
         defense.iceResistance.SetBaseValue(defenseGroup.iceResistance.GetValue() * reduction);
     }
-    public float GetElementalDamage(out ElementType element, float scareFactor = 1)//scareFactor比例因子，用于实现不同倍率的伤害
+    public float GetElementalDamage(out ElementType element, float scareFactor = 1)
     {
-        float fireDamage = attack.fireDamage.GetValue();
-        float iceDamage = attack.iceDamage.GetValue();
-        float lightningDamage = attack.lightningDamage.GetValue();
-
-        float bonusElementalDamage = (major.intelligence.GetValue() * 2);//每点智力+2元素伤害
-
-        float hightstDamage = fireDamage;
-        element = ElementType.Fire;
-
-        if (iceDamage > hightstDamage)
+        // 如果武器指定了元素，则直接使用该元素，伤害取对应元素数值
+        if (currentWeaponElement != ElementType.None)
         {
-            hightstDamage = iceDamage;
-            element = ElementType.Ice;
+            element = currentWeaponElement;
+            float damage = 0;
+            switch (element)
+            {
+                case ElementType.Fire: damage = attack.fireDamage.GetValue(); break;
+                case ElementType.Ice: damage = attack.iceDamage.GetValue(); break;
+                case ElementType.Lightning: damage = attack.lightningDamage.GetValue(); break;
+            }
+            // 智力加成保留
+            float bonusElementalDamage = major.intelligence.GetValue() * 2;
+            return (damage + bonusElementalDamage) * scareFactor;
         }
-        if (lightningDamage > hightstDamage)
-        {
-            hightstDamage = lightningDamage;
-            element = ElementType.Lightning;
-        }
-        if (hightstDamage <= 0)
-        {
-            element = ElementType.None;
-            return 0;
-        }
-        float bonusFire = (element == ElementType.Fire) ? 0 : fireDamage * .5f;
-        float bonusIce = (element == ElementType.Ice) ? 0 : iceDamage * .5f;
-        float bonusLightning = (element == ElementType.Lightning) ? 0 : lightningDamage * .5f;
-
-        float weakerElementsDamage = bonusFire + bonusIce + bonusLightning;
-        float finalDamage = hightstDamage + weakerElementsDamage + bonusElementalDamage;
-        return finalDamage * scareFactor;
+        // 无武器元素时，返回None
+        element = ElementType.None;
+        return 0;
     }
+    //public float GetElementalDamage(out ElementType element, float scareFactor = 1)//scareFactor比例因子，用于实现不同倍率的伤害
+    //{
+    //    float fireDamage = attack.fireDamage.GetValue();
+    //    float iceDamage = attack.iceDamage.GetValue();
+    //    float lightningDamage = attack.lightningDamage.GetValue();
+
+    //    float bonusElementalDamage = (major.intelligence.GetValue() * 2);//每点智力+2元素伤害
+
+    //    float hightstDamage = fireDamage;
+    //    element = ElementType.Fire;
+
+    //    if (iceDamage > hightstDamage)
+    //    {
+    //        hightstDamage = iceDamage;
+    //        element = ElementType.Ice;
+    //    }
+    //    if (lightningDamage > hightstDamage)
+    //    {
+    //        hightstDamage = lightningDamage;
+    //        element = ElementType.Lightning;
+    //    }
+    //    if (hightstDamage <= 0)
+    //    {
+    //        element = ElementType.None;
+    //        return 0;
+    //    }
+    //    float bonusFire = (element == ElementType.Fire) ? 0 : fireDamage * .5f;
+    //    float bonusIce = (element == ElementType.Ice) ? 0 : iceDamage * .5f;
+    //    float bonusLightning = (element == ElementType.Lightning) ? 0 : lightningDamage * .5f;
+
+    //    float weakerElementsDamage = bonusFire + bonusIce + bonusLightning;
+    //    float finalDamage = hightstDamage + weakerElementsDamage + bonusElementalDamage;
+    //    return finalDamage * scareFactor;
+    //}
     public float GetElementalResistance(ElementType element)
     {
         float baseResistance = 0;
@@ -206,8 +235,9 @@ public class Entity_Stats : MonoBehaviour
         attack.critPower.SetBaseValue(defaultStatSetup.critPower);
         attack.armorReduction.SetBaseValue(defaultStatSetup.armorReduction);
 
-        attack.iceDamage.SetBaseValue(defaultStatSetup.iceDamage);
+
         attack.fireDamage.SetBaseValue(defaultStatSetup.fireDamage);
+        attack.iceDamage.SetBaseValue(defaultStatSetup.iceDamage);
         attack.lightningDamage.SetBaseValue(defaultStatSetup.lightningDamage);
 
         defense.armor.SetBaseValue(defaultStatSetup.armor);
@@ -217,4 +247,37 @@ public class Entity_Stats : MonoBehaviour
         defense.fireResistance.SetBaseValue(defaultStatSetup.fireResistance);
         defense.lightningResistance.SetBaseValue(defaultStatSetup.LightningResistance);
     }
+    //[ContextMenu("更新默认数据")]
+    //public void ApplyDefaultStatSetup()
+    //{
+    //    if (defaultStatSetup == null)
+    //    {
+    //        Debug.Log("没有默认数据已分配");
+    //        return;
+    //    }
+    //    resources.maxHp.SetBaseValue(defaultStatSetup.maxHp);
+    //    resources.HpRegen.SetBaseValue(defaultStatSetup.HpRegen);
+
+    //    major.strength.SetBaseValue(defaultStatSetup.strength);
+    //    major.agility.SetBaseValue(defaultStatSetup.agility);
+    //    major.intelligence.SetBaseValue(defaultStatSetup.intelligence);
+    //    major.vitality.SetBaseValue(defaultStatSetup.vitality);
+
+    //    attack.attackSpeed.SetBaseValue(defaultStatSetup.attackSpeed);
+    //    attack.damage.SetBaseValue(defaultStatSetup.damage);
+    //    attack.critChance.SetBaseValue(defaultStatSetup.critChange);
+    //    attack.critPower.SetBaseValue(defaultStatSetup.critPower);
+    //    attack.armorReduction.SetBaseValue(defaultStatSetup.armorReduction);
+
+    //    attack.iceDamage.SetBaseValue(defaultStatSetup.iceDamage);
+    //    attack.fireDamage.SetBaseValue(defaultStatSetup.fireDamage);
+    //    attack.lightningDamage.SetBaseValue(defaultStatSetup.lightningDamage);
+
+    //    defense.armor.SetBaseValue(defaultStatSetup.armor);
+    //    defense.evasion.SetBaseValue(defaultStatSetup.evasion);
+
+    //    defense.iceResistance.SetBaseValue(defaultStatSetup.iceResistance);
+    //    defense.fireResistance.SetBaseValue(defaultStatSetup.fireResistance);
+    //    defense.lightningResistance.SetBaseValue(defaultStatSetup.LightningResistance);
+    //}
 }

@@ -9,7 +9,7 @@ public class DamageScaleFactor//缩放因子类，用于给攻击/技能设定�
     [cn("元素伤害倍率")] public float elemental = 1;
     [Header("霜冻")]
     [cn("减速时间")] public float chillDuration = 3;
-    [cn("减速效果倍率")] public float chillSlowMulitiplier = 0.2f;
+    [cn("减速效果倍率")] public float chillSlowMulitiplier = 0.35f;
     [Header("灼烧")]
     [cn("灼烧时间")]public float burnDuration = 3;
     [cn("灼烧伤害倍率")]public float burnDamageScale = 3;

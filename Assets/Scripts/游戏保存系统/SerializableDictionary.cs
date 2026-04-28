@@ -12,14 +12,14 @@ public class SerializableDictionary<TKey, TValue> : Dictionary<TKey, TValue>, IS
 
     public void OnAfterDeserialize()//在加载数据后取回两个列表并转换回字典
     {
-        this.Clear();
-
+        Clear();
         if (keys.Count != values.Count)
-            Debug.Log("键与值数量不等");
-        for (int i = 0; i < keys.Count; i++)
         {
-            this.Add(keys[i], values[i]);
+            Debug.Log("键与值数量不等");
+
         }
+        for (int i = 0; i < keys.Count; i++)
+                Add(keys[i], values[i]);
     }
 
     public void OnBeforeSerialize()//在保存前将字典转化为两个列表,分别保存键与值

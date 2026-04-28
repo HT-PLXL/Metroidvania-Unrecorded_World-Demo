@@ -1,5 +1,3 @@
-using UnityEngine;
-
 public class Player_FallState : Player_AiredState
 {
     public Player_FallState(Player player, StateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
@@ -10,9 +8,9 @@ public class Player_FallState : Player_AiredState
     {
         base.Update();
 
-        if (player.canJumpTwo && input.Player.Jump.WasPressedThisFrame())
+        if (player.HadUnlockDoubleJump() && player.canJumpTwo && input.Player.Jump.WasPressedThisFrame())
         {
-            player.SetVelocity(0, player.jumpForce);
+            player.SetVelocity(0, player.jumpForce);//二段
             player.canJumpTwo = false;
         }
 

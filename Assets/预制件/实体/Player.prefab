@@ -368,6 +368,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f39da77c07c6324ca3e96c919c167c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  showInQuickSlot: 1
   cooldown: 0
   skillType: 0
   upgradeType: 0
@@ -383,6 +384,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11a36311d7381c643a1fceb7098c4187, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  showInQuickSlot: 1
   cooldown: 0
   skillType: 2
   upgradeType: 0
@@ -406,6 +408,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df11ccc97b222ac44ad0b2dbef2415d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  showInQuickSlot: 1
   cooldown: 0
   skillType: 3
   upgradeType: 0
@@ -438,6 +441,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acc040eb551faf24bbfc37497885b5ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  showInQuickSlot: 1
   cooldown: 2
   skillType: 1
   upgradeType: 0
@@ -446,6 +450,7 @@ MonoBehaviour:
   maxAttackCounts: 3
   CloneChance: 0.5
   damagePercentHeal: 0.3
+  minRegen: 50
   cooldownReduceSeconds: 1
 --- !u!114 &5807603701529931306
 MonoBehaviour:
@@ -459,6 +464,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9cc48b1dfc25e1429096ad687b16502, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  showInQuickSlot: 1
   cooldown: 0
   skillType: 4
   upgradeType: 0
@@ -718,7 +724,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3647942062935756572
 Transform:
   m_ObjectHideFlags: 0
@@ -760,29 +766,35 @@ MonoBehaviour:
   equipmentSlotList:
   - slotType: 1
     equipmentItem:
+      persistentId: 
       itemData: {fileID: 0}
       stackCount: 0
       itemEffect: {fileID: 0}
   - slotType: 2
     equipmentItem:
+      persistentId: 
       itemData: {fileID: 0}
       stackCount: 0
       itemEffect: {fileID: 0}
   - slotType: 3
     equipmentItem:
+      persistentId: 
       itemData: {fileID: 0}
       stackCount: 0
       itemEffect: {fileID: 0}
   - slotType: 3
     equipmentItem:
+      persistentId: 
       itemData: {fileID: 0}
       stackCount: 0
       itemEffect: {fileID: 0}
   quickItems:
-  - itemData: {fileID: 0}
+  - persistentId: 
+    itemData: {fileID: 0}
     stackCount: 0
     itemEffect: {fileID: 0}
-  - itemData: {fileID: 0}
+  - persistentId: 
+    itemData: {fileID: 0}
     stackCount: 0
     itemEffect: {fileID: 0}
 --- !u!114 &7059242899662855689
@@ -809,6 +821,7 @@ MonoBehaviour:
   - {x: 3, y: 1.5}
   - {x: 1, y: 2.5}
   - {x: 2.75, y: 1.75}
+  attackVelocityDelay: 0
   jumpAttackVelocity: {x: 3, y: 6}
   attackSpeedDuration: 0.1
   comboResetTime: 1
@@ -844,7 +857,7 @@ Rigidbody2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
@@ -951,6 +964,7 @@ MonoBehaviour:
   lightningVfx: {fileID: 8159136254417894736, guid: 7e7fd2f69777e404ea3a48f1d23dc295, type: 3}
   currentCharge: 0
   maxCharge: 1
+  lightningDamageMultiplier: 5
 --- !u!114 &3322671050382212496
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1058,6 +1072,11 @@ MonoBehaviour:
     vitality:
       baseValue: 0
       modifiers: []
+  immunePhysical: 0
+  immuneFire: 0
+  immuneIce: 0
+  immuneLightning: 0
+  currentWeaponElement: 0
 --- !u!114 &1758771361336168078
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1380,7 +1399,7 @@ RectTransform:
   m_Father: {fileID: 8276701677116195189}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0.00050115585}
   m_SizeDelta: {x: 0, y: 0.0010022521}
   m_Pivot: {x: 0.5, y: 0.5}

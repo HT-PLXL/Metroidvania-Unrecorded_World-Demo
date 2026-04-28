@@ -9,6 +9,7 @@ public class Skill_Clone : Skill_Base
     [SerializeField][cn("克隆几率")] private float CloneChance = 0.33f;
     [Header("灵魂粒子")]
     [SerializeField][cn("敌人伤害转治疗量百分比")] private float damagePercentHeal = 0.3f;
+    [cn("灵魂粒子保底治疗量")] public float minRegen = 50f;
     [SerializeField][cn("减少冷却时间(秒)")] private float cooldownReduceSeconds;
 
     public override void TryUseSkill()//按键执行
@@ -22,7 +23,7 @@ public class Skill_Clone : Skill_Base
     {
         Vector3 position = targetPosition ?? transform.position;//选择生成位置，??空合并运算符，不为空则使用1值，空则使用2值
         GameObject clone = Instantiate(clonePrefab, position, Quaternion.identity);
-        clone.GetComponent<SkillObject_Clone>().SetUpClone(this);
+        clone.GetComponent<SkillObject_Clone>().SetUpClone(this,IsPhysicalDamage);
     }
     public float GetDamagePercentHeal()
     {

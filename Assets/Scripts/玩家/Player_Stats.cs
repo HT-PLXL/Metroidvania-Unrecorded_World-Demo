@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 //此类的一大作用是应用buff效果，可编程对象（物品效果）不能使用协程
@@ -33,5 +34,20 @@ public class Player_Stats : Entity_Stats
         }
         bag.TriggerUpdateUI();
         activeBuff.Remove(source);
+    }
+    public void ApplyImmunities(EquipmentDataSO equip)
+    {
+        if (equip.immunePhysical) immunePhysical = true;
+        if (equip.immuneFire) immuneFire = true;
+        if (equip.immuneIce) immuneIce = true;
+        if (equip.immuneLightning) immuneLightning = true;
+    }
+
+    public void RemoveImmunities(EquipmentDataSO equip)
+    {
+        if (equip.immunePhysical) immunePhysical = false;
+        if (equip.immuneFire) immuneFire = false;
+        if (equip.immuneIce) immuneIce = false;
+        if (equip.immuneLightning) immuneLightning = false;
     }
 }

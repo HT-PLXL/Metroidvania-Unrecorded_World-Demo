@@ -14,9 +14,9 @@ public class SkillObject_SpinSword : SkillObject_Sword
         if(stopAlready)
             Invoke(nameof(ShouldComeBack), throwSword.maxAttackDuration);
     }
-    public override void SetUpSword(Skill_ThrowSword throwSword, Vector2 direction)
+    public override void SetUpSword(Skill_ThrowSword throwSword, Vector2 direction, bool isPhysicalDamage)
     {
-        base.SetUpSword(throwSword, direction);
+        base.SetUpSword(throwSword, direction, isPhysicalDamage);
 
         anim?.SetTrigger("飞剑旋转");
         maxFlyDistance = throwSword.maxFlyDistance;

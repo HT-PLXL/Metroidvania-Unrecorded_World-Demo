@@ -15,11 +15,12 @@ public class SkillObject_Sword : SkillObject_Base
         transform.right = rb.linearVelocity;//剑尖方向和transform.right重合，因此可以用速度方向改变剑方向
         HandleComeBack();
     }
-    public virtual void SetUpSword(Skill_ThrowSword throwSword, Vector2 direction)//抛出剑的方法，同时接收Skill_ThrowSword的掷剑升级信息(可于技能容器修改)，并传递给技能实体脚本替换默认值
+    public virtual void SetUpSword(Skill_ThrowSword throwSword, Vector2 direction, bool isPhysicalDamage)//抛出剑的方法，同时接收Skill_ThrowSword的掷剑升级信息(可于技能容器修改)，并传递给技能实体脚本替换默认值
     {
         rb.linearVelocity = direction;//给一个初速度，就自动做斜抛运动了
         //用技能容器值替换默认值
         this.throwSword = throwSword;
+        this.isPhysicalDamage = isPhysicalDamage;
         playerTransform = throwSword.transform.root;//实际上获取的是技能容器transform组件的根组件player.transform
         playerStats = throwSword.player.stats;
         damageScale = throwSword.damageScale;

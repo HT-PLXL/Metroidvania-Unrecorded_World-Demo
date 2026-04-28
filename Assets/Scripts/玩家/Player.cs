@@ -15,14 +15,15 @@ public class Player : Entity
     //再去动画师窗口设置触发和结束的需要的参数
     //创建状态脚本，在此声明公开的脚本类型+变量
     //最后在Awake（）中new参数后在新的状态脚本写继承，触发、结束和状态转换
-    public UI ui { get; private set; }
+    public UI ui { get; set; }
     public Player_SkillManager skillManager { get; private set; }
     public Player_VFX vfx { get; private set; }
-    public EntityHp hp { get; private set; }
+    public EntityHp hp { get; set; }
     public Entity_StatusHandler statusHandler { get; private set; }
-    public Player_Combat playerCombat { get; private set; }
+    public Player_Combat playerCombat { get; set; }
     public Bag_Player bag { get; private set; }
-    public Player_Stats stats { get; private set; }
+    public Player_Stats stats { get; set; }
+    public Player_AttributeManager attributeManager { get; private set; }
 
     //————————————状态————————————
     public Player_IdleState idleState { get; private set; }
@@ -64,17 +65,26 @@ public class Player : Entity
     public Vector2 mousePosition { get; private set; }
 
     public bool canJumpTwo { get; set; }
+    private Skill_Base doubleJumpSkill;
     public MovingPlatform currentPlatform { get; private set; }   // 当前站立的平台
     private bool isOnMovingPlatform;   // 脚底接触平台表面
 
 
     protected override void Awake()
     {
+        input = new PlayerInputSet();
+
+        //if (instance != null && instance != this)
+        //{
+        //    Destroy(gameObject);
+        //    return;
+        //}
+        //DontDestroyOnLoad(gameObject);
+        instance = this;
+
         base.Awake();
 
-        instance = this;
         ui = FindAnyObjectByType<UI>();//全局范围查找第一个类型为UI的对象
-        input = new PlayerInputSet();
         skillManager = GetComponent<Player_SkillManager>();
         vfx = GetComponent<Player_VFX>();
         hp = GetComponent<EntityHp>();
@@ -82,6 +92,9 @@ public class Player : Entity
         playerCombat = GetComponent<Player_Combat>();
         bag = GetComponent<Bag_Player>();
         stats = GetComponent<Player_Stats>();
+        attributeManager = GetComponent<Player_AttributeManager>();
+
+        doubleJumpSkill = skillManager.GetSkillByType(SkillType.二段跳);
 
         ui.SetupControlUI(input, this);//初始化UI输入控制
 
@@ -113,6 +126,10 @@ public class Player : Entity
         bool hpBarEnabled = PlayerPrefs.GetInt("HpBarEnabled", 1) == 1;
         if (hp != null)
             hp.EnableHpBar(hpBarEnabled);
+    }
+    public bool HadUnlockDoubleJump()
+    {
+        return skillManager.doubleJump.CanUseSkill();
     }
     public void TeleportPlayer(Vector3 position) => transform.position = position;//传送玩家
     protected override IEnumerator SlowDownEntityCo(float duration, float slowMultiplier)

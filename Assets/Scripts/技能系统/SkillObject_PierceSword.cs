@@ -3,9 +3,9 @@ using UnityEngine;
 public class SkillObject_PierceSword : SkillObject_Sword
 {
     private int pierceNumber;
-    public override void SetUpSword(Skill_ThrowSword throwSword, Vector2 direction)
+    public override void SetUpSword(Skill_ThrowSword throwSword, Vector2 direction, bool isPhysicalDamage)
     {
-        base.SetUpSword(throwSword, direction);
+        base.SetUpSword(throwSword, direction, isPhysicalDamage);
         pierceNumber = throwSword.canPierceNumber;
     }
     protected override void OnTriggerEnter2D(Collider2D collider)//飞行时穿透与伤害判定

@@ -9,6 +9,8 @@ public class Player_SkillManager : MonoBehaviour
     public Skill_ThrowSword throwSword { get; private set; }
     public Skill_Clone clone { get; private set; }
     public Skill_Domain domain {  get; private set; }
+    public Skill_DoubleJump doubleJump { get; private set; }
+
     public Skill_Base[] allSkillType {  get; private set; }
 
     private void Awake()
@@ -18,6 +20,7 @@ public class Player_SkillManager : MonoBehaviour
         throwSword = GetComponentInChildren<Skill_ThrowSword>();
         clone = GetComponentInChildren<Skill_Clone>();
         domain = GetComponentInChildren<Skill_Domain>();
+        doubleJump = GetComponentInChildren<Skill_DoubleJump>();
         allSkillType = GetComponentsInChildren<Skill_Base>();
     }
     public void ReduceAllSkillCooldown(float amount)
@@ -34,6 +37,7 @@ public class Player_SkillManager : MonoBehaviour
             case SkillType.掷剑: return throwSword;
             case SkillType.克隆: return clone;
             case SkillType.领域:return domain;
+            case SkillType.二段跳:return doubleJump;
 
 
             default:

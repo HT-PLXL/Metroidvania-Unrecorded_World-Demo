@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class Enemy : Entity
+public class Enemy : Entity, ISaveable
 {
     public Entity_Stats stats { get; private set; }
     public EnemyHp enemyHp { get; private set; }
@@ -13,6 +13,10 @@ public class Enemy : Entity
     public Enemy_DeadState deadState;
     public Enemy_StunnedState stunnedState;
 
+    [Header("存档")]
+    [SerializeField] private string enemyId; // 每个敌人的唯一ID，需要在Inspector中手动填写
+    [cn("如果死亡，是否允许读档后重生")] public bool isRebirthOnLoad = true;
+
     [Header("战斗细节")]
     [cn("战斗移动速度")] public float battleMoveSpeed = 3;
     [cn("攻击距离-蓝线")] public float attackDistance = 2;
@@ -21,7 +25,6 @@ public class Enemy : Entity
     [cn("后撤力度")] public Vector2 backJumpSpeed;
     [cn("攻击冷却")] public float attackCooldown;
     [cn("是否应该追逐玩家？")] public bool ShouldChasePlayer = true;
-
 
     [Header("检测玩家")]
     [SerializeField][cn("什么是玩家")] private LayerMask whoIsPlayer;
@@ -48,7 +51,18 @@ public class Enemy : Entity
         enemyHp = GetComponent<EnemyHp>();
         stats = GetComponent<Entity_Stats>();
         combat = GetComponent<Entity_Combat>();
+
+        // 编辑器下检查存档 ID
+#if UNITY_EDITOR
+        if (string.IsNullOrEmpty(enemyId))
+            Debug.LogWarning($"Enemy '{gameObject.name}' 缺少存档 ID，请在 Inspector 中设置或使用工具生成。", this);
+#endif
     }
+    // 可在运行时为动态生成的敌人设置 ID
+    public void SetEnemyId(string id) => enemyId = id;//通过代码生成新敌人并希望存档，需在生成时手动调用 SetEnemyId 传入一个稳定 ID
+
+    public string GetEnemyId() => enemyId;
+
     public void CanBeSelect(bool canBeSelect)
     {
         if (canBeSelect == false)
@@ -66,6 +80,7 @@ public class Enemy : Entity
     protected override IEnumerator SlowDownEntityCo(float duration, float slowMultiplier)//冰冻减速异常效果实现
     {
         activeSlowDownmultiplier = 1 - slowMultiplier;
+        //activeSlowDownmultiplier = 0.1f;
         anim.speed = anim.speed * activeSlowDownmultiplier;
 
         yield return new WaitForSeconds(duration);
@@ -85,6 +100,8 @@ public class Enemy : Entity
     {
         base.EntityDead();
 
+        if (deadState == null)
+            return;
         stateMachine.ChangeState(deadState);
     }
     private void HandlePlayerDeath()
@@ -144,5 +161,15 @@ public class Enemy : Entity
     private void OnDisable()
     {
         Player.OnPlayerDeath -= HandlePlayerDeath;
+    }
+
+    public void SavaData(ref GameData data)
+    {
+        // 敌人死亡状态已由 SaveManager 统一管理
+    }
+
+    public void loadData(GameData data)
+    {
+        // 加载由 SaveManager.ApplyEnemyDeathStates() 处理
     }
 }

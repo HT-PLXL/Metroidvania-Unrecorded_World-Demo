@@ -13,7 +13,14 @@ public class Entity_StatusHandler : MonoBehaviour
     [SerializeField] private GameObject lightningVfx;
     [SerializeField] private float currentCharge;
     [SerializeField] private float maxCharge = 1;
+    [SerializeField] private float lightningDamageMultiplier = 5;//使用的是目标身上的数值
     private Coroutine lightningCo;
+
+    // 火视觉效果（独立管理，避免协程冲突）
+    private Coroutine burnVfxRoutine;
+    private float burnVfxEndTime;
+
+
     private void Awake()
     {
         EntityStats = GetComponent<Entity_Stats>();
@@ -26,12 +33,20 @@ public class Entity_StatusHandler : MonoBehaviour
         StopAllCoroutines();//关闭当前脚本所挂载的对象上由该脚本实例启动的所有协程
         currentEffect = ElementType.None;
         entityVfx.StopAllVfx();
+
+        if (burnVfxRoutine != null)
+        {
+            StopCoroutine(burnVfxRoutine);
+            burnVfxRoutine = null;
+        }
+        // 确保颜色重置
+        entityVfx.SetSpriteColor(Color.white);
     }
     public void ApplyStatusEffect(ElementType element,ElementEffectData effectData)//用于应用元素伤害与效果
     {
         if (element == ElementType.Ice && CanApply(ElementType.Ice))
             ApplyChillEffect(effectData.chillDuration, effectData.chillSlowMulitiplier);
-        if (element == ElementType.Fire && CanApply(ElementType.Fire))
+        if (element == ElementType.Fire)
             ApplyBurnEffect(effectData.burnDuration, effectData.totalBurnDamage);
         if (element == ElementType.Lightning && CanApply(ElementType.Lightning))
             ApplyLightningEffect(effectData.lightningDuration, effectData.lightningDamage, effectData.lightningCharge);
@@ -44,7 +59,7 @@ public class Entity_StatusHandler : MonoBehaviour
         currentCharge = currentCharge + finalCharge;//通过传入的charge更新当前charge层数
         if (currentCharge >= maxCharge)
         {
-            DoLightningStrike(damage);
+            DoLightningStrike(damage * lightningDamageMultiplier);//应用雷暴并使用伤害乘数造成伤害
             StopLightningEffect();
             return;
         }
@@ -62,6 +77,8 @@ public class Entity_StatusHandler : MonoBehaviour
     {
         Instantiate(lightningVfx, transform.position, Quaternion.identity);//实例化（闪电预制体，位置，旋转）
         entityHp.ReduceHp(damage,ElementType.Lightning);
+        // 显示雷电伤害跳字
+        DamagePopupManager.Instance?.ShowDamage(transform.position + Vector3.up * 1f, damage, ElementType.Lightning, false, transform);
     }
     private IEnumerator LightningEffectCo(float duration)//雷电闪烁效果协程
     {
@@ -76,7 +93,54 @@ public class Entity_StatusHandler : MonoBehaviour
         float fireResistance = EntityStats.GetElementalResistance(ElementType.Fire);
         float finalDamage = fireDamage * (1 - fireResistance);
 
-        StartCoroutine(BurnEffectCo(duration, finalDamage));
+        // 灼烧伤害协程（每次攻击独立启动，允许叠加）
+        StartCoroutine(BurnDamageCo(duration, finalDamage));
+
+        // 火视觉效果：唯一，只刷新结束时间，不重启协程
+        burnVfxEndTime = Time.time + duration;
+        if (burnVfxRoutine == null)
+            burnVfxRoutine = StartCoroutine(BurnVfxLoop());
+    }
+    // 独立的灼烧伤害协程
+    private IEnumerator BurnDamageCo(float duration, float totalDamage)
+    {
+        int ticksPerSecond = 2;
+        int tickCount = Mathf.RoundToInt(ticksPerSecond * duration);
+        float damagePerTick = totalDamage / tickCount;
+        float tickInterval = 1f / ticksPerSecond;
+
+        for (int i = 0; i < tickCount; i++)
+        {
+            entityHp.ReduceHp(damagePerTick, ElementType.Fire);
+            DamagePopupManager.Instance?.ShowDamage(transform.position + Vector3.up * 1f, damagePerTick, ElementType.Fire, false, transform);
+            yield return new WaitForSeconds(tickInterval);
+        }
+    }
+
+    // 火视觉效果循环（不依赖 Entity_VFX 的协程，仅控制颜色）
+    private IEnumerator BurnVfxLoop()
+    {
+        SpriteRenderer sr = entityVfx.GetSpriteRenderer();
+        if (sr == null) yield break;
+
+        // 使用与 Entity_VFX 中 burnVfx 相同的颜色
+        Color burnColor;
+        ColorUtility.TryParseHtmlString("#EE7100", out burnColor);
+        Color lightColor = burnColor * 1.05f;
+        Color darkColor = burnColor * 0.95f;
+        bool toggle = false;
+        float tick = 0.25f;
+
+        while (Time.time < burnVfxEndTime)
+        {
+            sr.color = toggle ? lightColor : darkColor;
+            toggle = !toggle;
+            yield return new WaitForSeconds(tick);
+        }
+
+        // 闪烁结束，恢复白色
+        sr.color = Color.white;
+        burnVfxRoutine = null;
     }
     private IEnumerator BurnEffectCo(float duration, float totalDamage)
     {
@@ -92,6 +156,8 @@ public class Entity_StatusHandler : MonoBehaviour
         for (int i = 0; i < tickCount; i++)
         {
             entityHp.ReduceHp(damagePerTick, ElementType.Fire);
+            // 显示燃烧伤害跳字（跟随自身）
+            DamagePopupManager.Instance?.ShowDamage(transform.position + Vector3.up * 1f, damagePerTick, ElementType.Fire, false, transform);
             yield return new WaitForSeconds(tickInterval);
         }
         currentEffect = ElementType.None;//解除属性状态

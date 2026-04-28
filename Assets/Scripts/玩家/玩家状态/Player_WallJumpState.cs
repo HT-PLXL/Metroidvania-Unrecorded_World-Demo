@@ -6,7 +6,6 @@ public class Player_WallJumpState : PlayerState
     {
     }
     //重要，此处依旧有bug，偶现于贴右墙时左+空格，有概率原地跳一下，待解决
-    private bool jumpOver;
     public override void Enter()
     {
         base.Enter();

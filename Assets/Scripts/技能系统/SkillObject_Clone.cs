@@ -14,11 +14,13 @@ public class SkillObject_Clone : SkillObject_Base
     private Entity_StatusHandler playerStatusHandler;
     public int maxAttackCounts { get; private set; }
 
-    public void SetUpClone(Skill_Clone cloneManager)
+    public void SetUpClone(Skill_Clone cloneManager, bool isPhysicalDamage)
     {
         this.cloneManager = cloneManager;
+        this.isPhysicalDamage = isPhysicalDamage;
         playerStats = cloneManager.player.stats;
-        damageScale = cloneManager.damageScale;
+        //damageScale = cloneManager.damageScale;
+        damageScale = GetAdjustedDamageScale(cloneManager.damageScale); // 使用调整倍率
         maxAttackCounts = cloneManager.GetMaxAttackCounts();
         playerTransform = cloneManager.transform.root;
         playerHp = cloneManager.player.hp;
@@ -62,11 +64,9 @@ public class SkillObject_Clone : SkillObject_Base
         Destroy(gameObject);
     }
 
-
-
     private void HandleTouchPlayer()//灵魂粒子接触玩家后内容（回血/减CD/清除debuff）
     {
-        float healAmount = cloneHp.lastDamage * cloneManager.GetDamagePercentHeal();//计算生命回复量
+        float healAmount = (cloneHp.lastDamage * cloneManager.GetDamagePercentHeal()) + cloneManager.minRegen;//计算生命回复量
         playerHp.IncreaseHp(healAmount);
 
         float cooldownReduction = cloneManager.GetcooldownReduceSeconds();

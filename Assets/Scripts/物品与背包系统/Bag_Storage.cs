@@ -10,6 +10,53 @@ public class Bag_Storage : Bag_Base
     {
         this.bag = bag;//获取bag
     }
+public bool TryConsumeItems(ItemRequirement[] requirements)
+{
+    if (requirements == null || requirements.Length == 0) return true;
+
+    // 第一步：检查总量
+    foreach (var req in requirements)
+    {
+        if (req.itemData == null) continue;
+        if (GetAvailableAmount(req.itemData) < req.amount)
+            return false;
+    }
+
+    // 第二步：执行消耗（使用安全的列表操作）
+    foreach (var req in requirements)
+        ConsumeFromAllSources(req.itemData, req.amount);
+
+    TriggerUpdateUI();
+    return true;
+}
+
+    private void ConsumeFromAllSources(ItemDataSO itemData, int amount)
+    {
+        int remaining = amount;
+        if (bag != null) remaining = RemoveFromList(bag.itemList, itemData, remaining);
+        if (remaining > 0) remaining = RemoveFromList(itemList, itemData, remaining);
+        if (remaining > 0) remaining = RemoveFromList(materialList, itemData, remaining);
+    }
+    private int RemoveFromList(List<Bag_Item> list, ItemDataSO itemData, int amount)
+    {
+        if (list == null || amount <= 0) return amount;
+        int consumed = 0;
+
+        // 从后往前遍历，安全删除
+        for (int i = list.Count - 1; i >= 0; i--)
+        {
+            var item = list[i];
+            if (item == null || item.itemData != itemData) continue;
+            int take = Mathf.Min(item.stackCount, amount - consumed);
+            item.stackCount -= take;
+            consumed += take;
+            if (item.stackCount <= 0)
+                list.RemoveAt(i);  // 反向遍历不会影响索引
+            if (consumed >= amount)
+                break;
+        }
+        return amount - consumed;
+    }
     public void FromPlayerToStorage(Bag_Item item, bool AllIn)//AllIn用于判断是否需要全部转移
     {
         if (CanAddItem(item))//看库存能不能添加
@@ -62,11 +109,12 @@ public class Bag_Storage : Bag_Base
     {
         int amount = 0;
 
-        foreach (var item in bag.itemList)
-        {
-            if (item.itemData == requiredItem)
-                amount = amount + item.stackCount;
-        }
+        if (bag != null)
+            foreach (var item in bag.itemList)
+            {
+                if (item.itemData == requiredItem)
+                    amount = amount + item.stackCount;
+            }
 
         foreach (var item in itemList)
         {

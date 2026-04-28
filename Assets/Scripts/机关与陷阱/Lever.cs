@@ -4,6 +4,7 @@ public class Lever : MonoBehaviour
 {
     [SerializeField][cn("关联的平台")] private MovingPlatform platform;
     [SerializeField][cn("交互按键")] private KeyCode interactKey = KeyCode.E;
+    [SerializeField][cn("即时响应")] private bool moveAgain;
 
     [Header("移动参数")]
     [SerializeField][cn("移动角度(0=右, 90=上)")] private float moveAngle = 0f;      // 角度（0=右, 90=上）
@@ -16,6 +17,9 @@ public class Lever : MonoBehaviour
 
     private bool playerInRange;
     private Animator anim;
+    private Vector2 direction;
+    private Vector2 targetPos;
+    private Vector2 nextPoint;
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -29,6 +33,15 @@ public class Lever : MonoBehaviour
     private void Awake()
     {
         anim = GetComponent<Animator>();
+    }
+    private void Start()
+    {
+        // 计算目标点（基于平台的初始起点 + 偏移）
+        direction = Quaternion.Euler(0, 0, moveAngle) * Vector2.right;
+        targetPos = platform.StartPos + direction * moveDistance;
+        if (moveAgain)
+            nextPoint = targetPos;
+        
     }
     private void Update()
     {
@@ -46,10 +59,23 @@ public class Lever : MonoBehaviour
             return;
         }
 
-        // 计算目标点（基于平台的初始起点 + 偏移）
-        Vector2 direction = Quaternion.Euler(0, 0, moveAngle) * Vector2.right;
-        Vector2 targetPos = platform.StartPos + direction * moveDistance;
+        if (moveAgain)
+        {
+            if (nextPoint == targetPos)
+            {
+                platform.MoveToTarget(targetPos, moveSpeed);
+                nextPoint = platform.StartPos;
+            }
+            else if (nextPoint == platform.StartPos)
+            {
+                platform.MoveToTarget(platform.StartPos, moveSpeed);
+                nextPoint = targetPos;
+            }
 
+            turnLeft = !turnLeft;
+            anim.SetBool("turnLeft", turnLeft);
+            return;
+        }
         // 判断平台当前位置：若已在目标点，则返回起点；否则移向目标点
         if (platform.IsAtPosition(targetPos))
             platform.MoveToTarget(platform.StartPos, moveSpeed);

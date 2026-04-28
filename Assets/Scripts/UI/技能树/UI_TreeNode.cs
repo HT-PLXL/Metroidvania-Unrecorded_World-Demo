@@ -69,6 +69,12 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
             isUnlocked = false;
             skillTree.AddSkillPoint(skillData.cost);
         }
+        // 重置对应技能基类的升级状态
+        var skillBase = skillTree.skillManager.GetSkillByType(skillData.skillType);
+        if (skillBase != null)
+        {
+            skillBase.ResetSkill();
+        }
         UpdateIconColor(GetColor(lockedColor));//恢复图标颜色
         connectHandle?.UnlockConnectionLineImage(false);//恢复连接线颜色
     }
@@ -76,7 +82,21 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     {
         isUnlocked = true;
         UpdateIconColor(Color.white);//恢复原色
-            skillTree.RemoveSkillPoint(skillData.cost);
+        skillTree.RemoveSkillPoint(skillData.cost);//扣除技能点
+
+        // 扣除物品
+        if (skillData.requiredItems != null && skillData.requiredItems.Length > 0)
+        {
+            var storage = Player.instance?.bag?.storage;
+            if (storage != null)
+                storage.TryConsumeItems(skillData.requiredItems);
+            else
+            {
+                Debug.LogWarning("Bag_Storage 未找到，无法消耗物品");
+                // 可选择不允许解锁
+            }
+        }
+
         LockConflictNodes();
         connectHandle.UnlockConnectionLineImage(true);//改变连接线颜色
 
@@ -96,6 +116,7 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
             return false;
         if (skillTree.HaveEnoughSkillPoint(skillData.cost) == false)
             return false;
+
         foreach (var node in needNodes)
         {
             if (node.isUnlocked == false)//判断前置节点是否解锁
@@ -107,6 +128,19 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
             if (node.isUnlocked)//判断节点是否有冲突
                 return false;
         }
+
+        // 检查物品需求
+        if (skillData.requiredItems != null && skillData.requiredItems.Length > 0)
+        {
+            var storage = Player.instance?.bag?.storage;
+            if (storage == null) return false;
+            foreach (var req in skillData.requiredItems)
+            {
+                if (storage.GetAvailableAmount(req.itemData) < req.amount)
+                    return false;
+            }
+        }
+
         return true;
     }
     private void LockConflictNodes()//锁定冲突节点
@@ -139,7 +173,7 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     }
     public void OnPointerEnter(PointerEventData eventData)
     {
-        ui.skillTooltip.ShowTooltip(true, rect,skillData ,this);
+        ui.skillTooltip.ShowTooltip(true, rect, skillData, this);
 
         if (isUnlocked == false && islocked == false)
         {

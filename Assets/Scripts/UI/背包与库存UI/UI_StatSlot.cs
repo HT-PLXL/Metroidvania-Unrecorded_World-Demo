@@ -32,6 +32,15 @@ public class UI_StatSlot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandle
     }
     public void UpdateStatValue()
     {
+        // 防止 playerStats 为空导致异常
+        if (playerStats == null)
+            playerStats = FindFirstObjectByType<Player_Stats>();
+        if (playerStats == null)
+        {
+            Debug.Log("playerStats为空");
+            return;
+        }
+
         Stat statNeedUpdate = playerStats.GetStatByType(statType);
         if (statNeedUpdate == null && statType != StatType.ElementDamage)//元素伤害没有专属数据不能通过种类查找，所以为空，但应该参加下面的查找得到具体值，即只有出现其他异常种类才返回null
             return;

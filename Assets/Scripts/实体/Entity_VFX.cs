@@ -112,5 +112,13 @@ public class Entity_VFX : MonoBehaviour
             return;
         beAttackVFXCo = StartCoroutine(BeAttackVFXSwitch());//启动IEnumerator
     }
+    // 允许外部直接设置精灵颜色
+    public void SetSpriteColor(Color color)
+    {
+        if (sr != null)
+            sr.color = color;
+    }
 
+    // 获取 SpriteRenderer 引用
+    public SpriteRenderer GetSpriteRenderer() => sr;
 }

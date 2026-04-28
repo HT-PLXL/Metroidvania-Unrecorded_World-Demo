@@ -21,12 +21,12 @@ public class Object_Shop : Object_NPC, IInteractable
         if (shop == null || bag == null)
             return;
         ui.shopUI.SetupShopUI(shop, bag);
-        if (ui.shopUI.gameObject.activeSelf)//二次交互关闭
-        {
-            ui.ToggleShopUI(false);
-            return;
-        }
-        ui.ToggleShopUI(true);
+        //if (ui.shopUI.gameObject.activeSelf)//二次交互关闭
+        //{
+        //    ui.ToggleShopUI(false);
+        //    return;
+        //}
+        ui.SwitchTo(ui.shopUI.gameObject);
     }
 
     protected override void OnTriggerEnter2D(Collider2D collision)
@@ -46,7 +46,9 @@ public class Object_Shop : Object_NPC, IInteractable
             base.OnTriggerExit2D(collision);
             try
             {
-                ui.ToggleShopUI(false);
+                //ui.ToggleShopUI(false);
+                ui.SwitchTo(ui.shopUI.gameObject,true);
+
             }
             catch
             {

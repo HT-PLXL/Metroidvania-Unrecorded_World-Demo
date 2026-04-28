@@ -11,19 +11,15 @@ public class ItemEffect_Buff : ItemEffectDataSO
 
     public override bool CanBeUsed(Player player)
     {
-
         if (player.stats.CanApplyBuff(source))
         {
             this.player = player;
             return true;
         }
-        else
-        {
-            Debug.Log("不能应用相同的buff");
-            return false;
-        }
+        Debug.Log("不能应用相同的buff");
+        return false;
     }
-    public override void ExecuteEffect()//执行效果
+    public override void ExecuteEffect()
     {
         player.stats.ApplyBuff(buffsNeedApply, duration, source);
         player = null;

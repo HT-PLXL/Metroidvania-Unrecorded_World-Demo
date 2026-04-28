@@ -569,6 +569,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4825281605291127094}
+  - component: {fileID: 6563492463566288430}
   - component: {fileID: 2693174204632152645}
   - component: {fileID: 9014708729377235015}
   - component: {fileID: 8465655294804793947}
@@ -596,6 +597,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1615010532441243064}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6563492463566288430
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4644260789184590187}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4e59a5a58699cc4c87a6065e533bc4c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  showInQuickSlot: 0
+  cooldown: 0
+  skillType: 5
+  upgradeType: 0
 --- !u!114 &2693174204632152645
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -608,6 +625,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f39da77c07c6324ca3e96c919c167c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  showInQuickSlot: 1
   cooldown: 0
   skillType: 0
   upgradeType: 0
@@ -623,6 +641,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11a36311d7381c643a1fceb7098c4187, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  showInQuickSlot: 1
   cooldown: 0
   skillType: 2
   upgradeType: 0
@@ -646,6 +665,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df11ccc97b222ac44ad0b2dbef2415d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  showInQuickSlot: 1
   cooldown: 0
   skillType: 3
   upgradeType: 0
@@ -678,14 +698,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acc040eb551faf24bbfc37497885b5ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  showInQuickSlot: 1
   cooldown: 2
   skillType: 1
   upgradeType: 0
-  clonePrefab: {fileID: 7238544822331427751, guid: 04644607660c5284191974c59e5c6067, type: 3}
-  cloneDuration: 0.5
+  clonePrefab: {fileID: 7238544822331427751, guid: c9f845aded99ecf40ac3dfcca4245a0e, type: 3}
+  cloneDuration: 1
   maxAttackCounts: 3
   CloneChance: 0.5
   damagePercentHeal: 0.3
+  minRegen: 50
   cooldownReduceSeconds: 1
 --- !u!114 &8484062448718467446
 MonoBehaviour:
@@ -699,6 +721,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9cc48b1dfc25e1429096ad687b16502, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  showInQuickSlot: 1
   cooldown: 0
   skillType: 4
   upgradeType: 0
@@ -764,6 +787,7 @@ GameObject:
   - component: {fileID: 8047439054276131643}
   - component: {fileID: 8595523981909980183}
   - component: {fileID: 6832352566671130295}
+  - component: {fileID: 3686443183963718530}
   m_Layer: 7
   m_Name: "\u4E3B\u89D2"
   m_TagString: Player
@@ -808,33 +832,39 @@ MonoBehaviour:
   maxBagSize: 15
   itemList: []
   itemDataBase: {fileID: 11400000, guid: a2bf550ed7567bc4a9a3876107abed6b, type: 2}
-  gold: 10000
+  gold: 999999
   equipmentSlotList:
   - slotType: 1
     equipmentItem:
+      persistentId: 
       itemData: {fileID: 0}
       stackCount: 0
       itemEffect: {fileID: 0}
   - slotType: 2
     equipmentItem:
+      persistentId: 
       itemData: {fileID: 0}
       stackCount: 0
       itemEffect: {fileID: 0}
   - slotType: 3
     equipmentItem:
+      persistentId: 
       itemData: {fileID: 0}
       stackCount: 0
       itemEffect: {fileID: 0}
   - slotType: 3
     equipmentItem:
+      persistentId: 
       itemData: {fileID: 0}
       stackCount: 0
       itemEffect: {fileID: 0}
   quickItems:
-  - itemData: {fileID: 0}
+  - persistentId: 
+    itemData: {fileID: 0}
     stackCount: 0
     itemEffect: {fileID: 0}
-  - itemData: {fileID: 0}
+  - persistentId: 
+    itemData: {fileID: 0}
     stackCount: 0
     itemEffect: {fileID: 0}
 --- !u!114 &2727903370264792535
@@ -974,7 +1004,7 @@ MonoBehaviour:
     phyiscal: 1
     elemental: 1
     chillDuration: 3
-    chillSlowMulitiplier: 0.2
+    chillSlowMulitiplier: 0.4
     burnDuration: 3
     burnDamageScale: 3
     lightningDuration: 3
@@ -1004,6 +1034,7 @@ MonoBehaviour:
   lightningVfx: {fileID: 8159136254417894736, guid: 7e7fd2f69777e404ea3a48f1d23dc295, type: 3}
   currentCharge: 0
   maxCharge: 1
+  lightningDamageMultiplier: 1
 --- !u!114 &389249955912364808
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1020,9 +1051,9 @@ MonoBehaviour:
   beAttackVFXDuration: 0.2
   hitVfx: {fileID: 2480556560465659715, guid: f1bfa83ea562e8448a91bbbf756e9b57, type: 3}
   critHitVfx: {fileID: 1443265509929969890, guid: c77bc308a98f36d48be407939fd266b9, type: 3}
-  chillVfx: {r: 0, g: 1, b: 1, a: 1}
-  burnVfx: {r: 1, g: 0, b: 0, a: 1}
-  lightningVfx: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  chillVfx: {r: 0.18431373, g: 0.49803922, b: 1, a: 1}
+  burnVfx: {r: 0.93333334, g: 0.44313726, b: 0, a: 1}
+  lightningVfx: {r: 0.77254903, g: 0.6313726, b: 0.2901961, a: 1}
   echoInterval: 0.05
   echoPrehab: {fileID: 7430276010750646368, guid: 9f10b1de9fe8821488e07325d935685c, type: 3}
 --- !u!114 &8047439054276131643
@@ -1111,6 +1142,11 @@ MonoBehaviour:
     vitality:
       baseValue: 0
       modifiers: []
+  immunePhysical: 0
+  immuneFire: 0
+  immuneIce: 0
+  immuneLightning: 0
+  currentWeaponElement: 0
 --- !u!114 &6832352566671130295
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1127,6 +1163,82 @@ MonoBehaviour:
   attackMiss: "\u73A9\u5BB6\u653B\u51FB\u672A\u547D\u4E2D"
   soundDistance: 15
   showGizmo: 0
+--- !u!114 &3686443183963718530
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6014651542249463710}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 411469bd3683afb43802e3617267c284, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  strengthLevel: 1
+  agilityLevel: 1
+  intelligenceLevel: 1
+  vitalityLevel: 1
+  strengthCosts: 0a000000140000001e0000002800000032000000
+  agilityCosts: 0a000000140000001e0000002800000032000000
+  intelligenceCosts: 0a000000140000001e0000002800000032000000
+  vitalityCosts: 0a000000140000001e0000002800000032000000
+  strengthValues:
+  - 4
+  - 8
+  - 12
+  - 16
+  - 20
+  - 24
+  agilityValues:
+  - 4
+  - 8
+  - 12
+  - 16
+  - 20
+  - 24
+  intelligenceValues:
+  - 4
+  - 8
+  - 12
+  - 16
+  - 20
+  - 24
+  vitalityValues:
+  - 4
+  - 8
+  - 12
+  - 16
+  - 20
+  - 24
+  strengthSprites:
+  - {fileID: -5533291456336407323, guid: 898de04fb73228e47a04b09f33b48890, type: 3}
+  - {fileID: -7583460192685135180, guid: 898de04fb73228e47a04b09f33b48890, type: 3}
+  - {fileID: -4490821689377912105, guid: 898de04fb73228e47a04b09f33b48890, type: 3}
+  - {fileID: 8427432276321825260, guid: 898de04fb73228e47a04b09f33b48890, type: 3}
+  - {fileID: -5570870607781325922, guid: 898de04fb73228e47a04b09f33b48890, type: 3}
+  - {fileID: -5414325406149679724, guid: 898de04fb73228e47a04b09f33b48890, type: 3}
+  agilitySprites:
+  - {fileID: 1644348287367066299, guid: 898de04fb73228e47a04b09f33b48890, type: 3}
+  - {fileID: 8182938853476993307, guid: 898de04fb73228e47a04b09f33b48890, type: 3}
+  - {fileID: 8303147220976016987, guid: 898de04fb73228e47a04b09f33b48890, type: 3}
+  - {fileID: -5369068455919730688, guid: 898de04fb73228e47a04b09f33b48890, type: 3}
+  - {fileID: 7828610855062199305, guid: 898de04fb73228e47a04b09f33b48890, type: 3}
+  - {fileID: 1904519739631913594, guid: 898de04fb73228e47a04b09f33b48890, type: 3}
+  intelligenceSprites:
+  - {fileID: -1205454349005581812, guid: 898de04fb73228e47a04b09f33b48890, type: 3}
+  - {fileID: -903228844347659306, guid: 898de04fb73228e47a04b09f33b48890, type: 3}
+  - {fileID: 2059362025888039173, guid: 898de04fb73228e47a04b09f33b48890, type: 3}
+  - {fileID: -3472071656566045654, guid: 898de04fb73228e47a04b09f33b48890, type: 3}
+  - {fileID: 3348568617783665471, guid: 898de04fb73228e47a04b09f33b48890, type: 3}
+  - {fileID: -4757173921369191816, guid: 898de04fb73228e47a04b09f33b48890, type: 3}
+  vitalitySprites:
+  - {fileID: 5979483719735286754, guid: 898de04fb73228e47a04b09f33b48890, type: 3}
+  - {fileID: 3236756357972836214, guid: 898de04fb73228e47a04b09f33b48890, type: 3}
+  - {fileID: 3848646819629874656, guid: 898de04fb73228e47a04b09f33b48890, type: 3}
+  - {fileID: 4332899884445571740, guid: 898de04fb73228e47a04b09f33b48890, type: 3}
+  - {fileID: -4200952108269724281, guid: 898de04fb73228e47a04b09f33b48890, type: 3}
+  - {fileID: -5882310090403965228, guid: 898de04fb73228e47a04b09f33b48890, type: 3}
 --- !u!1 &6613789118663001100
 GameObject:
   m_ObjectHideFlags: 0

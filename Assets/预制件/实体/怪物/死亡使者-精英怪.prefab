@@ -23,7 +23,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7449024013203268135
 Transform:
   m_ObjectHideFlags: 0
@@ -66,6 +66,8 @@ MonoBehaviour:
   groundDetectionStart: {fileID: 1311018775417749499}
   majorWallDetection: {fileID: 7449024013203268135}
   secondaryWallDetection: {fileID: 0}
+  enemyId: "\u6D4B\u8BD5\u5173\u5361 1_\u6B7B\u4EA1\u4F7F\u8005-\u7CBE\u82F1\u602A_740059d6"
+  isRebirthOnLoad: 1
   battleMoveSpeed: 2.2
   attackDistance: 5.5
   battleTimeDuration: 5
@@ -309,6 +311,11 @@ MonoBehaviour:
     vitality:
       baseValue: 0
       modifiers: []
+  immunePhysical: 0
+  immuneFire: 0
+  immuneIce: 0
+  immuneLightning: 0
+  currentWeaponElement: 0
 --- !u!114 &6903624519430828290
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -324,6 +331,7 @@ MonoBehaviour:
   lightningVfx: {fileID: 8159136254417894736, guid: 7e7fd2f69777e404ea3a48f1d23dc295, type: 3}
   currentCharge: 0
   maxCharge: 1
+  lightningDamageMultiplier: 5
 --- !u!1 &1082567564710696788
 GameObject:
   m_ObjectHideFlags: 0
@@ -357,7 +365,7 @@ RectTransform:
   m_Father: {fileID: 6429340971928888939}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0.00050115585}
   m_SizeDelta: {x: 0, y: 0.0010022521}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -1236,7 +1244,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 9.666756, y: 2.7934432}
+  m_Offset: {x: -2.0766125, y: 2.7934432}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -1246,7 +1254,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 49.773315, y: 7.7840757}
+  m_Size: {x: 26.286572, y: 7.7840757}
   m_EdgeRadius: 0
 --- !u!1 &5453965703186984198
 GameObject:

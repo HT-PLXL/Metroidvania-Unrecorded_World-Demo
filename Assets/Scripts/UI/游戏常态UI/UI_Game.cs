@@ -81,17 +81,24 @@ public class UI_Game : MonoBehaviour
     }
     public void HideQuickItemSelect() => quickItemSelectParent.position = new Vector3(0, 6480);
 
-    public UI_SkillSlot GetSkillSlot(SkillType skillType)//获取游戏UI的技能槽位
+    public UI_SkillSlot GetSkillSlot(SkillType skillType)
     {
         skillSlots = GetComponentsInChildren<UI_SkillSlot>(true);
+
+        // 优先返回已激活的槽
+        foreach (UI_SkillSlot slot in skillSlots)
+        {
+            if (slot.skilltype == skillType && slot.gameObject.activeSelf)
+                return slot;
+        }
+
+        // 无激活槽时返回隐藏的第一个（不激活）
         foreach (UI_SkillSlot slot in skillSlots)
         {
             if (slot.skilltype == skillType)
-            {
-                slot.gameObject.SetActive(true);//需要默认隐藏一个冲突槽位，所以使用前需要确保是激活的
                 return slot;
-            }
         }
+
         return null;
     }
     private void UpdateHealthBar()

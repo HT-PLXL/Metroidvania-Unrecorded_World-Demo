@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class UI_SkillTree : MonoBehaviour, ISaveable
 {
-    [SerializeField] private int skillPoint;
+    public int skillPoint;
     [SerializeField] private TextMeshProUGUI skillPointText;
     [SerializeField] private UI_TreeConnectHandle[] parentNodes;
     private UI_TreeNode[] allTreeNodes;
 
     public Player_SkillManager skillManager { get; private set; }
+
 
     private void Start()
     {
@@ -40,6 +41,7 @@ public class UI_SkillTree : MonoBehaviour, ISaveable
         skillPoint += cost;
         UpdateSkillPointText();
     }
+    public int GetSkillPoints() => skillPoint;
 
     [ContextMenu("重置技能")]
     public void RefundAllSkillPoint()
@@ -47,6 +49,9 @@ public class UI_SkillTree : MonoBehaviour, ISaveable
         UI_TreeNode[] skillNodes = GetComponentsInChildren<UI_TreeNode>();
         foreach (var node in skillNodes)
             node.RefundSkillPoint();
+
+        // 重新应用默认技能，刷新 UI 图标
+        UnlockedDefaultSkills();
     }
 
 

@@ -76,6 +76,9 @@ public class GameSceneManager : MonoBehaviour, ISaveable
         {
             //获取解锁的重生点坐标列表
             var data = SaveManager.instance.GetGameData();
+            // 确保 unlockedCheckPoints 不为 null
+            if (data.unlockedCheckPoints == null)
+                data.unlockedCheckPoints = new SerializableDictionary<string, bool>();
             var checkPoints = FindObjectsByType<CheckPoint>(FindObjectsSortMode.None);//查找所有重生点且不排序
             var unlocklist = checkPoints.Where(checkPoint => data.unlockedCheckPoints.TryGetValue(checkPoint.GetCheckPointId(), out bool unlock) && unlock)//过滤解锁的重生点
                 .Select(checkPoint => checkPoint.getPosition())//转而获取解锁的重生点的坐标
@@ -111,7 +114,6 @@ public class GameSceneManager : MonoBehaviour, ISaveable
         string currentScene = SceneManager.GetActiveScene().name;
         if (currentScene == "主菜单")
             return;
-
         data.lastPlayerPosition = Player.instance.transform.position;
         data.lastScenePlayed = currentScene;
         dataLoaded = false;

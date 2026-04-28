@@ -40,15 +40,16 @@ public class ItemEffect_IceBlastUnderAttack : ItemEffectDataSO
                 player.vfx.CreateEffectForTarget(onHitPrefab, target.transform);
         }
     }
-    public override void Subscribe(Player player)//订阅
+    public override void Subscribe(Player player)
     {
         base.Subscribe(player);
         player.hp.OnUnderAttack += ExecuteEffect;
     }
+
     public override void Unsubscribe()
     {
+        if (player != null && player.hp != null)
+            player.hp.OnUnderAttack -= ExecuteEffect;
         base.Unsubscribe();
-        player.hp.OnUnderAttack -= ExecuteEffect;
-        player = null;
     }
 }

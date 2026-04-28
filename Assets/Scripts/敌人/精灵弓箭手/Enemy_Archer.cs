@@ -8,6 +8,7 @@ public class Enemy_Archer : Enemy
     [SerializeField][cn("箭矢预制体")] private GameObject arrowPrefab;
     [SerializeField][cn("发射点")] private Transform arrowStartPoint;
     [SerializeField][cn("箭矢速度")] private float arrowSpeed =10;
+    [cn("箭矢强力击退")] public bool HearyHitback;//击退数值在实体血量的TakeDamage手动更改
     protected override void Awake()
     {
         base.Awake();

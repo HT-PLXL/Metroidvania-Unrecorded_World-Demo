@@ -9,9 +9,10 @@ public class SkillObject_Domain : SkillObject_Base
     private Vector3 targetScale;
     private bool isShrinking;//缩小
 
-    public void SetUpDomain(Skill_Domain domainManager)
+    public void SetUpDomain(Skill_Domain domainManager, bool isPhysicalDamage)
     {
         this.domainManager = domainManager;
+        this.isPhysicalDamage = isPhysicalDamage;
         float maxSize = domainManager.maxSize;
         duration = domainManager.GetDomainDuration();
         slowDownPercent = domainManager.GetSlowDownPercent();

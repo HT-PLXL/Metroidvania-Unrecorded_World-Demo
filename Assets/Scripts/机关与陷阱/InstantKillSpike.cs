@@ -7,7 +7,6 @@ public class InstantKillSpike : SpikeBase
 
     protected override void ApplyDamage(IDamageable target)
     {
-        // 传递极大伤害，利用原有死亡逻辑
         target.TakeDamage(killDamage, 0, ElementType.None, transform);
     }
 

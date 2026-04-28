@@ -103,7 +103,7 @@ Transform:
   m_GameObject: {fileID: 1124040502747493719}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.11, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.1, y: 1.1, z: 1.1}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -539,6 +539,37 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 2
+--- !u!1 &3515498774962248310
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8728812285139802569}
+  m_Layer: 8
+  m_Name: "\u5899\u58C1\u68C0\u6D4B\u8D77\u70B9"
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8728812285139802569
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3515498774962248310}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.056, y: -0.684, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4076546998259785863}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3550947974003452985
 GameObject:
   m_ObjectHideFlags: 0
@@ -703,6 +734,37 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 2
+--- !u!1 &3846560269242328453
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1543619032018537990}
+  m_Layer: 8
+  m_Name: "\u68C0\u6D4B\u73A9\u5BB6\u8D77\u70B9"
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1543619032018537990
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3846560269242328453}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4076546998259785863}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4282496318165930048
 GameObject:
   m_ObjectHideFlags: 0
@@ -975,10 +1037,12 @@ Transform:
   - {fileID: 5945645694273437954}
   - {fileID: 7728181097371912896}
   - {fileID: 4201903588021702476}
+  - {fileID: 8728812285139802569}
   - {fileID: 2205431976753118018}
   - {fileID: 8126624548633494092}
   - {fileID: 6063613473703684751}
   - {fileID: 3488017083867366623}
+  - {fileID: 1543619032018537990}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &2812119617907848214
@@ -1042,8 +1106,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.027364584, y: -0.18735519}
-  m_Size: {x: 0.6304022, y: 1.4997233}
+  m_Offset: {x: -0.027364584, y: -0.10178135}
+  m_Size: {x: 0.6304022, y: 1.3285756}
   m_Direction: 0
 --- !u!114 &5157945484186027447
 MonoBehaviour:
@@ -1063,8 +1127,10 @@ MonoBehaviour:
   groundDetectionDistance: 0.6
   wallDetectionDistance: 1.2
   groundDetectionStart: {fileID: 7728181097371912896}
-  majorWallDetection: {fileID: 4076546998259785863}
+  majorWallDetection: {fileID: 8728812285139802569}
   secondaryWallDetection: {fileID: 0}
+  enemyId: "\u6D4B\u8BD5\u5173\u5361 1_\u7CBE\u7075\u5F13\u7BAD\u624B_ab7657f3"
+  isRebirthOnLoad: 1
   battleMoveSpeed: 3
   attackDistance: 15
   battleTimeDuration: 5
@@ -1075,7 +1141,7 @@ MonoBehaviour:
   whoIsPlayer:
     serializedVersion: 2
     m_Bits: 128
-  detectPlayerStart: {fileID: 4076546998259785863}
+  detectPlayerStart: {fileID: 1543619032018537990}
   detectPlayerDistance: 15
   idleTime: 2
   moveSpeed: 1.4
@@ -1086,7 +1152,8 @@ MonoBehaviour:
   stunRecovery: 0
   arrowPrefab: {fileID: 7483468414534435490, guid: 3f8f668bc5089154f9aa3f0469019145, type: 3}
   arrowStartPoint: {fileID: 3488017083867366623}
-  arrowSpeed: 10
+  arrowSpeed: 50
+  HearyHitback: 1
 --- !u!114 &8185945152876904134
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1103,7 +1170,7 @@ MonoBehaviour:
     phyiscal: 1
     elemental: 1
     chillDuration: 3
-    chillSlowMulitiplier: 0.2
+    chillSlowMulitiplier: 0.35
     burnDuration: 3
     burnDamageScale: 3
     lightningDuration: 3
@@ -1176,7 +1243,7 @@ MonoBehaviour:
       modifiers: []
   attack:
     attackSpeed:
-      baseValue: 1
+      baseValue: 4
       modifiers: []
     damage:
       baseValue: 100
@@ -1228,6 +1295,11 @@ MonoBehaviour:
     vitality:
       baseValue: 0
       modifiers: []
+  immunePhysical: 0
+  immuneFire: 0
+  immuneIce: 0
+  immuneLightning: 0
+  currentWeaponElement: 0
 --- !u!114 &2547291022597818292
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1243,6 +1315,7 @@ MonoBehaviour:
   lightningVfx: {fileID: 8159136254417894736, guid: 7e7fd2f69777e404ea3a48f1d23dc295, type: 3}
   currentCharge: 0
   maxCharge: 1
+  lightningDamageMultiplier: 6
 --- !u!1 &6321526621759590758
 GameObject:
   m_ObjectHideFlags: 0

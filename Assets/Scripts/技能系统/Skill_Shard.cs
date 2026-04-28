@@ -113,7 +113,7 @@ public class Skill_Shard : Skill_Base
         originalHp = playerHp.currentHp;
         GameObject shard = Instantiate(shardPerfab, transform.position, Quaternion.identity);
         currentShard = shard.GetComponent<SkillObject_Shard>();
-        currentShard.SetUpShard(this);
+        currentShard.SetUpShard(this, IsPhysicalDamage);
         if (Unlocked(SkillUpgradeType.超时空升级) || Unlocked(SkillUpgradeType.时空回溯升级))
             currentShard.OnExplode += Cooldown;//订阅Cooldown()
     }
@@ -121,7 +121,7 @@ public class Skill_Shard : Skill_Base
     {
         bool canMove = shardCanMove != false ? shardCanMove : Unlocked(SkillUpgradeType.磁力升级) || Unlocked(SkillUpgradeType.充能升级);
         GameObject shard = Instantiate(shardPerfab, transform.position, Quaternion.identity);
-        shard.GetComponent<SkillObject_Shard>().SetUpShard(this, detonateTime, canMove, shardSpeed,target);//调用重载的方法
+        shard.GetComponent<SkillObject_Shard>().SetUpShard(this, detonateTime, canMove, shardSpeed, IsPhysicalDamage, target);//调用重载的方法
     }
     public void CreateDomainShard(Transform Target)
     {

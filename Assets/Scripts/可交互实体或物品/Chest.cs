@@ -17,7 +17,7 @@ public class Chest : MonoBehaviour, IDamageable
         vfx = GetComponent<Entity_VFX>();
         dropManager = GetComponent<Entity_DropManager>();
     }
-    public bool TakeDamage(float damage, float elementalDamage, ElementType element, Transform damageDealer)
+    public bool TakeDamage(float damage, float elementalDamage, ElementType element, Transform damageDealer, bool isCrit = false)
     {
         if (CanDropItem == true)
         {

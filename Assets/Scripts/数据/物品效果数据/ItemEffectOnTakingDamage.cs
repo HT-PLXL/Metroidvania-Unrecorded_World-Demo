@@ -13,12 +13,13 @@ public class ItemEffectOnTakingDamage : ItemEffectDataSO
     }
     public override void Unsubscribe()
     {
+        if (player != null && player.playerCombat != null)
+            player.playerCombat.OnTakingPhysicalDamage -= HealOnTakingDamage;
         base.Unsubscribe();
-        player.playerCombat.OnTakingPhysicalDamage -= HealOnTakingDamage;
         player = null;//清除类对玩家实例的引用，使得实例可被回收释放内存
     }
     private void HealOnTakingDamage(float damage)
     {
-        player.hp.IncreaseHp(damage * healPercentOnAttack);
+            player.hp.IncreaseHp(damage * healPercentOnAttack);
     }
 }

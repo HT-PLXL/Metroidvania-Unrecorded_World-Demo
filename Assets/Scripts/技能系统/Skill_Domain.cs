@@ -28,7 +28,7 @@ public class Skill_Domain : Skill_Base
     {
         spellCastPerSecond = GetSpellCastCount() / GetDomainDuration();
         GameObject domain = Instantiate(domainPrefab, transform.position, Quaternion.identity);
-        domain.GetComponent<SkillObject_Domain>().SetUpDomain(this);
+        domain.GetComponent<SkillObject_Domain>().SetUpDomain(this, IsPhysicalDamage);
     }
     public void HandleSpellCast()//SpellCast法术释放
     {

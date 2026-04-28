@@ -27,6 +27,7 @@ public class Entity : MonoBehaviour
 
     private Coroutine knockBackCo;//击退协程
     private Coroutine slowDownCo;//减速协程
+    private Coroutine DomainSlowDownCo;//领域减速协程
     protected bool isKnockBack;//被击退
 
     protected virtual void Awake()
@@ -56,25 +57,42 @@ public class Entity : MonoBehaviour
     {
 
     }
-    public virtual void SlowDownEntity(float duration, float slowMultiplier, bool canOverrideSlowDown = false)
+    public virtual void SlowDownEntity(float duration, float slowMultiplier, bool isDomainSlow = false)
     {
-        if (slowDownCo != null)
+        //if (slowDownCo != null)
+        //{
+        //    if (isDomainSlow)
+        //        StopCoroutine(slowDownCo);
+        //    else
+        //        return;
+        //}
+        //slowDownCo = StartCoroutine(SlowDownEntityCo(duration, slowMultiplier));
+
+        if (isDomainSlow)
         {
-            if (canOverrideSlowDown)
-                StopCoroutine(slowDownCo);
-            else
-                return;
+            if (DomainSlowDownCo != null)
+                StopCoroutine(DomainSlowDownCo);
+            DomainSlowDownCo = StartCoroutine(SlowDownEntityCo(duration, slowMultiplier));
         }
-        slowDownCo = StartCoroutine(SlowDownEntityCo(duration, slowMultiplier));
+        else
+        {
+            if (DomainSlowDownCo != null)
+                return;
+            if (slowDownCo != null)
+                StopCoroutine(slowDownCo);
+            slowDownCo = StartCoroutine(SlowDownEntityCo(duration, slowMultiplier));
+        }
     }
-    protected virtual IEnumerator SlowDownEntityCo(float duration, float slowMultiplier)//协程，允许暂停并在将来执行函数
+    protected virtual IEnumerator SlowDownEntityCo(float duration, float slowMultiplier)
     {
         yield return null;
     }
     public virtual void StopSlowDown()
     {
-        StopCoroutine(slowDownCo);
-        //slowDownCo = null;
+        if (slowDownCo != null)
+            StopCoroutine(slowDownCo);
+        if (DomainSlowDownCo != null)
+            StopCoroutine(DomainSlowDownCo);
     }
     public void StartknockBackCo(Vector2 knockBack, float duration)
     {

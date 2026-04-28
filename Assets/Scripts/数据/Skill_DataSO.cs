@@ -13,6 +13,8 @@ public class Skill_DataSO : ScriptableObject
     [cn("默认解锁？")] public bool unlockedByDefault;
     [cn("技能种类")] public SkillType skillType;
     [cn("升级详情")] public UpgradeData upgradeData;
+    [Header("额外解锁条件")]
+    [cn("解锁需要的物品")] public ItemRequirement[] requiredItems;
 }
 [Serializable]
 public class UpgradeData
@@ -20,4 +22,11 @@ public class UpgradeData
     [cn("升级种类")] public SkillUpgradeType upgradeType;
     [cn("冷却时间")] public float cooldown;
     [cn("伤害比例")] public DamageScaleFactor damageScale;
+    [cn("是否物理伤害（无视元素倍率）")] public bool isPhysicalDamage;
+}
+[System.Serializable]
+public class ItemRequirement
+{
+    public ItemDataSO itemData;
+    public int amount = 1;
 }

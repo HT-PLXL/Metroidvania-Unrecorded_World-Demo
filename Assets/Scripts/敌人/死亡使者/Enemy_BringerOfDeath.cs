@@ -13,7 +13,7 @@ public class Enemy_BringerOfDeath : Enemy, ICounter
     [SerializeField][cn("攻击后传送几率")] private float chanceToTeleport = 0.25f;
     [cn("最大战斗时待机时间")] public float maxBattleIdleTime = 2.5f;
     [Header("技能细节")]
-    [SerializeField][cn("技能伤害倍率表")] DamageScaleFactor damageScaleFactor;
+    [SerializeField][cn("技能伤害倍率表")] private DamageScaleFactor damageScaleFactor;
     [SerializeField][cn("技能预制体")] private GameObject skillPrefab;
     [SerializeField][cn("死亡动画预制体")] private GameObject deadPrefab;
     [SerializeField][cn("基础召唤攻击次数")] private int skillAmount = 6;
@@ -67,7 +67,7 @@ public class Enemy_BringerOfDeath : Enemy, ICounter
         if (playerObject == null)
             playerObject = player.GetComponent<Player>();
 
-        Vector3 lastPosition = new Vector3 (0,0);
+        Vector3 lastPosition = new Vector3(0, 0);
         for (int i = 0; i < skillAmount; i++)
         {
             bool playerMoving = playerObject.rb.linearVelocity.magnitude > 0;
@@ -81,7 +81,7 @@ public class Enemy_BringerOfDeath : Enemy, ICounter
             BringerOfDeath_Skill skill = Instantiate(skillPrefab, spellPosition, Quaternion.identity).GetComponent<BringerOfDeath_Skill>();
             skill.SetSkillObject(combat, damageScaleFactor);
 
-            if(moveLittle)//移动距离太短额外惩罚，右
+            if (moveLittle)//移动距离太短额外惩罚，右
             {
                 spellPosition = player.transform.position + new Vector3(0.9f, playerOffset.y);
                 BringerOfDeath_Skill skillTwo = Instantiate(skillPrefab, spellPosition, Quaternion.identity).GetComponent<BringerOfDeath_Skill>();
@@ -129,7 +129,7 @@ public class Enemy_BringerOfDeath : Enemy, ICounter
     }
     private void DeadAnim()
     {
-        Vector3 position = new Vector3(this.transform.position.x + 2, this.transform.position.y+0.5f);
+        Vector3 position = new Vector3(this.transform.position.x + 2, this.transform.position.y + 0.5f);
         Instantiate(deadPrefab, position, deadPrefab.transform.localRotation);
     }
     public override void AfterDie()

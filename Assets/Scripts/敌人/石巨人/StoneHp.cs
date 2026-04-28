@@ -10,12 +10,12 @@ public class StoneHp : EntityHp
     private bool isRegenerating;
 
     private Stone stone => GetComponent<Stone>();
-    public override bool TakeDamage(float damage, float elementalDamage, ElementType element, Transform damageSource)
+    public override bool TakeDamage(float damage, float elementalDamage, ElementType element, Transform damageSource, bool isCrit = false)
     {
         if (stone.active)
         {
             OnHpUpdate += stone.boosHpBar.UpdateBOOSHpbar;
-            bool wasHit = base.TakeDamage(damage, elementalDamage, element, damageSource);//执行父方法，并获取是否被击中，用于判断
+            bool wasHit = base.TakeDamage(damage, elementalDamage, element, damageSource,isCrit);//执行父方法，并获取是否被击中，用于判断
             //stone.boosHpBar.UpdateBOOSHpbar();
 
             if (wasHit == false)
@@ -77,6 +77,12 @@ public class StoneHp : EntityHp
     protected override void Die()
     {
         if (canTakeDamage == true && stone.stage == 3)
+        {
             base.Die();
+
+            // 记录死亡状态到存档数据（即使敌人随后被销毁）
+            if (SaveManager.instance != null && stone.isRebirthOnLoad == false)
+                SaveManager.instance.MarkEnemyDead(stone.GetEnemyId());
+        }
     }
 }

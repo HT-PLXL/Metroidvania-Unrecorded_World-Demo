@@ -11,7 +11,6 @@ public class Stat//这个类用于在unity面板设置基础值，其他脚本�
     private bool needCalculate = true;
     public float GetValue()
     {
-        //return GetfinalValue();性能不友好，优化如下
         if (needCalculate)
         {
             finalvalue = GetfinalValue();
@@ -39,7 +38,11 @@ public class Stat//这个类用于在unity面板设置基础值，其他脚本�
         }
         return finalValue;
     }
-    public void SetBaseValue(float value) => baseValue = value;
+    public void SetBaseValue(float value)
+    {
+        baseValue = value;
+        needCalculate = true;
+    }
 }
 
 [Serializable]

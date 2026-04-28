@@ -5,6 +5,7 @@ public class BackgroundLoop : MonoBehaviour
 {
     private Camera mainCamera;
     private float bgWidth;    // 背景宽度
+    public bool needDebugBgWidth;
     void Start()
     {
         mainCamera = Camera.main;
@@ -22,7 +23,8 @@ public class BackgroundLoop : MonoBehaviour
         SpriteRenderer spriterenderer = GetComponent<SpriteRenderer>();
         bgWidth = spriterenderer.bounds.size.x;
 
-        Debug.Log(transform.parent.name + "精灵图片的宽度: " + bgWidth);
+        if (needDebugBgWidth)
+            Debug.Log(transform.parent.name + "精灵图片的宽度: " + bgWidth);
     }
 
     void BgMove()

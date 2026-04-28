@@ -15,17 +15,17 @@ public class Object_Blacksmith : Object_NPC, IInteractable
     }
     public void Interact()//F互动方法
     {
-        if (storage == null||bag == null)
+        if (storage == null || bag == null)
             return;
         ui.storageUI.SetupStorageUI(storage);//初始化库存界面
         ui.craftUI.SetUpCraftUI(storage);//初始化制作面版
         //第二次互动关闭
-        if (ui.storageUI.gameObject.activeSelf || ui.craftUI.gameObject.activeSelf)
-        {
-            ui.ToggleStorageUI(false);//关闭库存UI和制作UI和提示板
-            return;//直接退出
-        }
-        ui.ToggleStorageUI(true);
+        //if (ui.storageUI.gameObject.activeSelf || ui.craftUI.gameObject.activeSelf)
+        //{
+        //    ui.ToggleStorageUI(false);//关闭库存UI和制作UI和提示板
+        //    return;//直接退出
+        //}
+        ui.SwitchTo(ui.storageUI.gameObject);
     }
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
@@ -43,7 +43,8 @@ public class Object_Blacksmith : Object_NPC, IInteractable
             base.OnTriggerExit2D(collision);
             try
             {
-                ui.ToggleStorageUI(false);//关闭库存UI和制作UI和提示板
+                //ui.ToggleStorageUI(false);//关闭库存UI和制作UI和提示板
+                ui.SwitchTo(ui.storageUI.gameObject,true);
             }
             catch
             {

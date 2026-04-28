@@ -33,7 +33,7 @@ RectTransform:
   m_Father: {fileID: 3262955771789135303}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0.00050115585}
   m_SizeDelta: {x: 0, y: 0.0010022521}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -527,7 +527,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &205361456716789004
 Transform:
   m_ObjectHideFlags: 0
@@ -569,6 +569,8 @@ MonoBehaviour:
   groundDetectionStart: {fileID: 2168234201485798531}
   majorWallDetection: {fileID: 205361456716789004}
   secondaryWallDetection: {fileID: 0}
+  enemyId: "\u6D4B\u8BD5\u5173\u5361 1_\u5927\u578B\u84DD\u8272\u53F2\u83B1\u59C6_06a8eb94"
+  isRebirthOnLoad: 1
   battleMoveSpeed: 2.5
   attackDistance: 2
   battleTimeDuration: 5
@@ -776,6 +778,11 @@ MonoBehaviour:
     vitality:
       baseValue: 0
       modifiers: []
+  immunePhysical: 0
+  immuneFire: 0
+  immuneIce: 0
+  immuneLightning: 0
+  currentWeaponElement: 0
 --- !u!114 &3653661547582971704
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -791,6 +798,7 @@ MonoBehaviour:
   lightningVfx: {fileID: 8159136254417894736, guid: 7e7fd2f69777e404ea3a48f1d23dc295, type: 3}
   currentCharge: 0
   maxCharge: 1
+  lightningDamageMultiplier: 5
 --- !u!114 &1788918139533556118
 MonoBehaviour:
   m_ObjectHideFlags: 0

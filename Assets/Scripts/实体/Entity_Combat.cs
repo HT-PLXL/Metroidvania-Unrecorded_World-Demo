@@ -7,7 +7,7 @@ public class Entity_Combat : MonoBehaviour
     private Entity_VFX vfx;
     private Entity_SFX sfx;
     private Entity_Stats stats;//声明stats即可使用Entity_Stats中GetAttackData()
-    [HideInInspector] public DamageScaleFactor basicDamageScale;
+    public DamageScaleFactor basicDamageScale;
     [Header("目标检测")]
     [SerializeField] private Transform targetCheck;
     [SerializeField] private float targetCheckRadius = 1;
@@ -18,27 +18,37 @@ public class Entity_Combat : MonoBehaviour
         sfx = GetComponent<Entity_SFX>();
         stats = GetComponent<Entity_Stats>();
     }
-    public void PerformAttack()//执行攻击
+
+    public void PerformAttack()
     {
         bool anyTargetGotHit = false;
-        foreach (var target in GetDetectColliders(whatIsTarget))//对受击目标执行
+        foreach (var target in GetDetectColliders(whatIsTarget))
         {
             IDamageable damageTarget = target.GetComponent<IDamageable>();
             if (damageTarget == null)
                 continue;
-            AttackData attackData = stats.GetAttackData(basicDamageScale);
 
+            AttackData attackData = stats.GetAttackData(basicDamageScale);
             float physicalDamage = attackData.physicalDamage;
             float elementalDamage = attackData.elementalDamage;
-            //if (element != ElementType.None)
-            //    target.GetComponent<Entity_StatusHandler>().ApplyStatusEffect(attackData.element, attackData.effectData);//使用攻击方的数据在受击方应用伤害与效果
-            //暂时不让普攻使用元素伤害以及元素附着特效
-            bool targetGotHit = damageTarget.TakeDamage(physicalDamage, elementalDamage, ElementType.None, transform);//暂时不让普攻使用元素伤害，此处传入ElementType.None
+            ElementType element = attackData.element; // 由武器元素伤害决定的属性
+
+            bool targetGotHit = damageTarget.TakeDamage(physicalDamage, elementalDamage, element, transform, attackData.isCrit);
+
             if (targetGotHit)
             {
                 anyTargetGotHit = true;
-                OnTakingPhysicalDamage?.Invoke(physicalDamage);//触发事件时顺带传入物理伤害
-                vfx.CreateHitVfx(target.transform, attackData.isCrit, attackData.element);//创建打击特效粒子
+                OnTakingPhysicalDamage?.Invoke(physicalDamage);
+
+                // 施加元素异常状态（若元素有效）
+                if (element != ElementType.None)
+                {
+                    Entity_StatusHandler statusHandler = target.GetComponent<Entity_StatusHandler>();
+                    if (statusHandler != null)
+                        statusHandler.ApplyStatusEffect(element, attackData.effectData);
+                }
+
+                vfx.CreateHitVfx(target.transform, attackData.isCrit, attackData.element);
                 sfx?.PlayAttackHit();
             }
         }
@@ -47,6 +57,7 @@ public class Entity_Combat : MonoBehaviour
         else
             sfx?.PlayAttackMiss();
     }
+
     public void PerformAttackOnTarget(Transform target, DamageScaleFactor damageScaleFactor = null)
     {
         bool anyTargetGotHit = false;
@@ -60,13 +71,23 @@ public class Entity_Combat : MonoBehaviour
 
         float physicalDamage = attackData.physicalDamage;
         float elementalDamage = attackData.elementalDamage;
+        ElementType element = attackData.element;
 
-        bool targetGotHit = damageTarget.TakeDamage(physicalDamage, elementalDamage, ElementType.None, transform);//暂时不让普攻使用元素伤害，此处传入ElementType.None
+        bool targetGotHit = damageTarget.TakeDamage(physicalDamage, elementalDamage, element, transform, attackData.isCrit);
+
         if (targetGotHit)
         {
             anyTargetGotHit = true;
-            OnTakingPhysicalDamage?.Invoke(physicalDamage);//触发事件时顺带传入物理伤害
-            vfx.CreateHitVfx(target.transform, attackData.isCrit, attackData.element);//创建打击特效粒子
+            OnTakingPhysicalDamage?.Invoke(physicalDamage);
+
+            if (element != ElementType.None)
+            {
+                Entity_StatusHandler statusHandler = target.GetComponent<Entity_StatusHandler>();
+                if (statusHandler != null)
+                    statusHandler.ApplyStatusEffect(element, attackData.effectData);
+            }
+
+            vfx.CreateHitVfx(target.transform, attackData.isCrit, attackData.element);
             sfx?.PlayAttackHit();
         }
 
@@ -75,6 +96,63 @@ public class Entity_Combat : MonoBehaviour
         else
             sfx?.PlayAttackMiss();
     }
+    //public void PerformAttack()//执行攻击
+    //{
+    //    bool anyTargetGotHit = false;
+    //    foreach (var target in GetDetectColliders(whatIsTarget))//对受击目标执行
+    //    {
+    //        IDamageable damageTarget = target.GetComponent<IDamageable>();
+    //        if (damageTarget == null)
+    //            continue;
+    //        AttackData attackData = stats.GetAttackData(basicDamageScale);
+
+    //        float physicalDamage = attackData.physicalDamage;
+    //        float elementalDamage = attackData.elementalDamage;
+    //        //if (element != ElementType.None)
+    //        //    target.GetComponent<Entity_StatusHandler>().ApplyStatusEffect(attackData.element, attackData.effectData);//使用攻击方的数据在受击方应用伤害与效果
+    //        //暂时不让普攻使用元素伤害以及元素附着特效
+    //        bool targetGotHit = damageTarget.TakeDamage(physicalDamage, elementalDamage, ElementType.None, transform);//暂时不让普攻使用元素伤害，此处传入ElementType.None
+    //        if (targetGotHit)
+    //        {
+    //            anyTargetGotHit = true;
+    //            OnTakingPhysicalDamage?.Invoke(physicalDamage);//触发事件时顺带传入物理伤害
+    //            vfx.CreateHitVfx(target.transform, attackData.isCrit, attackData.element);//创建打击特效粒子
+    //            sfx?.PlayAttackHit();
+    //        }
+    //    }
+    //    if (anyTargetGotHit)
+    //        sfx?.PlayAttackHit();
+    //    else
+    //        sfx?.PlayAttackMiss();
+    //}
+    //public void PerformAttackOnTarget(Transform target, DamageScaleFactor damageScaleFactor = null)
+    //{
+    //    bool anyTargetGotHit = false;
+
+    //    IDamageable damageTarget = target.GetComponent<IDamageable>();
+    //    if (damageTarget == null)
+    //        return;
+
+    //    DamageScaleFactor damageScale = damageScaleFactor == null ? basicDamageScale : damageScaleFactor;
+    //    AttackData attackData = stats.GetAttackData(damageScale);
+
+    //    float physicalDamage = attackData.physicalDamage;
+    //    float elementalDamage = attackData.elementalDamage;
+
+    //    bool targetGotHit = damageTarget.TakeDamage(physicalDamage, elementalDamage, ElementType.None, transform);//暂时不让普攻使用元素伤害，此处传入ElementType.None
+    //    if (targetGotHit)
+    //    {
+    //        anyTargetGotHit = true;
+    //        OnTakingPhysicalDamage?.Invoke(physicalDamage);//触发事件时顺带传入物理伤害
+    //        vfx.CreateHitVfx(target.transform, attackData.isCrit, attackData.element);//创建打击特效粒子
+    //        sfx?.PlayAttackHit();
+    //    }
+
+    //    if (anyTargetGotHit)
+    //        sfx?.PlayAttackHit();
+    //    else
+    //        sfx?.PlayAttackMiss();
+    //}
     protected Collider2D[] GetDetectColliders(LayerMask whatNeedDetect)//获得检测到的碰撞体
     {
         return Physics2D.OverlapCircleAll(targetCheck.position, targetCheckRadius, whatNeedDetect);
