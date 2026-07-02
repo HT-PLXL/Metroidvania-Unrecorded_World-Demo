@@ -19,6 +19,9 @@ public class UI_Shop : MonoBehaviour
         this.bag = bag;
         //需要同时给bag和shop事件绑定方法
         //不然使用/增加/移除时bag.OnBagChange或shop.OnBagChange触发，但没有方法，也就不会更新UI
+        this.bag.OnBagChange -= UpdateSlotUI;
+        shop.OnBagChange -= UpdateSlotUI;
+
         this.bag.OnBagChange += UpdateSlotUI;
         shop.OnBagChange += UpdateSlotUI;
         UpdateSlotUI();

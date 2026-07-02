@@ -8,8 +8,22 @@ public class Entity_DropManager : MonoBehaviour
     [SerializeField][cn("可掉落物列表")] private ItemListDataSO dropData;
     [SerializeField][cn("剩余稀有度点数")] private int maxRarityAmount = 1200;
     [SerializeField][cn("最大掉落数量")] private int maxItemsToDrop = 3;
+    [Header("固定掉落模式")]
+    [SerializeField][cn("启用固定掉落")] private bool useFixedDrops = false;
+    [SerializeField][cn("固定掉落列表")] private ItemListDataSO fixedDropItems;
     public virtual void DropItems()
     {
+        if (useFixedDrops && fixedDropItems != null && fixedDropItems.itemList.Count() > 0)
+        {
+            // 固定掉落模式：掉落列表中的所有物品
+            foreach (var item in fixedDropItems.itemList)
+            {
+                if (item != null)
+                    CreateItemDrop(item);
+            }
+            return;
+        }
+
         List<ItemDataSO> itemsWillDrop = RollDrops();//执行掉落roll点，得到候选掉落列表
         int amountWillDrop = Mathf.Min(itemsWillDrop.Count, maxItemsToDrop);//取“候选列表数量”和“最大掉落数”的较小值（避免超出上限）
         //生成掉落物

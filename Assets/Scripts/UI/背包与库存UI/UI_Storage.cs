@@ -13,6 +13,7 @@ public class UI_Storage : MonoBehaviour
     {
         this.storage = storage;
         bag = storage.bag;
+        storage.OnBagChange -= UpdateUI;
         storage.OnBagChange += UpdateUI;
         UpdateUI();
 

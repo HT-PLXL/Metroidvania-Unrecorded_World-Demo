@@ -4,11 +4,13 @@ public class Object_Shop : Object_NPC, IInteractable
 {
     private Bag_Player bag;
     private Bag_Shop shop;
+    private Bag_Storage storage;
 
     protected override void Awake()
     {
         base.Awake();
         shop = GetComponent<Bag_Shop>();
+        storage = GetComponent<Bag_Storage>();
     }
     protected override void Update()
     {
@@ -18,15 +20,20 @@ public class Object_Shop : Object_NPC, IInteractable
     }
     public void Interact()//F互动方法
     {
-        if (shop == null || bag == null)
+        if (shop == null || bag == null || storage == null)
+        {
+            Debug.Log("缺少shop/bag/storage实例");
             return;
+        }
         ui.shopUI.SetupShopUI(shop, bag);
+        ui.storageUI.SetupStorageUI(storage);//初始化库存界面
+        ui.craftUI.SetUpCraftUI(storage);//初始化制作面版
         //if (ui.shopUI.gameObject.activeSelf)//二次交互关闭
         //{
         //    ui.ToggleShopUI(false);
         //    return;
         //}
-        ui.SwitchTo(ui.shopUI.gameObject);
+        ui.ToggleShopUI();
     }
 
     protected override void OnTriggerEnter2D(Collider2D collision)
@@ -36,6 +43,7 @@ public class Object_Shop : Object_NPC, IInteractable
             base.OnTriggerEnter2D(collision);
             bag = playerTransform.GetComponent<Bag_Player>();
             shop.SetBag(bag);
+            storage.SetBag(bag);
         }
     }
 

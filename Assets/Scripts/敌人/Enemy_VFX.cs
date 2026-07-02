@@ -7,6 +7,9 @@ public class Enemy_VFX : Entity_VFX
 
     public void PlayAttackWarning(bool enable)
     {
+        if (attackWarning == null)
+            return;
+
         attackWarning.SetActive(enable);
     }
     public override Color GetHitVfxColor(Transform target)

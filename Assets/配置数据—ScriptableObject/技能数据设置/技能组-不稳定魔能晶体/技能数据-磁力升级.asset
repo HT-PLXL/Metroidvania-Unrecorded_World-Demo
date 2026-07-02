@@ -12,12 +12,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ec8ecb608c3d77448b7cb7bd6a2648f, type: 3}
   m_Name: "\u6280\u80FD\u6570\u636E-\u78C1\u529B\u5347\u7EA7"
   m_EditorClassIdentifier: 
+  skillName: "\u78C1\u529B\u5347\u7EA7"
+  cost: 2
+  description: "\u52A0\u88C5\u4E86\u7D22\u654C\u88C5\u7F6E\u7684\u6539\u826F\u7248\u9B54\u80FD\u6676\u4F53"
+  icon: {fileID: 1638181233, guid: 76d921da7037d15419cc58d02500e044, type: 3}
+  unlockedByDefault: 0
   skillType: 2
   upgradeData:
     upgradeType: 7
     cooldown: 3
-  unlockedByDefault: 0
-  skillName: "\u78C1\u529B\u5347\u7EA7"
-  cost: 2
-  description: "\u52A0\u88C5\u4E86\u7D22\u654C\u88C5\u7F6E\u7684\u6539\u826F\u7248\u9B54\u80FD\u6676\u4F53"
-  icon: {fileID: 2140423333, guid: d8922fa682394c34387c8e6ae7c48e68, type: 3}
+    damageScale:
+      phyiscal: 1
+      elemental: 1
+      chillDuration: 3
+      chillSlowMulitiplier: 0.35
+      burnDuration: 3
+      burnDamageScale: 3
+      lightningDuration: 3
+      lightningDamageScale: 1
+      lightningCharge: 0.4
+    isPhysicalDamage: 0
+  requiredItems: []

@@ -17,24 +17,28 @@ MonoBehaviour:
   itemType: 1
   maxStackCount: 1
   itemEffect: {fileID: 0}
-  itemRarity: 218
+  itemRarity: 683
   maxDropChance: 31.3
   dropChance: 31.3
-  level: "\u767D\u8272\u666E\u901A"
-  itemPrice: 100
+  level: "\u84DD\u8272\u7A00\u6709"
+  itemPrice: 1800
   minStackCountInShop: 1
   maxStackCountInShop: 1
   craftRecipe:
-  - itemData: {fileID: 11400000, guid: 28ccaf08e3fd513438fbe3f40046f991, type: 2}
+  - persistentId: 
+    itemData: {fileID: 11400000, guid: 28ccaf08e3fd513438fbe3f40046f991, type: 2}
     stackCount: 2
     itemEffect: {fileID: 0}
-  - itemData: {fileID: 11400000, guid: 71feda8aeaafc1b47bd8993bc5c8b6e8, type: 2}
+  - persistentId: 
+    itemData: {fileID: 11400000, guid: 71feda8aeaafc1b47bd8993bc5c8b6e8, type: 2}
     stackCount: 3
     itemEffect: {fileID: 0}
   weaponElement: 2
   modifier:
   - statType: 12
     value: 150
+  - statType: 3
+    value: 10
   immunePhysical: 0
   immuneFire: 0
   immuneIce: 0

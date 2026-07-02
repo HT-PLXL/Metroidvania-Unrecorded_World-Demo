@@ -2,10 +2,11 @@ using UnityEngine;
 
 public class DoorLever : MonoBehaviour
 {
-    public Door targetDoor;                 // 要控制的门
+    public Door[] targetDoors;// 要控制的多个门
     private bool playerInRange = false;
     private Animator anim;
     private bool Leverdown;
+
     private void Awake()
     {
         anim = GetComponent<Animator>();
@@ -15,11 +16,18 @@ public class DoorLever : MonoBehaviour
     {
         if (playerInRange && Input.GetKeyDown(KeyCode.F))
         {
-            if (targetDoor != null)
-                targetDoor.Toggle();
-
-            anim.SetBool("down", Leverdown);
+            //遍历所有门使其开关
+            if (targetDoors != null)
+            {
+                foreach (Door door in targetDoors)
+                {
+                    if (door != null)
+                        door.Toggle();
+                }
+            }
+            //切换拉杆动画
             Leverdown = !Leverdown;
+            anim.SetBool("use", Leverdown);
         }
     }
 

@@ -24,6 +24,7 @@ public class GameData
     public string[] quickItemSaveIds = new string[2]; // 保存两个快捷槽的物品savaId
     public float playerCurrentHp;
     public SerializableDictionary<string, bool> enemyStates; // <怪物ID，是否死亡>
+    public SerializableDictionary<string, bool> chestOpenedStates; // 宝箱 ID -> 是否已打开
     public GameData()
     {
         bag = new SerializableDictionary<string, int>();
@@ -38,7 +39,7 @@ public class GameData
         scenePortals = new SerializableDictionary<string, Vector3>();
 
         enemyStates = new SerializableDictionary<string, bool>();
-
+        chestOpenedStates = new SerializableDictionary<string, bool>();
     }
     
 }

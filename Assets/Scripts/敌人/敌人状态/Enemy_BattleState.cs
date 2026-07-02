@@ -64,7 +64,7 @@ public class Enemy_BattleState : EnemyState
         //MathF无法实例化，所有成员（方法、常量）均为静态，需通过MathF.XXX直接调用。
         //Abs：absolute，这里是绝对值运算
     }
-    protected bool BattleTimeOver() => Time.time > lastTimeWasInBattle + enemy.battleTimeDuration;
+    protected virtual bool BattleTimeOver() => Time.time > lastTimeWasInBattle + enemy.battleTimeDuration;
     protected bool InAttackRange()
     {
         return GetDistanceToPlayer() < enemy.attackDistance;

@@ -20,7 +20,8 @@ MonoBehaviour:
   itemRarity: 929
   maxDropChance: 75
   dropChance: 7.2
-  itemPrice: 888
+  level: "\u91D1\u8272\u4F20\u8BF4"
+  itemPrice: 666
   minStackCountInShop: 1
   maxStackCountInShop: 1
   craftRecipe: []

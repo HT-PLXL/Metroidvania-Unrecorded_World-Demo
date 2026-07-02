@@ -10,9 +10,11 @@ public class UI_FadeScreen : MonoBehaviour
     private void Awake()
     {
         fadeImage = GetComponent<Image>();
-        mainMenu = FindAnyObjectByType<UI_MainMenu>();
-        if (mainMenu != null)
-            fadeImage.color = new Color(0, 0, 0, 1);//运行时主菜单默认黑，用于渐变
+        fadeImage.color = new Color(0, 0, 0, 0);//强制初始化为完全透明
+
+        //mainMenu = FindAnyObjectByType<UI_MainMenu>();
+        //if (mainMenu != null)
+        //    fadeImage.color = new Color(0, 0, 0, 1);//运行时主菜单默认黑，用于渐变
     }
     public void DoFadeIn(float duration = 1) // 黑=>透明
     {

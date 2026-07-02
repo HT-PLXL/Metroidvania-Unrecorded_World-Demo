@@ -5,7 +5,7 @@ using UnityEngine;
 public class DamageScaleFactor//缩放因子类，用于给攻击/技能设定伤害倍率
 {
     [Header("伤害倍率")]
-    [cn("物理伤害倍率")] public float phyiscal = 1;
+    [cn("物理伤害倍率")] public float physical = 1;
     [cn("元素伤害倍率")] public float elemental = 1;
     [Header("霜冻")]
     [cn("减速时间")] public float chillDuration = 3;

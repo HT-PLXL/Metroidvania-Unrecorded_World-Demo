@@ -24,7 +24,20 @@ MonoBehaviour:
   itemPrice: 888
   minStackCountInShop: 1
   maxStackCountInShop: 1
-  craftRecipe: []
+  craftRecipe:
+  - persistentId: 
+    itemData: {fileID: 11400000, guid: 91996fe701a173f4092a42f0a8fdd0a8, type: 2}
+    stackCount: 1
+    itemEffect: {fileID: 0}
+  - persistentId: 
+    itemData: {fileID: 11400000, guid: 28ccaf08e3fd513438fbe3f40046f991, type: 2}
+    stackCount: 2
+    itemEffect: {fileID: 0}
+  weaponElement: 0
   modifier:
   - statType: 8
     value: 12
+  immunePhysical: 0
+  immuneFire: 0
+  immuneIce: 0
+  immuneLightning: 0

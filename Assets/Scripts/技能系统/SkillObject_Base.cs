@@ -98,7 +98,7 @@ public class SkillObject_Base : MonoBehaviour
         // 创建一个新实例，元素倍率设为0
         return new DamageScaleFactor
         {
-            phyiscal = original.phyiscal,
+            physical = original.physical,
             elemental = 0f,
             chillDuration = original.chillDuration,
             chillSlowMulitiplier = original.chillSlowMulitiplier,

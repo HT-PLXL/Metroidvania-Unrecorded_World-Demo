@@ -23,6 +23,12 @@ public class Entity_VFX : MonoBehaviour
     [SerializeField] private Color burnVfx;
     [SerializeField] private Color lightningVfx;
 
+    [Header("残影效果")]
+    [Range(0.01f, 0.2f)]
+    [SerializeField][cn("间隔")] private float echoInterval = 0.05f;
+    [SerializeField][cn("残影预制体")] private GameObject echoPrehab;
+    private Coroutine echoCo;
+
     private void Awake()
     {
         entity = GetComponent<Entity>();
@@ -53,8 +59,8 @@ public class Entity_VFX : MonoBehaviour
         float tickInterval = 0.25f;//短暂时间间隔
         float timeHasPassed = 0f;
 
-        Color lightColor = effectColor * 1.1f;
-        Color darkColor = effectColor * 0.95f;
+        Color lightColor = new Color(effectColor.r * 1.1f, effectColor.g * 1.1f, effectColor.b * 1.1f, effectColor.a);
+        Color darkColor = new Color(effectColor.r * 0.95f, effectColor.g * 0.95f, effectColor.b * 0.95f, effectColor.a);
 
         bool toggle = false;
 
@@ -121,4 +127,27 @@ public class Entity_VFX : MonoBehaviour
 
     // 获取 SpriteRenderer 引用
     public SpriteRenderer GetSpriteRenderer() => sr;
+
+    //残影特效
+    public void DoEchoEffect(float duration)
+    {
+        if (echoCo != null)
+            StopCoroutine(echoCo);
+        echoCo = StartCoroutine(echoEffectCo(duration));
+    }
+    private IEnumerator echoEffectCo(float duration)
+    {
+        float time = 0;
+        while (time < duration)
+        {
+            CreateEcho();
+            yield return new WaitForSeconds(echoInterval);
+            time = time + echoInterval;
+        }
+    }
+    private void CreateEcho()
+    {
+        GameObject echo = Instantiate(echoPrehab, transform.position, transform.rotation);
+        echo.GetComponentInChildren<SpriteRenderer>().sprite = sr.sprite;
+    }
 }

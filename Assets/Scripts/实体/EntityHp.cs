@@ -11,8 +11,8 @@ public class EntityHp : MonoBehaviour, IDamageable
     private Entity entity;
     protected Entity_Stats entityStats;
     private Entity_DropManager dropManager;//掉落物管理器
-    private LayerMask arrowLayer;
-    //private bool miniHpActive;
+    private Vector2? customKnockbackForce;//自定义临时击退力度，由攻击方设置
+    private float? customKnockbackDuration;//自定义临时击退时间，由攻击方设置
 
     public float lastDamage { get; private set; }//用于灵魂粒子
     public bool isDead { get; private set; }
@@ -21,10 +21,10 @@ public class EntityHp : MonoBehaviour, IDamageable
     [Header("血量回复")]
     [SerializeField][cn("回复间隔")] private float regenInterval = 1;
     [SerializeField][cn("允许自动回复？")] private bool canRegenHp = true;
-    [Header("hitBack")]
-    [SerializeField][cn("击退硬直时间")] private float hitBackStunDuration = .2f;
-    [SerializeField][cn("击退力度")] private Vector2 hitBackForce = new Vector2(1.5f, 2f);
-    [Header("强力攻击与击退")]
+    [Header("默认被击退数据")]
+    [SerializeField][cn("默认被击退硬直时间")] private float hitBackStunDuration = .2f;
+    [SerializeField][cn("默认被击退力度")] private Vector2 hitBackForce = new Vector2(1.5f, 2f);
+    [Header("强力攻击时被击退")]
     [SerializeField][cn("强力击退(伤害/最大血量)阈值")] private float powerfulHitBackThreshold = 0.3f;
     [SerializeField][cn("强力击退硬直时间")] private float powerfulHitBackDuration = 0.5f;
     [SerializeField][cn("强力击退力度")] private Vector2 powerfulHitBackForce = new Vector2(7, 7);
@@ -75,20 +75,8 @@ public class EntityHp : MonoBehaviour, IDamageable
 
         float resistance = entityStats != null ? entityStats.GetElementalResistance(element) : 0;
         float finalElementalDamage = elementalDamage * (1 - resistance);
-        if (damageSource.GetComponent<Enemy_Archer>() != null)
-        {
-            Enemy_Archer archer = damageSource.GetComponent<Enemy_Archer>();
-            if(archer.HearyHitback == true)
-            {
-                int direction = transform.position.x > damageSource.position.x ? 1 : -1;
-                Vector2 hitback = new Vector2(12 * direction, 3);
-                entity?.StartknockBackCo(hitback, 0.3f);
-            }
-            else
-                UseHitBack(damageSource, element != ElementType.None ? finalElementalDamage : finalPhysicalDamage);
-        }
-        else
-            UseHitBack(damageSource, element != ElementType.None ? finalElementalDamage : finalPhysicalDamage);
+
+        UseHitBack(damageSource, element != ElementType.None ? finalElementalDamage : finalPhysicalDamage);
 
         if (element == ElementType.None)
             ReduceHp(finalPhysicalDamage);
@@ -104,36 +92,7 @@ public class EntityHp : MonoBehaviour, IDamageable
         OnUnderAttack?.Invoke();
         return true;
     }
-    //public virtual bool TakeDamage(float damage, float elementalDamage, ElementType element, Transform damageSource)//对受击目标执行
-    //{
-    //    if (attackEvaded())//闪避
-    //    {
-    //        Debug.Log($"{gameObject.name} evaded the attack!");
-    //        return false;
-    //    }
-    //    if (canTakeDamage == false)
-    //        return true;
 
-    //    Entity_Stats attackerStats = damageSource.GetComponent<Entity_Stats>();
-    //    float armorReduction = attackerStats != null ? attackerStats.GetArmorReduction() : 0;
-
-    //    float mitigation = entityStats != null ? entityStats.GetArmorMitigation(armorReduction) : 0;//护甲在实体自身上，可以直接使用，削减在攻击者身上，需要获取并提供给方法以计算最终减免比例
-    //    float finalPhysicalDamage = damage * (1 - mitigation);
-
-    //    float resistance = entityStats != null ? entityStats.GetElementalResistance(element) : 0;
-    //    float finalElementalDamage = elementalDamage * (1 - resistance);
-
-    //    UseHitBack(damageSource, element != ElementType.None ? finalElementalDamage : finalPhysicalDamage);
-
-    //    if (element == ElementType.None)
-    //        ReduceHp(finalPhysicalDamage);
-    //    else
-    //        ReduceHp(finalElementalDamage, element);
-    //    lastDamage = finalPhysicalDamage + finalElementalDamage;
-
-    //    OnUnderAttack?.Invoke();//每次受到攻击执行
-    //    return true;
-    //}
     public float GetHpPercent()
     {
         float hpPercent = currentHp / entityStats.GetMaxHp();
@@ -182,7 +141,7 @@ public class EntityHp : MonoBehaviour, IDamageable
         }
 
         OnHpUpdate?.Invoke();
-        if (currentHp <= 0)
+        if (currentHp <= 0 && isDead != true)
             Die();
     }
     public void ReduceHp(float damage, ElementType element)//元素伤害专用，不播放变白效果
@@ -196,7 +155,7 @@ public class EntityHp : MonoBehaviour, IDamageable
         }
 
         OnHpUpdate?.Invoke();
-        if (currentHp <= 0)
+        if (currentHp <= 0 && isDead != true)
             Die();
     }
     protected virtual void Die()
@@ -217,11 +176,35 @@ public class EntityHp : MonoBehaviour, IDamageable
     {
         HpBar?.transform.parent.gameObject.SetActive(enable);
     }
+    //由攻击方调用，设置本次攻击的击退数据
+    public void SetCustomKnockback(Vector2 force, float duration)
+    {
+        customKnockbackForce = force;
+        customKnockbackDuration = duration;
+    }
     private void UseHitBack(Transform damageSource, float finalDamage)
     {
-        float duration = CalculateDuration(finalDamage);
-        Vector2 hitBack = CalculateDirectionAndForce(finalDamage, damageSource);
-        entity?.StartknockBackCo(hitBack, duration);
+        float duration;
+        Vector2 hitBack;
+        if (customKnockbackForce.HasValue && customKnockbackDuration.HasValue)
+        {
+            // 使用自定义击退
+            duration = customKnockbackDuration.Value;
+            hitBack = customKnockbackForce.Value;
+            // 根据伤害来源方向调整 X 方向
+            int direction = transform.position.x > damageSource.position.x ? 1 : -1;
+            hitBack.x = Mathf.Abs(hitBack.x) * direction;
+
+            // 清除临时数据
+            customKnockbackForce = null;
+            customKnockbackDuration = null;
+        }
+        else//启动常规的击退计算流程
+        {
+            duration = IsHeavyDamage(finalDamage) ? powerfulHitBackDuration : hitBackStunDuration; ;
+            hitBack = CalculateDirectionAndForce(finalDamage, damageSource);
+        }
+            entity?.StartknockBackCo(hitBack, duration);
     }
     private Vector2 CalculateDirectionAndForce(float damage, Transform damageSource)
     {
@@ -229,10 +212,6 @@ public class EntityHp : MonoBehaviour, IDamageable
         Vector2 hitBack = IsHeavyDamage(damage) ? powerfulHitBackForce : hitBackForce;
         hitBack.x = hitBack.x * direction;
         return hitBack;
-    }
-    private float CalculateDuration(float damage)
-    {
-        return IsHeavyDamage(damage) ? powerfulHitBackDuration : hitBackStunDuration;
     }
     private bool IsHeavyDamage(float damage)
     {

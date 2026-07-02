@@ -50,7 +50,7 @@ public class Skill_Shard : Skill_Base
         else
         {
             SwapPlayerAndShard();
-            playerHp.IncreaseHp(0.50f * Mathf.Abs(originalHp - playerHp.currentHp));
+            playerHp.IncreaseHp(0.80f * Mathf.Abs(originalHp - playerHp.currentHp));
             setSkillOnCooldown();
         }
     }

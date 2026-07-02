@@ -24,4 +24,8 @@ MonoBehaviour:
   itemPrice: 150
   minStackCountInShop: 1
   maxStackCountInShop: 10
-  craftRecipe: []
+  craftRecipe:
+  - persistentId: 
+    itemData: {fileID: 11400000, guid: 2fdb703f7daa8ae47bf551ee3dd01168, type: 2}
+    stackCount: 1
+    itemEffect: {fileID: 0}

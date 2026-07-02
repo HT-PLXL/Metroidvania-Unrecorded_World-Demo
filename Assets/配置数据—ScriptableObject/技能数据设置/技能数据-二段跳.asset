@@ -15,14 +15,14 @@ MonoBehaviour:
   skillName: "\u4E8C\u6BB5\u8DF3"
   cost: 3
   description: "\u6211\u521A\u624D\u8DF3\u4E86\uFF1F\u6CA1\u6709\u5427"
-  icon: {fileID: 1992749770, guid: d8922fa682394c34387c8e6ae7c48e68, type: 3}
+  icon: {fileID: 227497852, guid: 76d921da7037d15419cc58d02500e044, type: 3}
   unlockedByDefault: 0
   skillType: 5
   upgradeData:
     upgradeType: 25
     cooldown: 0
     damageScale:
-      phyiscal: 1
+      physical: 1
       elemental: 1
       chillDuration: 3
       chillSlowMulitiplier: 0.35
@@ -33,5 +33,5 @@ MonoBehaviour:
       lightningCharge: 0.4
     isPhysicalDamage: 0
   requiredItems:
-  - itemData: {fileID: 11400000, guid: 1a98859b036495b4cb3e6ff84297b37e, type: 2}
+  - itemData: {fileID: 11400000, guid: 6c02ee1617c79e141a85794a7f55fd31, type: 2}
     amount: 5

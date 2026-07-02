@@ -20,7 +20,12 @@ MonoBehaviour:
   itemRarity: 976
   maxDropChance: 75
   dropChance: 2.5
+  level: "\u7EA2\u8272\u7981\u5FCC"
   itemPrice: 2000
   minStackCountInShop: 1
   maxStackCountInShop: 1
-  craftRecipe: []
+  craftRecipe:
+  - persistentId: 
+    itemData: {fileID: 11400000, guid: 91996fe701a173f4092a42f0a8fdd0a8, type: 2}
+    stackCount: 5
+    itemEffect: {fileID: 0}

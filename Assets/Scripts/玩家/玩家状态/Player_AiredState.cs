@@ -13,6 +13,11 @@ public class Player_AiredState : PlayerState
             player.SetVelocity(player.moveInput.x * (player.moveSpeed * player.airMoveMultiplier), rb.linearVelocity.y);
 
         if (input.Player.普通攻击.WasPressedThisFrame())
-            stateMachine.ChangeState(player.jumpAttackState);
+        {
+            if (player.moveInput.y < 0)
+                stateMachine.ChangeState(player.jumpAttackState);//下落攻击
+            else if (player.airComboExhausted == false)
+                stateMachine.ChangeState(player.airComboState);//空中连击
+        }
     }
 }

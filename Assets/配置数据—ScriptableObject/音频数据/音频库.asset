@@ -24,6 +24,47 @@ MonoBehaviour:
     clips:
     - {fileID: 8300000, guid: 9a53141af16cae04d83b8c3767698d0b, type: 3}
     volume: 0.3
+  - audioName: "\u7CBE\u7075\u5F13\u7BAD\u624B"
+    clips:
+    - {fileID: 8300000, guid: 03c8853c3842fcf4ca945b47bac684f1, type: 3}
+    volume: 1
+  - audioName: "\u5C0F\u53F2\u83B1\u59C6\u547D\u4E2D"
+    clips:
+    - {fileID: 8300000, guid: 428f76679bc5ac3469702fe29766abfe, type: 3}
+    volume: 0.35
+  - audioName: "\u5C0F\u53F2\u83B1\u59C6\u672A\u547D\u4E2D"
+    clips:
+    - {fileID: 8300000, guid: 428f76679bc5ac3469702fe29766abfe, type: 3}
+    volume: 0.35
+  - audioName: "\u4E2D\u53F2\u83B1\u59C6\u547D\u4E2D"
+    clips:
+    - {fileID: 8300000, guid: 0709f5ff639105549806ccc3bef434fd, type: 3}
+    volume: 0.35
+  - audioName: "\u4E2D\u53F2\u83B1\u59C6\u672A\u547D\u4E2D"
+    clips:
+    - {fileID: 8300000, guid: 0709f5ff639105549806ccc3bef434fd, type: 3}
+    volume: 0.35
+  - audioName: "\u5927\u53F2\u83B1\u59C6\u547D\u4E2D"
+    clips:
+    - {fileID: 8300000, guid: 11e08237604aa3b408dbfc4619ff6d93, type: 3}
+    volume: 0.35
+  - audioName: "\u5927\u53F2\u83B1\u59C6\u672A\u547D\u4E2D"
+    clips:
+    - {fileID: 8300000, guid: 11e08237604aa3b408dbfc4619ff6d93, type: 3}
+    volume: 0.35
+  - audioName: "\u9AB7\u9AC5\u547D\u4E2D"
+    clips:
+    - {fileID: 8300000, guid: 14a3fa7798f8b554bbce89e5d4740ab2, type: 3}
+    volume: 1
+  - audioName: "\u9AB7\u9AC5\u672A\u547D\u4E2D"
+    clips:
+    - {fileID: 8300000, guid: 14a3fa7798f8b554bbce89e5d4740ab2, type: 3}
+    volume: 1
+  enemy:
+  - audioName: "\u5F39\u53CD\u6210\u529F"
+    clips:
+    - {fileID: 8300000, guid: c81d56534d2406d45b2c3e1c1993e348, type: 3}
+    volume: 0.1
   uiAudio:
   - audioName: "\u70B9\u51FB\u6309\u94AE"
     clips:
