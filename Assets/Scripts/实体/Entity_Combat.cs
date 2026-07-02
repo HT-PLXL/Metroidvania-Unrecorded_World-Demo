@@ -49,7 +49,6 @@ public class Entity_Combat : MonoBehaviour
                 }
 
                 vfx.CreateHitVfx(target.transform, attackData.isCrit, attackData.element);
-                sfx?.PlayAttackHit();
             }
         }
         if (anyTargetGotHit)
@@ -88,7 +87,6 @@ public class Entity_Combat : MonoBehaviour
             }
 
             vfx.CreateHitVfx(target.transform, attackData.isCrit, attackData.element);
-            sfx?.PlayAttackHit();
         }
 
         if (anyTargetGotHit)
@@ -96,67 +94,18 @@ public class Entity_Combat : MonoBehaviour
         else
             sfx?.PlayAttackMiss();
     }
-    //public void PerformAttack()//执行攻击
-    //{
-    //    bool anyTargetGotHit = false;
-    //    foreach (var target in GetDetectColliders(whatIsTarget))//对受击目标执行
-    //    {
-    //        IDamageable damageTarget = target.GetComponent<IDamageable>();
-    //        if (damageTarget == null)
-    //            continue;
-    //        AttackData attackData = stats.GetAttackData(basicDamageScale);
+    public void CounterDamage(Collider2D target)//弹反造成伤害的方法
+    {
+        DamageScaleFactor damageScale = new DamageScaleFactor{physical = 1.5f};//1.5倍
+        AttackData attackData = stats.GetAttackData(damageScale);
 
-    //        float physicalDamage = attackData.physicalDamage;
-    //        float elementalDamage = attackData.elementalDamage;
-    //        //if (element != ElementType.None)
-    //        //    target.GetComponent<Entity_StatusHandler>().ApplyStatusEffect(attackData.element, attackData.effectData);//使用攻击方的数据在受击方应用伤害与效果
-    //        //暂时不让普攻使用元素伤害以及元素附着特效
-    //        bool targetGotHit = damageTarget.TakeDamage(physicalDamage, elementalDamage, ElementType.None, transform);//暂时不让普攻使用元素伤害，此处传入ElementType.None
-    //        if (targetGotHit)
-    //        {
-    //            anyTargetGotHit = true;
-    //            OnTakingPhysicalDamage?.Invoke(physicalDamage);//触发事件时顺带传入物理伤害
-    //            vfx.CreateHitVfx(target.transform, attackData.isCrit, attackData.element);//创建打击特效粒子
-    //            sfx?.PlayAttackHit();
-    //        }
-    //    }
-    //    if (anyTargetGotHit)
-    //        sfx?.PlayAttackHit();
-    //    else
-    //        sfx?.PlayAttackMiss();
-    //}
-    //public void PerformAttackOnTarget(Transform target, DamageScaleFactor damageScaleFactor = null)
-    //{
-    //    bool anyTargetGotHit = false;
-
-    //    IDamageable damageTarget = target.GetComponent<IDamageable>();
-    //    if (damageTarget == null)
-    //        return;
-
-    //    DamageScaleFactor damageScale = damageScaleFactor == null ? basicDamageScale : damageScaleFactor;
-    //    AttackData attackData = stats.GetAttackData(damageScale);
-
-    //    float physicalDamage = attackData.physicalDamage;
-    //    float elementalDamage = attackData.elementalDamage;
-
-    //    bool targetGotHit = damageTarget.TakeDamage(physicalDamage, elementalDamage, ElementType.None, transform);//暂时不让普攻使用元素伤害，此处传入ElementType.None
-    //    if (targetGotHit)
-    //    {
-    //        anyTargetGotHit = true;
-    //        OnTakingPhysicalDamage?.Invoke(physicalDamage);//触发事件时顺带传入物理伤害
-    //        vfx.CreateHitVfx(target.transform, attackData.isCrit, attackData.element);//创建打击特效粒子
-    //        sfx?.PlayAttackHit();
-    //    }
-
-    //    if (anyTargetGotHit)
-    //        sfx?.PlayAttackHit();
-    //    else
-    //        sfx?.PlayAttackMiss();
-    //}
+        float physicalDamage = attackData.physicalDamage;
+        target.GetComponent<EntityHp>()?.ReduceHp(physicalDamage);
+        sfx?.PlaySpecialAttack();
+    }
     protected Collider2D[] GetDetectColliders(LayerMask whatNeedDetect)//获得检测到的碰撞体
     {
         return Physics2D.OverlapCircleAll(targetCheck.position, targetCheckRadius, whatNeedDetect);
-        //OverlapCircleAll存在可能的性能问题，后续再看需不需要优化吧。
     }
     private void OnDrawGizmos()
     {

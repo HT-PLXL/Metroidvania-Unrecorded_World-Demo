@@ -13,6 +13,10 @@ public class EnemyIdGenerator : EditorWindow
 
         foreach (var enemy in enemies)
         {
+            // 跳过临时对象（如编辑器预览、运行时动态生成且标记为不保存的对象，防报错用）
+            if ((enemy.gameObject.hideFlags & HideFlags.DontSaveInEditor) != 0)
+                continue;
+
             if (string.IsNullOrEmpty(enemy.GetEnemyId()))
             {
                 // 使用场景名 + 游戏物体名 + 唯一 GUID 组合，确保稳定且唯一

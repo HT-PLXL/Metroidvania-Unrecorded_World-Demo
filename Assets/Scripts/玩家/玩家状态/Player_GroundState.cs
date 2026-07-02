@@ -6,7 +6,13 @@ public class Player_GroundState : PlayerState
     {
 
     }
+    public override void Enter()
+    {
+        base.Enter();
 
+        //落地时重置空中连招限制
+        player.airComboExhausted = false;
+    }
     public override void Update()
     {
         base.Update();

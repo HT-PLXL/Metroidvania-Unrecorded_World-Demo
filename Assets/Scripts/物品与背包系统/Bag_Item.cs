@@ -11,7 +11,7 @@ public class Bag_Item
     public ItemModifier[] modifiers { get; private set; }
     public ItemEffectDataSO itemEffect;
 
-    public int buyPrice {  get; private set; }
+    public int buyPrice { get; private set; }
     public float sellPrice { get; private set; }
     public Bag_Item(ItemDataSO itemData, string existingId = null)
     {
@@ -44,7 +44,7 @@ public class Bag_Item
         }
     }
     public void AddItemEffect(Player player) => itemEffect?.Subscribe(player);//装备新装备时订阅物品效果（如果有）
-    public void RemoveItemEffect()=>itemEffect?.Unsubscribe();//卸下新装备时订阅物品效果（如果有）
+    public void RemoveItemEffect() => itemEffect?.Unsubscribe();//卸下新装备时订阅物品效果（如果有）
     private EquipmentDataSO GetEquipmentData()
     {
         if (itemData is EquipmentDataSO equipment)//检查itemData是否是EquipmentDataSO类型，如果是赋值给equipment
@@ -67,7 +67,12 @@ public class Bag_Item
         {
             string modifierType = modifier.statType.GetChineseName();
             string modifierValue = IsPercentStat(modifier.statType) ? modifier.value.ToString() + "%" : modifier.value.ToString();
-
+            // 如果是攻击速度
+            if (modifier.statType == StatType.AttackSpeed)
+            {
+                float attackValue = modifier.value * 100f;
+                modifierValue = attackValue.ToString() + "%";
+            }
             string sign = modifier.value >= 0 ? "+" : "";//负号应当在物品数据里
             sb.AppendLine(sign + modifierValue + " " + modifierType);
         }

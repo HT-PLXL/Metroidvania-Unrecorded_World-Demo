@@ -11,7 +11,7 @@ public class AttackData
 
     public AttackData(Entity_Stats entityStats,DamageScaleFactor damageScale)
     {
-        physicalDamage = entityStats.GetPhysicalDamage(out isCrit, damageScale.phyiscal);
+        physicalDamage = entityStats.GetPhysicalDamage(out isCrit, damageScale.physical);
         elementalDamage = entityStats.GetElementalDamage(out element,damageScale.elemental);
         effectData = new ElementEffectData(entityStats,damageScale);//传入自身的各种攻击数据，基础攻击比例
     }

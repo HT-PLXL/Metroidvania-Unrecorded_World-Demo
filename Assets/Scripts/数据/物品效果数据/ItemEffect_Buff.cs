@@ -19,7 +19,7 @@ public class ItemEffect_Buff : ItemEffectDataSO
         Debug.Log("不能应用相同的buff");
         return false;
     }
-    public override void ExecuteEffect()
+    public override void ExecuteEffect()//执行效果
     {
         player.stats.ApplyBuff(buffsNeedApply, duration, source);
         player = null;

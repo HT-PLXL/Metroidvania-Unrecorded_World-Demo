@@ -26,6 +26,7 @@ public FileStream(
 public class FileDataHandler
 {
     private string fullPath;//完整路径
+    public string FullPath => fullPath;
     private bool isEncryptData;//加密数据
     private string codeWord = "hjh1214179741";
     public FileDataHandler(string dataPath, string dataFileName, bool encryptData)//（路径，名，是否加密）

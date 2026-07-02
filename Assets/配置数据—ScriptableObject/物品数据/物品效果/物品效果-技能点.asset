@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65af8942a85e17e419f1eb4a29775614, type: 3}
   m_Name: "\u7269\u54C1\u6548\u679C-\u6280\u80FD\u70B9"
   m_EditorClassIdentifier: 
-  effectDescription: "\u83B7\u5F97\u8DB3\u8DB31\u4E2A\u6280\u80FD\u70B9\uFF01"
-  PointNeedAdd: 1
+  effectDescription: "\u83B7\u5F973\u4E2A\u6280\u80FD\u70B9"
+  PointNeedAdd: 3

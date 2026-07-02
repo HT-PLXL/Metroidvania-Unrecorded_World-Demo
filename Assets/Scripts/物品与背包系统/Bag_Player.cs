@@ -16,7 +16,10 @@ public class Bag_Player : Bag_Base
         base.Awake();
         storage = FindFirstObjectByType<Bag_Storage>();
     }
-
+    public void AddGold(int needAddOrReduce)
+    {
+        gold += needAddOrReduce;
+    }
     public void SetQuickItemInSlot(int slotNumber, Bag_Item itemNeedSet)
     {
         quickItems[slotNumber - 1] = itemNeedSet;
@@ -129,9 +132,18 @@ public class Bag_Player : Bag_Base
             if (slot.HasItem())
                 data.AlreadyEquipedItems[slot.equipmentItem.itemData.savaId] = slot.slotType;
 
+        //data.quickItemSaveIds = new string[2];
+        //for (int i = 0; i < quickItems.Length; i++)
+        //    data.quickItemSaveIds[i] = quickItems[i]?.itemData.savaId;
         data.quickItemSaveIds = new string[2];
         for (int i = 0; i < quickItems.Length; i++)
-            data.quickItemSaveIds[i] = quickItems[i]?.itemData.savaId;
+        {
+            // 确保 Bag_Item 和它的 itemData 都有效
+            if (quickItems[i] != null && quickItems[i].itemData != null)
+                data.quickItemSaveIds[i] = quickItems[i].itemData.savaId;
+            else
+                data.quickItemSaveIds[i] = null;   // 空槽或无效物品
+        }
     }
 
     public override void loadData(GameData data)
@@ -195,9 +207,29 @@ public class Bag_Player : Bag_Base
             }
 
         // 加载快捷槽
+        //if (data.quickItemSaveIds != null)
+        //    for (int i = 0; i < quickItems.Length && i < data.quickItemSaveIds.Length; i++)
+        //        quickItems[i] = itemList.Find(item => item.itemData.savaId == data.quickItemSaveIds[i]);
+
+        // 加载快捷槽
         if (data.quickItemSaveIds != null)
+        {
             for (int i = 0; i < quickItems.Length && i < data.quickItemSaveIds.Length; i++)
-                quickItems[i] = itemList.Find(item => item.itemData.savaId == data.quickItemSaveIds[i]);
+            {
+                string id = data.quickItemSaveIds[i];
+                if (!string.IsNullOrEmpty(id))
+                {
+                    //确保 itemData 存在
+                    ItemDataSO itemData = itemDataBase?.GetItemData(id);
+                    if (itemData != null)
+                        quickItems[i] = itemList.Find(item => item.itemData == itemData);
+                    else
+                        quickItems[i] = null;
+                }
+                else
+                    quickItems[i] = null;
+            }
+        }
 
         TriggerUpdateUI();
     }

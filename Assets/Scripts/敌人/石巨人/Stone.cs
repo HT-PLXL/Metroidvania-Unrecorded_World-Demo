@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using UnityEngine;
 //Boos——石巨人
 public class Stone : Enemy, ICounter
@@ -8,7 +7,6 @@ public class Stone : Enemy, ICounter
     public Stone_ActiveState activeState { get; set; }
     public bool active { get; set; }
     public Stone_AttackState attack { get; set; }
-    public UI_BOOSHpBar boosHpBar { get; set; }
     public StoneHp stoneHp { get; set; }
     [Header("石巨人专属")]
     public int stage = 0;

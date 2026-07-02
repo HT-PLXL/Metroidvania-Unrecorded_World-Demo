@@ -2,8 +2,9 @@ using UnityEngine;
 
 public class CheckPoint : MonoBehaviour, ISaveable
 {
-    [SerializeField] private string checkPointId;
-    [SerializeField] private Transform respawnPoint;
+    [SerializeField][cn("检查点id-请手动清空一次")] private string checkPointId;
+    [SerializeField][cn("可选-重生点位置")] private Transform respawnPoint;
+    [SerializeField][cn("是否打开音乐")] private bool OpenAudio;
     public bool isActive { get; private set; }
     private Animator anim;
     private AudioSource fireAudioSource;
@@ -13,7 +14,7 @@ public class CheckPoint : MonoBehaviour, ISaveable
         fireAudioSource = GetComponent<AudioSource>();
     }
     public Vector3 getPosition() => respawnPoint == null ? transform.position : respawnPoint.position;
-    public string GetCheckPointId() =>checkPointId;
+    public string GetCheckPointId() => checkPointId;
     private void OnValidate()
     {
 #if UNITY_EDITOR
@@ -27,10 +28,13 @@ public class CheckPoint : MonoBehaviour, ISaveable
     {
         isActive = activate;
         anim.SetBool("active", activate);
-        if (isActive && fireAudioSource.isPlaying ==false)
-            fireAudioSource.Play();
-        if(isActive == false)
-            fireAudioSource.Stop();
+        if (OpenAudio)
+        {
+            if (isActive && fireAudioSource.isPlaying == false)
+                fireAudioSource.Play();
+            if (isActive == false)
+                fireAudioSource.Stop();
+        }
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {

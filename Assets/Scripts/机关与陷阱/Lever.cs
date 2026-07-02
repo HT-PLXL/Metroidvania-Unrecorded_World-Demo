@@ -13,7 +13,7 @@ public class Lever : MonoBehaviour
 
     [Header("调试")]
     [SerializeField][cn("展示辅助线")] private bool showGizmos = true;
-    [SerializeField][cn("初始朝左")] private bool turnLeft;
+    [SerializeField][cn("初始朝左")] private bool use;
 
     private bool playerInRange;
     private Animator anim;
@@ -41,7 +41,8 @@ public class Lever : MonoBehaviour
         targetPos = platform.StartPos + direction * moveDistance;
         if (moveAgain)
             nextPoint = targetPos;
-        
+        if (anim != null)
+            anim.SetBool("use", use);
     }
     private void Update()
     {
@@ -72,8 +73,8 @@ public class Lever : MonoBehaviour
                 nextPoint = targetPos;
             }
 
-            turnLeft = !turnLeft;
-            anim.SetBool("turnLeft", turnLeft);
+            use = !use;
+            anim.SetBool("use", use);
             return;
         }
         // 判断平台当前位置：若已在目标点，则返回起点；否则移向目标点
@@ -82,8 +83,8 @@ public class Lever : MonoBehaviour
         else
             platform.MoveToTarget(targetPos, moveSpeed);
 
-        turnLeft = !turnLeft;
-        anim.SetBool("turnLeft", turnLeft);
+        use = !use;
+        anim.SetBool("use", use);
     }
 
     private void OnDrawGizmos()
@@ -113,14 +114,4 @@ public class Lever : MonoBehaviour
         Gizmos.DrawRay(targetPoint, right * 0.3f);
         Gizmos.DrawRay(targetPoint, left * 0.3f);
     }
-#if UNITY_EDITOR
-    private void OnValidate()
-    {
-        if (anim == null)
-            anim = GetComponent<Animator>();
-
-        if (anim != null)
-            anim.SetBool("turnLeft", turnLeft);
-    }
-#endif
 }

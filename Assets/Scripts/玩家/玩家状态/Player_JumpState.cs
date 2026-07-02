@@ -20,7 +20,7 @@ public class Player_JumpState : Player_AiredState
             player.canJumpTwo = false;
         }
 
-        if (rb.linearVelocity.y < 0 && stateMachine.currentState != player.jumpAttackState)
+        if (rb.linearVelocity.y < 0 && stateMachine.currentState != player.jumpAttackState && stateMachine.currentState != player.airComboState)
             //父类是空中状态，父类的update检测并执行Changestate（）进入空中斩击状态
             //而changestate（）会在同一帧执行exit（）和enter（）
             //所以在这一帧会执行跳跃斩击的enter（）同时在此处对y速度判定是否进入下落状态

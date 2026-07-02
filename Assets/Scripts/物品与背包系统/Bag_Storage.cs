@@ -10,25 +10,26 @@ public class Bag_Storage : Bag_Base
     {
         this.bag = bag;//获取bag
     }
-public bool TryConsumeItems(ItemRequirement[] requirements)
-{
-    if (requirements == null || requirements.Length == 0) return true;
-
-    // 第一步：检查总量
-    foreach (var req in requirements)
+    public bool TryConsumeItems(ItemRequirement[] requirements)
     {
-        if (req.itemData == null) continue;
-        if (GetAvailableAmount(req.itemData) < req.amount)
-            return false;
+        if (requirements == null || requirements.Length == 0) return true;
+
+        // 第一步：检查总量
+        foreach (var req in requirements)
+        {
+            if (req.itemData == null) continue;
+            if (GetAvailableAmount(req.itemData) < req.amount)
+                return false;
+        }
+
+        // 第二步：执行消耗（使用安全的列表操作）
+        foreach (var req in requirements)
+            ConsumeFromAllSources(req.itemData, req.amount);
+
+        TriggerUpdateUI();
+        bag?.TriggerUpdateUI();
+        return true;
     }
-
-    // 第二步：执行消耗（使用安全的列表操作）
-    foreach (var req in requirements)
-        ConsumeFromAllSources(req.itemData, req.amount);
-
-    TriggerUpdateUI();
-    return true;
-}
 
     private void ConsumeFromAllSources(ItemDataSO itemData, int amount)
     {

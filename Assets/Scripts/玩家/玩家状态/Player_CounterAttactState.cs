@@ -4,6 +4,9 @@ public class Player_CounterAttactState : PlayerState
 {
     private Player_Combat combat;
     private bool counterPerformed;
+    private bool hasSetValue;
+    private float Countertimer;
+    private bool hasCountered;
     public Player_CounterAttactState(Player player, StateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
         combat = player.GetComponent<Player_Combat>();
@@ -11,23 +14,44 @@ public class Player_CounterAttactState : PlayerState
     public override void Enter()
     {
         base.Enter();
-
-        stateTimer = combat.GetStunTimeAfterTryCounter();
-        counterPerformed = combat.tryCounter();//给其赋值为bool类型方法的返回值true/false
-        //只执行一次尝试弹反()，也就是只检测一次碰撞体，如果没检测到碰撞体或碰撞体无弹反接口
-        //就只会返回已弹反：false并被赋给是否已弹反
-        anim.SetBool("弹反成功", counterPerformed);
+        Countertimer = combat.Countertimer;
+        hasSetValue = false;
+        hasCountered = false;
+        counterPerformed = false;
+        stateTimer = 999f;
     }
     public override void Update()
     {
         base.Update();
-
         player.SetVelocity(0, rb.linearVelocity.y);
+
+        Countertimer -= Time.deltaTime;
+
+        if (hasCountered == false && Countertimer > 0)
+        {
+            counterPerformed = combat.tryCounter();
+            if (counterPerformed)
+            {
+                anim.SetBool("弹反成功", true);
+                hasCountered = true;
+            }
+        }
 
         if (triggerOver)
             stateMachine.ChangeState(player.idleState);
-        if (stateTimer < 0 && counterPerformed == false)
+
+        if (Countertimer < 0 && hasSetValue == false && hasCountered == false)
+        {
+            stateTimer = combat.stunTimeAfterTryCounter;
+            hasSetValue = true;
+        }
+        if (stateTimer < 0)
             stateMachine.ChangeState(player.idleState);
         //当没能弹反成功时，便要等待僵直时间作为惩罚，时间结束退出至空闲状态
+    }
+    public override void Exit()
+    {
+        base.Exit();
+        anim.SetBool("弹反成功", false);
     }
 }

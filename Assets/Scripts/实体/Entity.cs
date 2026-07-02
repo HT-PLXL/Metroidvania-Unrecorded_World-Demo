@@ -29,7 +29,7 @@ public class Entity : MonoBehaviour
     private Coroutine slowDownCo;//减速协程
     private Coroutine DomainSlowDownCo;//领域减速协程
     protected bool isKnockBack;//被击退
-
+    public bool isAutoWalking { get; set; } = false;
     protected virtual void Awake()
     {
         anim = GetComponentInChildren<Animator>();
@@ -105,7 +105,7 @@ public class Entity : MonoBehaviour
         isKnockBack = true;
         rb.linearVelocity = knockBack;
         yield return new WaitForSeconds(duration);
-        rb.linearVelocity = Vector2.zero;
+        //rb.linearVelocity = Vector2.zero;
         isKnockBack = false;
     }
     public void CurrentStateAnimTrigger()
@@ -117,8 +117,8 @@ public class Entity : MonoBehaviour
     }
     public void SetVelocity(float xVelocity, float yVelocity)
     {
-        if (isKnockBack)
-            return;//受击ban移动
+        if (isKnockBack || isAutoWalking)
+            return;//受击/自动移动时ban移动
         rb.linearVelocity = new Vector2(xVelocity, yVelocity);
         HandleFlip(xVelocity);
     }

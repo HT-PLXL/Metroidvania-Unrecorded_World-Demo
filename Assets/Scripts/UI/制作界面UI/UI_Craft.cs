@@ -1,8 +1,11 @@
+using TMPro;
 using UnityEngine;
 
 public class UI_Craft : MonoBehaviour
 {
     [SerializeField] private UI_ItemSlotParent itemSlotParent;
+    [SerializeField] private UI_EquipSlotParent uiEquipSlotParent;
+    [SerializeField] private TextMeshProUGUI gold;
     private Bag_Player bag;
     private UI_CraftPreview craftPreview;
     private UI_CraftSlot[] craftSlots;
@@ -16,6 +19,7 @@ public class UI_Craft : MonoBehaviour
     public void SetUpCraftUI(Bag_Storage storage)
     {
         bag = storage.bag;
+        bag.OnBagChange -= UpdateUI;
         bag.OnBagChange += UpdateUI;
         UpdateUI();
         craftPreview = GetComponentInChildren<UI_CraftPreview>();
@@ -39,5 +43,7 @@ public class UI_Craft : MonoBehaviour
     private void UpdateUI()
     {
         itemSlotParent.UpdateSlots(bag.itemList);
+        uiEquipSlotParent.UpdateEquipmentSlots(bag.equipmentSlotList);
+        gold.text = bag.gold.ToString();
     }
 }

@@ -2,5 +2,5 @@ using UnityEngine;
 
 public enum RespawnType
 {
-    Enter,Exit,None,Portal
+    Enter,Exit,None,Portal,AreaTransition
 }

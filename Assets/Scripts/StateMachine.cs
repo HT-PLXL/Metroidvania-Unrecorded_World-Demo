@@ -13,7 +13,7 @@ public class StateMachine
     {
         if (canChangeState == false)
             return;
-        currentState.Exit();//当前状态是三参包括animBoolName
+        currentState.Exit();//currentState是三参包括animBoolName
         currentState = newState;
         currentState.Enter();
     }
@@ -23,7 +23,7 @@ public class StateMachine
     }
     public void FixedUpdateForPlayerState()
     {
-        currentState.FixedUpdate();//调用公开的Updata
+        currentState.FixedUpdate();//调用公开的FixedUpdata
     }
     public void DisableStateMachine()
     {

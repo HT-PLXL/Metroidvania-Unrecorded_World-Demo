@@ -11,7 +11,7 @@ public class Enemy_DeadState : EnemyState
     public override void Enter()
     {
         base.Enter();
-
+        enemy.StopSlowDown();// 停止所有减速协程
         if (enemy.haveDeadAnim)//有专属死亡动画
         {
             stateMachine.DisableStateMachine();//关闭状态机不允许再切换状态

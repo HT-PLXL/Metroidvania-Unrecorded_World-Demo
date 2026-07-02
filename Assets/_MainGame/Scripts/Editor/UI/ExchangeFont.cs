@@ -1,4 +1,4 @@
-﻿
+
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
@@ -183,6 +183,15 @@ namespace Pillow.Ediotr
             for (int i = 0; i < targetkLists.Count; i++)
             {
                 EditorUtility.DisplayProgressBar("开始替换字体", "Show a progress bar for the given seconds", curCount / maxCount);
+            
+
+                // 检查预制体根对象是否为临时对象，防报错
+                if ((targetkLists[i].hideFlags & HideFlags.DontSaveInEditor) != 0)
+                {
+                    Debug.LogWarning($"跳过临时预制体：{targetkLists[i].name}");
+                    continue;
+                }
+
 
                 var Texts = targetkLists[i].GetComponentsInChildren<Text>(true);
                 ChangeText(Texts);

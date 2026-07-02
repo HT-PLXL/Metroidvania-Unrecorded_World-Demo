@@ -14,15 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillName: "\u63B7\u5251"
   cost: 1
-  description: "\u4E0D\u4F1A\u5251\u6280\u6CA1\u5173\u7CFB\uFF0C\u76F4\u63A5\u628A\u5251\u4E22\u51FA\u53BB\u4E5F\u4E0D\u662F\u4E0D\u884C\uFF01\u2014\u2014\u67D0\u5730\u644A\u5251\u6280\u201C\u7EDD\u5B66\u201D\u5982\u6B64\u5199\u5230"
-  icon: {fileID: -1391383647, guid: d8922fa682394c34387c8e6ae7c48e68, type: 3}
+  description: "\u9F20\u6807\u53F3\u952E\u63B7\u51FA\u98DE\u5251\uFF0C\u518D\u6B21\u6309\u4E0B\u6536\u56DE"
+  icon: {fileID: -3481501957421399093, guid: 0bf6114cd1ee856449efbb1f77ef736d, type: 3}
   unlockedByDefault: 0
   skillType: 3
   upgradeData:
     upgradeType: 11
     cooldown: 2
     damageScale:
-      phyiscal: 1
+      physical: 1
       elemental: 1
       chillDuration: 3
       chillSlowMulitiplier: 0.2
@@ -31,3 +31,5 @@ MonoBehaviour:
       lightningDuration: 3
       lightningDamageScale: 1
       lightningCharge: 0.4
+    isPhysicalDamage: 0
+  requiredItems: []

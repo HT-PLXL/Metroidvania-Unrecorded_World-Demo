@@ -11,8 +11,8 @@ public class Player_AttackState : PlayerState
     private bool IsComboSuccessful;
     public Player_AttackState(Player player, StateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
-        if (maxComboCount != player.attackVelocity.Length)
-            maxComboCount = player.attackVelocity.Length;
+        if (maxComboCount != player.velocityOnAttack.Length)
+            maxComboCount = player.velocityOnAttack.Length;
         //限制/确定数组和连招总数是否一致，没啥用哈哈
     }
     public override void Enter()
@@ -66,7 +66,7 @@ public class Player_AttackState : PlayerState
     }
     private async Task CreateAttackSpeed()//async Task 异步 任务
     {
-        Vector2 speedOnAttacking = player.attackVelocity[comboIndex - 1];
+        Vector2 speedOnAttacking = player.velocityOnAttack[comboIndex - 1];
         if (comboIndex == 2)//对第二段普攻使用
             await Task.Delay(player.attackVelocityDelay);//攻击时突进速度的应用延迟
         speedOnAttackingTimer = player.attackSpeedDuration;

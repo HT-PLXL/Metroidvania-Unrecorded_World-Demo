@@ -25,16 +25,18 @@ MonoBehaviour:
   minStackCountInShop: 1
   maxStackCountInShop: 1
   craftRecipe:
-  - itemData: {fileID: 11400000, guid: 28ccaf08e3fd513438fbe3f40046f991, type: 2}
+  - persistentId: 
+    itemData: {fileID: 11400000, guid: 28ccaf08e3fd513438fbe3f40046f991, type: 2}
     stackCount: 2
     itemEffect: {fileID: 0}
-  - itemData: {fileID: 11400000, guid: 71feda8aeaafc1b47bd8993bc5c8b6e8, type: 2}
+  - persistentId: 
+    itemData: {fileID: 11400000, guid: 71feda8aeaafc1b47bd8993bc5c8b6e8, type: 2}
     stackCount: 3
     itemEffect: {fileID: 0}
-  weaponElement: 3
+  weaponElement: 0
   modifier:
-  - statType: 13
-    value: 150
+  - statType: 7
+    value: 30
   immunePhysical: 0
   immuneFire: 0
   immuneIce: 0

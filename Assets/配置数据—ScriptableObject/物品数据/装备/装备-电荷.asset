@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5efc5f4960cb424eac1777908bf337d, type: 3}
+  m_Name: "\u88C5\u5907-\u7535\u8377"
+  m_EditorClassIdentifier: 
+  itemName: "\u7535\u8377"
+  icon: {fileID: 664033781394471947, guid: 033c65e05597d8c4096effd0771d5624, type: 3}
+  itemType: 1
+  maxStackCount: 1
+  itemEffect: {fileID: 0}
+  itemRarity: 529
+  maxDropChance: 14.5
+  dropChance: 14.5
+  level: "\u84DD\u8272\u7A00\u6709"
+  itemPrice: 1500
+  minStackCountInShop: 1
+  maxStackCountInShop: 1
+  craftRecipe: []
+  weaponElement: 3
+  modifier:
+  - statType: 13
+    value: 150
+  immunePhysical: 0
+  immuneFire: 0
+  immuneIce: 0
+  immuneLightning: 0

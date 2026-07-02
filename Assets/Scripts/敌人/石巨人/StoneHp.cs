@@ -14,7 +14,7 @@ public class StoneHp : EntityHp
     {
         if (stone.active)
         {
-            OnHpUpdate += stone.boosHpBar.UpdateBOOSHpbar;
+            OnHpUpdate += stone.boosHpBar.UpdateBoosHpBar;
             bool wasHit = base.TakeDamage(damage, elementalDamage, element, damageSource,isCrit);//执行父方法，并获取是否被击中，用于判断
             //stone.boosHpBar.UpdateBOOSHpbar();
 

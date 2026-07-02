@@ -20,7 +20,7 @@ public class PopupImageSetting
 public class DamagePopup : MonoBehaviour
 {
     [Header("重叠避免")]
-    [SerializeField] private float randomHorizontalRange = 0.5f; // 随机水平偏移范围
+    [SerializeField] private float randomHorizontalRange = 0.5f;// 随机水平偏移范围
     [Header("伤害设置")]
     [SerializeField] private AnimationCurve damageScaleCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
     [SerializeField] private AnimationCurve damageAlphaCurve = AnimationCurve.Linear(0, 1, 1, 0);
@@ -43,7 +43,7 @@ public class DamagePopup : MonoBehaviour
     [SerializeField] private Color healColor = Color.green;
 
     [Header("背景图片配置")]
-    [SerializeField] private Image backgroundImage;          // 拖入预制体中的 Image 子对象
+    [SerializeField] private Image backgroundImage;// 拖入预制体中的 Image 子对象
     [SerializeField] private PopupImageSetting physicalImageSetting = new PopupImageSetting();
     [SerializeField] private PopupImageSetting fireImageSetting = new PopupImageSetting();
     [SerializeField] private PopupImageSetting iceImageSetting = new PopupImageSetting();
@@ -80,8 +80,6 @@ public class DamagePopup : MonoBehaviour
         followOffset = (followTarget != null) ? (worldPosition + randOffset) - followTarget.position : Vector3.zero;
 
         valueText.text = Mathf.RoundToInt(damage).ToString();
-        //if (isCrit)
-        //    valueText.text += "!";
 
         // 文字颜色与缩放
         valueText.color = isCrit ? critColor : GetElementColor(element);
@@ -169,10 +167,8 @@ public class DamagePopup : MonoBehaviour
         bgRect.anchorMin = bgRect.anchorMax = new Vector2(0.5f, 0.5f);
         bgRect.pivot = new Vector2(0.5f, 0.5f);
         bgRect.anchoredPosition = setting.offset;
-        // 尺寸：以 RectTransform 的 sizeDelta 设置（适用于 overlay 模式）
         bgRect.sizeDelta = setting.size;
 
-        // 可选：图片也跟随整体透明度一起变化，稍后在协程中处理
     }
 
     private IEnumerator DamageAnimate(float baseScale)

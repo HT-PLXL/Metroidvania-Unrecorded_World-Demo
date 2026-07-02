@@ -11,7 +11,10 @@ public class Stone_ActiveState : EnemyState
     }
     public override void Exit()
     {
-        stone.boosHpBar.SetHpbar(stone);
+        if (stone.boosHpBar.gameObject.activeSelf == false)
+        {
+            stone.boosHpBar.SetTarget(stone, "Magic Stone");
+        }
         stone.shouldFloat = true;
     }
     public override void Update()

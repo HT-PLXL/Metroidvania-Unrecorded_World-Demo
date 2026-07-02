@@ -126,8 +126,8 @@ public class Entity_StatusHandler : MonoBehaviour
         // 使用与 Entity_VFX 中 burnVfx 相同的颜色
         Color burnColor;
         ColorUtility.TryParseHtmlString("#EE7100", out burnColor);
-        Color lightColor = burnColor * 1.05f;
-        Color darkColor = burnColor * 0.95f;
+        Color lightColor = new Color(burnColor.r * 1.05f, burnColor.g * 1.05f, burnColor.b * 1.05f, burnColor.a);
+        Color darkColor = new Color(burnColor.r * 0.95f, burnColor.g * 0.95f, burnColor.b * 0.95f, burnColor.a);
         bool toggle = false;
         float tick = 0.25f;
 

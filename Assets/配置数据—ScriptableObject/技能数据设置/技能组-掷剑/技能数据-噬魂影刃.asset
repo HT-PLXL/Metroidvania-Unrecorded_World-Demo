@@ -15,7 +15,7 @@ MonoBehaviour:
   skillName: "\u566C\u9B42\u5F71\u5203"
   cost: 2
   description: "\u4E00\u5251\u7A7F\u5FC3\uFF0C\u82E6\u75DB\u566C\u9B42\uFF0C\u574F\u4E86\u5B66\u5230\u771F\u4E1C\u897F\u4E86"
-  icon: {fileID: -641025023, guid: d8922fa682394c34387c8e6ae7c48e68, type: 3}
+  icon: {fileID: 111457151, guid: 76d921da7037d15419cc58d02500e044, type: 3}
   unlockedByDefault: 0
   skillType: 3
   upgradeData:
@@ -31,3 +31,5 @@ MonoBehaviour:
       lightningDuration: 3
       lightningDamageScale: 1
       lightningCharge: 0.4
+    isPhysicalDamage: 0
+  requiredItems: []

@@ -5,7 +5,13 @@ public class Player_WallSlideState : PlayerState
     public Player_WallSlideState(Player player, StateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
     }
+    public override void Enter()
+    {
+        base.Enter();
 
+        //攀墙时重置空中连招限制
+        player.airComboExhausted = false;
+    }
     public override void Update()
     {
         base.Update();

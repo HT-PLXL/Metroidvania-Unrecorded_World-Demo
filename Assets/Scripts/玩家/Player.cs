@@ -39,14 +39,22 @@ public class Player : Entity
     public Player_CounterAttactState counterAttactState { get; private set; }
     public Player_ThrowSwordState throwSwordState { get; private set; }
     public Player_DomainState domainState { get; private set; }
+    public Player_AirComboState airComboState { get; private set; }
     //————————————状态————————————
-    [Header("攻击细节")]
-    [cn("攻击时突进速度")] public Vector2[] attackVelocity;
+    [Header("地面连招细节")]
+    [cn("攻击时突进速度")] public Vector2[] velocityOnAttack;
     [cn("二段普攻突进速度延迟应用时间(毫秒)")] public int attackVelocityDelay;
     [cn("跳劈时初始速度-(暂时废弃)")] public Vector2 jumpAttackVelocity;
     [cn("攻击时突进速度的持续时间")] public float attackSpeedDuration = 0.1f;
-    [cn("连招重置时间")] public float comboResetTime = 1;
+    [cn("地面连招重置时间")] public float comboResetTime = 1;
+    [Header("空中连招细节")]
+    [cn("空中攻击时突进速度")] public Vector2[] velocityOnAirAttack;
+    [cn("二段普攻突进速度延迟应用时间(毫秒)")] public int airAttackVelocityDelay;
+    [cn("攻击时突进速度的持续时间")] public float airAttackSpeedDuration = 0.1f;
+    [cn("空中连招重置时间")] public float airComboResetTime = 1;
+    public bool airComboExhausted { get; set; }//空中连招机会是否用完
     private Coroutine comboQueueCo;//连招排队协程
+    private Coroutine airComboQueueCo;//空中连招排队协程
     [Header("移动详情")]
     [cn("移动速度")] public float moveSpeed;
     [cn("跳跃力度")] public float jumpForce;
@@ -65,21 +73,13 @@ public class Player : Entity
     public Vector2 mousePosition { get; private set; }
 
     public bool canJumpTwo { get; set; }
-    private Skill_Base doubleJumpSkill;
     public MovingPlatform currentPlatform { get; private set; }   // 当前站立的平台
     private bool isOnMovingPlatform;   // 脚底接触平台表面
-
 
     protected override void Awake()
     {
         input = new PlayerInputSet();
 
-        //if (instance != null && instance != this)
-        //{
-        //    Destroy(gameObject);
-        //    return;
-        //}
-        //DontDestroyOnLoad(gameObject);
         instance = this;
 
         base.Awake();
@@ -93,8 +93,6 @@ public class Player : Entity
         bag = GetComponent<Bag_Player>();
         stats = GetComponent<Player_Stats>();
         attributeManager = GetComponent<Player_AttributeManager>();
-
-        doubleJumpSkill = skillManager.GetSkillByType(SkillType.二段跳);
 
         ui.SetupControlUI(input, this);//初始化UI输入控制
 
@@ -111,6 +109,7 @@ public class Player : Entity
         jumpAttackState = new Player_JumpAttackState(this, stateMachine, "跳跃斩击");
         throwSwordState = new Player_ThrowSwordState(this, stateMachine, "throwSword");
         domainState = new Player_DomainState(this, stateMachine, "jumpFall");
+        airComboState = new Player_AirComboState(this, stateMachine, "AirCombo");
         //重中之重，此处通过new将参数传递给各状态脚本并执行其构造函数
         //再通过他们的构造函数中的“：base”传递参数给他们的父类PlayerState
         //于是各子类状态脚本便可以通过父类中声明的stateMachine执行操作,如调用状态机中的公开方法
@@ -132,6 +131,11 @@ public class Player : Entity
         return skillManager.doubleJump.CanUseSkill();
     }
     public void TeleportPlayer(Vector3 position) => transform.position = position;//传送玩家
+    public IEnumerator TeleportPlayerCoroutine(Vector3 newPosition)
+    {
+        transform.position = newPosition;//传送玩家
+        yield return new WaitForEndOfFrame();
+    }
     protected override IEnumerator SlowDownEntityCo(float duration, float slowMultiplier)
     {
         //存储原始值开始
@@ -140,10 +144,10 @@ public class Player : Entity
         float originalanimSpeed = anim.speed;//动画速度
         Vector2 originalWallJump = wallJumpForce;
         Vector2 originalJumpAttackVelocity = jumpAttackVelocity;
-        Vector2[] originalAttackVelocity = new Vector2[attackVelocity.Length];//攻击速度是3段普攻的不同数据，存储在数组（引用类型，变量实际只是个指针）不能简单的赋值保存，所以用for循环拷贝原数组
-        for (int i = 0; i < attackVelocity.Length; i++)
+        Vector2[] originalAttackVelocity = new Vector2[velocityOnAttack.Length];//攻击速度是3段普攻的不同数据，存储在数组（引用类型，变量实际只是个指针）不能简单的赋值保存，所以用for循环拷贝原数组
+        for (int i = 0; i < velocityOnAttack.Length; i++)
         {
-            originalAttackVelocity[i] = attackVelocity[i];
+            originalAttackVelocity[i] = velocityOnAttack[i];
         }
         //存储原始值结束
         float speedMultiplier = 1 - slowMultiplier;
@@ -154,9 +158,9 @@ public class Player : Entity
         wallJumpForce = wallJumpForce * speedMultiplier;
         jumpAttackVelocity = jumpAttackVelocity * speedMultiplier;
 
-        for (int i = 0; i < attackVelocity.Length; i++)
+        for (int i = 0; i < velocityOnAttack.Length; i++)
         {
-            attackVelocity[i] = attackVelocity[i] * speedMultiplier;
+            velocityOnAttack[i] = velocityOnAttack[i] * speedMultiplier;
         }
 
         yield return new WaitForSeconds(duration);
@@ -167,9 +171,9 @@ public class Player : Entity
         wallJumpForce = originalWallJump;
         jumpAttackVelocity = originalJumpAttackVelocity;
 
-        for (int i = 0; i < attackVelocity.Length; i++)
+        for (int i = 0; i < velocityOnAttack.Length; i++)
         {
-            attackVelocity[i] = originalAttackVelocity[i];
+            velocityOnAttack[i] = originalAttackVelocity[i];
         }
     }
     public override void EntityDead()
@@ -190,6 +194,18 @@ public class Player : Entity
         yield return new WaitForEndOfFrame();//生成延迟并返回——帧结束处理（一帧的最后一件事）
         stateMachine.ChangeState(attackState);//PlayerState中Enter会刷新bool值为真
     }
+    public void DelayEnterAirComboState()
+    {
+        if (airComboQueueCo != null)
+            StopCoroutine(airComboQueueCo);
+        airComboQueueCo = StartCoroutine(DelayEnterAirComboStateCo());
+    }
+    private IEnumerator DelayEnterAirComboStateCo()
+    {
+        yield return new WaitForEndOfFrame();
+        stateMachine.ChangeState(airComboState);
+    }
+
     public void TryInteract()//寻找最近可交互对象并交互
     {
         Transform closest = null;

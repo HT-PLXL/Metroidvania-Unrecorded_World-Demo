@@ -5,6 +5,7 @@ public class Enemy : Entity, ISaveable
 {
     public Entity_Stats stats { get; private set; }
     public EnemyHp enemyHp { get; private set; }
+    public Enemy_VFX vfx { get; private set; }
     public Entity_Combat combat { get; private set; }
     public Enemy_IdleState idleState;
     public Enemy_MoveState moveState;
@@ -12,7 +13,8 @@ public class Enemy : Entity, ISaveable
     public Enemy_BattleState battleState;
     public Enemy_DeadState deadState;
     public Enemy_StunnedState stunnedState;
-
+    [Header("选择BOOS血条-如果有")]
+    [cn("BOOS血条")] public UI_BOOSHpBar boosHpBar;
     [Header("存档")]
     [SerializeField] private string enemyId; // 每个敌人的唯一ID，需要在Inspector中手动填写
     [cn("如果死亡，是否允许读档后重生")] public bool isRebirthOnLoad = true;
@@ -39,7 +41,7 @@ public class Enemy : Entity, ISaveable
     [Header("僵直细节")]
     [cn("僵直时间")] public float stunnedDuration = 1;
     [cn("被弹反击飞力度")] public Vector2 stunnedVelocity = new Vector2(7, 7);
-    [SerializeField][cn("是否可被弹反")] protected bool canBeStunned;
+    [cn("是否可被弹反")] protected bool canBeStunned;
     [HideInInspector] public bool stunRecovery;//僵直恢复
 
     public bool haveDeadAnim { get; set; }
@@ -51,10 +53,11 @@ public class Enemy : Entity, ISaveable
         enemyHp = GetComponent<EnemyHp>();
         stats = GetComponent<Entity_Stats>();
         combat = GetComponent<Entity_Combat>();
+        vfx = GetComponent<Enemy_VFX>();  
 
         // 编辑器下检查存档 ID
 #if UNITY_EDITOR
-        if (string.IsNullOrEmpty(enemyId))
+        if (!Application.isPlaying && string.IsNullOrEmpty(enemyId))
             Debug.LogWarning($"Enemy '{gameObject.name}' 缺少存档 ID，请在 Inspector 中设置或使用工具生成。", this);
 #endif
     }

@@ -7,6 +7,7 @@ public class AudioDatabaseSO : ScriptableObject
     private Dictionary<string, AudioClipData> clipCollection;//音频集合（字典）<audioName组名，音频列表>
     [Header("音效")]
     public List<AudioClipData> player;
+    public List<AudioClipData> enemy;
     public List<AudioClipData> uiAudio;
     [Header("背景音乐")]
     public List<AudioClipData> mainMenuMusic;
@@ -17,6 +18,7 @@ public class AudioDatabaseSO : ScriptableObject
     {
         clipCollection = new Dictionary<string, AudioClipData>();
         AddToCollection(player);
+        AddToCollection(enemy);
         AddToCollection(uiAudio);
         AddToCollection(mainMenuMusic);
         AddToCollection(playMusic);
