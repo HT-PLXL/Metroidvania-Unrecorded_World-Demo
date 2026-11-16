@@ -940,7 +940,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9047921771514164361}
   - component: {fileID: 8960237608986945590}
-  m_Layer: 8
+  m_Layer: 13
   m_Name: "\u533A\u57DF\u653B\u51FB\u77E9\u5F62"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1244,6 +1244,8 @@ MonoBehaviour:
   trackingSpeed: -1
   useTriggerZoneAttack: 0
   triggerZone: {fileID: 8960237608986945590}
+  startInBattleState: 0
+  keepBattleForever: 0
 --- !u!114 &8185945152876904134
 MonoBehaviour:
   m_ObjectHideFlags: 0

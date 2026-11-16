@@ -19,7 +19,7 @@ public class SaveManager : MonoBehaviour
 
     [Header("直接从关卡运行时使用测试存档")]
     [SerializeField][cn("测试存档文件名")] private string tempSlotFileName = "TempSave";
-    [SerializeField][cn("测试存档初始场景")] private string tempStartScene = "安全区";
+    [SerializeField][cn("测试存档初始场景")] private string tempStartScene = "营地";
     private FileDataHandler[] slotHandlers;     // 每个槽位独立的数据处理器
     private GameData gameData;                  // 当前加载的游戏数据
     private int currentSlot = -1;               // -1 表示未选择任何槽位
@@ -141,7 +141,7 @@ public class SaveManager : MonoBehaviour
         GameData newGameData = new GameData();
         newGameData.gold = startingGold;
         newGameData.skillPoints = startingSkillPoints;
-        newGameData.lastScenePlayed = "安全区";
+        newGameData.lastScenePlayed = "营地";
 
         // 保存到文件
         slotHandlers[slotIndex].SaveDataToJson(newGameData);
@@ -186,6 +186,8 @@ public class SaveManager : MonoBehaviour
     /// <summary> 保存当前游戏数据到选中的槽位 </summary>
     public void SaveGame()
     {
+        try
+        {
         if (!slotSelected)
         {
             Debug.LogWarning("没有选择存档，自动激活测试存档");
@@ -217,6 +219,11 @@ public class SaveManager : MonoBehaviour
             slotHandlers[currentSlot].SaveDataToJson(gameData);
 
         Debug.Log($"游戏已保存 ({(isUsingTempData ? "测试存档" : $"槽位 {currentSlot}")})");
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError($"保存游戏时发生异常，但场景切换将继续: {e}");
+        }
     }
     private void LoadChestStatesFromData()
     {

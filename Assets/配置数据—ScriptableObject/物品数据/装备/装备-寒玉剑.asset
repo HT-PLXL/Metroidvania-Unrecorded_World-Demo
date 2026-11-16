@@ -33,6 +33,10 @@ MonoBehaviour:
     itemData: {fileID: 11400000, guid: 71feda8aeaafc1b47bd8993bc5c8b6e8, type: 2}
     stackCount: 3
     itemEffect: {fileID: 0}
+  - persistentId: 
+    itemData: {fileID: 11400000, guid: 6c02ee1617c79e141a85794a7f55fd31, type: 2}
+    stackCount: 2
+    itemEffect: {fileID: 0}
   weaponElement: 2
   modifier:
   - statType: 12

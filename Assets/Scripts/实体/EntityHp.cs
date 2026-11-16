@@ -53,6 +53,7 @@ public class EntityHp : MonoBehaviour, IDamageable
         if (attackEvaded())
         {
             Debug.Log($"{gameObject.name} 闪避了攻击!");
+            DamagePopupManager.Instance?.ShowMiss(transform.position + Vector3.up * 1f, transform);
             return false;
         }
         if (canTakeDamage == false)

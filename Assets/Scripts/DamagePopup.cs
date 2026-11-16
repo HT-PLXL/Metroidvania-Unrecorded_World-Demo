@@ -42,6 +42,14 @@ public class DamagePopup : MonoBehaviour
     [SerializeField] private float healVerticalDistance = 1.0f;
     [SerializeField] private Color healColor = Color.green;
 
+    [Header("Miss设置")]
+    [SerializeField] private AnimationCurve missScaleCurve = AnimationCurve.Constant(0, 1, 1);
+    [SerializeField] private AnimationCurve missAlphaCurve = AnimationCurve.Linear(0, 1, 1, 0);
+    [SerializeField] private AnimationCurve missVerticalCurve = new AnimationCurve(new Keyframe(0, 0), new Keyframe(1, 0.5f));
+    [SerializeField] private float missDuration = 0.8f;
+    [SerializeField] private float missVerticalDistance = 0.8f;
+    [SerializeField] private Color missColor = Color.gray;
+
     [Header("背景图片配置")]
     [SerializeField] private Image backgroundImage;// 拖入预制体中的 Image 子对象
     [SerializeField] private PopupImageSetting physicalImageSetting = new PopupImageSetting();
@@ -133,6 +141,39 @@ public class DamagePopup : MonoBehaviour
         if (animCoroutine != null)
             StopCoroutine(animCoroutine);
         animCoroutine = StartCoroutine(HealAnimate());
+    }
+    public void ShowMiss(Vector3 worldPosition, Transform followTarget = null)
+    {
+        gameObject.SetActive(true);
+
+        Vector3 randOffset = Vector3.zero;
+        if (randomHorizontalRange > 0)
+            randOffset = new Vector3(UnityEngine.Random.Range(-randomHorizontalRange, randomHorizontalRange), 0, 0);
+
+        transform.position = worldPosition + randOffset;
+        this.followTarget = followTarget;
+        followOffset = (followTarget != null) ? (worldPosition + randOffset) - followTarget.position : Vector3.zero;
+
+        valueText.text = "Miss";
+        valueText.color = missColor;
+        transform.localScale = Vector3.one;
+
+        // 不显示背景图片
+        if (backgroundImage != null)
+            backgroundImage.gameObject.SetActive(false);
+
+        // 重置 Canvas 设置
+        canvas.transform.localScale = Vector3.one;
+        RectTransform canvasRect = canvas.GetComponent<RectTransform>();
+        if (canvasRect != null)
+            canvasRect.sizeDelta = new Vector2(2f, 1f);
+
+        if (canvas != null && canvas.worldCamera == null)
+            canvas.worldCamera = Camera.main;
+
+        if (animCoroutine != null)
+            StopCoroutine(animCoroutine);
+        animCoroutine = StartCoroutine(MissAnimate());
     }
 
     private void SetupBackgroundImage(ElementType element, bool isCrit)
@@ -232,7 +273,32 @@ public class DamagePopup : MonoBehaviour
 
         DamagePopupManager.Instance.ReturnToPool(this);
     }
+    private IEnumerator MissAnimate()
+    {
+        float timer = 0;
+        Vector3 startWorldPos = transform.position;
 
+        while (timer < missDuration)
+        {
+            timer += Time.deltaTime;
+            float progress = timer / missDuration;
+
+            Vector3 currentBasePos = GetCurrentBasePosition(startWorldPos);
+            Vector3 pos = currentBasePos + Vector3.up * (missVerticalCurve.Evaluate(progress) * missVerticalDistance);
+            transform.position = pos;
+
+            float scale = Mathf.Clamp(missScaleCurve.Evaluate(progress), 0f, 5f);
+            transform.localScale = Vector3.one * scale;
+
+            Color c = valueText.color;
+            c.a = missAlphaCurve.Evaluate(progress);
+            valueText.color = c;
+
+            yield return null;
+        }
+
+        DamagePopupManager.Instance.ReturnToPool(this);
+    }
     private Vector3 GetCurrentBasePosition(Vector3 originalWorldPos)
     {
         if (followTarget != null)

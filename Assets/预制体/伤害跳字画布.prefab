@@ -371,6 +371,108 @@ MonoBehaviour:
   healDuration: 0.5
   healVerticalDistance: 1
   healColor: {r: 0, g: 1, b: 0, a: 1}
+  missScaleCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.143643
+      value: 0.011201914
+      inSlope: 0.020379966
+      outSlope: 0.020379966
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0.025
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  missAlphaCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.84262854
+      value: 0.64722747
+      inSlope: -1.2905298
+      outSlope: -1.2905298
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.057285592
+      outWeight: 0.12170576
+    - serializedVersion: 3
+      time: 0.9574354
+      value: 0.2906007
+      inSlope: -4.6696606
+      outSlope: -4.6696606
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.856892
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: -1
+      outSlope: -1
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  missVerticalCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 0.5
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  missDuration: 0.88
+  missVerticalDistance: 1
+  missColor: {r: 1, g: 1, b: 1, a: 1}
   backgroundImage: {fileID: 2604583076537530109}
   physicalImageSetting:
     enabled: 0
@@ -394,7 +496,7 @@ MonoBehaviour:
     size: {x: 1, y: 1}
   critImageSetting:
     enabled: 1
-    sprite: {fileID: 8471522056027257144, guid: 6df671555535cce438f5502f352eba42, type: 3}
+    sprite: {fileID: 21300000, guid: 4015bc2044c175e4aa84d5462558ffac, type: 3}
     offset: {x: -12, y: 0}
     size: {x: 10, y: 10}
   valueText: {fileID: 2319467934853821848}

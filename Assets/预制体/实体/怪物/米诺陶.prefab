@@ -541,7 +541,7 @@ MonoBehaviour:
   defaultStatSetup: {fileID: 11400000, guid: 32a1e0964c64c0245ac9c8d333284138, type: 2}
   resources:
     maxHp:
-      baseValue: 10000
+      baseValue: 15000
       modifiers: []
     HpRegen:
       baseValue: 233
@@ -576,16 +576,16 @@ MonoBehaviour:
       baseValue: 45
       modifiers: []
     evasion:
-      baseValue: 0
+      baseValue: 10
       modifiers: []
     fireResistance:
-      baseValue: 35
+      baseValue: 40
       modifiers: []
     iceResistance:
-      baseValue: 25
+      baseValue: 60
       modifiers: []
     lightningResistance:
-      baseValue: 35
+      baseValue: 80
       modifiers: []
   major:
     strength:
@@ -654,8 +654,8 @@ MonoBehaviour:
   dropData: {fileID: 11400000, guid: d7660185a04daf1498fceb8b6426cffa, type: 2}
   maxRarityAmount: 800
   maxItemsToDrop: 5
-  useFixedDrops: 0
-  fixedDropItems: {fileID: 0}
+  useFixedDrops: 1
+  fixedDropItems: {fileID: 11400000, guid: 1b721791a618c5a468f0a56dc987c485, type: 2}
 --- !u!1 &3449328114307917483
 GameObject:
   m_ObjectHideFlags: 0

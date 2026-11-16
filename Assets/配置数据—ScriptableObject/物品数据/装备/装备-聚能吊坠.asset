@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e5efc5f4960cb424eac1777908bf337d, type: 3}
-  m_Name: "\u88C5\u5907-\u4F24\u5BB3\u540A\u5760"
+  m_Name: "\u88C5\u5907-\u805A\u80FD\u540A\u5760"
   m_EditorClassIdentifier: 
-  itemName: "\u4F24\u5BB3\u540A\u5760"
+  itemName: "\u805A\u80FD\u540A\u5760"
   icon: {fileID: -5470013036652095632, guid: 6df671555535cce438f5502f352eba42, type: 3}
   itemType: 3
   maxStackCount: 1
@@ -20,10 +20,22 @@ MonoBehaviour:
   itemRarity: 749
   maxDropChance: 75
   dropChance: 25.2
+  level: "\u84DD\u8272\u7A00\u6709"
   itemPrice: 500
   minStackCountInShop: 1
   maxStackCountInShop: 1
   craftRecipe: []
+  weaponElement: 0
   modifier:
   - statType: 7
     value: 20
+  - statType: 11
+    value: 20
+  - statType: 12
+    value: 20
+  - statType: 13
+    value: 20
+  immunePhysical: 0
+  immuneFire: 0
+  immuneIce: 0
+  immuneLightning: 0

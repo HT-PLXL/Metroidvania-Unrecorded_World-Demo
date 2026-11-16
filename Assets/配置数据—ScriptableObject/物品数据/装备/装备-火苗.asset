@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5efc5f4960cb424eac1777908bf337d, type: 3}
   m_Name: "\u88C5\u5907-\u706B\u82D7"
   m_EditorClassIdentifier: 
+  savaId: 53d1bd3bf5e816840aad80980435f048
   itemName: "\u706B\u82D7"
   icon: {fileID: -7116395594446827303, guid: 033c65e05597d8c4096effd0771d5624, type: 3}
   itemType: 1

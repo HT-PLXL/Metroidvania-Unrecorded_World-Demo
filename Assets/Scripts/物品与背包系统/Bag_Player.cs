@@ -120,17 +120,26 @@ public class Bag_Player : Bag_Base
         data.gold = gold;
         data.bag.Clear();
         foreach (var item in itemList)
+        {
             if (item?.itemData != null)
             {
                 string saveId = item.itemData.savaId;
+                if (string.IsNullOrEmpty(saveId))
+                {
+                    Debug.LogWarning($"物品 {item.itemData.name} 的 savaId 为空，跳过保存");
+                    continue;
+                }
                 if (!data.bag.ContainsKey(saveId)) data.bag[saveId] = 0;
                 data.bag[saveId] += item.stackCount;
             }
+        }
 
         data.AlreadyEquipedItems.Clear();
         foreach (var slot in equipmentSlotList)
+        {
             if (slot.HasItem())
                 data.AlreadyEquipedItems[slot.equipmentItem.itemData.savaId] = slot.slotType;
+        }
 
         //data.quickItemSaveIds = new string[2];
         //for (int i = 0; i < quickItems.Length; i++)

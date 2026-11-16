@@ -60,6 +60,12 @@ public class DamagePopupManager : MonoBehaviour
         popup.ShowHeal(healAmount, worldPosition, followTarget);
     }
 
+    public void ShowMiss(Vector3 worldPosition, Transform followTarget = null)
+    {
+        DamagePopup popup = GetFromPool();
+        popup.ShowMiss(worldPosition, followTarget);
+    }
+
     private DamagePopup GetFromPool()
     {
         if (pool.Count > 0)

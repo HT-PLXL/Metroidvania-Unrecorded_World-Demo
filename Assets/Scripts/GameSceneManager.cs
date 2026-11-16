@@ -61,22 +61,36 @@ public class GameSceneManager : MonoBehaviour, ISaveable
     }
     private IEnumerator ChangeSceneCo(string sceneName, RespawnType respawnType)//切换场景协程
     {
+        // 获取并检查 fadeScreenUI，若获取失败则等待
         fadeScreenUI = FindFadeScreenUI();
-        if (fadeScreenUI == null)
+        float waitTime = 0f;
+        while (fadeScreenUI == null && waitTime < 1f)
         {
-            Debug.LogError("找不到 UI_FadeScreen，无法执行场景切换");
-            yield break;
+            waitTime += Time.deltaTime;
+            yield return null;
+            fadeScreenUI = FindFadeScreenUI();
         }
 
-        fadeScreenUI.DoFadeOut();// 透明=>黑
-        yield return fadeScreenUI.fadeEffectCo;//延迟到渐变效果结束
+        if (fadeScreenUI == null)
+        {
+            Debug.LogError("找不到 UI_FadeScreen，场景切换将继续但无淡入淡出效果");
+            // 直接加载场景，不执行淡出
+            SceneManager.LoadScene(sceneName);
+            yield return null; // 等待一帧
+        }
+        else
+        {
+            fadeScreenUI.DoFadeOut();// 透明=>黑
+            yield return fadeScreenUI.fadeEffectCo;//延迟到渐变效果结束
 
-        SceneManager.LoadScene(sceneName);//加载场景
-        yield return null;//延迟一帧等待加载完成
+            SceneManager.LoadScene(sceneName);//加载场景
+            yield return null;//延迟一帧等待加载完成
 
-        fadeScreenUI = FindFadeScreenUI();//切换场景后，引用可能丢失，需要重新获取
-        Image image = fadeScreenUI.GetComponent<Image>();
-        image.color = new Color(0, 0, 0, 1);
+            fadeScreenUI = FindFadeScreenUI();//切换场景后，引用可能丢失，需要重新获取
+            Image image = fadeScreenUI.GetComponent<Image>();
+            image.color = new Color(0, 0, 0, 1);
+        }
+
 
         dataLoaded = false;//重置标志符，重要
         //while (dataLoaded == false)//循环，直到数据加载完成
@@ -236,8 +250,11 @@ public class GameSceneManager : MonoBehaviour, ISaveable
         string currentScene = SceneManager.GetActiveScene().name;
         if (currentScene == "主菜单")
             return;
-        data.lastPlayerPosition = Player.instance.transform.position;
         data.lastScenePlayed = currentScene;
+        if (Player.instance != null)
+            data.lastPlayerPosition = Player.instance.transform.position;
+        else
+            Debug.LogWarning("Player.instance 为空，无法保存玩家位置");
         dataLoaded = false;
     }
 
@@ -247,7 +264,7 @@ public class GameSceneManager : MonoBehaviour, ISaveable
         lastPosition = data.lastPlayerPosition;
 
         if (string.IsNullOrEmpty(lastScenePlayed))
-            lastScenePlayed = "安全区";
+            lastScenePlayed = "营地";
         dataLoaded = true;
     }
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "游戏设置/物品数据/材料", fileName = "材料-")]
 public class ItemDataSO : ScriptableObject
 {
-    public string savaId { get; private set; }
+    public string savaId;
     //[cn("")]
     [cn("物品名")] public string itemName;
     [cn("图标")] public Sprite icon;
