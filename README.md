@@ -101,38 +101,6 @@ docs/                            WebGL 构建产物（GitHub Pages 发布源）
 
 ---
 
-## 踩坑记录
-
-### WebGL 构建：进度条卡死，`data` 文件永不加载
-
-发布 WebGL 版时遇到 `TypeError: Cannot read properties of undefined (reading 'match')`，页面停在加载页不动。
-
-排查过程：网络面板显示 `loader.js`、`framework.js`、`wasm` 全部 200，唯独 31MB 的 `data.unityweb` **一次都没有被请求**。逐字符读 Unity 6 的 loader 源码后定位到：该版本 loader 会**无条件**取 `workerUrl` 并交给 `cacheControl()` 做字符串匹配，而构建既没产出 worker 文件、模板也没生成该字段，于是 `undefined.match()` 抛异常，加载流程在请求 data 之前就断了。
-
-解决：补齐 `workerUrl` 配置项指向一个占位文件，加载链路恢复。
-
-### WebGL 构建：产物文件名含中文导致 404
-
-Unity 用 Product Name 命名构建产物，项目名含中文时生成 `未踏之地 Web版.loader.js`，浏览器请求时被百分号编码，静态服务器返回 404，页面白屏。将 Product Name 改为 ASCII（`UnrecordedWorld`）后解决。
-
-### WebGL 性能：高分屏超采样导致手感迟滞
-
-画面流畅但操作明显迟滞，排查后确认不是帧率问题而是渲染填充率。Unity 默认按 `devicePixelRatio` 放大渲染分辨率，2K 屏下像素填充量是画布的 4 倍，而像素风游戏并不需要如此高的采样率。在 `index.html` 中设置 `config.devicePixelRatio = 1` 后手感与原生版基本一致。
-
-### WebGL 构建时长
-
-IL2CPP 编译到 WebAssembly 时，C# 与 C++ 编译完成后会在 `wasm-ld` 链接阶段停留很久（本项目实测 1 小时以上），期间表现为进度条长时间不动。原因是链接阶段单线程且吃内存，同时杀毒软件实时扫描大量中间 `.o` 文件会显著拖慢。这是正常现象，不是卡死。
-
----
-
-## 已知限制
-
-- WebGL 版受浏览器合成器链路影响，输入延迟天然比原生版多 1–2 帧，无法完全消除
-- 场景加载目前为同步 `LoadScene`，在 WebGL 上会造成短暂冻结；后续计划改为原地状态重置
-- 存档使用 `PlayerPrefs`，在 WebGL 下走 IndexedDB，清除浏览器数据会丢失进度
-
----
-
 ## 说明
 
 本项目为个人学习与实践作品，美术与音频素材部分来自公开资源，代码与系统设计均为本人独立完成。欢迎交流与反馈。

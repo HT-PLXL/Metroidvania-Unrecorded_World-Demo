@@ -52,13 +52,13 @@
       }
 
       var buildUrl = "Build";
-      var loaderUrl = buildUrl + "/UnrecordedWorld.loader.js";
+      var loaderUrl = buildUrl + "/UnrecordedWorld_V1.loader.js";
       var config = {
         arguments: [],
-        dataUrl: buildUrl + "/UnrecordedWorld.data.unityweb",
-        frameworkUrl: buildUrl + "/UnrecordedWorld.framework.js.unityweb",
-        codeUrl: buildUrl + "/UnrecordedWorld.wasm.unityweb",
-        workerUrl: buildUrl + "/UnrecordedWorld.worker.js.unityweb",
+        dataUrl: buildUrl + "/UnrecordedWorld_V1.data.unityweb",
+        frameworkUrl: buildUrl + "/UnrecordedWorld_V1.framework.js.unityweb",
+        codeUrl: buildUrl + "/UnrecordedWorld_V1.wasm.unityweb",
+        workerUrl: buildUrl + "/UnrecordedWorld_V1.worker.js.unityweb",
         streamingAssetsUrl: "StreamingAssets",
         companyName: "DefaultCompany",
         productName: "UnrecordedWorld",
@@ -66,16 +66,15 @@
         showBanner: unityShowBanner,
       };
 
+      // 锁定像素比为 1，避免高分屏超采样导致渲染填充率翻数倍（像素风无需高采样）
+      config.devicePixelRatio = 1;
+
       // By default, Unity keeps WebGL canvas render target size matched with
       // the DOM size of the canvas element (scaled by window.devicePixelRatio)
       // Set this to false if you want to decouple this synchronization from
       // happening inside the engine, and you would instead like to size up
       // the canvas DOM size and WebGL render target sizes yourself.
       // config.matchWebGLToCanvasSize = false;
-
-      // 像素风游戏不需要 2x/3x 超采样：锁死渲染分辨率为 1 倍，
-      // 在高分屏上可减少 4 倍像素填充，明显降低输入延迟。
-      config.devicePixelRatio = 1;
 
       // If you would like all file writes inside Unity Application.persistentDataPath
       // directory to automatically persist so that the contents are remembered when
