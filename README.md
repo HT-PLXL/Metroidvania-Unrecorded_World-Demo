@@ -6,7 +6,7 @@
 
 [🎬 B 站演示视频](https://www.bilibili.com/video/BV1NtTt6VEXs/) ｜ [⬇ 下载 Windows 版](../../releases)
 
-> 在线版为 WebGL 构建，可能需要 5–15 秒加载；建议用 Chrome / Edge 打开。需要更好的手感请下载 Windows 版。
+> 在线版为 WebGL 构建（资源约 45MB），网络较慢时首次加载可能需要 1–2 分钟，请耐心等待；若长时间卡在进度条，可直接观看[演示视频](https://www.bilibili.com/video/BV1NtTt6VEXs/)。建议用 Chrome / Edge 打开，需要更好的手感请下载 Windows 版。
 
 ---
 

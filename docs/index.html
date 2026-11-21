@@ -17,6 +17,8 @@
         </div>
       </div>
       <div id="unity-warning"> </div>
+      <!-- 加载兜底提示：资源较大时避免访客以为页面卡死 -->
+      <div id="load-hint"></div>
       <div id="unity-footer">
         <div id="unity-logo-title-footer"></div>
         <div id="unity-fullscreen-button"></div>
@@ -25,6 +27,36 @@
     </div>
     <script>
       var canvas = document.querySelector("#unity-canvas");
+
+      // ===== 加载兜底提示 =====
+      // 原因：WebGL 包体约 45MB，国内网络从 GitHub Pages 拉取时可能很慢，
+      // 而 Unity 的进度条不会报错、也不会超时，访客容易误以为页面挂了。
+      // 处理：6 秒后提示"资源较大请稍候"，25 秒后追加"可先看视频"。
+      var loadHint = document.querySelector("#load-hint");
+      var loadHintStyle = "display:none;position:fixed;left:0;right:0;bottom:20px;" +
+        "text-align:center;font:13px/1.7 -apple-system,'Microsoft YaHei',sans-serif;" +
+        "color:#d8d8d8;z-index:9999;text-shadow:0 1px 3px rgba(0,0,0,.9);";
+
+      var hintTimerSlow = setTimeout(function () {
+        loadHint.style = loadHintStyle + "display:block;";
+        loadHint.innerHTML = "游戏资源约 45&nbsp;MB，首次加载可能需要 1–2 分钟，属正常现象，请稍候…";
+      }, 6000);
+
+      var hintTimerVideo = setTimeout(function () {
+        if (loadHint.style.display !== "block") return;
+        // 允许点击，所以这里单独打开 pointer-events
+        loadHint.style = loadHintStyle + "display:block;pointer-events:auto;";
+        loadHint.innerHTML = "加载较慢？可直接观看演示视频 → " +
+          '<a href="https://www.bilibili.com/video/BV1NtTt6VEXs/" target="_blank" ' +
+          'rel="noopener" style="color:#7fd3ff;text-decoration:underline;">B 站在线演示</a>';
+      }, 25000);
+
+      // 加载成功后就停止提示，避免遮挡画面
+      function clearLoadHints() {
+        clearTimeout(hintTimerSlow);
+        clearTimeout(hintTimerVideo);
+        loadHint.style.display = "none";
+      }
 
       // Shows a temporary message banner/ribbon for a few seconds, or
       // a permanent error message on top of the canvas if type=='error'.
@@ -114,13 +146,20 @@
         createUnityInstance(canvas, config, (progress) => {
           document.querySelector("#unity-progress-bar-full").style.width = 100 * progress + "%";
               }).then((unityInstance) => {
+                clearLoadHints();
                 document.querySelector("#unity-loading-bar").style.display = "none";
                 document.querySelector("#unity-fullscreen-button").onclick = () => {
                   unityInstance.SetFullscreen(1);
                 };
 
               }).catch((message) => {
-                alert(message);
+                // 加载失败时给出可执行的下一步，而不是一个没有出路的弹窗
+                clearLoadHints();
+                loadHint.style = loadHintStyle + "display:block;pointer-events:auto;";
+                loadHint.innerHTML = "加载失败，请刷新页面重试。也可以先看演示视频 → " +
+                  '<a href="https://www.bilibili.com/video/BV1NtTt6VEXs/" target="_blank" ' +
+                  'rel="noopener" style="color:#7fd3ff;text-decoration:underline;">B 站在线演示</a>';
+                console.error(message);
               });
             };
 
